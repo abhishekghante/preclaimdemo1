@@ -13,17 +13,17 @@ global $permission_arr;
       <div class="portlet-title">
         <div class="caption">
             <i class="icon-users font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp sbold">Active Regions</span>
+            <span class="caption-subject font-green-sharp sbold">Active Channels</span>
         </div>
         <div class="actions">
             <div class="btn-group">
-      <!--  <?php if( in_array( 'regions/add', $permission_arr ) ) { ?>
-              <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>  -->        
-              <a href="<?php echo base_url(); ?>regions/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+            <!--   <?php if( in_array( 'channels/add', $permission_arr ) ) { ?>
+              <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>  -->
+              <a href="<?php echo base_url(); ?>channels/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
             <!--   <?php } ?>
-              <?php } ?>   -->  
+              <?php } ?>  -->
             </div>
         </div>
       </div>
@@ -34,11 +34,12 @@ global $permission_arr;
           <div class="row">
             <div class="col-md-12 table-container">
                 <div class="box-body no-padding">
-                  <table id="active_region_list" class="table table-striped table-bordered table-hover table-checkable dataTable data-tbl">
+                  <table id="active_channel_list" class="table table-striped table-bordered table-hover table-checkable dataTable data-tbl">
                     <thead>
                       <tr class="tbl_head_bg">
                         <th class="head1 no-sort">#</th>
-                        <th class="head1 no-sort">Region Name</th>
+                        <th class="head1 no-sort">Channel Name</th>
+                        <th class="head1 no-sort">Channel Code</th>
                         <th class="head1 no-sort">Created Date</th>
                         <th class="head1 no-sort">Status</th>
                         <th class="head1 no-sort">Action</th>
@@ -49,7 +50,8 @@ global $permission_arr;
                         <th class="head2 no-sort"></th>
                         <th class="head2 no-sort"></th>
                         <th class="head2 no-sort"></th>
-                        <th class="head2 no-sort">Status</th>
+                        <th class="head2 no-sort"></th>
+                        <th class="head2 no-sort"></th>
                         <th class="head2 no-sort"></th>
                       </tr>
                     </tfoot>
@@ -67,7 +69,7 @@ global $permission_arr;
 $(document).ready(function() {
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  table = $('#active_region_list').DataTable({
+  table = $('#active_channel_list').DataTable({
       language: {
         processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
       },
@@ -79,32 +81,32 @@ $(document).ready(function() {
           "data": function(d) {
             d.csrf_test_name = csrf_hash;
           },
-          "url": "<?php echo site_url('/regions/activeRegionTableResponse')?>",
+          "url": "<?php echo site_url('/channels/activeChannelTableResponse')?>",
           "type": "POST"
       },
       "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
       "lengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
       //Set column definition initialisation properties.
       "columnDefs": [{
-          "targets": [0,4],
+          "targets": [0,5],
           "orderable": false, //set not orderable
       },
       {
-          "targets": [0,4],
+          "targets": [0,5],
           "searchable": false, //set orderable
       } ],
       buttons: []
   });
   var i = 0;
-  $('#active_region_list tfoot th').each( function () {
-    if( i == 1 ){
+  $('#active_channel_list tfoot th').each( function () {
+    if( i == 1 || i == 2 ){
       $(this).html( '<input type="text" class="form-control" placeholder="" />' );
     }
     i++;
   });
 
   // DataTable
-  var table = $('#active_region_list').DataTable();
+  var table = $('#active_channel_list').DataTable();
 
   // Apply the search
   table.columns().every( function () {

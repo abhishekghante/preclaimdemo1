@@ -1,51 +1,51 @@
-<!-- <?php
+<!--AG <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $assetUrl   = $this->config->item( 'base_url' );
 global $permission_arr;
-if($regionInfo){
-  $regionName = $regionInfo->regionName;
+if($groupInfo){
+  $groupName = $groupInfo->groupName;
 }else{
-  $regionName  = '';
+  $groupName = '';
 }
 ?> -->
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<?php if( in_array( 'regions/add', $permission_arr ) ) { ?>
+<!-- AG<?php if( in_array( 'groups/add', $permission_arr ) ) { ?>  -->
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
       <div class="portlet-title">
         <div class="caption">
           <i class="icon-users font-green-sharp"></i>
-          <span class="caption-subject font-green-sharp sbold"><?= (($regionId)?'Update':'Add'); ?> Region</span>
+          <span class="caption-subject font-green-sharp sbold"><?= (($groupId)?'Update':'Add'); ?> Group</span>
         </div>
       </div>
     </div>
     <div class="portlet light bordered">
       <div class="portlet-body">
         <div id="message_account"></div>
-        <form novalidate="" id="add_region_form" role="form" method="post" class="form-horizontal">
+        <form novalidate="" id="add_group_form" role="form" method="post" class="form-horizontal">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="col-md-4 control-label" for="regionName">Region Name <span class="text-danger">*</span></label>
+                <label class="col-md-4 control-label" for="groupName">Group Name <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" id="regionName" name="regionName" value="<?= $regionName; ?>" class="form-control" placeholder="Region Name">
+                  <input type="text" required="" value="<?= $groupName; ?>" placeholder="Group Name" id="groupName" class="form-control" name="groupName">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
-                  <!-- <?php
-                  if($regionId){ ?>  -->
-                    <input type="hidden" value="<?= $regionId; ?>" id="regionId" name="regionId">
-                    <button class="btn btn-info" id="editregionsubmit" onClick="return updateRegion();" type="button">Update</button>
-                    <a href="<?= base_url(); ?>regions/pendinglist" class="btn btn-danger" value="">Back</a>
-                  <!-- <?php }else{ ?>  -->
-                    <button class="btn btn-info" id="addregionsubmit" onClick="return addRegion();" type="button">Add Region</button>
+               <!--    <?php
+                  if($groupId){ ?>  -->
+                    <input type="hidden" value="<?= $groupId; ?>" id="groupId" name="groupId">
+                    <button class="btn btn-info" id="editgroupsubmit" onClick="return updateGroup();" type="button">Update</button>
+                    <a href="<?= base_url(); ?>groups/pendinglist" class="btn btn-danger" value="">Back</a>
+                 <!-- <?php }else{ ?> -->
+                    <button class="btn btn-info" id="addgroupsubmit" onClick="return addGroup();" type="button">Add Group</button>
                     <button class="btn btn-danger" type="reset" value="">Clear</button>
-                  <!-- <?php } ?>  -->
+                  <!-- <?php } ?>-->
                 </div>
               </div>
             </div>
@@ -55,24 +55,24 @@ if($regionInfo){
     </div>
   </div>
 </div>
-<!-- <?php } ?>  -->
+ <!--<?php } ?>-->
 <div class="row">
   <div class="col-xs-12 col-sm-12">
     <div class="portlet box">
       <div class="portlet-title">
         <div class="caption">
             <i class="icon-users font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp sbold">Pending Regions</span>
+            <span class="caption-subject font-green-sharp sbold">Pending Groups</span>
         </div>
         <div class="actions">
             <div class="btn-group">
-              <!-- <?php if( in_array( 'regions/add', $permission_arr ) ) { ?>
-              <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>  -->
-              <a href="<?php echo base_url(); ?>regions/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <?php if( in_array( 'groups/add', $permission_arr ) ) { ?>
+              <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>
+              <a href="<?php echo base_url(); ?>groups/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
-              <!-- <?php } ?>
-              <?php } ?>  -->
+              <?php } ?>
+              <?php } ?>
             </div>
         </div>
       </div>
@@ -83,11 +83,11 @@ if($regionInfo){
           <div class="row">
             <div class="col-md-12 table-container">
                 <div class="box-body no-padding">
-                  <table id="pending_region_list" class="table table-striped table-bordered table-hover table-checkable dataTable data-tbl">
+                  <table id="pending_group_list" class="table table-striped table-bordered table-hover table-checkable dataTable data-tbl">
                     <thead>
                       <tr class="tbl_head_bg">
                         <th class="head1 no-sort">#</th>
-                        <th class="head1 no-sort">Region Name</th>
+                        <th class="head1 no-sort">Group Name</th>
                         <th class="head1 no-sort">Created Date</th>
                         <th class="head1 no-sort">Status</th>
                         <th class="head1 no-sort">Action</th>
@@ -116,19 +116,17 @@ if($regionInfo){
 $(document).ready(function() {
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  table = $('#pending_region_list').DataTable({
+  table = $('#pending_group_list').DataTable({
       language: {
-        processing: "<img src='${pageContext.request.contextPath}/img/loading.gif'>",
+        processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
       },
       "processing": true, //Feature control the processing indicator.
       "serverSide": true, //Feature control DataTables' server-side processing mode.
       "order": [], //Initial no order.
       'autoWidth': false,
       "ajax": {
-          "data": function(d) {
-            d.csrf_test_name = csrf_hash;
-          },
-          "url": "<?php echo site_url('/regions/pendingRegionTableResponse')?>",
+          "data": function(d) {},
+          "url": "<?php echo site_url('/groups/pendingGroupTableResponse')?>",
           "type": "POST"
       },
       "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
@@ -145,7 +143,7 @@ $(document).ready(function() {
       buttons: []
   });
   var i = 0;
-  $('#pending_region_list tfoot th').each( function () {
+  $('#pending_group_list tfoot th').each( function () {
     if( i == 1 ){
       $(this).html( '<input type="text" class="form-control" placeholder="" />' );
     }
@@ -153,7 +151,7 @@ $(document).ready(function() {
   });
 
   // DataTable
-  var table = $('#pending_region_list').DataTable();
+  var table = $('#pending_group_list').DataTable();
 
   // Apply the search
   table.columns().every( function () {
@@ -174,71 +172,72 @@ $(document).ready(function() {
     });
   });
 });
-function addRegion() {
-  var table2     = $('#pending_region_list').DataTable();
-  var regionName = $( '#add_region_form #regionName' ).val(); 
-  if(regionName == ''){
-    toastr.error('Region Name Cannot be empty','Error');
+
+function addGroup() {
+  var table2 = $('#pending_group_list').DataTable();
+  var groupName = $( '#add_group_form #groupName' ).val(); 
+  if(groupName == ''){
+    toastr.error('Group Name Cannot be empty','Error');
     return false;
   }
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  if(regionName){
-      var formdata = {csrf_test_name:csrf_hash,'regionName':regionName};
-      $.ajax({
-        type: "POST",
-        url: adminurl + 'regions/addRegion',
-        data: formdata,
-        beforeSend: function() { 
-            $("#addregionsubmit").html('<img src="'+adminurl+'${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-            $("#addregionsubmit").prop('disabled', true);
-        },
-        success: function( data ) {
-          if(data == 1){
-            $("#addregionsubmit").html('Add Region');
-            $("#addregionsubmit").prop('disabled', false);
-            toastr.success( 'Region Added successfully.','Success' );
-            $( '#add_region_form #regionName' ).val('');
-            table2.ajax.reload();
-          }else{
-            toastr.error( data,'Error' );
-            $("#addregionsubmit").html('Add Region');
-            $("#addregionsubmit").prop('disabled', false);
-          }
+  if(groupName){
+    var formdata = {csrf_test_name:csrf_hash,'groupName':groupName};
+    $.ajax({
+      type: "POST",
+      url: adminurl + 'groups/addGroup',
+      data: formdata,
+      beforeSend: function() {
+          $("#addgroupsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+          $("#addgroupsubmit").prop('disabled', true);
+      },
+      success: function( data ) {
+        if(data == 1){
+          $("#addgroupsubmit").html('Add Group');
+          $("#addgroupsubmit").prop('disabled', false);
+          toastr.success( 'Group Added successfully.','Success' );
+          $('#add_group_form #groupName').val('');
+          table2.ajax.reload();
+        }else{
+          toastr.error( data,'Error' );
+          $("#addgroupsubmit").html('Add Group');
+          $("#addgroupsubmit").prop('disabled', false);
         }
-      });
+      }
+    });
   }   
 }
-function updateRegion() {
-  var table2     = $('#pending_region_list').DataTable();
-  var regionName = $( '#add_region_form #regionName' ).val();
-  var regionId   = $( '#add_region_form #regionId' ).val();
-  if(regionName == ''){
-    toastr.error('Region Name Cannot be empty','Error');
+function updateGroup() {
+  var table2    = $('#pending_group_list').DataTable();
+  var groupName = $( '#add_group_form #groupName' ).val();
+  var groupId   = $( '#add_group_form #groupId' ).val();
+  if(groupName == ''){
+    toastr.error('Group Name Cannot be empty','Error');
     return false;
   }
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  if(regionName){
-      var formdata = {csrf_test_name:csrf_hash,'regionName':regionName,'regionId':regionId};
+  if(groupName){
+      var formdata = {csrf_test_name:csrf_hash,'groupName':groupName,'groupId':groupId};
       $.ajax({
         type: "POST",
-        url: adminurl + 'regions/updateRegion',
+        url: adminurl + 'groups/updateGroup',
         data: formdata,
         beforeSend: function() { 
-            $("#editregionsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
-            $("#editregionsubmit").prop('disabled', true);
+            $("#editgroupsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#editgroupsubmit").prop('disabled', true);
         },
         success: function( data ) {
           if(data == 1){
-            $("#editregionsubmit").html('Update');
-            $("#editregionsubmit").prop('disabled', false);
-            toastr.success( 'Region Updated successfully.','Success' );
+            $("#editgroupsubmit").html('Update');
+            $("#editgroupsubmit").prop('disabled', false);
+            toastr.success( 'Group Updated successfully.','Success' );
             table2.ajax.reload();
           }else{
             toastr.error( data,'Error' );
-            $("#editregionsubmit").html('Update');
-            $("#editregionsubmit").prop('disabled', false);
+            $("#editgroupsubmit").html('Update');
+            $("#editgroupsubmit").prop('disabled', false);
           }
         }
       });

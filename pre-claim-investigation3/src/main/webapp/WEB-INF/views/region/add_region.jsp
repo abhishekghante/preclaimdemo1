@@ -1,7 +1,7 @@
-<?php
+<!-- <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $assetUrl  = $this->config->item( 'base_url' );
-?>
+?>  -->
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
@@ -62,7 +62,7 @@ function addRegion() {
         url: adminurl + 'regions/addRegion',
         data: formdata,
         beforeSend: function() { 
-            $("#addregionsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#addregionsubmit").html('<img src="'+adminurl+'${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
             $("#addregionsubmit").prop('disabled', true);
         },
         success: function( data ) {

@@ -2,50 +2,58 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 $assetUrl   = $this->config->item( 'base_url' );
 global $permission_arr;
-if($regionInfo){
-  $regionName = $regionInfo->regionName;
+if($channelInfo){
+  $channelName = $channelInfo->channelName;
+  $channelCode = $channelInfo->channelCode;
 }else{
-  $regionName  = '';
+  $channelName = '';
+  $channelCode = '';
 }
 ?> -->
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<?php if( in_array( 'regions/add', $permission_arr ) ) { ?>
+<?php if( in_array( 'channels/add', $permission_arr ) ) { ?>
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
       <div class="portlet-title">
         <div class="caption">
           <i class="icon-users font-green-sharp"></i>
-          <span class="caption-subject font-green-sharp sbold"><?= (($regionId)?'Update':'Add'); ?> Region</span>
+          <span class="caption-subject font-green-sharp sbold"><?= (($channelId)?'Update':'Add'); ?> Channel</span>
         </div>
       </div>
     </div>
     <div class="portlet light bordered">
       <div class="portlet-body">
         <div id="message_account"></div>
-        <form novalidate="" id="add_region_form" role="form" method="post" class="form-horizontal">
+        <form novalidate="" id="add_channel_form" role="form" method="post" class="form-horizontal">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="col-md-4 control-label" for="regionName">Region Name <span class="text-danger">*</span></label>
+                <label class="col-md-4 control-label" for="channelName">Channel Name <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" id="regionName" name="regionName" value="<?= $regionName; ?>" class="form-control" placeholder="Region Name">
+                  <input type="text" required="" value="<?= $channelName; ?>" id="channelName" name="channelName" maxlength="40" class="form-control" placeholder="Channel Name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="channelCode">Channel Code <span class="text-danger">*</span></label>
+                <div class="col-md-8">
+                  <input type="text" required="" value="<?= $channelCode; ?>" id="channelCode" name="channelCode" maxlength="10" class="form-control username" placeholder="Channel Code">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
-                  <!-- <?php
-                  if($regionId){ ?>  -->
-                    <input type="hidden" value="<?= $regionId; ?>" id="regionId" name="regionId">
-                    <button class="btn btn-info" id="editregionsubmit" onClick="return updateRegion();" type="button">Update</button>
-                    <a href="<?= base_url(); ?>regions/pendinglist" class="btn btn-danger" value="">Back</a>
-                  <!-- <?php }else{ ?>  -->
-                    <button class="btn btn-info" id="addregionsubmit" onClick="return addRegion();" type="button">Add Region</button>
+                <!-- <?php
+                  if($channelId){ ?>  -->  
+                    <input type="hidden" value="<?= $channelId; ?>" id="channelId" name="channelId">
+                    <button class="btn btn-info" id="editchannelsubmit" onClick="return updateChannel();" type="button">Update</button>
+                    <a href="<?= base_url(); ?>channels/pendinglist" class="btn btn-danger" value="">Back</a>
+                  <!-- <?php }else{ ?> --> 
+                    <button class="btn btn-info" id="addchannelsubmit" onClick="return addChannel();" type="button">Add Channel</button>
                     <button class="btn btn-danger" type="reset" value="">Clear</button>
-                  <!-- <?php } ?>  -->
+                  <!-- <?php } ?> --> 
                 </div>
               </div>
             </div>
@@ -55,24 +63,24 @@ if($regionInfo){
     </div>
   </div>
 </div>
-<!-- <?php } ?>  -->
+ <!--<?php } ?> --> 
 <div class="row">
   <div class="col-xs-12 col-sm-12">
     <div class="portlet box">
       <div class="portlet-title">
         <div class="caption">
             <i class="icon-users font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp sbold">Pending Regions</span>
+            <span class="caption-subject font-green-sharp sbold">Pending Channels</span>
         </div>
         <div class="actions">
             <div class="btn-group">
-              <!-- <?php if( in_array( 'regions/add', $permission_arr ) ) { ?>
-              <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>  -->
-              <a href="<?php echo base_url(); ?>regions/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <!--<?php if( in_array( 'channels/add', $permission_arr ) ) { ?> -->
+             <!-- <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?> -->
+              <a href="<?php echo base_url(); ?>channels/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
-              <!-- <?php } ?>
-              <?php } ?>  -->
+            <!--  <?php } ?>--> 
+             <!-- <?php } ?>--> 
             </div>
         </div>
       </div>
@@ -83,11 +91,12 @@ if($regionInfo){
           <div class="row">
             <div class="col-md-12 table-container">
                 <div class="box-body no-padding">
-                  <table id="pending_region_list" class="table table-striped table-bordered table-hover table-checkable dataTable data-tbl">
+                  <table id="pending_channel_list" class="table table-striped table-bordered table-hover table-checkable dataTable data-tbl">
                     <thead>
                       <tr class="tbl_head_bg">
                         <th class="head1 no-sort">#</th>
-                        <th class="head1 no-sort">Region Name</th>
+                        <th class="head1 no-sort">Channel Name</th>
+                        <th class="head1 no-sort">Channel Code</th>
                         <th class="head1 no-sort">Created Date</th>
                         <th class="head1 no-sort">Status</th>
                         <th class="head1 no-sort">Action</th>
@@ -98,7 +107,8 @@ if($regionInfo){
                         <th class="head2 no-sort"></th>
                         <th class="head2 no-sort"></th>
                         <th class="head2 no-sort"></th>
-                        <th class="head2 no-sort">Status</th>
+                        <th class="head2 no-sort"></th>
+                        <th class="head2 no-sort"></th>
                         <th class="head2 no-sort"></th>
                       </tr>
                     </tfoot>
@@ -116,9 +126,9 @@ if($regionInfo){
 $(document).ready(function() {
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  table = $('#pending_region_list').DataTable({
+  table = $('#pending_channel_list').DataTable({
       language: {
-        processing: "<img src='${pageContext.request.contextPath}/img/loading.gif'>",
+        processing: "<img src='$pageContext.request.contextPath/resources/img/loading.gif'>",
       },
       "processing": true, //Feature control the processing indicator.
       "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -128,32 +138,32 @@ $(document).ready(function() {
           "data": function(d) {
             d.csrf_test_name = csrf_hash;
           },
-          "url": "<?php echo site_url('/regions/pendingRegionTableResponse')?>",
+          "url": "<?php echo site_url('/channels/pendingChannelTableResponse')?>",
           "type": "POST"
       },
       "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
       "lengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
       //Set column definition initialisation properties.
       "columnDefs": [{
-          "targets": [0,4],
+          "targets": [0,5],
           "orderable": false, //set not orderable
       },
       {
-          "targets": [0,4],
+          "targets": [0,5],
           "searchable": false, //set orderable
       } ],
       buttons: []
   });
   var i = 0;
-  $('#pending_region_list tfoot th').each( function () {
-    if( i == 1 ){
+  $('#pending_channel_list tfoot th').each( function () {
+    if( i == 1 || i == 2 ){
       $(this).html( '<input type="text" class="form-control" placeholder="" />' );
     }
     i++;
   });
 
   // DataTable
-  var table = $('#pending_region_list').DataTable();
+  var table = $('#pending_channel_list').DataTable();
 
   // Apply the search
   table.columns().every( function () {
@@ -174,71 +184,82 @@ $(document).ready(function() {
     });
   });
 });
-function addRegion() {
-  var table2     = $('#pending_region_list').DataTable();
-  var regionName = $( '#add_region_form #regionName' ).val(); 
-  if(regionName == ''){
-    toastr.error('Region Name Cannot be empty','Error');
+function addChannel() {
+  var table2      = $('#pending_channel_list').DataTable();
+  var channelName = $( '#add_channel_form #channelName' ).val();
+  var channelCode = $( '#add_channel_form #channelCode' ).val();
+  if(channelName == ''){
+    toastr.error('Channel Name Cannot be empty','Error');
+    return false;
+  }
+  if(channelCode == ''){
+    toastr.error('Channel Code Cannot be empty','Error');
     return false;
   }
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  if(regionName){
-      var formdata = {csrf_test_name:csrf_hash,'regionName':regionName};
+  if(channelName && channelCode){
+      var formdata = {csrf_test_name:csrf_hash,'channelName':channelName,'channelCode':channelCode};
       $.ajax({
         type: "POST",
-        url: adminurl + 'regions/addRegion',
+        url: adminurl + 'channels/addChannel',
         data: formdata,
         beforeSend: function() { 
-            $("#addregionsubmit").html('<img src="'+adminurl+'${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-            $("#addregionsubmit").prop('disabled', true);
+            $("#addchannelsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#addchannelsubmit").prop('disabled', true);
         },
         success: function( data ) {
           if(data == 1){
-            $("#addregionsubmit").html('Add Region');
-            $("#addregionsubmit").prop('disabled', false);
-            toastr.success( 'Region Added successfully.','Success' );
-            $( '#add_region_form #regionName' ).val('');
+            $("#addchannelsubmit").html('Add Channel');
+            $("#addchannelsubmit").prop('disabled', false);
+            toastr.success( 'Channel Added successfully.','Success' );
+            $( '#add_channel_form #channelName' ).val('');
+            $( '#add_channel_form #channelCode' ).val('');
             table2.ajax.reload();
           }else{
             toastr.error( data,'Error' );
-            $("#addregionsubmit").html('Add Region');
-            $("#addregionsubmit").prop('disabled', false);
+            $("#addchannelsubmit").html('Add Channel');
+            $("#addchannelsubmit").prop('disabled', false);
           }
         }
       });
   }   
 }
-function updateRegion() {
-  var table2     = $('#pending_region_list').DataTable();
-  var regionName = $( '#add_region_form #regionName' ).val();
-  var regionId   = $( '#add_region_form #regionId' ).val();
-  if(regionName == ''){
-    toastr.error('Region Name Cannot be empty','Error');
+function updateChannel() {
+  var table2      = $('#pending_channel_list').DataTable();
+  var channelName = $( '#add_channel_form #channelName' ).val();
+  var channelId   = $( '#add_channel_form #channelId' ).val();
+  var channelCode = $( '#add_channel_form #channelCode' ).val();
+  if(channelName == ''){
+    toastr.error('Channel Name Cannot be empty','Error');
+    return false;
+  }
+  if(channelCode == ''){
+    toastr.error('Channel Code Cannot be empty','Error');
     return false;
   }
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  if(regionName){
-      var formdata = {csrf_test_name:csrf_hash,'regionName':regionName,'regionId':regionId};
+  if(channelName && channelCode){
+      var formdata = {csrf_test_name:csrf_hash,'channelName':channelName,'channelCode':channelCode,'channelId':channelId};
       $.ajax({
         type: "POST",
-        url: adminurl + 'regions/updateRegion',
+        url: adminurl + 'channels/updateChannel',
         data: formdata,
         beforeSend: function() { 
-            $("#editregionsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
-            $("#editregionsubmit").prop('disabled', true);
+            $("#editchannelsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#editchannelsubmit").prop('disabled', true);
         },
         success: function( data ) {
           if(data == 1){
-            $("#editregionsubmit").html('Update');
-            $("#editregionsubmit").prop('disabled', false);
-            toastr.success( 'Region Updated successfully.','Success' );
+            $("#editchannelsubmit").html('Update');
+            $("#editchannelsubmit").prop('disabled', false);
+            toastr.success( 'Channel Updated successfully.','Success' );
             table2.ajax.reload();
           }else{
             toastr.error( data,'Error' );
-            $("#editregionsubmit").html('Update');
-            $("#editregionsubmit").prop('disabled', false);
+            $("#editchannelsubmit").html('Update');
+            $("#editchannelsubmit").prop('disabled', false);
           }
         }
       });

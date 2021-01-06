@@ -69,7 +69,7 @@ function updateRegion() {
         url: adminurl + 'regions/updateRegion',
         data: formdata,
         beforeSend: function() { 
-            $("#editregionsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#editregionsubmit").html('<img src="'+adminurl+'${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
             $("#editregionsubmit").prop('disabled', true);
         },
         success: function( data ) {

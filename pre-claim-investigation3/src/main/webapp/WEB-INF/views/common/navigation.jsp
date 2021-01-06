@@ -122,7 +122,7 @@
               <ul class="sub-menu">
 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/groups/add" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/group/add_group" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Groups
                   </a>
                 </li>
@@ -149,14 +149,14 @@
               </a>
               <ul class="sub-menu">
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/channels/add" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/channel/add_channel" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Channel
                   </a>
                 </li>
                 <?php } ?>
                 <?php } ?>
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/channels/pendinglist" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/channel/pending_channel" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Channels
                   </a>
                 </li>

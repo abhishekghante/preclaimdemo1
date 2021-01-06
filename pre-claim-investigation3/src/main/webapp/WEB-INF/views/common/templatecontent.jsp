@@ -1,10 +1,10 @@
 <%@page import="com.preclaim.config.Config" %>
 <%@page import = "java.time.LocalDateTime" %>
 <%@page import = "java.time.format.DateTimeFormatter" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+<%@page import="com.preclaim.models.ScreenDetails" %>
 <%
 String W0DATE = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy hh:mm:ss a"));
-String screen_name = (String) session.getAttribute("screen_name");
+ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
 %>
 <jsp:include page="templateheader.jsp"/>
 <!-- BEGIN CONTENT -->
@@ -18,6 +18,9 @@ String screen_name = (String) session.getAttribute("screen_name");
                 <li>
                     <a href="${pageContext.request.contextPath}/dashboard">Home</a>
                     <i class="fa fa-circle"></i>
+                </li>
+                <li class="active">
+                	<%=details.getScreen_title() %>
                 </li>                
             </ul>
             <ul class="page-breadcrumb" style="margin-left: 20px;">
@@ -70,7 +73,7 @@ String screen_name = (String) session.getAttribute("screen_name");
         } ?>
         </div>
         <?php echo $content; ?>-->
-        <jsp:include page="<%=screen_name %>"/>
+        <jsp:include page="<%=details.getScreen_name() %>"/>
     </div> 
     <!-- END CONTENT BODY -->
 </div>
