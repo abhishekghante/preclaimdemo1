@@ -39,4 +39,9 @@ public class LoginController {
     	else
     		return "Invalid Username or Password";
     }
+    
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public String dashboard() {
+        return "common/dashboard";
+    }
 }

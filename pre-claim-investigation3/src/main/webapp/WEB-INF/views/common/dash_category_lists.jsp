@@ -24,16 +24,13 @@ global $permission_arr;
                         </div>
                         <div class="mt-action-buttons ">
                             <div class="btn-group btn-group-circle">
-                                <?php if( in_array( 'category/status', $permission_arr ) ) { ?>
                                 <button type="button" onClick="return updateDashCategoryStatus(<?=$pCatlist->categoryId; ?>,1);" class="btn btn-outline green btn-sm">Appove</button>
                                 <button type="button" onClick="return updateDashCategoryStatus(<?=$pCatlist->categoryId; ?>,2);" class="btn btn-outline red btn-sm">Reject</button>
-                                <?php } ?>
+                              
                             </div>
                         </div>
                     </div>
-                    <?php
-                    }
-                }else{ ?>
+                    <!-- 
                     <div class="mt-action-row">
                         <div class="mt-action-info ">
                             <div class="mt-action-details ">
@@ -41,9 +38,7 @@ global $permission_arr;
                             </div>
                         </div>
                     </div>
-                <?php
-                }
-                ?>
+                 -->
             </div>
         </div>
     </div>

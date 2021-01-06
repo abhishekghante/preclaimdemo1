@@ -1,7 +1,3 @@
-<?php 
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl  = $this->config->item( 'base_url' ); 
-?>
         <!-- END QUICK SIDEBAR -->
         </div>
         <!-- END CONTAINER -->
@@ -14,21 +10,21 @@ $assetUrl  = $this->config->item( 'base_url' );
         </div>
         <!-- END FOOTER -->
         <!-- BEGIN CORE PLUGINS -->
-        <script src="<?= $assetUrl; ?>assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
-        <script src="<?= $assetUrl; ?>assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-        <script src="<?= $assetUrl; ?>assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-        <script src="<?= $assetUrl; ?>assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-        <!--<script src="<?= $assetUrl; ?>assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>-->
-        <script src="<?= $assetUrl; ?>assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/resources/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/resources/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/resources/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+        <!--<script src="${pageContext.request.contextPath}/resources/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>-->
+        <script src="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
-        <script src="<?= $assetUrl; ?>assets/global/scripts/app.min.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/resources/global/scripts/app.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
-        <script src="<?= $assetUrl; ?>assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
-        <script src="<?= $assetUrl; ?>assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
-        <script src="<?= $assetUrl; ?>assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-        <script src="<?= $assetUrl; ?>assets/custom_js/admin_custom.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/resources/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/resources/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/resources/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/resources/custom_js/admin_custom.js" type="text/javascript"></script>
         <!-- END THEME LAYOUT SCRIPTS -->
         <script>
         $(document).ready(function(){

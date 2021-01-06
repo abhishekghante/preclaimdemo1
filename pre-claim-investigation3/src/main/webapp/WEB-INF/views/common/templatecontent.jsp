@@ -1,15 +1,6 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?>
-<?php $this->load->view( 'common/templateheader', $header ); ?>
-<?php
-$settingInfo = $this->Adminusermodel->settingInfo(1);
-if($settingInfo->system_version){
-    $version = $settingInfo->system_version;
-}else{
-    $version = VERSION;
-}
-?>
+<%@page import="com.preclaim.config.Config" %>
+<%@page import = "java.time.LocalDate" %>
+<jsp:include page="templateheader.jsp"/>
 <!-- BEGIN CONTENT -->
 <div class="page-content-wrapper">
     <!-- BEGIN CONTENT BODY -->
@@ -19,18 +10,17 @@ if($settingInfo->system_version){
         <div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>
-                    <a href="<?= base_url(); ?>dashboard">Home</a>
+                    <a href="${pageContext.request.contextPath}/dashboard">Home</a>
                     <i class="fa fa-circle"></i>
                 </li>
-                <?php echo $breadcrumb; ?>
             </ul>
             <ul class="page-breadcrumb" style="margin-left: 20px;">
-                <li><small><?= $version; ?></small></li>
+                <li><small><%=Config.version %></small></li>
             </ul>
             <div class="page-toolbar">
                 <div id="dashboard-report-range" class="pull-right tooltips btn btn-sm" data-container="body" data-placement="bottom" data-original-title="<?=date('jS M Y h:i:s A'); ?>" aria-describedby="tooltip324660">
                     <i class="icon-calendar"></i>&nbsp;
-                    <span class="thin uppercase hidden-xs"><?=date('jS M Y h:i:s A'); ?></span>&nbsp;
+                    <span class="thin uppercase hidden-xs"><%=LocalDate.now() %></span>&nbsp;
                 </div>
             </div>
         </div>
@@ -38,6 +28,7 @@ if($settingInfo->system_version){
         <!-- BEGIN PAGE TITLE-->
         <!-- END PAGE TITLE-->
         <!-- END PAGE HEADER-->
+        <!-- 
         <div class="row">
         <?php 
         if( $this->session->flashdata( 'errorMSG' ) ) { ?>
@@ -72,10 +63,10 @@ if($settingInfo->system_version){
         <?php 
         } ?>
         </div>
-        <?php echo $content; ?>
-    </div>
+        <?php echo $content; ?>-->
+    </div> 
     <!-- END CONTENT BODY -->
 </div>
 <!-- END CONTENT -->
 
-<?php $this->load->view( 'common/templatefooter', $footer ); ?>
+<jsp:include page="templatefooter.jsp"/>

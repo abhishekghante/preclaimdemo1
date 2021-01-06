@@ -1,12 +1,9 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$base_url   = $this->config->item( 'base_url' );
-global $permission_arr;
-?>
+<%@page import="com.preclaim.config.Config" %>
+<jsp:include page="templatecontent.jsp"/>
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <h3 class="page-title">Dashboard
-            <small><?= VERSION; ?></small>
+            <small><%=Config.version %></small>
         </h3>
     </div>
 
@@ -17,7 +14,7 @@ global $permission_arr;
             </div>
             <div class="details">
                 <div class="number">
-                    <span data-counter="counterup" data-value="1349"><?= $CountActiveMessages; ?></span>
+                    <span data-counter="counterup" data-value="1349">47</span>
                 </div>
                 <div class="desc"> Claim investigation </div>
             </div>
@@ -37,7 +34,7 @@ global $permission_arr;
             </div>
             <div class="details">
                 <div class="number">
-                    <span data-counter="counterup" data-value="12,5"><?= $CountPendingMessages; ?></span></div>
+                    <span data-counter="counterup" data-value="12,5">1</span></div>
                 <div class="desc"> New investigation </div>
             </div>
             <a class="more" href="javascript:;"> 
@@ -53,7 +50,7 @@ global $permission_arr;
             </div>
             <div class="details">
                 <div class="number">
-                    <span data-counter="counterup" data-value="549"><?= $countAppUser; ?></span>
+                    <span data-counter="counterup" data-value="549">2486</span>
                 </div>
                 <div class="desc"> Pending investigations </div>
             </div>
@@ -70,7 +67,7 @@ global $permission_arr;
             </div>
             <div class="details">
                 <div class="number">
-                    <span data-counter="counterup" data-value="89"><?= $CountActiveCategory; ?></span></div>
+                    <span data-counter="counterup" data-value="89">5</span></div>
                 <div class="desc"> Assigned investigation </div>
             </div>
             <a class="more" href="javascript:;"> 
@@ -89,7 +86,7 @@ global $permission_arr;
             </div>
             <div class="details">
                 <div class="number">
-                    <span data-counter="counterup" data-value="12,5"><?= $CountPendingMessages; ?></span></div>
+                    <span data-counter="counterup" data-value="12,5">1</span></div>
                 <div class="desc"> Investigation charges paid </div>
             </div>
             <a class="more" href="javascript:;"> 
@@ -107,7 +104,7 @@ global $permission_arr;
             </div>
             <div class="details">
                 <div class="number">
-                    <span data-counter="counterup" data-value="12,5"><?= $CountPendingMessages; ?></span></div>
+                    <span data-counter="counterup" data-value="12,5">1</span></div>
                 <div class="desc"> Investigation charges pending </div>
             </div>
             <a class="more" href="javascript:;"> 
@@ -120,7 +117,6 @@ global $permission_arr;
     </div>
 </div>
 <div class="row">
-<?php if( in_array( 'messages', $permission_arr ) ) { ?>
 <div class="col-md-6 col-sm-6">
     <div class="portlet light bordered">
         <div class="portlet-title tabbable-line">
@@ -139,13 +135,11 @@ global $permission_arr;
         </div>
         <div class="portlet-body">
             <div class="tab-content" id="dash_message_lists">
-                <?= $this->load->view( 'common/dash_message_lists', $msgData, true ); ?>
+                <jsp:include page="dash_message_lists.jsp"></jsp:include>
             </div>
         </div>
     </div>
 </div>
-<?php } ?>
-<?php if( in_array( 'category', $permission_arr ) ) { ?>
 <div class="col-md-6 col-sm-6">
     <div class="portlet light bordered">
         <div class="portlet-title tabbable-line">
@@ -164,12 +158,11 @@ global $permission_arr;
         </div>
         <div class="portlet-body">
             <div class="tab-content" id="dash_category_lists">
-                <?= $this->load->view( 'common/dash_category_lists', $msgData, true ); ?>
+                <jsp:include page="dash_category_lists.jsp"></jsp:include>
             </div>
         </div>
     </div>
 </div>
-<?php } ?>
 </div>
 
 <div id="testmodal" class="modal fade">
