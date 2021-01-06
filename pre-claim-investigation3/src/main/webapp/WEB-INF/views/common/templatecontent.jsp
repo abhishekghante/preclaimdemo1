@@ -1,8 +1,10 @@
 <%@page import="com.preclaim.config.Config" %>
 <%@page import = "java.time.LocalDateTime" %>
 <%@page import = "java.time.format.DateTimeFormatter" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <%
 String W0DATE = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy hh:mm:ss a"));
+String screen_name = (String) session.getAttribute("screen_name");
 %>
 <jsp:include page="templateheader.jsp"/>
 <!-- BEGIN CONTENT -->
@@ -28,7 +30,6 @@ String W0DATE = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM 
                 </div>
             </div>
         </div>
-        <jsp:include page="../app_user/app_user.jsp"></jsp:include>
         <!-- END PAGE BAR -->
         <!-- BEGIN PAGE TITLE-->
         <!-- END PAGE TITLE-->
@@ -69,6 +70,7 @@ String W0DATE = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM 
         } ?>
         </div>
         <?php echo $content; ?>-->
+        <jsp:include page="<%=screen_name %>"/>
     </div> 
     <!-- END CONTENT BODY -->
 </div>

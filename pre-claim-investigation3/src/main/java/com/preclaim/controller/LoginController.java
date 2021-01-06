@@ -2,6 +2,7 @@ package com.preclaim.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.preclaim.dao.LoginDAO;
 import com.preclaim.models.Login;
+import com.preclaim.models.ScreenDetails;
 import com.preclaim.models.UserDetails;
 
 @Controller
@@ -41,7 +43,13 @@ public class LoginController {
     }
     
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-    public String dashboard() {
-        return "common/templatecontent";
+    public String dashboard(HttpSession session) {
+    	ScreenDetails details = new ScreenDetails();
+    	details.setScreen_name("dashboard.jsp");
+    	details.setScreen_title("Dashboard");
+    	details.setUser_id("");
+    	details.setUser_name("admin");
+    	session.setAttribute("ScreenDetails", details);
+    	return "common/templatecontent";
     }
 }

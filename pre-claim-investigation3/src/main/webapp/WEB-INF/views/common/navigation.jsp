@@ -25,7 +25,7 @@
                 </a>
             </li>
             <li class="nav-item start">
-                <a href="${pageContext.request.contextPath}/appUsers" class="nav-link">
+                <a href="${pageContext.request.contextPath}/app_user/app_user" class="nav-link">
                     <i class="icon-user"></i>
                     <span class="title">App Users Management</span>
                 </a>
