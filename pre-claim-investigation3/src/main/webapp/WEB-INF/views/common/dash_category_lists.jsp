@@ -1,26 +1,18 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-global $permission_arr;
-?>
 <div class="tab-pane active" id="tab_cat_pending">
     <!-- BEGIN: Actions -->
     <div class="mt-actions">
         <div class="mt-action">
             <div class="mt-action-body">
-                <?php 
-                if($pendingCatlist){
-                    foreach ($pendingCatlist as $key => $pCatlist) {
-                    ?>
                     <div class="mt-action-row">
                         <div class="mt-action-info ">
                             <div class="mt-action-details ">
-                                <span class="mt-action-author"><?= substr($pCatlist->categoryNameEn,0,35); ?></span>
+                                <span class="mt-action-author">Group</span>
                             </div>
                         </div>
                         <div class="mt-action-datetime ">
-                            <span class="mt-action-date"><?= date('d M',strtotime($pCatlist->createdDate)); ?></span>
+                            <span class="mt-action-date"></span>
                             <span class="mt-action-dot bg-green"></span>
-                            <span class="mt=action-time"><?= date('h:i:s A',strtotime($pCatlist->createdDate)); ?> </span>
+                            <span class="mt=action-time"></span>
                         </div>
                         <div class="mt-action-buttons ">
                             <div class="btn-group btn-group-circle">
@@ -49,10 +41,6 @@ global $permission_arr;
     <div class="mt-actions">
         <div class="mt-action">
             <div class="mt-action-body">
-                <?php 
-                if($activeCatlist){
-                    foreach ($activeCatlist as $key => $aCatlist) {
-                    ?>
                     <div class="mt-action-row">
                         <div class="mt-action-info ">
                             <div class="mt-action-details ">
@@ -65,9 +53,7 @@ global $permission_arr;
                             <span class="mt=action-time"><?= date('h:i:s A',strtotime($aCatlist->createdDate)); ?></span>
                         </div>
                     </div>
-                    <?php
-                    }
-                }else{ ?>
+                    <!-- 
                     <div class="mt-action-row">
                         <div class="mt-action-info ">
                             <div class="mt-action-details ">
@@ -75,9 +61,7 @@ global $permission_arr;
                             </div>
                         </div>
                     </div>
-                <?php
-                }
-                ?>
+                 -->
             </div>
         </div>
         <!-- END: Completed -->

@@ -18,29 +18,27 @@
                 <div class="sidebar-toggler"> </div>
                 <!-- END SIDEBAR TOGGLER BUTTON -->
             </li>
-            <li class="nav-item start <?= $homeactive; ?>">
-                <a href="${pageContext.request.contextPath}//dashboard" class="nav-link">
+            <li class="nav-item start">
+                <a href="${pageContext.request.contextPath}/dashboard" class="nav-link">
                     <i class="icon-home"></i>
                     <span class="title">Dashboard</span>
                 </a>
             </li>
-            <?php if( in_array( 'appUsers', $permission_arr ) ) { ?>
-            <li class="nav-item start <?= $appuseractive; ?>">
+            <li class="nav-item start">
                 <a href="${pageContext.request.contextPath}/appUsers" class="nav-link">
                     <i class="icon-user"></i>
                     <span class="title">App Users Management</span>
                 </a>
             </li>
-            <?php } ?>
 
-            <li class="nav-item <?= $liveactive; ?>">
+            <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/liveTracking" class="nav-link">
                     <i class="icon-pointer"></i>
                     <span class="title">Live Tracking</span>
                 </a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-envelope-letter"></i>
                   <span class="title">Case Management </span>
@@ -48,33 +46,33 @@
               </a>
               <ul class="sub-menu">
                 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/messages/import" 
                   	class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Bulk case uploads
                   </a>
                 </li>
 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/messages/add" 
                   	class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Create Case
                   </a>
                 </li>
                 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/messages/pendinglist" 
                   	class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Cases
                   </a>
                 </li>
-                <li class="nav-item active">
-                  <a href="${pageContext.request.contextPath}/messages/activelist" 
+                <li class="nav-item">
+                  <a href="${pageContext.request.contextPath}/messages/list" 
                   	class="nav-link nav-toggle">
-                    <i class="icon-check"></i> Active Cases
+                    <i class="icon-check"></i>  Cases
                   </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/messages/assignedlist" 
                   	class="nav-link nav-toggle">
                     <i class="icon-check"></i> Assigned Cases
@@ -87,7 +85,7 @@
                 <h3 class="uppercase">Settings</h3>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
               <a href="${pageContext.request.contextPath}/users" class="nav-link nav-toggle">
                   <i class="icon-user"></i>
                   <span class="title">Users</span>
@@ -95,19 +93,19 @@
               </a>
               <ul class="sub-menu">
                 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/users/add" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> Add User
                   </a>
                 </li>
                 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/users" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> User Lists
                   </a>
                 </li>
                 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/users/role" class="nav-link nav-toggle">
                     <i class="icon-user-following"></i> User Role
                   </a>
@@ -115,7 +113,7 @@
               </ul>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-users"></i>
                   <span class="title">Groups</span>
@@ -123,54 +121,54 @@
               </a>
               <ul class="sub-menu">
 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/groups/add" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Groups
                   </a>
                 </li>
 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/groups/pendinglist" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Groups
                   </a>
                 </li>
 
-                <li class="nav-item active">
-                  <a href="${pageContext.request.contextPath}/groups/activelist" class="nav-link nav-toggle">
-                    <i class="icon-check"></i> Active Groups
+                <li class="nav-item">
+                  <a href="${pageContext.request.contextPath}/groups/list" class="nav-link nav-toggle">
+                    <i class="icon-check"></i>  Groups
                   </a>
                 </li>
               </ul>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-support"></i>
                   <span class="title">Channels</span>
                   <span class="arrow "></span>
               </a>
               <ul class="sub-menu">
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/channels/add" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Channel
                   </a>
                 </li>
                 <?php } ?>
                 <?php } ?>
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/channels/pendinglist" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Channels
                   </a>
                 </li>
-                <li class="nav-item active">
-                  <a href="${pageContext.request.contextPath}/channels/activelist" class="nav-link nav-toggle">
-                    <i class="icon-check"></i> Active Channels
+                <li class="nav-item">
+                  <a href="${pageContext.request.contextPath}/channels/list" class="nav-link nav-toggle">
+                    <i class="icon-check"></i>  Channels
                   </a>
                 </li>
               </ul>
             </li>
             
-            <li class="nav-item active">
+            <li class="nav-item">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-pointer"></i>
                   <span class="title">Regions</span>
@@ -178,26 +176,26 @@
               </a>
               <ul class="sub-menu">
                 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/regions/add" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Region
                   </a>
                 </li>
                 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/regions/pendinglist" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Regions
                   </a>
                 </li>
-                <li class="nav-item active">
-                  <a href="${pageContext.request.contextPath}/regions/activelist" class="nav-link nav-toggle">
-                    <i class="icon-check"></i> Active Regions
+                <li class="nav-item">
+                  <a href="${pageContext.request.contextPath}/regions/list" class="nav-link nav-toggle">
+                    <i class="icon-check"></i>  Regions
                   </a>
                 </li>
               </ul>
             </li>
             
-            <li class="nav-item active">
+            <li class="nav-item">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-grid"></i>
                   <span class="title">Type of investigations</span>
@@ -205,39 +203,39 @@
               </a>
               <ul class="sub-menu">
                 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/category/add" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> investigations
                   </a>
                 </li>
 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/category/pendinglist" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Add investigations
                   </a>
                 </li>
                 
-                <li class="nav-item active">
-                  <a href="${pageContext.request.contextPath}/category/activelist" class="nav-link nav-toggle">
-                    <i class="icon-check"></i> Active investigations
+                <li class="nav-item">
+                  <a href="${pageContext.request.contextPath}/category/list" class="nav-link nav-toggle">
+                    <i class="icon-check"></i>  investigations
                   </a>
                 </li>
               </ul>
             </li>
             
-            <li class="nav-item active">
+            <li class="nav-item">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-shuffle"></i>
                   <span class="title">Mapping</span>
                   <span class="arrow "></span>
               </a>
               <ul class="sub-menu">
-                <li class="nav-item active">
+                <li class="nav-item ">
                   <a href="${pageContext.request.contextPath}/mapping/add" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Mapping
                   </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/mapping/mappinglist" class="nav-link nav-toggle">
                     <i class="icon-list"></i> Mapping List
                   </a>
@@ -249,39 +247,39 @@
                 <h3 class="uppercase">----</h3>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-folder-alt"></i>
                   <span class="title">Report</span>
-                  <span class="arrow "></span>
+                  <span class="arrow"></span>
               </a>
               <ul class="sub-menu">
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/report/messagesStatus" class="nav-link nav-toggle">
                     <i class="icon-bar-chart"></i> All investigations 
 
                   </a>
                 </li>
 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/report/readmessages" class="nav-link nav-toggle">
                     <i class="icon-envelope-open"></i>  Assigned Investigators cases
                   </a>
                 </li>
 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/report/likemessage" class="nav-link nav-toggle">
                     <i class="icon-like"></i> Investigators matched/unmatched client
                   </a>
                 </li>
                 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/report/favouritemessage" class="nav-link nav-toggle">
                     <i class="icon-docs"></i> Billing Reports
                   </a>
                 </li>
                 
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="${pageContext.request.contextPath}/report/loginDetails" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> Export data
                   </a>

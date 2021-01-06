@@ -32,7 +32,6 @@
         <script src="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
         <!-- END THEME LAYOUT STYLES -->
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico" />
-        <script> var adminurl = "${pageContext.request.contextPath}/login"; </script>
       </head>
     <!-- END HEAD -->
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
@@ -42,7 +41,7 @@
             <div class="page-header-inner ">
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
-                    <a href="<?= base_url(); ?>dashboard">
+                    <a href="${pageContext.request.contextPath}/dashboard">
                       <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo" class="logo-default" />
                     </a>
                     <div class="menu-toggler sidebar-toggler"> </div>
@@ -65,7 +64,7 @@
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <img alt="No Image" class="img-circle" 
                                 	src="${pageContext.request.contextPath}/resources/img/avatar.png">
-                                <span class="username username-hide-on-mobile">Welcome, <?=$this->session->userdata( 'USER_NAME' );?></span>
+                                <span class="username username-hide-on-mobile">Welcome, admin</span>
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">

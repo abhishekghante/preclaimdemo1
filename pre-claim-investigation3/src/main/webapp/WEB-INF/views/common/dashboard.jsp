@@ -1,5 +1,5 @@
 <%@page import="com.preclaim.config.Config" %>
-<jsp:include page="templatecontent.jsp"/>
+
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <h3 class="page-title">Dashboard
@@ -38,7 +38,8 @@
                 <div class="desc"> New investigation </div>
             </div>
             <a class="more" href="javascript:;"> 
-                <a href="<?= base_url();?>/category/activelist" class="btn btn-info">View more</a>
+                <a href="${pageContext.request.contextPath}/category/activelist" 
+                	class="btn btn-info">View more</a>
             </a>
         </div>
     </div>
@@ -55,7 +56,7 @@
                 <div class="desc"> Pending investigations </div>
             </div>
             <a class="more" href="javascript:;"> 
-                <a href="<?= base_url();?>/category/pendinglist" class="btn btn-info">View more</a>
+                <a href="${pageContext.request.contextPath}/category/pendinglist" class="btn btn-info">View more</a>
             </a>
         </div>
     </div>

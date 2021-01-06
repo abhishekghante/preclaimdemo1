@@ -42,6 +42,6 @@ public class LoginController {
     
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String dashboard() {
-        return "common/dashboard";
+        return "common/templatecontent";
     }
 }
