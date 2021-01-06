@@ -12,8 +12,8 @@
       <!-- BEGIN GLOBAL MANDATORY STYLES -->
       <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
       <link href="${pageContext.request.contextPath}/resources/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-      <link href="${pageContext.request.contextPath}/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-      <link href="${pageContext.request.contextPath}/resources/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+      <link href="${pageContext.request.contextPath}/resources/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet">
+      <link href="${pageContext.request.contextPath}/resources/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
       <link href="${pageContext.request.contextPath}/resources/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
       <link href="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
       <!-- END GLOBAL MANDATORY STYLES -->
@@ -32,17 +32,14 @@
       <!-- END PAGE LEVEL STYLES -->
       <!-- BEGIN THEME LAYOUT STYLES -->
       <!-- END THEME LAYOUT STYLES -->
-      <script> 
-      	var adminurl = '{pageContext.request.contextPath}/login'; 
-      </script>
       <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico" />
     </head>
   <!-- END HEAD -->
-  <body class=" login">
+  <body class="login">
       <!-- BEGIN LOGO -->
       <div class="logo">
           <a href="javascript:;">
-            <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo" />
+            <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo">
           </a>
       </div>
       <!-- END LOGO -->
@@ -61,25 +58,25 @@
                   <label class="control-label visible-ie8 visible-ie9">Username</label>
                   <div class="input-icon">
                     <i class="fa fa-user"></i>
-                    <input type="text" class="form-control placeholder-no-fix" autocomplete="off" id="username" name="username" placeholder="Username" value="">
+                    <input type="text" class="form-control placeholder-no-fix" id="username" name="username" placeholder="Username">
                   </div>
               </div>
               <div class="form-group">
                   <label class="control-label visible-ie8 visible-ie9">Password</label>
                   <div class="input-icon">
                     <i class="fa fa-lock"></i>
-                    <input type="password" class="form-control placeholder-no-fix" id="password" autocomplete="off" name="password" placeholder="Password">
+                    <input type="password" class="form-control placeholder-no-fix" id="password" name="password" placeholder="Password">
                   </div>
               </div>
               <div class="form-actions">
                   <label class="checkbox">
-                    <input type="checkbox" name="remember" value="1" /> Remember me </label>
-                    <input type="button" id="login_submit" class="btn green pull-right" name="login_submit" onclick="loginValidate()" value="submit"/>
+                    <input type="checkbox" name="remember" checked> Remember me </label>
+                    <input type="button" id="login_submit" class="btn green pull-right" name="login_submit" onclick="loginValidate()" value="Login">
               </div>
               <div class="forget-password">
-                <p class="text-center"></p>
+                <p class="text-center">UAT Version 2.1</p>
               </div>
-</form>
+		</form>
           <!-- END LOGIN FORM -->
       </div>
       <!-- END LOGIN -->
@@ -108,6 +105,58 @@
       <!-- END PAGE LEVEL SCRIPTS -->
       <!-- BEGIN THEME LAYOUT SCRIPTS -->
       <!-- END THEME LAYOUT SCRIPTS -->
+  
+  <script>
+  function loginValidate() {
+	    var username = $('#username').val();
+	    var password = $('#password').val();
+	    if(username == ''){
+	        toastr.error('Username is required.','Error');
+	    }
+	    if(password == ''){
+	        toastr.error('Password is required.','Error');
+	    }
+	    if(username && password){
+	    	var formData = new FormData();
+	    	var data = {"username":username,"password":password};
+	    	formData.append("username", username);
+	    	formData.append("password",password);
+	    	console.log(formData);
+	    	console.log(data);
+	    	$.ajax({
+	    		type: "POST",
+	            url: 'login_validate.html',
+	            data: data,
+	            contentType: false, //used for multipart/form-data
+	            processData: false, //doesn't modify or encode the String
+	            cache: false, 
+	            async: false,//wait till the execution finishes
+	            beforeSend: function() { 
+	                $("#login_submit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+	                $("#login_submit").prop('disabled', true);
+	            },
+	            success : function( msg ) {
+	            	console.log(msg);
+	                $("#login_submit").html('Login');
+	                $("#login_submit").prop('disabled', false);
+	                if( msg == "****") 
+	                {
+	                	toastr.error(msg,"Success");
+	                    //window.location.href = "${pageContext.request.contextPath}/dashboard";
+	                }
+	                else
+	                {
+	                    toastr.error(msg,'Error');
+	                }
+	            }
+	        });
+	    }
+	}
+  
+  
+  </script>
+  
+  
   </body>
 
 </html>
