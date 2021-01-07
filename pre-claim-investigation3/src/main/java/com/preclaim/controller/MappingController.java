@@ -20,6 +20,7 @@ public class MappingController{
 		details.setScreen_title("");
 		details.setUser_id("");
 		details.setUser_name("admin");
+		details.setMain_menu("Groups");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 
@@ -33,6 +34,7 @@ public class MappingController{
 		details.setScreen_title("Mapping Lists");
 		details.setUser_id("");
 		details.setUser_name("admin");
+		details.setMain_menu("Groups");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}

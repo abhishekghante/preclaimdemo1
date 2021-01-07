@@ -20,9 +20,10 @@ public class AppUserController {
 		session.removeAttribute("Screen_detail");    	
 		ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../app_user/app_user.jsp");
-    	details.setScreen_title("App User Management");
+    	details.setScreen_title("<li class = \"active\">App User Lists</li>x");
     	details.setUser_id("");
     	details.setUser_name("admin");
+    	details.setMain_menu("Groups");
     	session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}

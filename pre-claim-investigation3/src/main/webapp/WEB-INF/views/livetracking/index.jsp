@@ -1,8 +1,3 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl       = $this->config->item( 'base_url' );
-$random_pass    = randomPassword();
-?>
 <style type="text/css">
 #imgAccount { display:none;}
 </style>
@@ -31,23 +26,23 @@ $random_pass    = randomPassword();
 <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
 <script type="text/javascript">
   var locations = [
-    ['<a href="'+adminurl+'messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.213294, 72.969636, 17],
-    ['<a href="'+adminurl+'messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.322390, 73.049720, 16],
-    ['<a href="'+adminurl+'messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.047799, 73.015760, 15],
-    ['<a href="'+adminurl+'messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.071675, 72.998091, 14],
-    ['<a href="'+adminurl+'messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 18.557052, 73.806058, 13],
-    ['<a href="'+adminurl+'messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 18.512867, 73.895197, 12],
-    ['<a href="'+adminurl+'messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.224475, 73.097742, 11],
-    ['<a href="'+adminurl+'messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.233373, 73.145929, 10],
-    ['<a href="'+adminurl+'messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.317462, 73.073492, 9],
-    ['<a href="'+adminurl+'messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.247312, 72.982981, 8],
-    ['<a href="'+adminurl+'messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.256622, 72.972612, 7],
-    ['<a href="'+adminurl+'messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.130165, 72.877781, 6],
-    ['<a href="'+adminurl+'messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.056038, 72.888566, 5],
-    ['<a href="'+adminurl+'messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.117959, 72.931643, 4],
-    ['<a href="'+adminurl+'messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.051644, 72.897039, 3],
-    ['<a href="'+adminurl+'messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.130736, 72.853587, 2],
-    ['<a href="'+adminurl+'messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.205124, 72.831257, 1]
+    ['<a href="${pageContext.request.contextPath}/messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.213294, 72.969636, 17],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.322390, 73.049720, 16],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.047799, 73.015760, 15],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.071675, 72.998091, 14],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 18.557052, 73.806058, 13],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 18.512867, 73.895197, 12],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.224475, 73.097742, 11],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.233373, 73.145929, 10],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.317462, 73.073492, 9],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.247312, 72.982981, 8],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.256622, 72.972612, 7],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.130165, 72.877781, 6],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.056038, 72.888566, 5],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist" title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.117959, 72.931643, 4],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.051644, 72.897039, 3],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.130736, 72.853587, 2],
+    ['<a href="${pageContext.request.contextPath}/messages/activelist"  title="View All Cases" class="btn red-haze btn-outline btn-xs">View All Cases</a>', 19.205124, 72.831257, 1]
   ];
 
   var map = new google.maps.Map(document.getElementById('map'), {

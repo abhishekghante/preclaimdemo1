@@ -33,7 +33,7 @@ public class LoginController {
     	String username = request.getParameter("username");
     	String password = request.getParameter("password");
     	Login login = new Login(username, password);
-    	System.out.println(login.getPassword()+password);
+    	System.out.println(login.toString());
     	UserDetails user = dao.validateUser(login);
     	if(user != null)
     		return "****";
@@ -48,6 +48,7 @@ public class LoginController {
     	details.setScreen_title("Dashboard");
     	details.setUser_id("");
     	details.setUser_name("admin");
+    	details.setMain_menu("Groups");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }

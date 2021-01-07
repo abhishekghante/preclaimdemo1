@@ -20,6 +20,7 @@ public class GroupController {
     	details.setScreen_title("Add Group");
     	details.setUser_id("");
     	details.setUser_name("admin");
+    	details.setMain_menu("Groups");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -32,6 +33,7 @@ public class GroupController {
     	details.setScreen_title("Groups Lists");
     	details.setUser_id("");
     	details.setUser_name("admin");
+    	details.setMain_menu("Groups");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -44,6 +46,7 @@ public class GroupController {
     	details.setScreen_title("Active Group");
     	details.setUser_id("");
     	details.setUser_name("admin");
+    	details.setMain_menu("Groups");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }

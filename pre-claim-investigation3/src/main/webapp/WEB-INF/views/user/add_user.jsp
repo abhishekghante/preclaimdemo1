@@ -82,7 +82,7 @@ $random_pass    = randomPassword();
               <div class="form-group">
                 <label class="col-md-4 control-label" for="password">Password <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" value="<?php echo $random_pass; ?>" maxlength="15" placeholder="Password" id="password" class="allow_password form-control" name="password">
+                  <input type="text" required maxlength="15" placeholder="Password" id="password" class="allow_password form-control" name="password">
                 </div>
               </div>
               <div class="form-group level_div">

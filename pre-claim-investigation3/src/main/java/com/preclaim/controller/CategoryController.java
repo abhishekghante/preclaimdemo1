@@ -20,6 +20,7 @@ public class CategoryController {
 	    	details.setScreen_title("Add Category");
 	    	details.setUser_id("");
 	    	details.setUser_name("admin");
+	    	details.setMain_menu("Groups");
 	    	session.setAttribute("ScreenDetails", details);
 	    	return "common/templatecontent";
 	    }
@@ -33,6 +34,7 @@ public class CategoryController {
 	    	details.setScreen_title("Category Lists");
 	    	details.setUser_id("");
 	    	details.setUser_name("admin");
+	    	details.setMain_menu("Groups");
 	    	session.setAttribute("ScreenDetails", details);
 	    	return "common/templatecontent";
 	    }
@@ -44,6 +46,7 @@ public class CategoryController {
 	    	details.setScreen_title("Category Lists");
 	    	details.setUser_id("");
 	    	details.setUser_name("admin");
+	    	details.setMain_menu("Groups");
 	    	session.setAttribute("ScreenDetails", details);
 	    	return "common/templatecontent";
 	    }

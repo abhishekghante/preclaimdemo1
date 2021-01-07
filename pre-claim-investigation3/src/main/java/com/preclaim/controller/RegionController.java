@@ -19,6 +19,7 @@ public class RegionController{
 		details.setScreen_title("Add Region");
 		details.setUser_id("");
 		details.setUser_name("admin");
+		details.setMain_menu("Groups");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}
@@ -31,6 +32,7 @@ public class RegionController{
 		details.setScreen_title("Pending Region");
 		details.setUser_id("");
 		details.setUser_name("admin");
+		details.setMain_menu("Groups");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}
@@ -42,6 +44,7 @@ public class RegionController{
 		details.setScreen_title("Active Region");
 		details.setUser_id("");
 		details.setUser_name("admin");
+		details.setMain_menu("Groups");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}

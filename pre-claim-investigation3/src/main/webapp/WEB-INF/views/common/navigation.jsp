@@ -1,3 +1,7 @@
+<%@page import="com.preclaim.models.ScreenDetails" %>
+<%
+ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
+%>
 <!-- BEGIN SIDEBAR -->
 <div class="page-sidebar-wrapper">
     <!-- BEGIN SIDEBAR -->
@@ -32,7 +36,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/liveTracking" class="nav-link">
+                <a href="${pageContext.request.contextPath}/livetracking/index" class="nav-link">
                     <i class="icon-pointer"></i>
                     <span class="title">Live Tracking</span>
                 </a>
@@ -106,14 +110,14 @@
                 </li>
                 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/users/role" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/user/role" class="nav-link nav-toggle">
                     <i class="icon-user-following"></i> User Role
                   </a>
                 </li>
               </ul>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item <%if(details.getMain_menu().equals("Groups")){%>active open<%}%>">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-users"></i>
                   <span class="title">Groups</span>

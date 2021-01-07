@@ -31,7 +31,7 @@ public class LoginDAOImpl implements LoginDAO {
 		Base64.Encoder encoder = Base64.getEncoder();    
 		String password = encoder.encodeToString(login.getPassword().getBytes());  
 		System.out.println("Login password: "+ password);
-		String sql = "select * from admin_user where username = '" + login.getUsername() + "'"; 
+		String sql = "select * from admin_user where username = '" + login.getUsername() + "' and password= password ";
 		List<UserDetails> user_list = template.query(sql,new UserMapper());
       
 		return user_list.size() > 0 ? user_list.get(0) : null ;

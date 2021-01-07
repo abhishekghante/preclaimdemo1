@@ -19,9 +19,7 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                     <a href="${pageContext.request.contextPath}/dashboard">Home</a>
                     <i class="fa fa-circle"></i>
                 </li>
-                <li class="active">
-                	<%=details.getScreen_title() %>
-                </li>                
+                	<%=details.getScreen_title() %>                
             </ul>
             <ul class="page-breadcrumb" style="margin-left: 20px;">
                 <li><small><%=Config.version %></small></li>
