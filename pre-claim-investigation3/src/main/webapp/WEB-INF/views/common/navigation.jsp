@@ -47,7 +47,7 @@
               <ul class="sub-menu">
                 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/messages/import" 
+                  <a href="${pageContext.request.contextPath}/message/import_case" 
                   	class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Bulk case uploads
                   </a>
@@ -128,13 +128,13 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/groups/pendinglist" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/group/pending_group" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Groups
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/groups/list" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/group/active_group" class="nav-link nav-toggle">
                     <i class="icon-check"></i>  Groups
                   </a>
                 </li>
@@ -161,7 +161,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/channels/list" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/channel/active_channel" class="nav-link nav-toggle">
                     <i class="icon-check"></i>  Channels
                   </a>
                 </li>
@@ -177,18 +177,18 @@
               <ul class="sub-menu">
                 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/regions/add" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/region/add_region" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Region
                   </a>
                 </li>
                 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/regions/pendinglist" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/region/pending_region" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Regions
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/regions/list" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/region/active_region" class="nav-link nav-toggle">
                     <i class="icon-check"></i>  Regions
                   </a>
                 </li>
@@ -231,12 +231,12 @@
               </a>
               <ul class="sub-menu">
                 <li class="nav-item ">
-                  <a href="${pageContext.request.contextPath}/mapping/add" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/mapping/add_mapping" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Mapping
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/mapping/mappinglist" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/mapping/mapping_list" class="nav-link nav-toggle">
                     <i class="icon-list"></i> Mapping List
                   </a>
                 </li>

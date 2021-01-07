@@ -27,13 +27,13 @@
                 <label class="col-md-4 control-label" for="msgChannel">Select Channel <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <select name="msgChannel[]" id="msgChannel" multiple class="form-control select2" tabindex="-1">
-                    <?php 
+                 <!--   <?php 
                     if($channelLists){
                       foreach ($channelLists as $channelInfo) {
                         ?><option value="<?php echo $channelInfo->channelId; ?>"><?php echo $channelInfo->channelName; ?> (<?php echo $channelInfo->channelCode; ?>)</option><?php
                       }
                     }
-                    ?>
+                    ?> --> 
                   </select>
                 </div>
               </div>
@@ -43,13 +43,13 @@
                 <label class="col-md-4 control-label" for="msgCategory">Select Investigations <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <select name="msgCategory[]" id="msgCategory" multiple class="form-control select2" tabindex="-1">
-                    <?php 
+                 <!--    <?php 
                     if($categoryLists){
                       foreach ($categoryLists as $categoryInfo) {
                         ?><option value="<?php echo $categoryInfo->categoryId; ?>"><?php echo $categoryInfo->categoryNameEn; ?></option><?php
                       }
                     }
-                    ?>
+                    ?> -->
                   </select>
                 </div>
               </div>

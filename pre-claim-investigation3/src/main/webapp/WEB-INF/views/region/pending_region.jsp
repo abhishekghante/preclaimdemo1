@@ -12,14 +12,14 @@ if($regionInfo){
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<?php if( in_array( 'regions/add', $permission_arr ) ) { ?>
+<!-- <?php if( in_array( 'regions/add', $permission_arr ) ) { ?> -->
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
       <div class="portlet-title">
         <div class="caption">
           <i class="icon-users font-green-sharp"></i>
-          <span class="caption-subject font-green-sharp sbold"><?= (($regionId)?'Update':'Add'); ?> Region</span>
+          <span class="caption-subject font-green-sharp sbold"><!-- <?= (($regionId)?'Update':'Add'); ?> --> Region</span>
         </div>
       </div>
     </div>
@@ -118,7 +118,7 @@ $(document).ready(function() {
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
   table = $('#pending_region_list').DataTable({
       language: {
-        processing: "<img src='${pageContext.request.contextPath}/img/loading.gif'>",
+        processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
       },
       "processing": true, //Feature control the processing indicator.
       "serverSide": true, //Feature control DataTables' server-side processing mode.

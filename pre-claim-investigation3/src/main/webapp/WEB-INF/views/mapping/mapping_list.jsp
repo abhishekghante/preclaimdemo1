@@ -1,13 +1,13 @@
-<?php
+<!-- <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $assetUrl   = $this->config->item( 'base_url' );
 global $permission_arr;
-?>
-<link href="${pageContext.request.contextPath}/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
-<script src="${pageContext.request.contextPath}/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<?php if( in_array( 'mapping/add', $permission_arr ) ) { ?>
+?> -->
+<link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+<!-- <?php if( in_array( 'mapping/add', $permission_arr ) ) { ?>  -->
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
@@ -28,13 +28,13 @@ global $permission_arr;
                 <label class="col-md-4 control-label" for="msgChannel">Select Channel <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <select name="msgChannel[]" id="msgChannel" multiple class="form-control select2" tabindex="-1">
-                    <?php 
+                   <!--  <?php 
                     if($channelLists){
                       foreach ($channelLists as $channelInfo) {
                         ?><option value="<?php echo $channelInfo->channelId; ?>"><?php echo $channelInfo->channelName; ?> (<?php echo $channelInfo->channelCode; ?>)</option><?php
                       }
                     }
-                    ?>
+                    ?> -->
                   </select>
                 </div>
               </div>
@@ -44,13 +44,13 @@ global $permission_arr;
                 <label class="col-md-4 control-label" for="msgCategory">Select Investigations <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <select name="msgCategory[]" id="msgCategory" multiple class="form-control select2" tabindex="-1">
-                    <?php 
+                    <!-- <?php 
                     if($categoryLists){
                       foreach ($categoryLists as $categoryInfo) {
                         ?><option value="<?php echo $categoryInfo->categoryId; ?>"><?php echo $categoryInfo->categoryNameEn; ?></option><?php
                       }
                     }
-                    ?>
+                    ?> -->
                   </select>
                 </div>
               </div>
@@ -69,7 +69,7 @@ global $permission_arr;
     </div>
   </div>
 </div>
-<?php } ?>
+<!-- <?php } ?> -->
 <div class="row">
   <div class="col-xs-12 col-sm-12">
     <div class="portlet box">
@@ -80,13 +80,13 @@ global $permission_arr;
         </div>
         <div class="actions">
             <div class="btn-group">
-              <?php if( in_array( 'mapping/add', $permission_arr ) ) { ?>
-              <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>
+              <!-- <?php if( in_array( 'mapping/add', $permission_arr ) ) { ?>
+              <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?> -->
               <a href="<?php echo base_url(); ?>mapping/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
-              <?php } ?>
-              <?php } ?>
+              <!-- <?php } ?>
+              <?php } ?>  -->
             </div>
         </div>
       </div>
@@ -133,7 +133,7 @@ $(document).ready(function() {
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
   table = $('#mapping_list').DataTable({
       language: {
-        processing: "<img src='<?php echo base_url();?>assets/img/loading.gif'>",
+        processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
       },
       "processing": true, //Feature control the processing indicator.
       "serverSide": true, //Feature control DataTables' server-side processing mode.

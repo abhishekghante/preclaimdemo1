@@ -1,8 +1,8 @@
-<?php
+<!-- <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $assetUrl       = $this->config->item( 'base_url' );
 $random_pass    = randomPassword();
-?>
+?> -->
 <style type="text/css">
 #imgAccount { display:none;}
 </style>
@@ -46,9 +46,9 @@ $random_pass    = randomPassword();
         <div class="row">
           <div class="col-md-12">
 
-            <?php echo form_open_multipart( site_url('appUsers/importData'), 'id="import_user_form" class="form-horizontal" role="form"' ); ?>
+      <!--       <?php echo form_open_multipart( site_url('appUsers/importData'), 'id="import_user_form" class="form-horizontal" role="form"' ); ?> -->
               <div class="form-group">
-                <label class="col-md-4 padding-left-0 col-xs-4 control-label">Import Data</label>
+                <label class="col-md-4 padding-left-5 col-xs-4 control-label">Import Data</label>
                 <div class="col-md-6 padding-left-0 col-xs-6">
                   <input type="file" name="userfile" required="" id="userfile" class="form-control">
                   <note>Please uploads xls file only</note>
@@ -60,7 +60,7 @@ $random_pass    = randomPassword();
                   <div><a style="display: inline-block;" href="../uploads/sample_user.xls">Click to download sample "Excel" file</a></div>
                 </div>
               </div>
-            <?php echo form_close(); ?>
+            <!-- <?php echo form_close(); ?> -->
           </div>
         </div>
       </div>
