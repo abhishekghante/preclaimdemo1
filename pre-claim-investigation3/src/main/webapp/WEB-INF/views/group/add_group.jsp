@@ -12,7 +12,7 @@ $assetUrl  = $this->config->item( 'base_url' );
         </div>
         <div class="actions">
           <div class="btn-group">
-            <a href="<?= base_url(); ?>groups/pendinglist" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
+            <a href="${pageContext.request.contextPath}/group/pending_group" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
               <i class="fa fa-reply"></i>
             </a>
           </div>

@@ -19,7 +19,7 @@ global $permission_arr;
             <div class="btn-group">
       <!--  <?php if( in_array( 'regions/add', $permission_arr ) ) { ?>
               <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>  -->        
-              <a href="<?php echo base_url(); ?>regions/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/region/add_region" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
             <!--   <?php } ?>
@@ -67,6 +67,7 @@ global $permission_arr;
 $(document).ready(function() {
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+  /*
   table = $('#active_region_list').DataTable({
       language: {
         processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
@@ -95,6 +96,7 @@ $(document).ready(function() {
       } ],
       buttons: []
   });
+  */
   var i = 0;
   $('#active_region_list tfoot th').each( function () {
     if( i == 1 ){

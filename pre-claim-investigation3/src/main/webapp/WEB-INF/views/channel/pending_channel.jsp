@@ -34,7 +34,7 @@
                 <div class="col-md-offset-4 col-md-8">
                     <input type="hidden" id="channelId" name="channelId">
                     <button class="btn btn-info" id="editchannelsubmit" onClick="return updateChannel();" type="button">Update</button>
-                    <a href="${pageContext.request.contextPath}channels/pendinglist" class="btn btn-danger" value="">Back</a>
+                    <a href="${pageContext.request.contextPath}/channel/pending_channel" class="btn btn-danger" value="">Back</a>
                     <button class="btn btn-info" id="addchannelsubmit" onClick="return addChannel();" type="button">Add Channel</button>
                     <button class="btn btn-danger" type="reset" value="">Clear</button>
                 </div>
@@ -57,7 +57,7 @@
         </div>
         <div class="actions">
             <div class="btn-group">
-              <a href="<?php echo base_url(); ?>channels/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/channel/add_channel" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
             </div>

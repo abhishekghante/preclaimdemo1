@@ -34,7 +34,7 @@ public class RegionController{
 		details.setUser_id("");
 		details.setUser_name("admin");
 		details.setMain_menu("Regions");
-		details.setSub_menu("");
+		details.setSub_menu("Pending Regions");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}

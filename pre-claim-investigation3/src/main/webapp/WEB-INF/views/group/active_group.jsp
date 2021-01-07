@@ -12,7 +12,7 @@
         </div>
         <div class="actions">
             <div class="btn-group">
-              <a href="<?php echo base_url(); ?>groups/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/group/add_group" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
             </div>

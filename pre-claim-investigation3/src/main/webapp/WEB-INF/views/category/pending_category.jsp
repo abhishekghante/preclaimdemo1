@@ -124,7 +124,7 @@ if($categoryInfo){
                   if($categoryId){ ?>-->
                     <input type="hidden" value="<?= $categoryId; ?>" id="categoryId" name="categoryId">
                     <button class="btn btn-info" id="editcategorysubmit" type="submit">Update</button>
-                    <a href="${pageContext.request.contextPath}/category/pendinglist" class="btn btn-danger" value="">Back</a>
+                    <a href="${pageContext.request.contextPath}/category/pending_category" class="btn btn-danger" value="">Back</a>
                   <!-- <?php }else{ ?>  -->
                     <input type="hidden" id="categoryId" name="categoryId">
                     <button class="btn btn-info" id="addcategorysubmit" type="submit">Add Category</button>
@@ -152,7 +152,7 @@ if($categoryInfo){
             <div class="btn-group">
              <!--  <?php if( in_array( 'category/add', $permission_arr ) ) { ?>
               <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>  -->
-              <a href="${pageContext.request.contextPath}/category/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/category/add_category" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
              <!--  <?php } ?>

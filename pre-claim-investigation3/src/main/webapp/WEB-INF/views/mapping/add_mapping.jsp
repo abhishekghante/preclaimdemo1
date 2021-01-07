@@ -8,7 +8,7 @@
         </div>
         <div class="actions">
           <div class="btn-group">
-            <a href="${pagecontext.request.contextPath}/mapping/mappinglist" data-toggle="tooltip" 
+            <a href="${pageContext.request.contextPath}/mapping/mapping_list" data-toggle="tooltip" 
             	title="Back" class="btn green-haze btn-outline btn-xs pull-right" style="margin-right: 5px;" data-original-title="Back">
               <i class="fa fa-reply"></i>
             </a>

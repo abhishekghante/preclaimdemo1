@@ -30,7 +30,7 @@
                   if($regionId){ ?>  -->
                     <input type="hidden" id="regionId" name="regionId">
                     <button class="btn btn-info" id="editregionsubmit" onClick="return updateRegion();" type="button">Update</button>
-                    <a href="${pageContext.request.contextPath}/regions/pendinglist" class="btn btn-danger" value="">Back</a>
+                    <a href="${pageContext.request.contextPath}/region/pending_region" class="btn btn-danger" value="">Back</a>
                   <!-- <?php }else{ ?>  -->
                     <button class="btn btn-info" id="addregionsubmit" onClick="return addRegion();" type="button">Add Region</button>
                     <button class="btn btn-danger" type="reset" value="">Clear</button>
@@ -55,7 +55,7 @@
         </div>
         <div class="actions">
             <div class="btn-group">
-              <a href="${pageContext.request.contextPath}/regions/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/region/add_region" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
               <!-- <?php } ?>

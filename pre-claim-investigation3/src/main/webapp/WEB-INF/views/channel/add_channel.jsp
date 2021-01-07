@@ -12,7 +12,7 @@ $assetUrl  = $this->config->item( 'base_url' );
         </div>
         <div class="actions">
           <div class="btn-group">
-            <a href="<?php echo base_url(); ?>channels/pendinglist" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
+            <a href="${pageContext.request.contextPath}/channel/pending_channel" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
               <i class="fa fa-reply"></i>
             </a>
           </div>
@@ -73,7 +73,7 @@ function addChannel() {
         url: adminurl + 'channels/addChannel',
         data: formdata,
         beforeSend: function() { 
-            $("#addchannelsubmit").html('<img src="'+adminurl+'${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+            $("#addchannelsubmit").html('<img src="'${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
             $("#addchannelsubmit").prop('disabled', true);
         },
         success: function( data ) {

@@ -30,7 +30,7 @@
                   if($groupId){ ?>  -->
                     <input type="hidden" value="<?= $groupId; ?>" id="groupId" name="groupId">
                     <button class="btn btn-info" id="editgroupsubmit" onClick="return updateGroup();" type="button">Update</button>
-                    <a href="${pageContext.request.contextPath}/groups/pendinglist" class="btn btn-danger" value="">Back</a>
+                    <a href="${pageContext.request.contextPath}/groups/pending_group" class="btn btn-danger" value="">Back</a>
                  <!-- <?php }else{ ?> -->
                     <button class="btn btn-info" id="addgroupsubmit" onClick="return addGroup();" type="button">Add Group</button>
                     <button class="btn btn-danger" type="reset" value="">Clear</button>
@@ -57,7 +57,7 @@
             <div class="btn-group">
               <?php if( in_array( 'groups/add', $permission_arr ) ) { ?>
               <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>
-              <a href="<?php echo base_url(); ?>groups/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/group/add_group" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
               <?php } ?>
