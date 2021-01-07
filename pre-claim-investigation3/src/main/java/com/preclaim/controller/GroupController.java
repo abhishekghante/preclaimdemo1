@@ -13,7 +13,7 @@ import com.preclaim.models.ScreenDetails;
 public class GroupController {
 
     @RequestMapping(value = "/add_group", method = RequestMethod.GET)
-    public String dashboard(HttpSession session) {
+    public String add_group(HttpSession session) {
     	session.removeAttribute("ScreenDetails");
     	ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../group/add_group.jsp");
@@ -21,6 +21,7 @@ public class GroupController {
     	details.setUser_id("");
     	details.setUser_name("admin");
     	details.setMain_menu("Groups");
+    	details.setSub_menu("Add Groups");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -34,6 +35,7 @@ public class GroupController {
     	details.setUser_id("");
     	details.setUser_name("admin");
     	details.setMain_menu("Groups");
+    	details.setSub_menu("Pending Groups");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -47,6 +49,7 @@ public class GroupController {
     	details.setUser_id("");
     	details.setUser_name("admin");
     	details.setMain_menu("Groups");
+    	details.setSub_menu("Active Groups");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }

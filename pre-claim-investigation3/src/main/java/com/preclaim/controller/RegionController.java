@@ -13,13 +13,14 @@ public class RegionController{
 
 	@RequestMapping(value = "/add_region",method = RequestMethod.GET)
 	public String add_region(HttpSession session) {
-		session.removeAttribute("Screen_details");
+		session.removeAttribute("ScreenDetails");
 		ScreenDetails details=new ScreenDetails();
 		details.setScreen_name("../region/add_region.jsp");
 		details.setScreen_title("Add Region");
 		details.setUser_id("");
 		details.setUser_name("admin");
-		details.setMain_menu("Groups");
+		details.setMain_menu("Regions");
+		details.setSub_menu("Add Region");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}
@@ -32,7 +33,8 @@ public class RegionController{
 		details.setScreen_title("Pending Region");
 		details.setUser_id("");
 		details.setUser_name("admin");
-		details.setMain_menu("Groups");
+		details.setMain_menu("Regions");
+		details.setSub_menu("");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}
@@ -44,7 +46,8 @@ public class RegionController{
 		details.setScreen_title("Active Region");
 		details.setUser_id("");
 		details.setUser_name("admin");
-		details.setMain_menu("Groups");
+		details.setMain_menu("Regions");
+		details.setSub_menu("Active Regions");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}

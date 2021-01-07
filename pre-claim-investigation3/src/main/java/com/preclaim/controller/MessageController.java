@@ -25,7 +25,8 @@ public class MessageController {
 				+ "<li class=\"active\"><span>Import User</span></li>");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Case Management");
+    	details.setSub_menu("Bulk case uploads");
     	session.setAttribute("ScreenDetails", details);
         return "common/templatecontent";
     }
@@ -41,7 +42,8 @@ public class MessageController {
     					+ "<li class=\"active\"><span>Add Cases</span></li>");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Case Management");
+    	details.setSub_menu("Create Case");
     	session.setAttribute("ScreenDetails", details);
         return "common/templatecontent";
     }
@@ -54,7 +56,8 @@ public class MessageController {
     	details.setScreen_title("<li class = \"active\">Pending Cases Lists</li>");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Case Management");
+    	details.setSub_menu("Pending Cases");
     	session.setAttribute("ScreenDetails", details);
         return "common/templatecontent";
     }
@@ -67,7 +70,8 @@ public class MessageController {
     	details.setScreen_title("<li class = \"active\">Active Cases Lists</li>");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Case Management");
+    	details.setSub_menu("Active  Cases");
     	session.setAttribute("ScreenDetails", details);
         return "common/templatecontent";
     }
@@ -80,7 +84,8 @@ public class MessageController {
     	details.setScreen_title("<li class = \"active\">Assigned Cases Lists</li>");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Case Management");
+    	details.setSub_menu("Assigned Cases");
     	session.setAttribute("ScreenDetails", details);
         return "common/templatecontent";
     }

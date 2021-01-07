@@ -15,15 +15,16 @@ public class AppUserController {
 
 	
 	@RequestMapping(value = "/app_user")
-	public String appuser(HttpSession session)
+	public String app_user(HttpSession session)
 	{
-		session.removeAttribute("Screen_detail");    	
+		session.removeAttribute("ScreenDetails");    	
 		ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../app_user/app_user.jsp");
     	details.setScreen_title("<li class = \"active\">App User Lists</li>x");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("App Users Management");
+    	details.setSub_menu("");
     	session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}

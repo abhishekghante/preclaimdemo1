@@ -13,7 +13,7 @@ import com.preclaim.models.ScreenDetails;
 public class UserController {
 
 	@RequestMapping(value = "/add_user", method = RequestMethod.GET)
-	public String appuser(HttpSession session)
+	public String add_user(HttpSession session)
 	{
 		session.removeAttribute("ScreenDetails");    	
 		ScreenDetails details = new ScreenDetails();
@@ -21,13 +21,14 @@ public class UserController {
     	details.setScreen_title("Manage User");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Users");
+    	details.setSub_menu("Add User");
     	session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}
 	
 	@RequestMapping(value = "/role", method = RequestMethod.GET)
-	public String edit(HttpSession session)
+	public String role(HttpSession session)
 	{
 		session.removeAttribute("ScreenDetails");    	
 		ScreenDetails details = new ScreenDetails();
@@ -35,7 +36,8 @@ public class UserController {
     	details.setScreen_title("Role lists");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Users");
+    	details.setSub_menu("User Role");
     	session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}

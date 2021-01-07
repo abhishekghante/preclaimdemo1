@@ -20,7 +20,8 @@ public class CategoryController {
 	    	details.setScreen_title("Add Category");
 	    	details.setUser_id("");
 	    	details.setUser_name("admin");
-	    	details.setMain_menu("Groups");
+	    	details.setMain_menu("Type of Investigations");
+	    	details.setSub_menu("Add Investigation");
 	    	session.setAttribute("ScreenDetails", details);
 	    	return "common/templatecontent";
 	    }
@@ -34,7 +35,8 @@ public class CategoryController {
 	    	details.setScreen_title("Category Lists");
 	    	details.setUser_id("");
 	    	details.setUser_name("admin");
-	    	details.setMain_menu("Groups");
+	    	details.setMain_menu("Type of Investigations");
+	    	details.setSub_menu("Pending Investigations");
 	    	session.setAttribute("ScreenDetails", details);
 	    	return "common/templatecontent";
 	    }
@@ -46,7 +48,8 @@ public class CategoryController {
 	    	details.setScreen_title("Category Lists");
 	    	details.setUser_id("");
 	    	details.setUser_name("admin");
-	    	details.setMain_menu("Groups");
+	    	details.setMain_menu("Type of Investigations");
+	    	details.setSub_menu("Active investigations");
 	    	session.setAttribute("ScreenDetails", details);
 	    	return "common/templatecontent";
 	    }

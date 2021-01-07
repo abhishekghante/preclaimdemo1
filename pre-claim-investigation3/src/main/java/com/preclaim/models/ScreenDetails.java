@@ -9,6 +9,16 @@ public class ScreenDetails {
 	private String main_menu;
 	private String sub_menu;
 	
+	public ScreenDetails()
+	{
+		this.screen_name = "";
+		this.screen_title = "";
+		this.user_id = "";
+		this.user_name = "";
+		this.main_menu = "";
+		this.sub_menu = "";
+	}
+	
 	public String getScreen_name() {
 		return screen_name;
 	}

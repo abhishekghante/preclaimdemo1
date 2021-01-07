@@ -29,7 +29,6 @@ public class LoginController {
     @RequestMapping(value = "/login_validate", method = RequestMethod.POST)
     public @ResponseBody String login_validate(HttpServletRequest request, HttpServletResponse response)
     {
-    	System.out.println("Entered");
     	String username = request.getParameter("username");
     	String password = request.getParameter("password");
     	Login login = new Login(username, password);
@@ -48,7 +47,7 @@ public class LoginController {
     	details.setScreen_title("Dashboard");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Dashboard");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }

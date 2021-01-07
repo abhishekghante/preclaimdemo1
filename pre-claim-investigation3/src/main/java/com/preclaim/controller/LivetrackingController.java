@@ -20,7 +20,7 @@ public class LivetrackingController {
     	details.setScreen_title("App User Management");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Live Tracking");
     	session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
     }    

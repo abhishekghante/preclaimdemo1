@@ -21,7 +21,8 @@ public class ReportController {
     	details.setScreen_title("Cases Status Lists");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Report");
+    	details.setSub_menu("All investigations");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -34,7 +35,8 @@ public class ReportController {
     	details.setScreen_title("Cases Status Lists");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Report");
+    	details.setSub_menu("Assigned Investigators cases");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -47,7 +49,8 @@ public class ReportController {
     	details.setScreen_title("Like Cases Lists");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Report");
+    	details.setSub_menu("Investigators matched/unmatched client");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -60,7 +63,8 @@ public class ReportController {
     	details.setScreen_title("Favourite Cases Lists");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Report");
+    	details.setSub_menu("");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -72,7 +76,8 @@ public class ReportController {
     	details.setScreen_title("Login Details");
     	details.setUser_id("");
     	details.setUser_name("admin");
-    	details.setMain_menu("Groups");
+    	details.setMain_menu("Report");
+    	details.setSub_menu("");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }

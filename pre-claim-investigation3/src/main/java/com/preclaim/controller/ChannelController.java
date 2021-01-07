@@ -19,7 +19,8 @@ public class ChannelController {
 	    	details.setScreen_title("Add Channel");
 	    	details.setUser_id("");
 	    	details.setUser_name("admin");
-	    	details.setMain_menu("Groups");
+	    	details.setMain_menu("Channels");
+	    	details.setSub_menu("Add Channel");
 	    	session.setAttribute("ScreenDetails", details);
 	    	return "common/templatecontent";
 	    }
@@ -32,7 +33,8 @@ public class ChannelController {
 		   details.setScreen_title("Pending Channels");
 		   details.setUser_id("");
 		   details.setUser_name("admin");
-		   details.setMain_menu("Groups");
+		   details.setMain_menu("Channels");
+		   details.setSub_menu("Pending Channels");
 		   session.setAttribute("ScreenDetails", details);
 		   return "common/templatecontent";
 		   
@@ -46,7 +48,8 @@ public class ChannelController {
 		 details.setScreen_title("Active Channels");
 		 details.setUser_id("");
 		 details.setUser_name("admin");
-		 details.setMain_menu("Groups");
+		 details.setMain_menu("Channels");
+		 details.setSub_menu("Active Channels");
 		 session.setAttribute("ScreenDetails", details);
 		 return "common/templatecontent";
 	 }
