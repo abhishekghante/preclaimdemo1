@@ -71,7 +71,7 @@
               <div class="form-actions">
                   <label class="checkbox">
                     <input type="checkbox" name="remember" checked> Remember me </label>
-                    <input type="button" id="login_submit" class="btn green pull-right" name="login_submit" onclick="loginValidate()" value="Login">
+                    <button type="button" id="login_submit" class="btn green pull-right" name="login_submit" onclick="loginValidate()">Login</button>
               </div>
               <div class="forget-password">
                 <p class="text-center">UAT Version 2.1</p>
@@ -117,32 +117,18 @@
 	        toastr.error('Password is required.','Error');
 	    }
 	    if(username && password){
-	    	var formData = new FormData();
-	    	var data = {"username":username,"password":password};
-	    	formData.append("username", username);
-	    	formData.append("password",password);
-	    	console.log(formData);
-	    	console.log(data);
+	    	var formdata = {"username":username,"password":password};
 	    	$.ajax({
 	    		type: "POST",
-	            url: 'login_validate.html',
-	            data: data,
-	            contentType: false, //used for multipart/form-data
-	            processData: false, //doesn't modify or encode the String
-	            cache: false, 
-	            async: false,//wait till the execution finishes
-	            beforeSend: function() { 
-	                $("#login_submit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-	                $("#login_submit").prop('disabled', true);
-	            },
+	            url: "login_validate",
+	            data: formdata,
 	            success : function( msg ) {
-	            	console.log(msg);
-	                $("#login_submit").html('Login');
+	            	console.log("Received:" + msg);
+	            	$("#login_submit").html('Login');
 	                $("#login_submit").prop('disabled', false);
 	                if( msg == "****") 
 	                {
-	                	toastr.error(msg,"Success");
-	                    //window.location.href = "${pageContext.request.contextPath}/dashboard";
+	                    window.location.href = "${pageContext.request.contextPath}/dashboard";
 	                }
 	                else
 	                {
