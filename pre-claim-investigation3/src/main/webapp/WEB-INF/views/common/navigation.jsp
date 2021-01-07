@@ -54,26 +54,26 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/messages/add" 
+                  <a href="${pageContext.request.contextPath}/message/add_message" 
                   	class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Create Case
                   </a>
                 </li>
                 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/messages/pendinglist" 
+                  <a href="${pageContext.request.contextPath}/message/pending_message" 
                   	class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Cases
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/messages/list" 
+                  <a href="${pageContext.request.contextPath}/message/active_message" 
                   	class="nav-link nav-toggle">
                     <i class="icon-check"></i>  Cases
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/messages/assignedlist" 
+                  <a href="${pageContext.request.contextPath}/message/assigned_message" 
                   	class="nav-link nav-toggle">
                     <i class="icon-check"></i> Assigned Cases
                   </a>
@@ -94,7 +94,7 @@
               <ul class="sub-menu">
                 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/users/add" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/user/add_user" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> Add User
                   </a>
                 </li>
@@ -204,20 +204,20 @@
               <ul class="sub-menu">
                 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/category/add" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/category/add_category" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> investigations
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/category/pendinglist" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/category/pending_category" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Add investigations
                   </a>
                 </li>
                 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/category/list" class="nav-link nav-toggle">
-                    <i class="icon-check"></i>  investigations
+                  <a href="${pageContext.request.contextPath}/category/active_category" class="nav-link nav-toggle">
+                    <i class="icon-check"></i> Active investigations
                   </a>
                 </li>
               </ul>
@@ -255,32 +255,32 @@
               </a>
               <ul class="sub-menu">
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/report/messagesStatus" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/report/messages_status" class="nav-link nav-toggle">
                     <i class="icon-bar-chart"></i> All investigations 
 
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/report/readmessages" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/report/read_message" class="nav-link nav-toggle">
                     <i class="icon-envelope-open"></i>  Assigned Investigators cases
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/report/likemessage" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/report/like_message" class="nav-link nav-toggle">
                     <i class="icon-like"></i> Investigators matched/unmatched client
                   </a>
                 </li>
                 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/report/favouritemessage" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/report/favourite_message" class="nav-link nav-toggle">
                     <i class="icon-docs"></i> Billing Reports
                   </a>
                 </li>
                 
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/report/loginDetails" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/report/login_details" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> Export data
                   </a>
                 </li>
