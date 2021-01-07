@@ -27,14 +27,13 @@ public class LoginController {
     }
     
     @RequestMapping(value = "/login_validate", method = RequestMethod.POST)
-    public @ResponseBody String loginprocess(HttpServletRequest request, HttpServletResponse response)
+    public @ResponseBody String login_validate(HttpServletRequest request, HttpServletResponse response)
     {
     	System.out.println("Entered");
-    	System.out.println("Username:" + request.getParameter("username"));
-    	System.out.println("Password:" + request.getParameter("password"));
-    	Login login = new Login();
-    	login.setUsername("admin");
-    	login.setPassword("admin@123");
+    	String username = request.getParameter("username");
+    	String password = request.getParameter("password");
+    	Login login = new Login(username, password);
+    	System.out.println(login.getPassword()+password);
     	UserDetails user = dao.validateUser(login);
     	if(user != null)
     		return "****";
