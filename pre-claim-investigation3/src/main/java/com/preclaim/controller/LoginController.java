@@ -33,7 +33,7 @@ public class LoginController {
     	String username = request.getParameter("username");
     	String password = request.getParameter("password");
     	Login login = new Login(username, password);
-    	System.out.println(login.getPassword()+password);
+    	System.out.println(login.toString());
     	UserDetails user = dao.validateUser(login);
     	if(user != null)
     		return "****";
