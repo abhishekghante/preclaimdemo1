@@ -24,4 +24,52 @@ public class MessageController {
         return "common/templatecontent";
     }
     
+    @RequestMapping(value = "/add_message", method = RequestMethod.GET)
+    public String add_message(HttpSession session) {
+    	session.removeAttribute("ScreenDetails");
+    	ScreenDetails details=new ScreenDetails();
+    	details.setScreen_name("../message/add_message.jsp");
+    	details.setScreen_title("Add Case");
+    	details.setUser_id("");
+    	details.setUser_name("admin");
+    	session.setAttribute("ScreenDetails", details);
+        return "common/templatecontent";
+    }
+    
+    @RequestMapping(value = "/pending_message", method = RequestMethod.GET)
+    public String pending_message(HttpSession session) {
+    	session.removeAttribute("ScreenDetails");
+    	ScreenDetails details=new ScreenDetails();
+    	details.setScreen_name("../message/pending_message.jsp");
+    	details.setScreen_title("Pending Cases Lists");
+    	details.setUser_id("");
+    	details.setUser_name("admin");
+    	session.setAttribute("ScreenDetails", details);
+        return "common/templatecontent";
+    }
+  
+    @RequestMapping(value = "/active_message", method = RequestMethod.GET)
+    public String active_message(HttpSession session) {
+    	session.removeAttribute("ScreenDetails");
+    	ScreenDetails details=new ScreenDetails();
+    	details.setScreen_name("../message/active_message.jsp");
+    	details.setScreen_title("Active Cases Lists");
+    	details.setUser_id("");
+    	details.setUser_name("admin");
+    	session.setAttribute("ScreenDetails", details);
+        return "common/templatecontent";
+    }
+    
+    @RequestMapping(value = "/assigned_message", method = RequestMethod.GET)
+    public String assigned_message(HttpSession session) {
+    	session.removeAttribute("ScreenDetails");
+    	ScreenDetails details=new ScreenDetails();
+    	details.setScreen_name("../message/assigned_message.jsp");
+    	details.setScreen_title("Assigned Cases Lists");
+    	details.setUser_id("");
+    	details.setUser_name("admin");
+    	session.setAttribute("ScreenDetails", details);
+        return "common/templatecontent";
+    }
+    
 }

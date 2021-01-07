@@ -1,12 +1,12 @@
-<?php
+<!-- <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $assetUrl   = $this->config->item( 'base_url' );
 global $permission_arr;
-?>
-<link href="${pageContext.request.contextPath}/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
-<script src="${pageContext.request.contextPath}/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+?> -->
+<link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
 
 <div class="row">
   <div class="col-xs-12 col-sm-12">
@@ -67,7 +67,7 @@ $(document).ready(function() {
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
   table = $('#message_status_list').DataTable({
       language: {
-        processing: "<img src='<?php echo base_url();?>assets/img/loading.gif'>",
+        processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
       },
       "processing": true, //Feature control the processing indicator.
       "serverSide": true, //Feature control DataTables' server-side processing mode.

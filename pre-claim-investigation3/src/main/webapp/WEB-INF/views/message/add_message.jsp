@@ -1,16 +1,16 @@
-<?php
+<!-- <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $assetUrl       = $this->config->item( 'base_url' );
 $random_pass    = randomPassword();
-?>
+?> -->
 <style type="text/css">
 .placeImg { display:none !important;}
 </style>
-<link href="${pageContext.request.contextPath}/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
-<script src="${pageContext.request.contextPath}/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<link href="${pageContext.request.contextPath}/resources/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/resources/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
@@ -40,13 +40,13 @@ $random_pass    = randomPassword();
                 <label class="col-md-4 control-label" for="msgGroup">Select Group <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <select name="msgGroup" id="msgGroup" class="form-control" tabindex="-1" >
-                    <?php 
+                    <!-- <?php 
                     if($groupLists){
                       foreach ($groupLists as $groupInfo) {
                         ?><option value="<?php echo $groupInfo->groupId; ?>"><?php echo $groupInfo->groupName; ?></option><?php
                       }
                     }
-                    ?>
+                    ?> -->
                   </select>
                 </div>
               </div>
@@ -55,13 +55,13 @@ $random_pass    = randomPassword();
                 <div class="col-md-8">
                   <select name="msgRegion[]" id="msgRegion" class="form-control select2-multiple" tabindex="-1" multiple>
                     <option value="">Select</option>
-                    <?php 
+                   <!--  <?php 
                     if($regionLists){
                       foreach ($regionLists as $regionInfo) {
                         ?><option selected value="<?php echo $regionInfo->regionId; ?>"><?php echo $regionInfo->regionName; ?></option><?php
                       }
                     }
-                    ?>
+                    ?> -->
                   </select>
                 </div>
               </div>
@@ -70,13 +70,13 @@ $random_pass    = randomPassword();
                 <div class="col-md-8">
                   <select name="msgChannel" id="msgChannel" class="form-control select2" tabindex="-1">
                     <option value="">Select</option>
-                    <?php 
+                    <!-- <?php 
                     if($channelLists){
                       foreach ($channelLists as $channelInfo) {
                         ?><option value="<?php echo $channelInfo->channelId; ?>"><?php echo $channelInfo->channelName; ?></option><?php
                       }
                     }
-                    ?>
+                    ?> -->
                   </select>
                 </div>
               </div>
@@ -85,13 +85,13 @@ $random_pass    = randomPassword();
                 <div class="col-md-8">
                   <select name="msgCategory" id="msgCategory" class="form-control select2" tabindex="-1">
                     <option value="">Select</option>
-                    <?php 
+                    <!-- <?php 
                     if($categoryLists){
                       foreach ($categoryLists as $categoryInfo) {
                         ?><option value="<?php echo $categoryInfo->categoryId; ?>"><?php echo $categoryInfo->categoryNameEn; ?></option><?php
                       }
                     }
-                    ?>
+                    ?> -->
                   </select>
                 </div>
               </div>
@@ -179,7 +179,7 @@ $random_pass    = randomPassword();
                           <span class="add_link_btn" data-val="" id="link_msgImgEn_1" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="<?php echo $assetUrl; ?>uploads/default_img.png" class="imgMsgEnLbl" id="imgMsgEnLbl_1" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 1" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgEnLbl" id="imgMsgEnLbl_1" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 1" />
                         </div>
                         <input type="file" onchange="displayUploadImg(this, 'imgMsgEnLbl_1', 'enLblDelBtn_1', 'link_msgImgEn_1');" name="imgMsgEn_1" id="imgMsgEn_1" class="placeImg" accept="image/*" />
                         <input type="hidden" name="d_link_msgImgEn_1" id="d_link_msgImgEn_1" />
@@ -194,7 +194,7 @@ $random_pass    = randomPassword();
                           <span class="add_link_btn" data-val="" id="link_msgImgEn_2" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="<?php echo $assetUrl; ?>uploads/default_img.png" class="imgMsgEnLbl" id="imgMsgEnLbl_2" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 2" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgEnLbl" id="imgMsgEnLbl_2" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 2" />
                         </div>
                         <input type="file" onchange="displayUploadImg(this, 'imgMsgEnLbl_2', 'enLblDelBtn_2', 'link_msgImgEn_2');" name="imgMsgEn_2" id="imgMsgEn_2" class="placeImg" accept="image/*" />
                         <input type="hidden" name="d_link_msgImgEn_2" id="d_link_msgImgEn_2" />
@@ -209,7 +209,7 @@ $random_pass    = randomPassword();
                           <span class="add_link_btn" data-val="" id="link_msgImgEn_3" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="<?php echo $assetUrl; ?>uploads/default_img.png" class="imgMsgEnLbl" id="imgMsgEnLbl_3" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 3" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgEnLbl" id="imgMsgEnLbl_3" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 3" />
                         </div>
                         <input type="file" onchange="displayUploadImg(this, 'imgMsgEnLbl_3', 'enLblDelBtn_3', 'link_msgImgEn_3');" name="imgMsgEn_3" id="imgMsgEn_3" class="placeImg" accept="image/*" />
                         <input type="hidden" name="d_link_msgImgEn_3" id="d_link_msgImgEn_3" />
@@ -224,7 +224,7 @@ $random_pass    = randomPassword();
                           <span class="add_link_btn" data-val="" id="link_msgImgEn_4" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="<?php echo $assetUrl; ?>uploads/default_img.png" class="imgMsgEnLbl" id="imgMsgEnLbl_4" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 4" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgEnLbl" id="imgMsgEnLbl_4" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 4" />
                         </div>
                         <input type="file" onchange="displayUploadImg(this, 'imgMsgEnLbl_4', 'enLblDelBtn_4', 'link_msgImgEn_4');" name="imgMsgEn_4" id="imgMsgEn_4" class="placeImg" accept="image/*" />
                         <input type="hidden" name="d_link_msgImgEn_4" id="d_link_msgImgEn_4" />
@@ -239,7 +239,7 @@ $random_pass    = randomPassword();
                           <span class="add_link_btn" data-val="" id="link_msgImgEn_5" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="<?php echo $assetUrl; ?>uploads/default_img.png" class="imgMsgEnLbl" id="imgMsgEnLbl_5" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 5" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgEnLbl" id="imgMsgEnLbl_5" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 5" />
                         </div>
                         <input type="file" onchange="displayUploadImg(this, 'imgMsgEnLbl_5', 'enLblDelBtn_5', 'link_msgImgEn_5');" name="imgMsgEn_5" id="imgMsgEn_5" class="placeImg" accept="image/*" />
                         <input type="hidden" name="d_link_msgImgEn_5" id="d_link_msgImgEn_5" />
@@ -301,7 +301,7 @@ $random_pass    = randomPassword();
                           <span class="add_link_btn" data-val="" id="link_msgImgThai_1" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="<?php echo $assetUrl; ?>uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_1" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 1" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_1" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 1" />
                         </div>
                         <input type="file" onchange="displayUploadImg(this, 'imgMsgThaiLbl_1', 'thaiLblDelBtn_1', 'link_msgImgThai_1');" name="imgMsgThai_1" id="imgMsgThai_1" class="placeImg" accept="image/*" />
                         <input type="hidden" name="d_link_msgImgThai_1" id="d_link_msgImgThai_1" />
@@ -316,7 +316,7 @@ $random_pass    = randomPassword();
                           <span class="add_link_btn" data-val="" id="link_msgImgThai_2" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="<?php echo $assetUrl; ?>uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_2" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 2" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_2" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 2" />
                         </div>
                         <input type="file" onchange="displayUploadImg(this, 'imgMsgThaiLbl_2', 'thaiLblDelBtn_2', 'link_msgImgThai_2');" name="imgMsgThai_2" id="imgMsgThai_2" class="placeImg" accept="image/*" />
                         <input type="hidden" name="d_link_msgImgThai_2" id="d_link_msgImgThai_2" />
@@ -331,7 +331,7 @@ $random_pass    = randomPassword();
                           <span class="add_link_btn" data-val="" id="link_msgImgThai_3" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="<?php echo $assetUrl; ?>uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_3" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 3" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_3" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 3" />
                         </div>
                         <input type="file" onchange="displayUploadImg(this, 'imgMsgThaiLbl_3', 'thaiLblDelBtn_3', 'link_msgImgThai_3');" name="imgMsgThai_3" id="imgMsgThai_3" class="placeImg" accept="image/*" />
                         <input type="hidden" name="d_link_msgImgThai_3" id="d_link_msgImgThai_3" />
@@ -346,7 +346,7 @@ $random_pass    = randomPassword();
                           <span class="add_link_btn" data-val="" id="link_msgImgThai_4" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="<?php echo $assetUrl; ?>uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_4" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 4" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_4" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 4" />
                         </div>
                         <input type="file" onchange="displayUploadImg(this, 'imgMsgThaiLbl_4', 'thaiLblDelBtn_4', 'link_msgImgThai_4');" name="imgMsgThai_4" id="imgMsgThai_4" class="placeImg" accept="image/*" />
                         <input type="hidden" name="d_link_msgImgThai_4" id="d_link_msgImgThai_4" />
@@ -361,7 +361,7 @@ $random_pass    = randomPassword();
                           <span class="add_link_btn" data-val="" id="link_msgImgThai_5" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="<?php echo $assetUrl; ?>uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_5" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 5" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_5" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 5" />
                         </div>
                         <input type="file" onchange="displayUploadImg(this, 'imgMsgThaiLbl_5', 'thaiLblDelBtn_5', 'link_msgImgThai_5');" name="imgMsgThai_5" id="imgMsgThai_5" class="placeImg" accept="image/*" />
                         <input type="hidden" name="d_link_msgImgThai_5" id="d_link_msgImgThai_5" />
@@ -398,10 +398,10 @@ $random_pass    = randomPassword();
               <div class="box-footer">
                 <div class="row">
                   <div class="col-md-offset-4 col-md-8">
-                    <?php
+                <!-- <?php
                     $token_name = $this->security->get_csrf_token_name();
                     $token_hash = $this->security->get_csrf_hash();
-                    ?>
+                    ?> -->
                     <input type="hidden" id="csrf" name="<?= $token_name; ?>" value="<?= $token_hash; ?>" />
                     <button class="btn btn-info" id="addmessagesubmit" type="submit">Broadcast</button>
                     <button class="btn btn-danger" onClick="return clearForm();" type="button">Clear</button>
@@ -415,9 +415,9 @@ $random_pass    = randomPassword();
     </div>
   </div>
 </div>
-<?php
+<!--  <?php
 $datetime = date('Y-m-d H:i:s');
-?>
+?>-->
 <script type="text/javascript">
 function displayUploadImg(input, PlaceholderID, deleteID, linkID) {
   if (input.files && input.files[0]) {
@@ -518,7 +518,7 @@ $(document).ready(function(){
             url  : adminurl + 'messages/updateHperLink',
             data : { 'hyperlink' : linkvalue,'linkKey' : linkKey,'msgId' : msgId },
             beforeSend: function() {
-                $("#continuemodal"+linkKey).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+linkKey).html('<img src="'+adminurl+'${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+linkKey).prop('disabled', true);
             },
             success : function( msg ) {
@@ -591,7 +591,7 @@ $(document).ready(function(){
           cache: false,
           processData:false,
           beforeSend: function() { 
-              $("#addmessagesubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+              $("#addmessagesubmit").html('<img src="'+adminurl+'${pageContext.request.contextPath}/img/input-spinner.gif"> Loading...');
               $("#addmessagesubmit").prop('disabled', true);
               $('#add_message_form').css("opacity",".5");
           },
