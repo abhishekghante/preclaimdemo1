@@ -1,27 +1,14 @@
-<!-- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl   = $this->config->item( 'base_url' );
-global $permission_arr;
-if($channelInfo){
-  $channelName = $channelInfo->channelName;
-  $channelCode = $channelInfo->channelCode;
-}else{
-  $channelName = '';
-  $channelCode = '';
-}
-?> -->
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<?php if( in_array( 'channels/add', $permission_arr ) ) { ?>
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
       <div class="portlet-title">
         <div class="caption">
           <i class="icon-users font-green-sharp"></i>
-          <span class="caption-subject font-green-sharp sbold"><?= (($channelId)?'Update':'Add'); ?> Channel</span>
+          <span class="caption-subject font-green-sharp sbold">Channel</span>
         </div>
       </div>
     </div>
@@ -34,26 +21,22 @@ if($channelInfo){
               <div class="form-group">
                 <label class="col-md-4 control-label" for="channelName">Channel Name <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" value="<?= $channelName; ?>" id="channelName" name="channelName" maxlength="40" class="form-control" placeholder="Channel Name">
+                  <input type="text" required id="channelName" name="channelName" maxlength="40" class="form-control" placeholder="Channel Name">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-4 control-label" for="channelCode">Channel Code <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" value="<?= $channelCode; ?>" id="channelCode" name="channelCode" maxlength="10" class="form-control username" placeholder="Channel Code">
+                  <input type="text" required id="channelCode" name="channelCode" maxlength="10" class="form-control username" placeholder="Channel Code">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
-                <!-- <?php
-                  if($channelId){ ?>  -->  
-                    <input type="hidden" value="<?= $channelId; ?>" id="channelId" name="channelId">
+                    <input type="hidden" id="channelId" name="channelId">
                     <button class="btn btn-info" id="editchannelsubmit" onClick="return updateChannel();" type="button">Update</button>
-                    <a href="<?= base_url(); ?>channels/pendinglist" class="btn btn-danger" value="">Back</a>
-                  <!-- <?php }else{ ?> --> 
+                    <a href="${pageContext.request.contextPath}channels/pendinglist" class="btn btn-danger" value="">Back</a>
                     <button class="btn btn-info" id="addchannelsubmit" onClick="return addChannel();" type="button">Add Channel</button>
                     <button class="btn btn-danger" type="reset" value="">Clear</button>
-                  <!-- <?php } ?> --> 
                 </div>
               </div>
             </div>
@@ -74,13 +57,9 @@ if($channelInfo){
         </div>
         <div class="actions">
             <div class="btn-group">
-              <!--<?php if( in_array( 'channels/add', $permission_arr ) ) { ?> -->
-             <!-- <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?> -->
               <a href="<?php echo base_url(); ?>channels/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
-            <!--  <?php } ?>--> 
-             <!-- <?php } ?>--> 
             </div>
         </div>
       </div>
@@ -126,6 +105,7 @@ if($channelInfo){
 $(document).ready(function() {
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+  /*
   table = $('#pending_channel_list').DataTable({
       language: {
         processing: "<img src='$pageContext.request.contextPath/resources/img/loading.gif'>",
@@ -154,6 +134,7 @@ $(document).ready(function() {
       } ],
       buttons: []
   });
+  */
   var i = 0;
   $('#pending_channel_list tfoot th').each( function () {
     if( i == 1 || i == 2 ){
@@ -244,7 +225,7 @@ function updateChannel() {
       var formdata = {csrf_test_name:csrf_hash,'channelName':channelName,'channelCode':channelCode,'channelId':channelId};
       $.ajax({
         type: "POST",
-        url: adminurl + 'channels/updateChannel',
+        url: 'channels/updateChannel',
         data: formdata,
         beforeSend: function() { 
             $("#editchannelsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');

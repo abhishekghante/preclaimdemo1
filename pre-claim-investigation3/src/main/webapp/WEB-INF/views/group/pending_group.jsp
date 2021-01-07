@@ -1,38 +1,27 @@
-<!--AG <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl   = $this->config->item( 'base_url' );
-global $permission_arr;
-if($groupInfo){
-  $groupName = $groupInfo->groupName;
-}else{
-  $groupName = '';
-}
-?> -->
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<!-- AG<?php if( in_array( 'groups/add', $permission_arr ) ) { ?>  -->
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
       <div class="portlet-title">
         <div class="caption">
           <i class="icon-users font-green-sharp"></i>
-          <span class="caption-subject font-green-sharp sbold"><?= (($groupId)?'Update':'Add'); ?> Group</span>
+          <span class="caption-subject font-green-sharp sbold">Group</span>
         </div>
       </div>
     </div>
     <div class="portlet light bordered">
       <div class="portlet-body">
         <div id="message_account"></div>
-        <form novalidate="" id="add_group_form" role="form" method="post" class="form-horizontal">
+        <form novalidate id="add_group_form" role="form" method="post" class="form-horizontal">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="col-md-4 control-label" for="groupName">Group Name <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" value="<?= $groupName; ?>" placeholder="Group Name" id="groupName" class="form-control" name="groupName">
+                  <input type="text" required placeholder="Group Name" id="groupName" class="form-control" name="groupName">
                 </div>
               </div>
               <div class="form-group">
@@ -41,7 +30,7 @@ if($groupInfo){
                   if($groupId){ ?>  -->
                     <input type="hidden" value="<?= $groupId; ?>" id="groupId" name="groupId">
                     <button class="btn btn-info" id="editgroupsubmit" onClick="return updateGroup();" type="button">Update</button>
-                    <a href="<?= base_url(); ?>groups/pendinglist" class="btn btn-danger" value="">Back</a>
+                    <a href="${pageContext.request.contextPath}/groups/pendinglist" class="btn btn-danger" value="">Back</a>
                  <!-- <?php }else{ ?> -->
                     <button class="btn btn-info" id="addgroupsubmit" onClick="return addGroup();" type="button">Add Group</button>
                     <button class="btn btn-danger" type="reset" value="">Clear</button>
@@ -116,6 +105,7 @@ if($groupInfo){
 $(document).ready(function() {
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+  /*
   table = $('#pending_group_list').DataTable({
       language: {
         processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
@@ -126,7 +116,7 @@ $(document).ready(function() {
       'autoWidth': false,
       "ajax": {
           "data": function(d) {},
-          "url": "<?php echo site_url('/groups/pendingGroupTableResponse')?>",
+          "url": "",
           "type": "POST"
       },
       "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
@@ -141,7 +131,7 @@ $(document).ready(function() {
           "searchable": false, //set orderable
       } ],
       buttons: []
-  });
+  });*/
   var i = 0;
   $('#pending_group_list tfoot th').each( function () {
     if( i == 1 ){
@@ -186,10 +176,10 @@ function addGroup() {
     var formdata = {csrf_test_name:csrf_hash,'groupName':groupName};
     $.ajax({
       type: "POST",
-      url: adminurl + 'groups/addGroup',
+      url: 'groups/addGroup',
       data: formdata,
       beforeSend: function() {
-          $("#addgroupsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+          $("#addgroupsubmit").html('<img src="${pageContext.request.contextPath}/img/input-spinner.gif"> Loading...');
           $("#addgroupsubmit").prop('disabled', true);
       },
       success: function( data ) {
@@ -225,7 +215,7 @@ function updateGroup() {
         url: adminurl + 'groups/updateGroup',
         data: formdata,
         beforeSend: function() { 
-            $("#editgroupsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#editgroupsubmit").html('<img src="${pageContext.request.contextPath}/img/input-spinner.gif"> Loading...');
             $("#editgroupsubmit").prop('disabled', true);
         },
         success: function( data ) {

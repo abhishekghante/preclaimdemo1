@@ -118,7 +118,7 @@ if($categoryInfo){
           <div class="col-md-offset-2 col-md-10">
             <input type="hidden" value="<?= $categoryId; ?>" id="categoryId" name="categoryId">
             <button class="btn btn-info" id="editcategorysubmit" type="submit">Update</button>
-            <a href="<?= base_url(); ?>category/pendinglist" class="btn btn-danger" value="">Back</a>
+            <a href="${pageContext.request.contextPath}/category/pendinglist" class="btn btn-danger" value="">Back</a>
           </div>
         </div>
       </form>

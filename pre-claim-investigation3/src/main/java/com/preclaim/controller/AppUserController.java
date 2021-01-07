@@ -11,8 +11,6 @@ import com.preclaim.models.ScreenDetails;
 @Controller
 @RequestMapping(value = "/app_user")
 public class AppUserController {
-
-
 	
 	@RequestMapping(value = "/app_user")
 	public String app_user(HttpSession session)
@@ -29,4 +27,18 @@ public class AppUserController {
 		return "common/templatecontent";
 	}
 	
+	@RequestMapping(value = "/import")
+	public String import_user(HttpSession session)
+	{
+		session.removeAttribute("ScreenDetails");    	
+		ScreenDetails details = new ScreenDetails();
+    	details.setScreen_name("../app_user/import_user.jsp");
+    	details.setScreen_title("<li class = \"active\">App User Lists</li>x");
+    	details.setUser_id("");
+    	details.setUser_name("admin");
+    	details.setMain_menu("App Users Management");
+    	details.setSub_menu("");
+    	session.setAttribute("ScreenDetails", details);
+		return "common/templatecontent";
+	}
 }

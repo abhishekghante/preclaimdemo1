@@ -131,6 +131,7 @@ global $permission_arr;
 $(document).ready(function() {
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+  /*
   table = $('#mapping_list').DataTable({
       language: {
         processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
@@ -159,6 +160,7 @@ $(document).ready(function() {
       } ],
       buttons: []
   });
+  */
   var i = 0;
   $('#mapping_list tfoot th').each( function () {
   });

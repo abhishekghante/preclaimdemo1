@@ -104,7 +104,7 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                 </li>
                 
                 <li class="nav-item <%if(details.getSub_menu().equals("User Lists")){%>active<%}%>">
-                  <a href="${pageContext.request.contextPath}/users" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/user/user_list" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> User Lists
                   </a>
                 </li>
@@ -275,13 +275,13 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                   </a>
                 </li>
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu().equals("Billing Reports")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/report/favourite_message" class="nav-link nav-toggle">
                     <i class="icon-docs"></i> Billing Reports
                   </a>
                 </li>
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu().equals("Export data")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/report/login_details" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> Export data
                   </a>
@@ -297,17 +297,17 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                   <span class="arrow "></span>
               </a>
               <ul class="sub-menu">
-                <li class="nav-item <%if(details.getSub_menu().equals("")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu().equals("Update billing")){%>active<%}%>">
                   <a href="#" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Update billing
                   </a>
                 </li>
-                <li class="nav-item <%if(details.getSub_menu().equals("")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu().equals("Payment")){%>active<%}%>">
                   <a href="#" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Payment
                   </a>
                 </li>
-                <li class="nav-item <%if(details.getSub_menu().equals("")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu().equals("Capturing payment details")){%>active<%}%>">
                   <a href="#" class="nav-link nav-toggle">
                     <i class="icon-check"></i> Capturing payment details
                   </a>

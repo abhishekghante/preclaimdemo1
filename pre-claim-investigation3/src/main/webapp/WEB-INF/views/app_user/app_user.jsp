@@ -18,9 +18,9 @@ global $permission_arr;
         <div class="actions">
             <div class="btn-group">
              <!--  <?php if( in_array( 'appUsers/import', $permission_arr ) ) { ?>  -->
-              <a href="$pageContext.request.contextPath/appUsers/import" data-toggle="tooltip" title="Import" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/app_user/import" data-toggle="tooltip" title="Import" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i></a>
-              <a href="$pageContext.request.contextPath/appUsers/deleteOldUsers" onclick="return confirm(' you want to delete?');" data-toggle="tooltip" title="Delete old users" class="btn red-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Delete old users">
+              <a href="${pageContext.request.contextPath}/app_user/deleteOldUsers" onclick="return confirm(' you want to delete?');" data-toggle="tooltip" title="Delete old users" class="btn red-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Delete old users">
                 <i class="fa fa-remove"></i>
               </a>
            <!-- <?php } ?> -->   

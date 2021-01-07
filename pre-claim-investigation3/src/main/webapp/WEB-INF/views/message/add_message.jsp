@@ -21,7 +21,7 @@ $random_pass    = randomPassword();
         </div>
         <div class="actions">
             <div class="btn-group">
-              <a href="<?= base_url(); ?>messages/pendinglist" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" data-toggle="tooltip" title="Back" style="margin-right: 5px;" data-original-title="Back">
+              <a href="${pageContext.request.contextPath}/message/pending_message" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" data-toggle="tooltip" title="Back" style="margin-right: 5px;" data-original-title="Back">
                 <i class="fa fa-reply"></i>
               </a>
             </div>

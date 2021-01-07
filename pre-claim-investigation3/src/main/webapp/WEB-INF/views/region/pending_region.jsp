@@ -1,18 +1,7 @@
-<!-- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl   = $this->config->item( 'base_url' );
-global $permission_arr;
-if($regionInfo){
-  $regionName = $regionInfo->regionName;
-}else{
-  $regionName  = '';
-}
-?> -->
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<!-- <?php if( in_array( 'regions/add', $permission_arr ) ) { ?> -->
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
@@ -32,16 +21,16 @@ if($regionInfo){
               <div class="form-group">
                 <label class="col-md-4 control-label" for="regionName">Region Name <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" id="regionName" name="regionName" value="<?= $regionName; ?>" class="form-control" placeholder="Region Name">
+                  <input type="text" required="" id="regionName" name="regionName" class="form-control" placeholder="Region Name">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
                   <!-- <?php
                   if($regionId){ ?>  -->
-                    <input type="hidden" value="<?= $regionId; ?>" id="regionId" name="regionId">
+                    <input type="hidden" id="regionId" name="regionId">
                     <button class="btn btn-info" id="editregionsubmit" onClick="return updateRegion();" type="button">Update</button>
-                    <a href="<?= base_url(); ?>regions/pendinglist" class="btn btn-danger" value="">Back</a>
+                    <a href="${pageContext.request.contextPath}/regions/pendinglist" class="btn btn-danger" value="">Back</a>
                   <!-- <?php }else{ ?>  -->
                     <button class="btn btn-info" id="addregionsubmit" onClick="return addRegion();" type="button">Add Region</button>
                     <button class="btn btn-danger" type="reset" value="">Clear</button>
@@ -66,9 +55,7 @@ if($regionInfo){
         </div>
         <div class="actions">
             <div class="btn-group">
-              <!-- <?php if( in_array( 'regions/add', $permission_arr ) ) { ?>
-              <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>  -->
-              <a href="<?php echo base_url(); ?>regions/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/regions/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
               <!-- <?php } ?>
@@ -116,6 +103,7 @@ if($regionInfo){
 $(document).ready(function() {
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+  /*
   table = $('#pending_region_list').DataTable({
       language: {
         processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
@@ -144,6 +132,7 @@ $(document).ready(function() {
       } ],
       buttons: []
   });
+  */
   var i = 0;
   $('#pending_region_list tfoot th').each( function () {
     if( i == 1 ){

@@ -7,14 +7,16 @@
     <div class="portlet box">
       <div class="portlet-title">
         <div class="caption">
-            <i class="icon-users font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp sbold">Active Groups</span>
+            <i class="icon-user font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp sbold">Manage Users</span>
         </div>
         <div class="actions">
             <div class="btn-group">
-              <a href="<?php echo base_url(); ?>groups/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <?php if( in_array( 'users/add', $permission_arr ) ) { ?>
+              <a href="${pageContext.request.contextPath}/user/add_user" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
+              <?php } ?>
             </div>
         </div>
       </div>
@@ -25,20 +27,26 @@
           <div class="row">
             <div class="col-md-12 table-container">
                 <div class="box-body no-padding">
-                  <table id="active_group_list" class="table table-striped table-bordered table-hover table-checkable dataTable data-tbl">
+                  <table id="adminuser_list" class="table table-striped table-bordered table-hover table-checkable dataTable data-tbl">
                     <thead>
                       <tr class="tbl_head_bg">
-                        <th class="head1 no-sort">#</th>
-                        <th class="head1 no-sort">Group Name</th>
-                        <th class="head1 no-sort">Created Date</th>
-                        <th class="head1 no-sort">Status</th>
-                        <th class="head1 no-sort">Action</th>
+                        <th width="5%" class="head1 no-sort">#</th>
+                        <th width="5%" class="head1 no-sort">Name</th>
+                        <th width="5%" class="head1 no-sort">User Type</th>
+                        <th width="5%" class="head1 no-sort">User Name</th>
+                        <th width="5%" class="head1 no-sort">Email</th>
+                        <th width="5%" class="head1 no-sort">Password</th>
+                        <th width="5%" class="head1 no-sort">Status</th>
+                        <th width="5%" class="head1 no-sort">Action</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr class="tbl_head_bg">
                         <th class="head2 no-sort"></th>
                         <th class="head2 no-sort"></th>
+                        <th class="head2 no-sort">User Type</th>
+                        <th class="head2 no-sort"></th>
+                        <th class="head2 no-sort">Email</th>
                         <th class="head2 no-sort"></th>
                         <th class="head2 no-sort">Status</th>
                         <th class="head2 no-sort"></th>
@@ -56,12 +64,12 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-  var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+  var start = '';
+  var end = '';
   /*
-  table = $('#active_group_list').DataTable({
+  table = $('#adminuser_list').DataTable({
       language: {
-        processing: "<img src='pageContext.request.contextPath/resources/img/loading.gif'>",
+        processing: "<img src='<?php echo base_url();?>assets/img/loading.gif'>",
       },
       "processing": true, //Feature control the processing indicator.
       "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -69,35 +77,50 @@ $(document).ready(function() {
       'autoWidth': false,
       "ajax": {
           "data": function(d) {
-            d.csrf_test_name = csrf_hash;
           },
-          "url": "<?php echo site_url('/groups/activeGroupTableResponse')?>",
+          "url": "<?php echo site_url('/users/accountsTableResponse')?>",
           "type": "POST"
       },
       "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
       "lengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
       //Set column definition initialisation properties.
       "columnDefs": [{
-          "targets": [0,4],
+          "targets": [0,5,7],
           "orderable": false, //set not orderable
       },
       {
-          "targets": [0,4],
+          "targets": [0,5,7],
           "searchable": false, //set orderable
       } ],
       buttons: []
   });
   */
+  var levelLists = <?php echo json_encode($role_lists) ?>;
   var i = 0;
-  $('#active_group_list tfoot th').each( function () {
-    if( i == 1 ){
+  $('#adminuser_list tfoot th').each( function () {
+    if( i == 1 || i == 3 || i == 4 ){
       $(this).html( '<input type="text" class="form-control" placeholder="" />' );
+    }else if(i == 2){
+      var tech_selectbox = '<select name="user_type" id="user_type" class="form-control">'
+                              +'<option value="">All</option>';
+      $.each(levelLists, function (i, elem) {
+          tech_selectbox += '<option value="'+ elem['roleId'] +'">'+ decodeURIComponent(elem['role']) +'</option>';
+      });
+        tech_selectbox += '</select>';
+        $(this).html( tech_selectbox );
+    }else if(i == 6){
+      var status_selectbox = '<select name="status_type" id="status_type" class="form-control">'
+                            +'<option value="">All</option>'
+                            +'<option value="1">Active</option>'
+                            +'<option value="2">Inactive</option>'
+                            +'</select>';
+      $(this).html( status_selectbox );
     }
     i++;
   });
 
   // DataTable
-  var table = $('#active_group_list').DataTable();
+  var table = $('#adminuser_list').DataTable();
 
   // Apply the search
   table.columns().every( function () {

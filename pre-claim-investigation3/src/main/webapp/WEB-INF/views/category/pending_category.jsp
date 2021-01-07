@@ -44,7 +44,7 @@ if($categoryInfo){
               <div class="form-group">
                 <label class="col-md-4 control-label" for="categoryNameEn">investigations Name (English) <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" value="<?= $categoryNameEn; ?>" id="categoryNameEn" name="categoryNameEn" maxlength="40" class="form-control" placeholder="investigations Name">
+                  <input type="text" required id="categoryNameEn" name="categoryNameEn" maxlength="40" class="form-control" placeholder="investigations Name">
                 </div>
               </div>
               <div class="form-group">
@@ -79,7 +79,7 @@ if($categoryInfo){
               <div class="form-group">
                 <label class="col-md-4 control-label" for="categoryNameThai">investigations Name (Hindi) <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" name="categoryNameThai" id="categoryNameThai" value="<?= $categoryNameThai; ?>" maxlength="40" class="form-control" placeholder="investigations Name">
+                  <input type="text" required="" name="categoryNameThai" id="categoryNameThai" maxlength="40" class="form-control" placeholder="investigations Name">
                 </div>
               </div>
               <div class="form-group">
@@ -124,7 +124,7 @@ if($categoryInfo){
                   if($categoryId){ ?>-->
                     <input type="hidden" value="<?= $categoryId; ?>" id="categoryId" name="categoryId">
                     <button class="btn btn-info" id="editcategorysubmit" type="submit">Update</button>
-                    <a href="<?= base_url(); ?>category/pendinglist" class="btn btn-danger" value="">Back</a>
+                    <a href="${pageContext.request.contextPath}/category/pendinglist" class="btn btn-danger" value="">Back</a>
                   <!-- <?php }else{ ?>  -->
                     <input type="hidden" id="categoryId" name="categoryId">
                     <button class="btn btn-info" id="addcategorysubmit" type="submit">Add Category</button>
@@ -152,7 +152,7 @@ if($categoryInfo){
             <div class="btn-group">
              <!--  <?php if( in_array( 'category/add', $permission_arr ) ) { ?>
               <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>  -->
-              <a href="<?php echo base_url(); ?>category/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/category/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
              <!--  <?php } ?>
@@ -204,6 +204,7 @@ if($categoryInfo){
 $(document).ready(function() {
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+  /*
   table = $('#pending_category_list').DataTable({
       language: {
         processing: "<img src='<?php echo base_url();?>${pageContext.request.contextPath}/resources/img/loading.gif'>",
@@ -232,6 +233,7 @@ $(document).ready(function() {
       } ],
       buttons: []
   });
+  */
   var i = 0;
   $('#pending_category_list tfoot th').each( function () {
     if( i == 1 || i == 2 ){

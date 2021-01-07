@@ -65,6 +65,7 @@ global $permission_arr;
 $(document).ready(function() {
   var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
   var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+  /*
   table = $('#message_status_list').DataTable({
       language: {
         processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
@@ -93,6 +94,7 @@ $(document).ready(function() {
           "searchable": false, //set orderable
       } ],
   });
+  */
   var i = 0;
   $('#message_status_list tfoot th').each( function () {
     if( i == 1 || i == 2 ){

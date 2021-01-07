@@ -27,7 +27,7 @@ if($messgeInfo->enableNotification == 1){ $checked7 = 'checked'; }else{ $checked
         </div>
         <div class="actions">
           <div class="btn-group">
-            <a href="<?= base_url(); ?>messages/pendinglist" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
+            <a href="${pageContext.request.contextPath}/messages/pendinglist" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
               <i class="fa fa-reply"></i>
             </a>
           </div>
@@ -61,14 +61,7 @@ if($messgeInfo->enableNotification == 1){ $checked7 = 'checked'; }else{ $checked
                 <div class="col-md-8">
                   <select name="msgRegion[]" id="msgRegion" class="form-control select2-multiple" tabindex="-1" multiple>
                     <option value="">Select</option>
-                    <?php 
-                    if($regionLists){
-                      $msgRegionArr  = explode(',', $messgeInfo->msgRegion);
-                      foreach ($regionLists as $regionInfo) {
-                        ?><option value="<?php echo $regionInfo->regionId; ?>" <?php if(in_array($regionInfo->regionId, $msgRegionArr)){ echo 'selected'; } ?>><?php echo $regionInfo->regionName; ?></option><?php
-                      }
-                    }
-                    ?>
+                    
                   </select>
                 </div>
               </div>
@@ -77,13 +70,7 @@ if($messgeInfo->enableNotification == 1){ $checked7 = 'checked'; }else{ $checked
                 <div class="col-md-8">
                   <select name="msgChannel" id="msgChannel" class="form-control select2" tabindex="-1">
                     <option value="">Select</option>
-                    <?php 
-                    if($channelLists){
-                      foreach ($channelLists as $channelInfo) {
-                        ?><option value="<?= $channelInfo->channelId; ?>" <?php if($channelInfo->channelId == $messgeInfo->msgChannel){ echo 'selected'; } ?>><?= $channelInfo->channelName; ?></option><?php
-                      }
-                    }
-                    ?>
+                    
                   </select>
                 </div>
               </div>
@@ -92,13 +79,7 @@ if($messgeInfo->enableNotification == 1){ $checked7 = 'checked'; }else{ $checked
                 <div class="col-md-8">
                   <select name="msgCategory" id="msgCategory" class="form-control select2" tabindex="-1">
                     <option value="">Select</option>
-                    <?php 
-                    if($categoryLists){
-                      foreach ($categoryLists as $categoryInfo) {
-                        ?><option value="<?php echo $categoryInfo->categoryId; ?>" <?php if($categoryInfo->categoryId == $messgeInfo->msgCategory){ echo 'selected'; } ?>><?php echo $categoryInfo->categoryNameEn; ?></option><?php
-                      }
-                    }
-                    ?>
+                    
                   </select>
                 </div>
               </div>

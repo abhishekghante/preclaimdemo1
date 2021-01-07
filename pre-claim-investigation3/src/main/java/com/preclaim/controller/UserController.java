@@ -27,6 +27,21 @@ public class UserController {
 		return "common/templatecontent";
 	}
 	
+	@RequestMapping(value = "/user_list", method = RequestMethod.GET)
+	public String user_list(HttpSession session)
+	{
+		session.removeAttribute("ScreenDetails");    	
+		ScreenDetails details = new ScreenDetails();
+    	details.setScreen_name("../user/user_list.jsp");
+    	details.setScreen_title("User LIst");
+    	details.setUser_id("");
+    	details.setUser_name("admin");
+    	details.setMain_menu("Users");
+    	details.setSub_menu("User Lists");
+    	session.setAttribute("ScreenDetails", details);
+		return "common/templatecontent";
+	}
+	
 	@RequestMapping(value = "/role", method = RequestMethod.GET)
 	public String role(HttpSession session)
 	{

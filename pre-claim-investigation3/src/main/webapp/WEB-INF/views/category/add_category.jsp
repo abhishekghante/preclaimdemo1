@@ -15,7 +15,7 @@ $assetUrl  = $this->config->item( 'base_url' );
         </div>
         <div class="actions">
           <div class="btn-group">
-            <a href="<?= base_url(); ?>category/pendinglist" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
+            <a href="${pageContext.request.contextPath}/category/pendinglist" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
               <i class="fa fa-reply"></i>
             </a>
           </div>
@@ -39,7 +39,7 @@ $assetUrl  = $this->config->item( 'base_url' );
                 <label class="col-md-4 control-label">investigations Image (English) </label>
                 <div class="col-md-8">
                   <a href="javascript:void(0);">
-                    <img src="<?php echo $assetUrl; ?>uploads/default_img.png" id="categoryImgEn" style="height:160px;width:auto;" data-src="#" />
+                    <img src="${pageContext.request.contextPath}/uploads/default_img.png" id="categoryImgEn" style="height:160px;width:auto;" data-src="#" />
                     <input type="file" onchange="displayUploadImg(this, 'categoryImgEn');" name="imgCatEng" id="imgCatEng" class="placeImg" accept="image/*" />
                   </a>
                 </div>
@@ -64,7 +64,7 @@ $assetUrl  = $this->config->item( 'base_url' );
                 <label class="col-md-4 control-label">Upload Image</label>
                 <div class="col-md-8">
                   <a href="javascript:void(0);">
-                    <img src="<?php echo $assetUrl; ?>uploads/default_img.png" id="categoryImgThai" style="height:160px;width: auto;" data-src="#" /> <br />
+                    <img src="${pageContext.request.contextPath}/uploads/default_img.png" id="categoryImgThai" style="height:160px;width: auto;" data-src="#" /> <br />
                     <input type="file" onchange="displayUploadImg(this, 'categoryImgThai');" name="imgCatThai" id="imgCatThai" class="placeImg" accept="image/*" />
                   </a>
                 </div>
@@ -141,7 +141,7 @@ $(document).ready(function(){
           cache: false,
           processData:false,
           beforeSend: function() { 
-              $("#addcategorysubmit").html('<img src="'+adminurl+'${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+              $("#addcategorysubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
               $("#addcategorysubmit").prop('disabled', true);
               $('#add_category_form').css("opacity",".5");
           },
@@ -151,8 +151,8 @@ $(document).ready(function(){
               $("#addcategorysubmit").prop('disabled', false);
               toastr.success( 'investigations Added successfully.','Success' );
               $("form#add_category_form").trigger("reset");
-              $("#categoryImgEn").attr("src", adminurl+'uploads/default_img.png');
-              $("#categoryImgThai").attr("src", adminurl+'uploads/default_img.png');
+              $("#categoryImgEn").attr("src", '${pageContext.request.contextPath}/uploads/default_img.png');
+              $("#categoryImgThai").attr("src",'${pageContext.request.contextPath}/uploads/default_img.png');
             }else{
               toastr.error( data,'Error' );
               $("#addcategorysubmit").html('Add investigations');
