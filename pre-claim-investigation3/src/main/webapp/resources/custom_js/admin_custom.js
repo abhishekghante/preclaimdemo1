@@ -4,10 +4,10 @@ function updateMappingStatus( cmId, status ) {
     
     $.ajax({
         type : 'POST',
-        url  : adminurl + 'mapping/updateMappingStatus',
+        url  : 'mapping/updateMappingStatus',
         data : { 'cmId' : cmId, 'status' : status },
         beforeSend: function() {
-            $("#mappingStatus"+cmId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#mappingStatus"+cmId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
         },
         success : function( msg ) {
             table2.ajax.reload();
@@ -29,10 +29,10 @@ function deleteGroup( groupId, type ) {
     $( '#continuemodal'+groupId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'groups/deleteGroup',
+            url  : 'groups/deleteGroup',
             data : { 'groupId' : groupId },
             beforeSend: function() { 
-                $("#continuemodal"+groupId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+groupId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+groupId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -61,10 +61,10 @@ function updateGroupStatus( groupId, type, status ) {
     $( '#continuemodal'+groupId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'groups/updateGroupStatus',
+            url  : 'groups/updateGroupStatus',
             data : { 'groupId' : groupId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+groupId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+groupId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+groupId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -90,10 +90,10 @@ function deleteChannel( channelId, type ) {
     $( '#continuemodal'+channelId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'channels/deleteChannel',
+            url  : 'channels/deleteChannel',
             data : { 'channelId' : channelId },
             beforeSend: function() { 
-                $("#continuemodal"+channelId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+channelId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+channelId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -122,10 +122,10 @@ function updateChannelStatus( channelId, type, status ) {
     $( '#continuemodal'+channelId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'channels/updateChannelStatus',
+            url  : 'channels/updateChannelStatus',
             data : { 'channelId' : channelId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+channelId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+channelId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+channelId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -151,10 +151,10 @@ function deleteRegion( regionId, type ) {
     $( '#continuemodal'+regionId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'regions/deleteRegion',
+            url  : 'regions/deleteRegion',
             data : { 'regionId' : regionId },
             beforeSend: function() { 
-                $("#continuemodal"+regionId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+regionId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+regionId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -183,10 +183,10 @@ function updateRegionStatus( regionId, type, status ) {
     $( '#continuemodal'+regionId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'regions/updateRegionStatus',
+            url  : 'regions/updateRegionStatus',
             data : { 'regionId' : regionId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+regionId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+regionId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+regionId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -212,10 +212,10 @@ function deleteCategory( categoryId, type ) {
     $( '#continuemodal'+categoryId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'category/deleteCategory',
+            url  : 'category/deleteCategory',
             data : { 'categoryId' : categoryId },
             beforeSend: function() { 
-                $("#continuemodal"+categoryId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+categoryId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+categoryId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -245,10 +245,10 @@ function updateCategoryStatus( categoryId, type, status ) {
     $( '#continuemodal'+categoryId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'category/updateCategoryStatus',
+            url  : 'category/updateCategoryStatus',
             data : { 'categoryId' : categoryId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+categoryId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+categoryId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+categoryId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -274,10 +274,10 @@ function deleteBanner( bannerId, type ) {
     $( '#continuemodal'+bannerId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'banner/deleteBanner',
+            url  : 'banner/deleteBanner',
             data : { 'bannerId' : bannerId },
             beforeSend: function() {
-                $("#continuemodal"+bannerId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+bannerId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+bannerId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -307,10 +307,10 @@ function updateBannerStatus( bannerId, type, status ) {
     $( '#continuemodal'+bannerId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'banner/updateBannerStatus',
+            url  : 'banner/updateBannerStatus',
             data : { 'bannerId' : bannerId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+bannerId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+bannerId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+bannerId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -333,10 +333,10 @@ function deleteAdminUser( user_id ) {
     $( '#continuemodal'+user_id ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'users/deleteAdminUser',
+            url  : 'users/deleteAdminUser',
             data : { 'user_id' : user_id },
             beforeSend: function() {
-                $("#continuemodal"+user_id).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+user_id).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+user_id).prop('disabled', true);
             },
             success : function( msg ) {
@@ -355,14 +355,14 @@ function deleteRole( roleId ) {
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
-    $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal'+roleId+'" class="btn green">Yes</button>' );
-    $( '#continuemodal'+roleId ).click( function() {
+    $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal" class="btn green">Yes</button>' );
+    $( '#continuemodal').click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'users/deleteRole',
+            url  : 'deleteRole',
             data : { 'roleId' : roleId },
             beforeSend: function() {
-                $("#continuemodal"+roleId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+roleId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+roleId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -389,10 +389,10 @@ function updateUserStatus( user_id, type, status ) {
     $( '#continuemodal'+user_id ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'users/updateUserStatus',
+            url  : 'users/updateUserStatus',
             data : { 'user_id' : user_id, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+user_id).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+user_id).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+user_id).prop('disabled', true);
             },
             success : function( msg ) {
@@ -415,10 +415,10 @@ function deleteAppUser( appUserId ) {
     $( '#continuemodal'+appUserId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'appUsers/deleteAppUser',
+            url  : 'appUsers/deleteAppUser',
             data : { 'appUserId' : appUserId },
             beforeSend: function() {
-                $("#continuemodal"+appUserId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+appUserId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+appUserId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -444,10 +444,10 @@ function updateAppUserStatus( appUserId, type, status ) {
     $( '#continuemodal'+appUserId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'appUsers/updateAppUserStatus',
+            url  : 'appUsers/updateAppUserStatus',
             data : { 'appUserId' : appUserId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+appUserId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+appUserId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+appUserId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -477,10 +477,10 @@ function updateMessageStatus( msgId, type, status ) {
     $( '#continuemodal'+msgId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'messages/updateMessageStatus',
+            url  : 'messages/updateMessageStatus',
             data : { 'msgId' : msgId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+msgId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+msgId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+msgId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -506,10 +506,10 @@ function deleteMessage( msgId, type ) {
     $( '#continuemodal'+msgId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'messages/deleteMessage',
+            url  : 'messages/deleteMessage',
             data : { 'msgId' : msgId },
             beforeSend: function() {
-                $("#continuemodal"+msgId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+msgId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+msgId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -535,10 +535,10 @@ function updateDashMessageStatus( msgId, status ) {
     $( '#continuemodal'+msgId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'messages/updateMessageStatus',
+            url  : 'messages/updateMessageStatus',
             data : { 'msgId' : msgId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+msgId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+msgId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+msgId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -563,10 +563,10 @@ function updateDashCategoryStatus( categoryId, status ) {
     $( '#continuemodal'+categoryId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'category/updateCategoryStatus',
+            url  : 'category/updateCategoryStatus',
             data : { 'categoryId' : categoryId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+categoryId).html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+categoryId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+categoryId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -582,7 +582,7 @@ function ajaxDashMessage() {
     var data = {}
     $.ajax({
         type    : 'POST',
-        url     : adminurl + 'dashboard/ajaxDashMessageList',
+        url     : 'dashboard/ajaxDashMessageList',
         data    : data,
         success : function( msg ) {
             $("#dash_message_lists").html(msg);
@@ -593,7 +593,7 @@ function ajaxDashCategory() {
     var data = {}
     $.ajax({
         type    : 'POST',
-        url     : adminurl + 'dashboard/ajaxDashCategoryList',
+        url     : 'dashboard/ajaxDashCategoryList',
         data    : data,
         success : function( msg ) {
             $("#dash_category_lists").html(msg);
@@ -609,10 +609,10 @@ function change_passValidate() {
     var data = { 'c_pass' : c_pass, 'n_pass': n_pass, 'confirm_pass' : confirm_pass }
     $.ajax({
         type    : 'POST',
-        url     : adminurl + 'profile/change_passValidate',
+        url     : 'profile/change_passValidate',
         data    : data,
         beforeSend: function() {
-            $("#changepasswordsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#changepasswordsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
             $("#changepasswordsubmit").prop('disabled', true);
         },
         success : function( msg ) {
@@ -674,18 +674,18 @@ function accountValidate() {
     
     $.ajax({
         type    : 'POST',
-        url     : adminurl + 'users/accountValidate',
+        url     : 'users/accountValidate',
         data    : {'full_name':full_name,'username':username,'user_email':user_email,
         "password":password,"account_type":account_type,"account_img":account_img,"status":status},
         beforeSend: function() { 
-            $("#addaccountsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#addaccountsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
             $("#addaccountsubmit").prop('disabled', true);
         },
         success : function( msg ) {
             $("#addaccountsubmit").html('Create');
             $("#addaccountsubmit").prop('disabled', false);
             if( msg == 1 ) {
-                window.location.href = adminurl + "users";
+                window.location.href = "users";
             } else {
                 toastr.error(msg,'Error');
                 //$("#alert_msg").html('<div class="alert alert-danger">'+msg+'</div>');
@@ -738,18 +738,18 @@ function updateAccountValidate() {
     
     $.ajax({
         type    : 'POST',
-        url     : adminurl + 'users/updateAccountValidate',
+        url     : 'users/updateAccountValidate',
         data    : {'full_name':full_name,'username':username,'user_email':user_email,
         "password":password,"account_type":account_type,"user_id":user_id,"account_img":account_img,"status":status},
         beforeSend: function() { 
-            $("#editaccountsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#editaccountsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
             $("#editaccountsubmit").prop('disabled', true);
         },
         success : function( msg ) {
             $("#editaccountsubmit").html('Update');
             $("#editaccountsubmit").prop('disabled', false);
             if( msg == 1 ) {
-                window.location.href = adminurl + "users";
+                window.location.href = "users";
             } else {
                 toastr.error(msg,'Error');
                 //$("#alert_msg").html('<div class="alert alert-danger">'+msg+'</div>');

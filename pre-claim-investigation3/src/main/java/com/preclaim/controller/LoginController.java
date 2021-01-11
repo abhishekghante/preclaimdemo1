@@ -33,6 +33,12 @@ public class LoginController {
     	return "common/login";
     }
     
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpSession session) {
+    	session.removeAttribute("User_Login");
+    	return "common/login";
+    }
+    
     @RequestMapping(value = "/login_validate", method = RequestMethod.POST)
     public @ResponseBody String login_validate(HttpSession session,HttpServletRequest request, HttpServletResponse response)
     {

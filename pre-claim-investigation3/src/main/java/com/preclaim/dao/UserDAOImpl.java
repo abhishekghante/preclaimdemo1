@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.preclaim.models.UserDetails;
-import com.preclaim.models.User_Role;
+import com.preclaim.models.UserRole;
 
 public class UserDAOImpl implements UserDAO{
 
@@ -30,12 +30,12 @@ public class UserDAOImpl implements UserDAO{
 
 	DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	@Override
-	public List<User_Role> role_lists() {
+	public List<UserRole> role_lists() {
 		String sql = "select * from user_role where status = 1";
-		return template.query(sql, new RowMapper<User_Role>(){			
-			public User_Role mapRow(ResultSet rs, int row) throws SQLException
+		return template.query(sql, new RowMapper<UserRole>(){			
+			public UserRole mapRow(ResultSet rs, int row) throws SQLException
 			{
-				User_Role role = new User_Role();
+				UserRole role = new UserRole();
 				role.setRoleId(rs.getInt(1));
 				role.setRole(rs.getString(2));
 				role.setRole_code(rs.getString(3));
@@ -60,6 +60,37 @@ public class UserDAOImpl implements UserDAO{
 		catch(Exception e)
 		{
 			return "Error in adding user";
+		}
+		return "****";
+	}
+
+	@Override
+	public String create_role(UserRole role) {
+		try
+		{
+			String sql = "INSERT INTO user_role(role,role_code,status,created_on,updated_on) VALUES(?,?,?,?,?)";
+			this.template.update(sql,role.getRole(),role.getRole_code(),role.getStatus(),role.getCreated_on(),
+				role.getUpdated_on());
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return "Error adding role. Kindly contact system administrator";
+		}
+		return "****";
+	}
+
+	@Override
+	public String delete_role(UserRole role) {
+		try
+		{
+			String sql = "UPDATE user_role SET status = ? where roleId = ?";
+			this.template.update(sql,role.getStatus(),role.getRoleId());
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return "Error deleting role. Kindly contact system administrator";
 		}
 		return "****";
 	}

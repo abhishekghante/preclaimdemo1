@@ -3,11 +3,12 @@ package com.preclaim.dao;
 import java.util.List;
 
 import com.preclaim.models.UserDetails;
-import com.preclaim.models.User_Role;
+import com.preclaim.models.UserRole;
 
 public interface UserDAO {
 	
-	public List<User_Role> role_lists();
+	public List<UserRole> role_lists();
 	public String create_user(UserDetails user);
-
+	public String create_role(UserRole role);
+	public String delete_role(UserRole role);
 }
