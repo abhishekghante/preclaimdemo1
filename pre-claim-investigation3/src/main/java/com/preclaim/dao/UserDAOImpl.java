@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.preclaim.models.UserDetails;
+import com.preclaim.models.UserList;
 import com.preclaim.models.UserRole;
 
 public class UserDAOImpl implements UserDAO{
@@ -93,6 +94,34 @@ public class UserDAOImpl implements UserDAO{
 			return "Error deleting role. Kindly contact system administrator";
 		}
 		return "****";
+	}
+
+	@Override
+	public List<UserList> user_list() {
+		try
+		{
+			String sql = "select * from admin_user a, user_role b where a.account_type = b.roleId";			
+			List<UserList> user_list = this.template.query(sql, 
+					(ResultSet rs, int count) -> {
+						UserList user = new UserList();
+						user.setSrno(count);
+						user.setFull_name(rs.getString("full_name"));
+						user.setAccount_type(rs.getString("role"));
+						user.setAccount_code(rs.getString("roleId"));
+						user.setUsername(rs.getString("username"));
+						user.setUser_email(rs.getString("user_email"));
+						user.decodePassword(rs.getString("password"));
+						user.setUser_status(rs.getString("status"));
+						return user;
+					});
+			return user_list;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 }

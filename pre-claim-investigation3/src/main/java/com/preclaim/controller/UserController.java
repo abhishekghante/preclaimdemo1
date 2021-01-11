@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.preclaim.dao.UserDAO;
 import com.preclaim.models.ScreenDetails;
 import com.preclaim.models.UserDetails;
+import com.preclaim.models.UserList;
 import com.preclaim.models.UserRole;
 
 @Controller
@@ -36,8 +37,7 @@ public class UserController {
     	details.setSub_menu1("Add User");
     	details.setSub_menu2("Manage Users");
     	details.setSub_menu2_path("/user/user_list");
-    	session.setAttribute("ScreenDetails", details);
-    	
+    	session.setAttribute("ScreenDetails", details);    	
     	List<UserRole> role = dao.role_lists();
     	m.addAttribute("role_list", role);
     	
@@ -73,7 +73,11 @@ public class UserController {
     	details.setMain_menu("Users");
     	details.setSub_menu1("User Lists");
     	session.setAttribute("ScreenDetails", details);
-		return "common/templatecontent";
+    	List<UserList> user_list = dao.user_list();
+    	session.setAttribute("user_list",user_list);
+    	List<UserRole> role = dao.role_lists();
+    	session.setAttribute("role_list", role);  	
+    	return "common/templatecontent";
 	}
 	
 	@RequestMapping(value = "/role", method = RequestMethod.GET)

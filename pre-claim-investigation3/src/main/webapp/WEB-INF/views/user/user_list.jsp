@@ -1,3 +1,15 @@
+<%@page import = "java.util.List" %>
+<%@page import = "com.preclaim.models.UserList" %>
+<%@page import = "com.preclaim.models.UserRole" %>
+<% 
+List<UserList> user_list = (List<UserList>) session.getAttribute("user_list");
+session.removeAttribute("user_list");
+List<UserRole> user_role = (List<UserRole>) session.getAttribute("role_list");
+String list_of_roles = "[";
+for(UserRole role:user_role)
+	list_of_roles += "\"" + role.getRole() + "\","; 
+list_of_roles += list_of_roles.substring(0, list_of_roles.length()-1) + "]";
+%>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
@@ -12,11 +24,9 @@
         </div>
         <div class="actions">
             <div class="btn-group">
-              <?php if( in_array( 'users/add', $permission_arr ) ) { ?>
               <a href="${pageContext.request.contextPath}/user/add_user" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
-              <?php } ?>
             </div>
         </div>
       </div>
@@ -52,6 +62,47 @@
                         <th class="head2 no-sort"></th>
                       </tr>
                     </tfoot>
+                    <tbody>
+                    	<%if(user_list != null)
+                    		{int i = 1;
+                    		for(UserList items:user_list)
+                    		{%>
+                    		<tr>
+                    			<td><%=i %></td>
+                    			<td><%= items.getFull_name()%></td>
+                    			<td><%= items.getAccount_type()%></td>
+                    			<td><%= items.getUsername()%></td>
+                    			<td><%= items.getUser_email()%></td>
+                    			<td><%= items.getPassword()%></td>
+                    			<td>
+                    				<% if(items.getUser_status().equals("1")) {%>
+                    					<span class="label label-sm label-success">Active</span>
+									<%}else{ %>
+										<span class="label label-sm label-danger">Inactive</span>									
+									<%} %>								
+								</td>                    			
+                    			<td>
+                    				<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteAdminUser('.$account->user_id.');" 
+                    					class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                    				<% if(items.getUser_status().equals("1")) {%>
+									<a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateUserStatus(,1,2);" 
+										class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i>
+									</a>
+									<%}else{ %>
+									<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateUserStatus(,1,1);"
+										class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i>
+									</a>
+									<%} %>
+                    				<a href="${pageContext.request.contextPath}/users/edit/" data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
+                    				
+                    			</td>
+                   			</tr>
+                   			<%
+                   			i++;
+                   			}                    		
+                    		} %>
+                    </tbody>
+                    
                   </table>
                 </div>
               <div class="clearfix"></div>
@@ -66,61 +117,40 @@
 $(document).ready(function() {
   var start = '';
   var end = '';
-  /*
-  table = $('#adminuser_list').DataTable({
-      language: {
-        processing: "<img src='<?php echo base_url();?>assets/img/loading.gif'>",
-      },
-      "processing": true, //Feature control the processing indicator.
-      "serverSide": true, //Feature control DataTables' server-side processing mode.
-      "order": [], //Initial no order.
-      'autoWidth': false,
-      "ajax": {
-          "data": function(d) {
-          },
-          "url": "<?php echo site_url('/users/accountsTableResponse')?>",
-          "type": "POST"
-      },
-      "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
-      "lengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
-      //Set column definition initialisation properties.
-      "columnDefs": [{
-          "targets": [0,5,7],
-          "orderable": false, //set not orderable
-      },
-      {
-          "targets": [0,5,7],
-          "searchable": false, //set orderable
-      } ],
-      buttons: []
-  });
-  */
-  var levelLists = <?php echo json_encode($role_lists) ?>;
+  
+  var table = $('#adminuser_list').DataTable();
+  
   var i = 0;
   $('#adminuser_list tfoot th').each( function () {
     if( i == 1 || i == 3 || i == 4 ){
       $(this).html( '<input type="text" class="form-control" placeholder="" />' );
     }else if(i == 2){
-      var tech_selectbox = '<select name="user_type" id="user_type" class="form-control">'
-                              +'<option value="">All</option>';
-      $.each(levelLists, function (i, elem) {
-          tech_selectbox += '<option value="'+ elem['roleId'] +'">'+ decodeURIComponent(elem['role']) +'</option>';
-      });
-        tech_selectbox += '</select>';
-        $(this).html( tech_selectbox );
+    	var tech_selectbox = '<select name="user_type" id="user_type" class="form-control">'
+            +'<option value="">All</option>';
+		<%
+			if(user_role != null)
+			{
+				for(UserRole role : user_role)
+				{			
+		%>
+            
+            tech_selectbox += '<option value ="<%=role.getRole()%>"><%=role.getRole()%></option>';
+        <%
+        		}
+			}
+		%>
+		tech_selectbox += '</select>';
+		$(this).html(tech_selectbox);
     }else if(i == 6){
       var status_selectbox = '<select name="status_type" id="status_type" class="form-control">'
                             +'<option value="">All</option>'
-                            +'<option value="1">Active</option>'
-                            +'<option value="2">Inactive</option>'
+                            +'<option value="Active">Active</option>'
+                            +'<option value="Inactive">Inactive</option>'
                             +'</select>';
       $(this).html( status_selectbox );
     }
     i++;
   });
-
-  // DataTable
-  var table = $('#adminuser_list').DataTable();
 
   // Apply the search
   table.columns().every( function () {
