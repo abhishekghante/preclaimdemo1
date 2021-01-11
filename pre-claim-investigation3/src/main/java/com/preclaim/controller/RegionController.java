@@ -17,10 +17,10 @@ public class RegionController{
 		ScreenDetails details=new ScreenDetails();
 		details.setScreen_name("../region/add_region.jsp");
 		details.setScreen_title("Add Region");
-		details.setUser_id("");
-		details.setUser_name("admin");
 		details.setMain_menu("Regions");
-		details.setSub_menu("Add Region");
+		details.setSub_menu1("Add Region");
+    	details.setSub_menu2("Manage Regions");
+    	details.setSub_menu2_path("/region/pending_region");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}
@@ -31,10 +31,8 @@ public class RegionController{
 		ScreenDetails details=new ScreenDetails();
 		details.setScreen_name("../region/pending_region.jsp");
 		details.setScreen_title("Pending Region");
-		details.setUser_id("");
-		details.setUser_name("admin");
 		details.setMain_menu("Regions");
-		details.setSub_menu("Pending Regions");
+		details.setSub_menu1("Pending Regions");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}
@@ -44,10 +42,8 @@ public class RegionController{
 		ScreenDetails details=new ScreenDetails();
 		details.setScreen_name("../region/active_region.jsp");
 		details.setScreen_title("Active Region");
-		details.setUser_id("");
-		details.setUser_name("admin");
 		details.setMain_menu("Regions");
-		details.setSub_menu("Active Regions");
+		details.setSub_menu1("Active Regions");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}

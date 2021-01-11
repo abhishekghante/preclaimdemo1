@@ -1,8 +1,6 @@
-<!--<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl       = $this->config->item( 'base_url' );
-$random_pass    = randomPassword();
-?> -->
+<%@page import="com.preclaim.models.User_Role" %>
+<%@page import = "java.util.List" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <style type="text/css">
 #imgAccount { display:none;}
 </style>
@@ -27,37 +25,30 @@ $random_pass    = randomPassword();
       <!-- /.box-header -->
       <!-- form start -->
       <div id="message_account"></div>
-      <form novalidate="" id="add_account_form" role="form" method="post" class="form-horizontal">
+      <form novalidate="" id="add_account_form" role="form" method="post" class="form-horizontal" action = "create_user">
         <div class="box-body">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="col-md-4 control-label" for="full_name">Name <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" placeholder="Name" id="full_name" class="form-control" name="full_name">
+                  <input type="text" required placeholder="Name" id="full_name" class="form-control" name="full_name">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-4 control-label" for="user_email">Email</label>
                 <div class="col-md-8">
-                  <input type="email" required="" placeholder="Email" id="user_email" class="form-control" name="user_email">
+                  <input type="email" required placeholder="Email" id="user_email" class="form-control" name="user_email">
                 </div>
               </div>
               <div class="form-group level_div">
                 <label class="col-md-4 control-label" for="account_type">Select User Type <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <select name="account_type" id="account_type" class="form-control selecter_1" tabindex="-1">
-                    <option value="">Select</option>
-                <!-- <?php 
-                    if($role_lists){
-                      foreach ($role_lists as $roleInfo) {
-                        if($this->session->userdata(SYS_SESSION_ID) != SUPER_ADMIN_ID && $roleInfo->role_code == 'SA001') {
-                          continue;
-                        }
-                        ?><option value="<?php echo $roleInfo->roleId; ?>"><?= rawurldecode($roleInfo->role); ?></option><?php
-                      }
-                    }
-                    ?>  -->
+                  <select name="account_type" id="account_type" class="form-control selecter_1" tabindex="-1" required>
+                    <option value="-1" selected disabled>Select</option>
+                	<c:forEach var="role_list" items="${role_list}">
+                		<option value = "${role_list.roleId}">${role_list.role}</option>
+                	</c:forEach>
                   </select>
                 </div>
               </div>
@@ -76,7 +67,7 @@ $random_pass    = randomPassword();
               <div class="form-group">
                 <label class="col-md-4 control-label" for="username">Username <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" placeholder="User name" maxlength="15" id="username" class="username form-control" name="username">
+                  <input type="text" required placeholder="User name" maxlength="15" id="username" class="username form-control" name="username">
                 </div>
               </div>
               <div class="form-group">
@@ -88,9 +79,9 @@ $random_pass    = randomPassword();
               <div class="form-group level_div">
                 <label class="col-md-4 control-label" for="status">Select Status <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <select name="status" id="status" class="form-control selecter_1" tabindex="-1">
-                    <option value="">Select</option>
-                    <option value="1">Activate</option>
+                  <select name="status" id="status" class="form-control selecter_1" tabindex="-1" required>
+                    <option value="-1" selected disabled>Select</option>
+                    <option value="1">Active</option>
                     <option value="2">Inactive</option>
                   </select>
                 </div>
@@ -101,7 +92,7 @@ $random_pass    = randomPassword();
         <!-- /.box-body -->
         <div class="box-footer">
           <div class="col-md-offset-2 col-md-10">
-            <button class="btn btn-info" id="addaccountsubmit" onClick="return accountValidate();" type="button">Create</button>
+            <button class="btn btn-info" id="addaccountsubmit" type="submit" onClick="return accountValidate();">Create</button>
             <button class="btn btn-danger" type="reset">Clear</button>
           </div>
         </div>
@@ -111,11 +102,12 @@ $random_pass    = randomPassword();
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
-  
-  $("#account_picture").on('click', function() {
-    $("#imgAccount").trigger('click');
-  });
+	$("#account_picture").on('click', function() {
+	    $("#imgAccount").trigger('click');
+	  });	  
+
   formdata = new FormData();
+  /*
   $("#imgAccount").change(function(){
     // readURL(this);
     var file = this.files[0];
@@ -141,11 +133,12 @@ $(document).ready(function(){
           }
         }
       }
-      xhr.open("POST", adminurl+"users/ajaxUpload");
+      xhr.open("POST","users/ajaxUpload");
       xhr.send(formdata);
     }else{
       alert('File too large. File must be less than 2 MB.');
     }
     });
+  */
 });
 </script>

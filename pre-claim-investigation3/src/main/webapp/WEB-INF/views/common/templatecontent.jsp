@@ -19,7 +19,18 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                     <a href="${pageContext.request.contextPath}/dashboard">Home</a>
                     <i class="fa fa-circle"></i>
                 </li>
-                	<%=details.getScreen_title() %>                
+                <%if (!details.getSub_menu2().equals(""))
+                	{ %>
+               	<li>
+               		<a href = "${pageContext.request.contextPath}<%=details.getSub_menu2_path() %>">
+               			<%=details.getSub_menu2() %>
+               		</a>
+               		<i class = "fa fa-circle"></i>
+              	</li>
+              	<%} %>
+                <li class = "active">
+                	<%=details.getScreen_title() %>
+               	</li>                	               
             </ul>
             <ul class="page-breadcrumb" style="margin-left: 20px;">
                 <li><small><%=Config.version %></small></li>

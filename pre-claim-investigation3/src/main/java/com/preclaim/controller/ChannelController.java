@@ -17,10 +17,10 @@ public class ChannelController {
 	    	ScreenDetails details = new ScreenDetails();
 	    	details.setScreen_name("../channel/add_channel.jsp");
 	    	details.setScreen_title("Add Channel");
-	    	details.setUser_id("");
-	    	details.setUser_name("admin");
 	    	details.setMain_menu("Channels");
-	    	details.setSub_menu("Add Channel");
+	    	details.setSub_menu1("Add Channel");
+	    	details.setSub_menu2("Manage Channels");
+	    	details.setSub_menu2_path("/channel/pending_channel");
 	    	session.setAttribute("ScreenDetails", details);
 	    	return "common/templatecontent";
 	    }
@@ -31,10 +31,8 @@ public class ChannelController {
 		   ScreenDetails details=new ScreenDetails();
 		   details.setScreen_name("../channel/pending_channel.jsp");
 		   details.setScreen_title("Pending Channels");
-		   details.setUser_id("");
-		   details.setUser_name("admin");
 		   details.setMain_menu("Channels");
-		   details.setSub_menu("Pending Channels");
+		   details.setSub_menu1("Pending Channels");
 		   session.setAttribute("ScreenDetails", details);
 		   return "common/templatecontent";
 		   
@@ -46,10 +44,8 @@ public class ChannelController {
 		 ScreenDetails details=new ScreenDetails();
 		 details.setScreen_name("../channel/active_channel.jsp");
 		 details.setScreen_title("Active Channels");
-		 details.setUser_id("");
-		 details.setUser_name("admin");
 		 details.setMain_menu("Channels");
-		 details.setSub_menu("Active Channels");
+		 details.setSub_menu1("Active Channels");
 		 session.setAttribute("ScreenDetails", details);
 		 return "common/templatecontent";
 	 }

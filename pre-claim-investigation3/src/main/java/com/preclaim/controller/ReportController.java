@@ -17,12 +17,10 @@ public class ReportController {
     public String messages_status(HttpSession session) {
     	session.removeAttribute("ScreenDetails");
     	ScreenDetails details = new ScreenDetails();
-    	details.setScreen_name("../report/messages_status.jsp");
+    	details.setScreen_name("/report/messages_status");
     	details.setScreen_title("Cases Status Lists");
-    	details.setUser_id("");
-    	details.setUser_name("admin");
     	details.setMain_menu("Report");
-    	details.setSub_menu("All investigations");
+    	details.setSub_menu1("All investigations");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -33,10 +31,8 @@ public class ReportController {
     	ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../report/read_message.jsp");
     	details.setScreen_title("Cases Status Lists");
-    	details.setUser_id("");
-    	details.setUser_name("admin");
     	details.setMain_menu("Report");
-    	details.setSub_menu("Assigned Investigators cases");
+    	details.setSub_menu1("Assigned Investigators cases");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -47,10 +43,8 @@ public class ReportController {
     	ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../report/like_message.jsp");
     	details.setScreen_title("Like Cases Lists");
-    	details.setUser_id("");
-    	details.setUser_name("admin");
     	details.setMain_menu("Report");
-    	details.setSub_menu("Investigators matched/unmatched client");
+    	details.setSub_menu1("Investigators matched/unmatched client");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -61,10 +55,8 @@ public class ReportController {
     	ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../report/favourite_message.jsp");
     	details.setScreen_title("Favourite Cases Lists");
-    	details.setUser_id("");
-    	details.setUser_name("admin");
     	details.setMain_menu("Report");
-    	details.setSub_menu("");
+    	details.setSub_menu1("");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -74,10 +66,8 @@ public class ReportController {
     	ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../report/login_details.jsp");
     	details.setScreen_title("Login Details");
-    	details.setUser_id("");
-    	details.setUser_name("admin");
     	details.setMain_menu("Report");
-    	details.setSub_menu("");
+    	details.setSub_menu1("");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }

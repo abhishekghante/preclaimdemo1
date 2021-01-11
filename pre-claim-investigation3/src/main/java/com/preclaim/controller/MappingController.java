@@ -18,10 +18,10 @@ public class MappingController{
 		ScreenDetails details=new ScreenDetails();
 		details.setScreen_name("../mapping/add_mapping.jsp");
 		details.setScreen_title("");
-		details.setUser_id("");
-		details.setUser_name("admin");
 		details.setMain_menu("Mapping");
-		details.setSub_menu("Add Mapping");
+		details.setSub_menu1("Add Mapping");
+    	details.setSub_menu2("Manage Mapping");
+    	details.setSub_menu2_path("/mapping/mapping_list");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 
@@ -33,10 +33,8 @@ public class MappingController{
 		ScreenDetails details=new ScreenDetails();
 		details.setScreen_name("../mapping/mapping_list.jsp");
 		details.setScreen_title("Mapping Lists");
-		details.setUser_id("");
-		details.setUser_name("admin");
 		details.setMain_menu("Mapping");
-		details.setSub_menu("Mapping List");
+		details.setSub_menu1("Mapping List");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}

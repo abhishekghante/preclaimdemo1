@@ -50,33 +50,33 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
               </a>
               <ul class="sub-menu">
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("Bulk case uploads")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Bulk case uploads")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/message/import_case" 
                   	class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Bulk case uploads
                   </a>
                 </li>
 
-                <li class="nav-item <%if(details.getSub_menu().equals("Create Case")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Create Case")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/message/add_message" 
                   	class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Create Case
                   </a>
                 </li>
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("Pending Cases")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Pending Cases")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/message/pending_message" 
                   	class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Cases
                   </a>
                 </li>
-                <li class="nav-item <%if(details.getSub_menu().equals("Active  Cases")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Active  Cases")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/message/active_message" 
                   	class="nav-link nav-toggle">
                     <i class="icon-check"></i>Active  Cases
                   </a>
                 </li>
-                <li class="nav-item <%if(details.getSub_menu().equals("Assigned Cases")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Assigned Cases")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/message/assigned_message" 
                   	class="nav-link nav-toggle">
                     <i class="icon-check"></i> Assigned Cases
@@ -97,19 +97,19 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
               </a>
               <ul class="sub-menu">
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("Add User")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Add User")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/user/add_user" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> Add User
                   </a>
                 </li>
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("User Lists")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("User Lists")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/user/user_list" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> User Lists
                   </a>
                 </li>
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("User Role")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("User Role")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/user/role" class="nav-link nav-toggle">
                     <i class="icon-user-following"></i> User Role
                   </a>
@@ -125,19 +125,19 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
               </a>
               <ul class="sub-menu">
 
-                <li class="nav-item <%if(details.getSub_menu().equals("Add Groups")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Add Groups")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/group/add_group" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Groups
                   </a>
                 </li>
 
-                <li class="nav-item <%if(details.getSub_menu().equals("Pending Groups")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Pending Groups")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/group/pending_group" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Groups
                   </a>
                 </li>
 
-                <li class="nav-item <%if(details.getSub_menu().equals("Active Groups")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Active Groups")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/group/active_group" class="nav-link nav-toggle">
                     <i class="icon-check"></i> Active Groups
                   </a>
@@ -152,17 +152,17 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                   <span class="arrow "></span>
               </a>
               <ul class="sub-menu">
-                <li class="nav-item <%if(details.getSub_menu().equals("Add Channel")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Add Channel")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/channel/add_channel" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Channel
                   </a>
                 </li>
-                <li class="nav-item <%if(details.getSub_menu().equals("Pending Channels")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Pending Channels")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/channel/pending_channel" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Channels
                   </a>
                 </li>
-                <li class="nav-item <%if(details.getSub_menu().equals("Active Channels")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Active Channels")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/channel/active_channel" class="nav-link nav-toggle">
                     <i class="icon-check"></i> Active Channels
                   </a>
@@ -178,18 +178,18 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
               </a>
               <ul class="sub-menu">
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("Add Region")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Add Region")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/region/add_region" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Region
                   </a>
                 </li>
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("Pending Regions")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Pending Regions")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/region/pending_region" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Regions
                   </a>
                 </li>
-                <li class="nav-item <%if(details.getSub_menu().equals("Active Regions")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Active Regions")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/region/active_region" class="nav-link nav-toggle">
                     <i class="icon-check"></i> Active Regions
                   </a>
@@ -205,19 +205,19 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
               </a>
               <ul class="sub-menu">
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("Add Investigations")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Add Investigations")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/category/add_category" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Investigation
                   </a>
                 </li>
 
-                <li class="nav-item <%if(details.getSub_menu().equals("Pending Investigations")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Pending Investigations")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/category/pending_category" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Investigations
                   </a>
                 </li>
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("Active investigations")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Active investigations")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/category/active_category" class="nav-link nav-toggle">
                     <i class="icon-check"></i> Active investigations
                   </a>
@@ -232,12 +232,12 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                   <span class="arrow "></span>
               </a>
               <ul class="sub-menu">
-                <li class="nav-item <%if(details.getSub_menu().equals("Add Mapping")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Add Mapping")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/mapping/add_mapping" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Mapping
                   </a>
                 </li>
-                <li class="nav-item <%if(details.getSub_menu().equals("Mapping List")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Mapping List")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/mapping/mapping_list" class="nav-link nav-toggle">
                     <i class="icon-list"></i> Mapping List
                   </a>
@@ -256,32 +256,32 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                   <span class="arrow"></span>
               </a>
               <ul class="sub-menu">
-                <li class="nav-item <%if(details.getSub_menu().equals("All investigations")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("All investigations")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/report/messages_status" class="nav-link nav-toggle">
                     <i class="icon-bar-chart"></i> All investigations 
 
                   </a>
                 </li>
 
-                <li class="nav-item <%if(details.getSub_menu().equals("Assigned Investigators cases")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Assigned Investigators cases")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/report/read_message" class="nav-link nav-toggle">
                     <i class="icon-envelope-open"></i>  Assigned Investigators cases
                   </a>
                 </li>
 
-                <li class="nav-item <%if(details.getSub_menu().equals("Investigators matched/unmatched client")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Investigators matched/unmatched client")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/report/like_message" class="nav-link nav-toggle">
                     <i class="icon-like"></i> Investigators matched/unmatched client
                   </a>
                 </li>
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("Billing Reports")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Billing Reports")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/report/favourite_message" class="nav-link nav-toggle">
                     <i class="icon-docs"></i> Billing Reports
                   </a>
                 </li>
                 
-                <li class="nav-item <%if(details.getSub_menu().equals("Export data")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Export data")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/report/login_details" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> Export data
                   </a>
@@ -297,17 +297,17 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                   <span class="arrow "></span>
               </a>
               <ul class="sub-menu">
-                <li class="nav-item <%if(details.getSub_menu().equals("Update billing")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Update billing")){%>active<%}%>">
                   <a href="#" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Update billing
                   </a>
                 </li>
-                <li class="nav-item <%if(details.getSub_menu().equals("Payment")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Payment")){%>active<%}%>">
                   <a href="#" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Payment
                   </a>
                 </li>
-                <li class="nav-item <%if(details.getSub_menu().equals("Capturing payment details")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Capturing payment details")){%>active<%}%>">
                   <a href="#" class="nav-link nav-toggle">
                     <i class="icon-check"></i> Capturing payment details
                   </a>

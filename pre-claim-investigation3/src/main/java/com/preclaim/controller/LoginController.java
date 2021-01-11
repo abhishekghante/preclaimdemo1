@@ -23,11 +23,16 @@ public class LoginController {
 	
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String login() {
-        return "common/login";
+    	return "common/login";
+    }
+    
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login_method() {
+    	return "common/login";
     }
     
     @RequestMapping(value = "/login_validate", method = RequestMethod.POST)
-    public @ResponseBody String login_validate(HttpServletRequest request, HttpServletResponse response)
+    public @ResponseBody String login_validate(HttpSession session,HttpServletRequest request, HttpServletResponse response)
     {
     	String username = request.getParameter("username");
     	String password = request.getParameter("password");
@@ -35,7 +40,10 @@ public class LoginController {
     	System.out.println(login.toString());
     	UserDetails user = dao.validateUser(login);
     	if(user != null)
+    	{
+    		session.setAttribute("User_Login", user);
     		return "****";
+    	}
     	else
     		return "Invalid Username or Password";
     }
@@ -45,8 +53,6 @@ public class LoginController {
     	ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("dashboard.jsp");
     	details.setScreen_title("Dashboard");
-    	details.setUser_id("");
-    	details.setUser_name("admin");
     	details.setMain_menu("Dashboard");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";

@@ -18,10 +18,10 @@ public class GroupController {
     	ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../group/add_group.jsp");
     	details.setScreen_title("Add Group");
-    	details.setUser_id("");
-    	details.setUser_name("admin");
     	details.setMain_menu("Groups");
-    	details.setSub_menu("Add Groups");
+    	details.setSub_menu1("Add Group");
+    	details.setSub_menu2("Manage Groups");
+    	details.setSub_menu2_path("/group/pending_group");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -32,10 +32,8 @@ public class GroupController {
     	ScreenDetails details=new ScreenDetails();
     	details.setScreen_name("../group/pending_group.jsp");
     	details.setScreen_title("Groups Lists");
-    	details.setUser_id("");
-    	details.setUser_name("admin");
     	details.setMain_menu("Groups");
-    	details.setSub_menu("Pending Groups");
+    	details.setSub_menu1("Pending Groups");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
@@ -46,10 +44,8 @@ public class GroupController {
     	ScreenDetails details=new ScreenDetails();
     	details.setScreen_name("../group/active_group.jsp");;
     	details.setScreen_title("Active Group");
-    	details.setUser_id("");
-    	details.setUser_name("admin");
     	details.setMain_menu("Groups");
-    	details.setSub_menu("Active Groups");
+    	details.setSub_menu1("Active Groups");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }

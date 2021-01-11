@@ -18,10 +18,10 @@ public class CategoryController {
 	    	ScreenDetails details = new ScreenDetails();
 	    	details.setScreen_name("../category/add_category.jsp");
 	    	details.setScreen_title("Add Category");
-	    	details.setUser_id("");
-	    	details.setUser_name("admin");
 	    	details.setMain_menu("Type of Investigations");
-	    	details.setSub_menu("Add Investigation");
+	    	details.setSub_menu1("Add Investigation");
+	    	details.setSub_menu2("Manage Category");
+	    	details.setSub_menu2_path("/category/pending_category");
 	    	session.setAttribute("ScreenDetails", details);
 	    	return "common/templatecontent";
 	    }
@@ -33,10 +33,8 @@ public class CategoryController {
 	    	ScreenDetails details = new ScreenDetails();
 	    	details.setScreen_name("../category/pending_category.jsp");
 	    	details.setScreen_title("Category Lists");
-	    	details.setUser_id("");
-	    	details.setUser_name("admin");
 	    	details.setMain_menu("Type of Investigations");
-	    	details.setSub_menu("Pending Investigations");
+	    	details.setSub_menu1("Pending Investigations");
 	    	session.setAttribute("ScreenDetails", details);
 	    	return "common/templatecontent";
 	    }
@@ -46,10 +44,8 @@ public class CategoryController {
 	    	ScreenDetails details = new ScreenDetails();
 	    	details.setScreen_name("../category/active_category.jsp");
 	    	details.setScreen_title("Category Lists");
-	    	details.setUser_id("");
-	    	details.setUser_name("admin");
 	    	details.setMain_menu("Type of Investigations");
-	    	details.setSub_menu("Active investigations");
+	    	details.setSub_menu1("Active investigations");
 	    	session.setAttribute("ScreenDetails", details);
 	    	return "common/templatecontent";
 	    }

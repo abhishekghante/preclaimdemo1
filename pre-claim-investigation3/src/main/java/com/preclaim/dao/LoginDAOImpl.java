@@ -43,12 +43,11 @@ class UserMapper implements RowMapper<UserDetails>
 {	  
 	public UserDetails mapRow(ResultSet rs, int arg1) throws SQLException 
 	{
-		UserDetails emp = new UserDetails();
-		emp.setUser_id(rs.getInt("user_id"));
-		emp.setUsername(rs.getString("username"));
-		emp.setPassword(rs.getString("password"));
-		    
-		return emp;	  
+		UserDetails login_user = new UserDetails();
+		login_user.setUsername(rs.getString("username"));
+		login_user.setPassword(rs.getString("password"));
+		login_user.setFull_name(rs.getString("full_name"));
+		return login_user;	  
 	}
 }
 

@@ -17,9 +17,7 @@ public class LivetrackingController {
     	session.removeAttribute("ScreenDetails");    	
 		ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../livetracking/index.jsp");
-    	details.setScreen_title("App User Management");
-    	details.setUser_id("");
-    	details.setUser_name("admin");
+    	details.setScreen_title("App Users Lists");
     	details.setMain_menu("Live Tracking");
     	session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";

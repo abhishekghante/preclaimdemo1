@@ -37,4 +37,8 @@
  		<beans:property name="template" ref="jt"/>    
 	</beans:bean>
 	
+	<beans:bean id="userdao" class="com.preclaim.dao.UserDAOImpl" >
+ 		<beans:property name="template" ref="jt"/>    
+	</beans:bean>
+	
 </beans:beans>
