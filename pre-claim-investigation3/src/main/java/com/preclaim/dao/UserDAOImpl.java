@@ -2,7 +2,6 @@ package com.preclaim.dao;
 
 import java.sql.ResultSet;
 import java.util.List;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 

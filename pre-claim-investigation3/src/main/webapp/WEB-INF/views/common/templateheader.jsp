@@ -69,7 +69,8 @@ UserDetails user = (UserDetails) session.getAttribute("User_Login");
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <img alt="No Image" class="img-circle" 
                                 	src="${pageContext.request.contextPath}/resources/img/avatar.png">
-                                <span class="username username-hide-on-mobile">Welcome, <%= user.getFull_name() %></span>
+                                <span class="username username-hide-on-mobile">
+                                	Welcome, <%= user == null ? "" : user.getFull_name() %></span>
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">

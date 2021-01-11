@@ -41,6 +41,8 @@ public class LoginController {
     	UserDetails user = dao.validateUser(login);
     	if(user != null)
     	{
+    		if(user.getStatus() == 0)
+    			return "User ID disabled. Kindly contact system administrator";
     		session.setAttribute("User_Login", user);
     		return "****";
     	}
