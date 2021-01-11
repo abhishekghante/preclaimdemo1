@@ -25,7 +25,7 @@
 		<beans:property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>  
 		<beans:property name="url" value="jdbc:mysql://localhost:3306/PreClaimInvestigation"/>    
 		<beans:property name="username" value="root"/>    
-		<beans:property name="password" value="Spidey#000"/>    
+		<beans:property name="password" value="root"/>    
 	</beans:bean>    
 
 	 <!-- End -->   
@@ -38,6 +38,18 @@
 	</beans:bean>
 	
 	<beans:bean id="userdao" class="com.preclaim.dao.UserDAOImpl" >
+ 		<beans:property name="template" ref="jt"/>    
+	</beans:bean>
+	
+	<beans:bean id="groupdao" class="com.preclaim.dao.GroupDaoImpl" >
+ 		<beans:property name="template" ref="jt"/>    
+	</beans:bean>
+	
+	<beans:bean id="regiondao" class="com.preclaim.dao.RegionDaoImpl" >
+ 		<beans:property name="template" ref="jt"/>    
+	</beans:bean>
+	
+	<beans:bean id="channeldao" class="com.preclaim.dao.ChannelDaoImpl" >
  		<beans:property name="template" ref="jt"/>    
 	</beans:bean>
 	

@@ -22,7 +22,7 @@ $assetUrl  = $this->config->item( 'base_url' );
     <div class="box box-primary">
       <!-- form start -->
       <div id="message_account"></div>
-      <form novalidate="" id="add_group_form" role="form" method="post" class="form-horizontal">
+      <form novalidate="" id="add_group_form" role="form" method="post" class="form-horizontal" action="create_group">
         <div class="box-body">
           <div class="row">
             <div class="col-md-6">
@@ -38,7 +38,7 @@ $assetUrl  = $this->config->item( 'base_url' );
         <!-- /.box-body -->
         <div class="box-footer">
           <div class="col-md-offset-2 col-md-10">
-            <button class="btn btn-info" id="addgroupsubmit" onClick="return addGroup();" type="button">Add Group</button>
+            <button class="btn btn-info" id="addgroupsubmit" onClick="return addGroup();" type="submit">Add Group</button>
             <button class="btn btn-danger" type="reset" value="">Clear</button>
           </div>
         </div>
