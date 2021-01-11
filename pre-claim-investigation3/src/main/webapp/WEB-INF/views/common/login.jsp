@@ -117,6 +117,8 @@
 	        toastr.error('Password is required.','Error');
 	    }
 	    if(username && password){
+	    	$("#login_submit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+            $("#login_submit").prop('disabled', true);
 	    	var formdata = {"username":username,"password":password};
 	    	$.ajax({
 	    		type: "POST",

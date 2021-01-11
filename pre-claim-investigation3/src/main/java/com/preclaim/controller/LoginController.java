@@ -1,5 +1,7 @@
 package com.preclaim.controller;
 
+import java.util.Base64;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,7 +37,9 @@ public class LoginController {
     public @ResponseBody String login_validate(HttpSession session,HttpServletRequest request, HttpServletResponse response)
     {
     	String username = request.getParameter("username");
-    	String password = request.getParameter("password");
+    	Base64.Encoder encoder = Base64.getEncoder();    
+		String password = encoder.encodeToString(request.getParameter("password").getBytes());  		
+    	
     	Login login = new Login(username, password);
     	System.out.println(login.toString());
     	UserDetails user = dao.validateUser(login);

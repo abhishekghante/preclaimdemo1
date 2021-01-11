@@ -7,11 +7,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.preclaim.dao.UserDAO;
 import com.preclaim.models.ScreenDetails;
+import com.preclaim.models.UserDetails;
 import com.preclaim.models.User_Role;
 
 @Controller
@@ -41,14 +43,20 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/create_user", method = RequestMethod.POST)
-	public String create_user(HttpSession session,Model m)
+	public String create_user(@ModelAttribute("user_details") UserDetails user, HttpSession session)
 	{
+		System.out.println(user.toString());
+		String message = dao.create_user(user);
 		session.removeAttribute("ScreenDetails");    	
 		ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../user/user_list.jsp");
-    	details.setScreen_title("User LIst");
+    	details.setScreen_title("User List");
     	details.setMain_menu("Users");
     	details.setSub_menu1("User Lists");
+    	if(message.equals("****"))
+    		details.setSuccess_message1("User created successfully");
+    	else
+    		details.setError_message1(message);
     	session.setAttribute("ScreenDetails", details);
 		
 		return "common/templatecontent";
@@ -59,7 +67,7 @@ public class UserController {
 		session.removeAttribute("ScreenDetails");    	
 		ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../user/user_list.jsp");
-    	details.setScreen_title("User LIst");
+    	details.setScreen_title("User List");
     	details.setMain_menu("Users");
     	details.setSub_menu1("User Lists");
     	session.setAttribute("ScreenDetails", details);

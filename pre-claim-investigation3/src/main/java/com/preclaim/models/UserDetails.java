@@ -1,5 +1,7 @@
 package com.preclaim.models;
 
+import java.util.Base64;
+import java.util.Base64.Encoder;
 
 public class UserDetails {
 	private String full_name;  
@@ -48,7 +50,8 @@ public class UserDetails {
 		return password;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		Encoder encoder = Base64.getEncoder();
+		this.password = encoder.encodeToString(password.getBytes());
 	}
 	public String getUsertype() {
 		return usertype;

@@ -14,7 +14,9 @@
         </div>
         <div class="actions">
             <div class="btn-group">
-              <a href="${pageContext.request.contextPath}/user/user_list" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
+              <a href="${pageContext.request.contextPath}/user/user_list" data-toggle="tooltip" 
+              	class="btn green-haze btn-outline btn-xs pull-right" style="margin-right: 5px;" 
+              	data-original-title="Back" title="Back">
                 <i class="fa fa-reply"></i>
               </a>
             </div>
@@ -25,26 +27,30 @@
       <!-- /.box-header -->
       <!-- form start -->
       <div id="message_account"></div>
-      <form novalidate="" id="add_account_form" role="form" method="post" class="form-horizontal" action = "create_user">
+      <form id="add_account_form" role="form" method="post" class="form-horizontal" 
+      	action = "create_user" modelAttribute = "user_details">
         <div class="box-body">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="col-md-4 control-label" for="full_name">Name <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required placeholder="Name" id="full_name" class="form-control" name="full_name">
+                  <input type="text" required placeholder="Name" id="full_name" class="form-control" 
+                  	name="full_name">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-4 control-label" for="user_email">Email</label>
                 <div class="col-md-8">
-                  <input type="email" required placeholder="Email" id="user_email" class="form-control" name="user_email">
+                  <input type="email" placeholder="Email" id="user_email" class="form-control" 
+                  	name="user_email">
                 </div>
               </div>
               <div class="form-group level_div">
-                <label class="col-md-4 control-label" for="account_type">Select User Type <span class="text-danger">*</span></label>
+                <label class="col-md-4 control-label" for="usertype">Select User Type <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <select name="account_type" id="account_type" class="form-control selecter_1" tabindex="-1" required>
+                  <select name="usertype" id="usertype" class="form-control selecter_1" tabindex="-1" 
+                  	required>
                     <option value="-1" selected disabled>Select</option>
                 	<c:forEach var="role_list" items="${role_list}">
                 		<option value = "${role_list.roleId}">${role_list.role}</option>
@@ -56,10 +62,11 @@
                 <label class="col-md-4 control-label">Upload image</label>
                 <div class="col-md-8">
                   <a href="javascript:void(0);">
-                    <img src="${pageContext.request.contextPath}/resources/img/upload_img.png" id="account_picture" style="height:160px;width: auto;" data-src="#" /> <br />
-                    <input type='file' id="imgAccount" accept="image/*" />
+                    <img src="${pageContext.request.contextPath}/resources/img/upload_img.png" 
+                    	id="img_userimage" style="height:160px;width: auto;" data-src="#"> <br />
+                    <input type='file' id="input_userimage" accept="image/*">
                   </a>
-                  <input type="hidden" id="account_img" name="account_img"/>
+                  <input type="hidden" id="userimage" name="userimage">
                 </div>
               </div>
             </div>
@@ -73,7 +80,7 @@
               <div class="form-group">
                 <label class="col-md-4 control-label" for="password">Password <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required maxlength="15" placeholder="Password" id="password" class="allow_password form-control" name="password">
+                  <input type="password" required maxlength="15" placeholder="Password" id="password" class="allow_password form-control" name="password">
                 </div>
               </div>
               <div class="form-group level_div">
@@ -92,7 +99,7 @@
         <!-- /.box-body -->
         <div class="box-footer">
           <div class="col-md-offset-2 col-md-10">
-            <button class="btn btn-info" id="addaccountsubmit" type="submit" onClick="return accountValidate();">Create</button>
+            <button class="btn btn-info" id="addaccountsubmit" type="submit">Create</button>
             <button class="btn btn-danger" type="reset">Clear</button>
           </div>
         </div>
@@ -102,8 +109,9 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#account_picture").on('click', function() {
-	    $("#imgAccount").trigger('click');
+	$("#img_userimage").on('click', function() {
+	    $("#input_userimage").trigger('click');
+	    readImage($("#input_userimage"));
 	  });	  
 
   formdata = new FormData();
@@ -141,4 +149,17 @@ $(document).ready(function(){
     });
   */
 });
+</script>
+<script>
+function readImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#img_userimage').attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 </script>

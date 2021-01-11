@@ -46,42 +46,39 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
         <!-- BEGIN PAGE TITLE-->
         <!-- END PAGE TITLE-->
         <!-- END PAGE HEADER-->
-        <!-- 
         <div class="row">
-        <?php 
-        if( $this->session->flashdata( 'errorMSG' ) ) { ?>
-            <script type="text/javascript">
-                toastr.error("<?php echo $this->session->flashdata( 'errorMSG' ); ?>",'Error');
+        <% 
+        if(!details.getError_message1().equals("")) { %>
+            <script>
+                toastr.error("<%=details.getError_message1()%>",'Error');
             </script>
-        <?php 
+        <%  
         }
-        if( $this->session->flashdata( 'successMSG' ) ) { ?>
-            <script type="text/javascript">
-                toastr.success("<?php echo $this->session->flashdata( 'successMSG' ); ?>",'Success');
+        if(!details.getSuccess_message1().equals("")) { %>
+            <script>
+                toastr.success("<%=details.getSuccess_message1()%>",'Success');
             </script>
-        <?php 
-        } ?>
+        <% 
+        } %>
         </div>
         <div class="row">
-        <?php 
-        if( $this->session->flashdata( 'errorMSG2' ) ) { ?>
+        <%
+        if(!details.getError_message1().equals("")) { %>
             <div class="col-xs-12 col-sm-12 margin_t10">
                 <div class="alert alert-danger">
-                    <?php echo $this->session->flashdata( 'errorMSG2' ); ?>
+                    <%=details.getError_message2()%>
                 </div>
             </div>
-        <?php 
-        }
-        if( $this->session->flashdata( 'successMSG2' ) ) { ?>
+        <%}
+        if(!details.getError_message1().equals("")) { %>
             <div class="col-xs-12 col-sm-12 margin_t10">
                 <div class="alert alert-success">
-                    <?php echo $this->session->flashdata( 'successMSG2' ); ?>
+                    <%=details.getSuccess_message2()%>
                 </div>
             </div>
-        <?php 
-        } ?>
+        <% 
+        } %>
         </div>
-        <?php echo $content; ?>-->
         <jsp:include page="<%=details.getScreen_name() %>"/>
     </div> 
     <!-- END CONTENT BODY -->

@@ -8,6 +8,10 @@ public class ScreenDetails {
 	private String sub_menu1;
 	private String sub_menu2;
 	private String sub_menu2_path;
+	private String error_message1;
+	private String error_message2;
+	private String success_message1;
+	private String success_message2;
 	
 	public ScreenDetails()
 	{
@@ -17,6 +21,10 @@ public class ScreenDetails {
 		this.sub_menu1 = "";
 		this.sub_menu2 = "";
 		this.sub_menu2_path = "";
+		this.error_message1 = "";
+		this.error_message2 = "";
+		this.success_message1 = "";
+		this.success_message2= "";
 	}
 
 	public String getScreen_name() {
@@ -67,12 +75,47 @@ public class ScreenDetails {
 		this.sub_menu2_path = sub_menu2_path;
 	}
 
+	public String getError_message1() {
+		return error_message1;
+	}
+
+	public void setError_message1(String error_message1) {
+		this.error_message1 = error_message1;
+	}
+
+	public String getError_message2() {
+		return error_message2;
+	}
+
+	public void setError_message2(String error_message2) {
+		this.error_message2 = error_message2;
+	}
+
+	public String getSuccess_message1() {
+		return success_message1;
+	}
+
+	public void setSuccess_message1(String success_message1) {
+		this.success_message1 = success_message1;
+	}
+
+	public String getSuccess_message2() {
+		return success_message2;
+	}
+
+	public void setSuccess_message2(String success_message2) {
+		this.success_message2 = success_message2;
+	}
+
 	@Override
 	public String toString() {
 		return "ScreenDetails [screen_name=" + screen_name + ", screen_title=" + screen_title + ", main_menu="
 				+ main_menu + ", sub_menu1=" + sub_menu1 + ", sub_menu2=" + sub_menu2 + ", sub_menu2_path="
-				+ sub_menu2_path + "]";
+				+ sub_menu2_path + ", error_message1=" + error_message1 + ", error_message2=" + error_message2
+				+ ", success_message1=" + success_message1 + ", success_message2=" + success_message2 + "]";
 	}
+
+	
 	
 		
 }
