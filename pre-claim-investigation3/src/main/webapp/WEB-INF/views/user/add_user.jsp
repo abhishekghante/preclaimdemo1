@@ -64,7 +64,8 @@
                   <a href="javascript:void(0);">
                     <img src="${pageContext.request.contextPath}/resources/img/upload_img.png" 
                     	id="img_userimage" style="height:160px;width: auto;" data-src="#"> <br />
-                    <input type='file' id="input_userimage" accept="image/*">
+                    <input type='file' id="input_userimage" accept="image/*" style = "display:none"
+                    	onchange="displayUploadImg(this, 'img_userimage');">
                   </a>
                   <input type="hidden" id="userimage" name="userimage">
                 </div>
@@ -151,15 +152,31 @@ $(document).ready(function(){
 });
 </script>
 <script>
-function readImage(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#img_userimage').attr('src', e.target.result);
-        };
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
+function displayUploadImg(input, PlaceholderID) {
+	  if (input.files && input.files[0]) {
+	    var upfile = input.files[0];
+	    var imagefile = upfile.type;
+	    var match= ["image/jpeg","image/png","image/jpg"];
+	    if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))){
+	      alert('Please select a valid image file (JPEG/JPG/PNG).');
+	      $("#"+input.id).val('');
+	      return false;
+	    }
+	    var file_size = upfile.size/1024/1024;
+	    if(file_size < 5){
+	      var reader = new FileReader();
+	      reader.onload = function (e) {
+	        $('#'+PlaceholderID)
+	            .attr('src', e.target.result)
+	            .width('auto')
+	            .height(160);
+	        };
+	      reader.readAsDataURL(upfile);
+	    }else{
+	      alert('File too large. File must be less than 5 MB.');
+	      $("#"+input.id).val('');
+	      return false;
+	    }
+	  }
+	}
 </script>

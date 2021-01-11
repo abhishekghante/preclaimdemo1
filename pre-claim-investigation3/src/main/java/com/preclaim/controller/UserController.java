@@ -105,12 +105,10 @@ public class UserController {
 	@RequestMapping(value = "/deleteRole", method = RequestMethod.POST)
 	public @ResponseBody String delete_role(HttpServletRequest request)
 	{
-		System.out.println("Role: " + request.getParameter("role"));
-		System.out.println("Role_Code:" + request.getParameter("role_code"));
 		UserRole role = new UserRole();
-		role.setRole(request.getParameter("role"));
-		role.setRole_code(request.getParameter("role_code"));
+		role.setRoleId(Integer.parseInt(request.getParameter("roleId")));
 		role.setStatus(0);
+		System.out.println(role.toString());
 		String message = dao.delete_role(role);
 		return message;
 	}

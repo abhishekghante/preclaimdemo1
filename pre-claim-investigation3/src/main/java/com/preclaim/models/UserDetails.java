@@ -2,6 +2,7 @@ package com.preclaim.models;
 
 import java.util.Base64;
 import java.util.Base64.Encoder;
+import java.util.Base64.Decoder;
 
 public class UserDetails {
 	private String full_name;  
@@ -75,6 +76,12 @@ public class UserDetails {
 	public String toString() {
 		return "UserDetails [Full Name=" + full_name + ", username=" + username + ", email=" + user_email + ", password=" + password
 				+ ", usertype=" + usertype + ", status=" + status + ", userimage=" + userimage + "]";
+	}
+	
+	public void decodePassword(String encodedPassword)
+	{
+		Decoder decoder = Base64.getDecoder();
+		this.password = new String(decoder.decode(encodedPassword));
 	}
 	
 }

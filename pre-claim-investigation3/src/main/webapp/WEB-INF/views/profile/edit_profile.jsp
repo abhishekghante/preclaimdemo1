@@ -1,24 +1,8 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl       = $this->config->item( 'base_url' );
-
-if($userInfo){
-  $user_email = $userInfo->user_email;
-  $full_name  = $userInfo->full_name;
-  $username   = $userInfo->username;
-  $address    = $userInfo->address;
-  $password   = $this->encryption->decrypt($userInfo->password);
-  $user_image = $userInfo->user_image;
-}else{
-  $user_email = '';
-  $full_name  = '';
-  $username   = '';
-  $address    = '';
-  $password   = '';
-  $user_image = '';
-}
-$user_id = $userInfo->user_id;
-?>
+<%@page import="com.preclaim.models.UserDetails" %>
+<%
+UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
+//user_details.decodePassword(user_details.getPassword());
+%>
 <style type="text/css">
 #userImage { display:none;}
 </style>
@@ -50,37 +34,21 @@ $user_id = $userInfo->user_id;
               <div class="form-group">
                 <label class="col-md-4 control-label" for="full_name">Name <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" value="<?php echo $full_name; ?>" placeholder="Name" id="full_name" class="form-control" name="full_name">
+                  <input type="text" required="" value="<%=user_details.getFull_name() %>" placeholder="Name" id="full_name" class="form-control" name="full_name">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-4 control-label" for="user_email">Email <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="email" required="" value="<?php echo $user_email; ?>" placeholder="Email" id="user_email" class="form-control" name="user_email">
+                  <input type="email" required="" value="<%= user_details.getUser_email() %>" placeholder="Email" id="user_email" class="form-control" name="user_email">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-4 control-label">Upload image</label>
                 <div class="col-md-8">
                   <a href="javascript:void(0);">
-                    <?php
-                    if($user_image){
-                      $tmp2 = explode('/', $user_image);
-                      $file_name2 = end($tmp2);
-                      if (file_exists('uploads/user/'.$file_name2)) {
-                        $user_image = $user_image;
-                        $imgUserSty   = 'style="display: block;"';
-                      }else{
-                        $user_image = $assetUrl.'uploads/default_img.png';
-                        $imgUserSty   = '';
-                      }
-                    }else{
-                      $user_image = $assetUrl.'uploads/default_img.png';
-                      $imgUserSty   = '';
-                    }
-                    ?>
-                    <span <?= $imgUserSty; ?> data-imgID="account_picture" data-delID="delUserImg" data-ID="userImage" id="userLblDelBtn" class="delete_btn" data-toggle="tooltip" data-toggle="tooltip" title="Remove"><i class="fa fa-remove"></i></span>
-                    <img src="<?= $user_image; ?>" id="account_picture" style="height:160px;width: auto;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload" />
+                    <span data-imgID="account_picture" data-delID="delUserImg" data-ID="userImage" id="userLblDelBtn" class="delete_btn" data-toggle="tooltip" data-toggle="tooltip" title="Remove"><i class="fa fa-remove"></i></span>
+                    <img src="${pageContext.request.contextPath}/resources/img/default_img.png" id="account_picture" style="height:160px;width: auto;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload" />
                     <input type="hidden" name="delUserImg" id="delUserImg" value="0" />
                     <input type='file' onchange="displayUploadImg(this, 'account_picture');" name="userImage" id="userImage" accept="image/*" />
                   </a>
@@ -91,13 +59,17 @@ $user_id = $userInfo->user_id;
               <div class="form-group">
                 <label class="col-md-4 control-label" for="username">Username <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" value="<?php echo $username; ?>" placeholder="User name" maxlength="15" id="username" class="username form-control" name="username">
+                  <input type="text" required value="<%= user_details.getFull_name()%>" 
+                  	placeholder="User name" maxlength="15" id="username" class="username form-control" 
+                  	name="username">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-4 control-label" for="password">Password <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" value="<?php echo $password; ?>" maxlength="15" placeholder="Password" id="password" class="allow_password form-control" name="password">
+                  <input type="text" required maxlength="15" placeholder="Password" id="password" 
+                  	value="<%=user_details.getPassword() %>"                  	
+                  	class="allow_password form-control" name="password">
                 </div>
               </div>
             </div>
@@ -105,9 +77,9 @@ $user_id = $userInfo->user_id;
           <!-- /.box-body -->
           <div class="box-footer">
             <div class="col-md-offset-2 col-md-10">
-              <input type="hidden" value="<?php echo $user_id; ?>" id="user_id" name="user_id">
+              <input type="hidden" value="<%=user_details.getUsername() %>" id="user_id" name="user_id">
               <button class="btn btn-info" id="editprofilesubmit" type="submit">Update</button>
-              <a href="<?= base_url(); ?>dashboard" class="btn btn-danger" value="">Back</a>
+              <a href="${pageContext.request.contextPath}/dashboard" class="btn btn-danger" value="">Back</a>
             </div>
           </div>
         </div>
@@ -163,13 +135,13 @@ $(document).ready(function(){
     }
     $.ajax({
         type    : 'POST',
-        url     : adminurl + 'profile/updateProfile',
+        url     : 'updateProfile',
         data    : new FormData(this),
         contentType: false,
         cache: false,
         processData:false,
         beforeSend: function() { 
-          $("#editprofilesubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+          $("#editprofilesubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
           $("#editprofilesubmit").prop('disabled', true);
           $('#edit_profile_form').css("opacity",".5");
         },
@@ -217,9 +189,5 @@ function displayUploadImg(input, PlaceholderID) {
       return false;
     }
   }
-}
-function ValidateEmail(email) {
-  var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-  return expr.test(email);
 }
 </script>
