@@ -23,14 +23,18 @@ public class ChannelDaoImpl implements ChannelDao {
 	}
 
 	@Override
-	public String create_channel(Channel channel) {
-		
-		try {
-			String query="insert into channel_lists(channelName,channelCode,level,createdBy,createdDate,updatedDate,updatedBy,status) values(?,?,?,?,?,?,?,?)";
-			int channel_status=this.template.update(query,channel.getChannelName(),channel.getChannelCode(),channel.getLevel(),channel.getCreatedBy(),channel.getCreatedDate(),channel.getUpdatedDate(),channel.getUpdatedBy(),channel.getStatus());
+	public String create_channel(Channel channel) {	
+		try 
+		{
+			String query="INSERT INTO channel_lists(channelName, channelCode, level, createdBy, "
+					+ "createdDate, updatedDate, updatedBy, status) values(?,?,?,?,?,?,?,?)";
+			template.update(query,channel.getChannelName(),channel.getChannelCode(),
+					channel.getLevel(),channel.getCreatedBy(),channel.getCreatedDate(),
+					channel.getUpdatedDate(),channel.getUpdatedBy(),channel.getStatus());
 			
-		}catch(Exception e) {
-	
+		}
+		catch(Exception e) 
+		{	
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			return "Error adding channel";

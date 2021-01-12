@@ -1,12 +1,3 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl = $this->config->item( 'base_url' );
-if($regionInfo){
-  $regionName = $regionInfo->regionName;
-}else{
-  $regionName  = '';
-}
-?>
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">

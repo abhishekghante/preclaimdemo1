@@ -151,7 +151,7 @@ function deleteRegion( regionId) {
                 $("#continuemodal"+regionId).html('Yes');
                 $("#continuemodal"+regionId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                
+                location.reload();
             }
         });
     });

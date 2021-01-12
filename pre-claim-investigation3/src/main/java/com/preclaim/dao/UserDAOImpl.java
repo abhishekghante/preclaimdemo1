@@ -1,13 +1,10 @@
 package com.preclaim.dao;
 
 import java.sql.ResultSet;
-import java.util.Base64;
-import java.util.Base64.Encoder;
-import java.util.List;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -15,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.preclaim.models.Permission;
 import com.preclaim.models.UserDetails;
 import com.preclaim.models.UserList;
 import com.preclaim.models.UserRole;
@@ -54,9 +52,9 @@ public class UserDAOImpl implements UserDAO{
 				+ "web_active, last_login) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		System.out.println(user.getPassword());
 		try {
-			template.update(sql, user.getFull_name(),user.getAccount_type(),user.getUsername(),user.getUser_email(),
-					"",user.getPassword(),"","",user.getStatus(),"",created_date,
-					1,created_date);
+			template.update(sql, user.getFull_name(), user.getAccount_type(), user.getUsername(),
+					user.getUser_email(), "", user.getPassword(), "", "", user.getStatus(), "",
+					created_date, 1, created_date);
 		}
 		catch(Exception e)
 		{
@@ -69,8 +67,9 @@ public class UserDAOImpl implements UserDAO{
 	public String create_role(UserRole role) {
 		try
 		{
-			String sql = "INSERT INTO user_role(role,role_code,status,created_on,updated_on) VALUES(?,?,?,?,?)";
-			this.template.update(sql,role.getRole(),role.getRole_code(),role.getStatus(),role.getCreated_on(),
+			String sql = "INSERT INTO user_role(role, role_code, status, created_on, updated_on) "
+					+ "VALUES(?,?,?,?,?)";
+			template.update(sql, role.getRole(), role.getRole_code(), role.getStatus(), role.getCreated_on(),
 				role.getUpdated_on());
 		}
 		catch(Exception ex)
@@ -86,7 +85,7 @@ public class UserDAOImpl implements UserDAO{
 		try
 		{
 			String sql = "UPDATE user_role SET status = ? where roleId = ?";
-			this.template.update(sql,role.getStatus(),role.getRoleId());
+			template.update(sql,role.getStatus(),role.getRoleId());
 		}
 		catch(Exception ex)
 		{
@@ -121,8 +120,7 @@ public class UserDAOImpl implements UserDAO{
 		{
 			e.printStackTrace();
 			return null;
-		}
-		
+		}		
 	}
 
 	@Override
@@ -130,8 +128,7 @@ public class UserDAOImpl implements UserDAO{
 		try
 		{
 			String sql = "DELETE FROM admin_user where user_id = ?";
-			int message = this.template.update(sql, user_id);
-			System.out.println("Deletion" + message);	
+			this.template.update(sql, user_id);
 		}
 		catch(Exception e)
 		{
@@ -147,8 +144,7 @@ public class UserDAOImpl implements UserDAO{
 		try
 		{
 			String sql = "UPDATE admin_user SET status = ? where user_id = ?";
-			int message = this.template.update(sql, user_status,user_id);
-			System.out.println("Update Status" + message);	
+			this.template.update(sql, user_status,user_id);
 		}
 		catch(Exception e)
 		{
@@ -196,7 +192,7 @@ public class UserDAOImpl implements UserDAO{
 			String sql = "UPDATE admin_user SET full_name = ?, account_type = ?, username = ?,"
 					+ "user_email = ?, password = ?, status = ?, user_image = ? where "
 					+ "user_id = ?";
-			this.template.update(sql, user_details.getFull_name(), user_details.getAccount_type(),
+			template.update(sql, user_details.getFull_name(), user_details.getAccount_type(),
 					user_details.getUsername(), user_details.getUser_email(), user_details.getPassword(),
 					user_details.getStatus(), user_details.getUserimage(), user_details.getUserID());
 					
@@ -214,7 +210,7 @@ public class UserDAOImpl implements UserDAO{
 		try
 		{
 			String sql = "UPDATE user_role SET role = ?, role_code = ?, updated_on = ? where roleId = ?";
-			this.template.update(sql, role.getRole(), role.getRole_code(), 
+			template.update(sql, role.getRole(), role.getRole_code(), 
 					LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
 					role.getRoleId());
 					
@@ -225,6 +221,37 @@ public class UserDAOImpl implements UserDAO{
 			return "Failed updating user ID";
 		}
 		return "****";
+	}
+
+	@Override
+	public List<Permission> retrievePermission(int roleID) {
+		try
+		{
+			String sql = "SELECT * from permission where role_id = ?";
+			return template.query(sql, new Object[] {roleID}, 
+					(ResultSet rs, int rowCount) ->
+					{
+						Permission role_permission = new Permission();
+						role_permission.setModule(rs.getString("module"));
+						role_permission.setRole_id(rs.getInt("role_id"));
+						role_permission.setStatus(rs.getInt("status"));
+						return role_permission;
+					}
+					);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String addPermission(List<Permission> role_permission) {
+		
+		
+		
+		return null;
 	}
 	
 	

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.preclaim.dao.UserDAO;
+import com.preclaim.models.Permission;
 import com.preclaim.models.ScreenDetails;
 import com.preclaim.models.UserDetails;
 import com.preclaim.models.UserList;
@@ -189,4 +190,25 @@ public class UserController {
 		return dao.updateUserDetails(user_details);
 	}
 	
+	@RequestMapping(value = "/permission/{roleID}", method = RequestMethod.GET)
+	public String permission(@PathVariable("roleID") int roleID, HttpSession session)
+	{
+		session.removeAttribute("ScreenDetails");    	
+		ScreenDetails details = new ScreenDetails();
+    	details.setScreen_name("../user/add_permission_form.jsp");
+    	details.setScreen_title("Manage Permission");
+    	session.setAttribute("ScreenDetails", details);
+    	List<Permission> role_permission = dao.retrievePermission(roleID);
+    	session.setAttribute("role_id", String.valueOf(roleID));
+    	session.setAttribute("permission", role_permission);
+    	System.out.println(role_permission.equals("appUsers"));
+    	return "common/templatecontent";
+	}
+	
+	@RequestMapping(value = "/addPermission", method = RequestMethod.POST)
+	public @ResponseBody String addPermission(HttpSession session)
+	{
+		
+		return "****";
+	}
 }

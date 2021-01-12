@@ -78,7 +78,8 @@
 		               					onclick="return deleteRole( '${role_list.roleId}' );">
 		               					<i class="fa fa-trash"></i>
 		           					</a>
-		           					<a class="btn btn-success btn-xs" href="${pageContext.request.contextPath}/users/permission/${role_list.roleId}>">
+		           					<a class="btn btn-success btn-xs" 
+		           						href="${pageContext.request.contextPath}/user/permission/${role_list.roleId}">
 		           						Permission
 		           						<i class="fa fa-plus"></i>
 		          					</a>                             

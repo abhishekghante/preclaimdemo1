@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -69,9 +70,29 @@ public class RegionController{
 		details.setSub_menu1("Pending Regions");
 		session.setAttribute("ScreenDetails", details);
 		List<RegionList> pending_region=regionDao.region_list(1);
-		session.setAttribute("pending_region", pending_region);
+		session.setAttribute("pending_region", pending_region);		
 		return "common/templatecontent";
 	}
+	
+	@RequestMapping(value = "/pending_region/{region_name}/{regionId}",method = RequestMethod.GET)
+	public String pending_region(@PathVariable("region_name") String region_name, 
+			@PathVariable("regionId") String regionId, HttpSession session) {
+		session.removeAttribute("ScreenDetails");
+		ScreenDetails details=new ScreenDetails();
+		details.setScreen_name("../region/pending_region.jsp");
+		details.setScreen_title("Pending Region");
+		details.setMain_menu("Regions");
+		details.setSub_menu1("Pending Regions");
+		session.setAttribute("ScreenDetails", details);
+		List<RegionList> pending_region=regionDao.region_list(1);
+		session.setAttribute("pending_region", pending_region);
+		RegionList region = new RegionList();
+			region.setRegionId(Integer.parseInt(regionId));
+			region.setRegionName(region_name);
+			session.setAttribute("region", region);		
+		return "common/templatecontent";
+	}
+	
 	@RequestMapping(value = "/active_region",method = RequestMethod.GET)
 	public String active_region(HttpSession session) {
 		session.removeAttribute("ScreenDetails");
@@ -93,6 +114,26 @@ public class RegionController{
 		System.out.println("RegionId :"+RegionId);
 		String message=regionDao.deleteRegion(RegionId);
 		
+		return message;
+	}
+	
+	@RequestMapping(value = "/addRegion",method = RequestMethod.POST)
+	public @ResponseBody String addRegion(HttpServletRequest request) 
+	{	
+		String RegionName = request.getParameter("regionName");
+		Region region = new Region();
+		region.setRegionName(RegionName);
+		String message=regionDao.create_region(region);		
+		return message;
+	}
+	
+	@RequestMapping(value = "/updateRegion",method = RequestMethod.POST)
+	public @ResponseBody String updateRegion(HttpServletRequest request) 
+	{	
+		int RegionId=Integer.parseInt(request.getParameter("regionId"));
+		String RegionName = request.getParameter("regionName");
+		System.out.println("RegionId :"+RegionId);
+		String message=regionDao.updateRegion(RegionId,RegionName);		
 		return message;
 	}
 	
