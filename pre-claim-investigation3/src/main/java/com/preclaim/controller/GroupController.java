@@ -1,5 +1,7 @@
 package com.preclaim.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.preclaim.dao.GroupDao;
 import com.preclaim.models.Group;
+import com.preclaim.models.GroupList;
 import com.preclaim.models.ScreenDetails;
 
 @Controller
@@ -63,6 +66,8 @@ public class GroupController {
     	details.setMain_menu("Groups");
     	details.setSub_menu1("Pending Groups");
     	session.setAttribute("ScreenDetails", details);
+    	List<GroupList> pending_list=groupDao.pending_list();
+    	session.setAttribute("pending_list", pending_list);
     	return "common/templatecontent";
     }
     
@@ -75,6 +80,8 @@ public class GroupController {
     	details.setMain_menu("Groups");
     	details.setSub_menu1("Active Groups");
     	session.setAttribute("ScreenDetails", details);
+    	List<GroupList> active_list=groupDao.active_list();
+    	session.setAttribute("active_list", active_list);
     	return "common/templatecontent";
     }
 }

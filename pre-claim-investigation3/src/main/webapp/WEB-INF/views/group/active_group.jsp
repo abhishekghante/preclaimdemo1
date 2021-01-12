@@ -1,3 +1,10 @@
+<%@page import="com.preclaim.models.GroupList"%>
+<%@page import="java.util.List"%>
+<%
+List<GroupList>active_list=(List<GroupList>)session.getAttribute("active_list");
+session.removeAttribute("active_list");
+%>
+
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
@@ -44,6 +51,37 @@
                         <th class="head2 no-sort"></th>
                       </tr>
                     </tfoot>
+                    <tbody>
+                    <%
+                    if(active_list!=null){
+                    	
+                    	for(GroupList list_group : active_list){
+                    		if(list_group.getStatus()!=1)
+                    			continue;
+                    %>
+                    		<tr>
+                    			<td><%=list_group.getSrNo() %></td>
+                    		    <td><%=list_group.getGroupName() %></td>
+                    		    <td><%=list_group.getCreatedDate() %></td>
+                    		    <td><span class="label label-sm label-success">Active</span></td>
+                    		    <td>
+                    		         <a href="'.base_url().'groups/pendinglist/'.$group->groupId.'" data-toggle="tooltip" title="Edit" 
+                    		             class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
+                    		         <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('.$group->groupId.',1,1);" 
+                    		             class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
+                    		         <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('.$group->groupId.',1);" 
+                    		             class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                    		    </td>
+                    		</tr>
+                    		
+                    		<%
+                    	     }
+                             }
+                            %>                   
+                    
+                    
+                    
+                    </tbody>
                   </table>
                 </div>
               <div class="clearfix"></div>

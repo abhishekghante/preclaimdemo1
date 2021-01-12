@@ -1,4 +1,6 @@
 package com.preclaim.controller;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.preclaim.dao.RegionDao;
 import com.preclaim.models.Group;
 import com.preclaim.models.Region;
+import com.preclaim.models.RegionList;
 import com.preclaim.models.ScreenDetails;
 
 @Controller
@@ -64,6 +67,8 @@ public class RegionController{
 		details.setMain_menu("Regions");
 		details.setSub_menu1("Pending Regions");
 		session.setAttribute("ScreenDetails", details);
+		List<RegionList> pending_region=regionDao.pending_region();
+		session.setAttribute("pending_region", pending_region);
 		return "common/templatecontent";
 	}
 	@RequestMapping(value = "/active_region",method = RequestMethod.GET)
@@ -75,6 +80,8 @@ public class RegionController{
 		details.setMain_menu("Regions");
 		details.setSub_menu1("Active Regions");
 		session.setAttribute("ScreenDetails", details);
+		List<RegionList> active_region=regionDao.active_region();
+		session.setAttribute("active_region", active_region);
 		return "common/templatecontent";
 	}
 	

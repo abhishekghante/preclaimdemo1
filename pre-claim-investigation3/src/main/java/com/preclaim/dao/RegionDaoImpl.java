@@ -1,13 +1,17 @@
 package com.preclaim.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-
+import org.springframework.jdbc.core.RowMapper;
 
 import com.preclaim.models.Region;
+import com.preclaim.models.RegionList;
 
 public class RegionDaoImpl implements RegionDao {
 	
@@ -39,6 +43,43 @@ public class RegionDaoImpl implements RegionDao {
 		
 		return "****";
 	}
+
+	@Override
+	public List<RegionList> pending_region() {
+		String query="select * from region_lists";
+		return this.template.query(query, new RowMapper<RegionList>() {
+
+			@Override
+			public RegionList mapRow(ResultSet rs, int rowNum) throws SQLException {
+				RegionList regionList=new RegionList();
+				regionList.setSrNo(rowNum);
+				regionList.setRegionName(rs.getString("regionName"));
+				regionList.setCreatedDate(rs.getString("createdDate"));
+				regionList.setStatus(rs.getInt("status"));
+				return regionList;
+			}
+			
+		});
+	}
+	
+	@Override
+	public List<RegionList> active_region() {
+		String query="select * from region_lists";
+		return this.template.query(query, new RowMapper<RegionList>() {
+
+			@Override
+			public RegionList mapRow(ResultSet rs, int rowNum) throws SQLException {
+				RegionList regionList=new RegionList();
+				regionList.setSrNo(rowNum);
+				regionList.setRegionName(rs.getString("regionName"));
+				regionList.setCreatedDate(rs.getString("createdDate"));
+				regionList.setStatus(rs.getInt("status"));
+				return regionList;
+			}
+			
+		});
+	}
+
 
 	
 
