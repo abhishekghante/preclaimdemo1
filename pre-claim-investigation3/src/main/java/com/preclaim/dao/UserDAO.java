@@ -8,9 +8,14 @@ import com.preclaim.models.UserRole;
 
 public interface UserDAO {
 	
-	public List<UserRole> role_lists();
 	public String create_user(UserDetails user);
-	public String create_role(UserRole role);
-	public String delete_role(UserRole role);
 	public List<UserList> user_list();
+	public String deleteAdminUser(int user_id);
+	public String create_role(UserRole role);
+	public List<UserRole> role_lists();
+	public String delete_role(UserRole role);
+	public String updateUserStatus(int user_id, int user_status);
+	public UserDetails getUserDetails(int user_id);
+	public String updateUserDetails(UserDetails user_details);
+		
 }

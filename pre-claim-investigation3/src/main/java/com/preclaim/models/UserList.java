@@ -6,24 +6,26 @@ import java.util.Base64.Decoder;
 public class UserList {
 
 	private int srno;
+	private int user_id;
 	private String full_name;
 	private String account_type;
 	private String account_code;
 	private String username;
 	private String user_email;
 	private String password;
-	private String user_status;
+	private int user_status;
 	
 	public UserList()
 	{
 		this.srno = 0;
+		this.user_id = 0;
 		this.full_name = "";
 		this.account_type = "";
 		this.account_code = "";
 		this.username = "";
 		this.user_email = "";
 		this.password = "";
-		this.user_status = "";
+		this.user_status = 0;
 	}
 	
 	public int getSrno() {
@@ -31,6 +33,12 @@ public class UserList {
 	}
 	public void setSrno(int srno) {
 		this.srno = srno;
+	}	
+	public int getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 	public String getFull_name() {
 		return full_name;
@@ -68,17 +76,18 @@ public class UserList {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getUser_status() {
+	public int getUser_status() {
 		return user_status;
 	}
-	public void setUser_status(String user_status) {
+	public void setUser_status(int user_status) {
 		this.user_status = user_status;
 	}
+
 	@Override
 	public String toString() {
-		return "UserList [srno=" + srno + ", full_name=" + full_name + ", account_type=" + account_type
-				+ ", account_code=" + account_code + ", username=" + username + ", user_email=" + user_email
-				+ ", password=" + password + ", user_status=" + user_status + "]";
+		return "UserList [srno=" + srno + ", user_id=" + user_id + ", full_name=" + full_name + ", account_type="
+				+ account_type + ", account_code=" + account_code + ", username=" + username + ", user_email="
+				+ user_email + ", password=" + password + ", user_status=" + user_status + "]";
 	}
 	
 	public void decodePassword(String password)

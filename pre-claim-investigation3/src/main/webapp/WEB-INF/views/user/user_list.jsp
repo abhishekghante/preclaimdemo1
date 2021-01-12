@@ -5,10 +5,7 @@
 List<UserList> user_list = (List<UserList>) session.getAttribute("user_list");
 session.removeAttribute("user_list");
 List<UserRole> user_role = (List<UserRole>) session.getAttribute("role_list");
-String list_of_roles = "[";
-for(UserRole role:user_role)
-	list_of_roles += "\"" + role.getRole() + "\","; 
-list_of_roles += list_of_roles.substring(0, list_of_roles.length()-1) + "]";
+session.removeAttribute("role_list");
 %>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -75,26 +72,35 @@ list_of_roles += list_of_roles.substring(0, list_of_roles.length()-1) + "]";
                     			<td><%= items.getUser_email()%></td>
                     			<td><%= items.getPassword()%></td>
                     			<td>
-                    				<% if(items.getUser_status().equals("1")) {%>
+                    				<% if(items.getUser_status()== 1) {%>
                     					<span class="label label-sm label-success">Active</span>
 									<%}else{ %>
 										<span class="label label-sm label-danger">Inactive</span>									
 									<%} %>								
 								</td>                    			
                     			<td>
-                    				<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteAdminUser('.$account->user_id.');" 
-                    					class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
-                    				<% if(items.getUser_status().equals("1")) {%>
-									<a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateUserStatus(,1,2);" 
-										class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i>
+                    				<a href="${pageContext.request.contextPath}/user/edit/<%=items.getUser_id() %>" 
+                    					data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
+                    					<i class="glyphicon glyphicon-edit"></i>
+                   					</a>
+                    				<% if(items.getUser_status() == 1) {%>
+									<a href="javascript:;" data-toggle="tooltip" title="Inactive" 
+										onClick="return updateUserStatus(<%=items.getUser_id() %>,0);" 
+										class="btn btn-warning btn-xs">
+										<i class="glyphicon glyphicon-ban-circle"></i>
 									</a>
 									<%}else{ %>
-									<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateUserStatus(,1,1);"
-										class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i>
+									<a href="javascript:;" data-toggle="tooltip" title="Active" 
+										onClick="return updateUserStatus(<%=items.getUser_id() %>,1);"
+										class="btn btn-success btn-xs">
+										<i class="glyphicon glyphicon-ok-circle"></i>
 									</a>
 									<%} %>
-                    				<a href="${pageContext.request.contextPath}/users/edit/" data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
-                    				
+									<a href="#" data-toggle="tooltip" title="Delete" 
+                    					onClick="return deleteAdminUser('<%=items.getUser_id() %>');" 
+                    					class="btn btn-danger btn-xs">
+                    					<i class="glyphicon glyphicon-remove"></i>
+                   					</a>                    				
                     			</td>
                    			</tr>
                    			<%

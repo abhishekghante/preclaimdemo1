@@ -47,9 +47,9 @@
                 </div>
               </div>
               <div class="form-group level_div">
-                <label class="col-md-4 control-label" for="usertype">Select User Type <span class="text-danger">*</span></label>
+                <label class="col-md-4 control-label" for="account_type">Select User Type <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <select name="usertype" id="usertype" class="form-control selecter_1" tabindex="-1" 
+                  <select name="account_type" id="account_type" class="form-control selecter_1" tabindex="-1" 
                   	required>
                     <option value="-1" selected disabled>Select</option>
                 	<c:forEach var="role_list" items="${role_list}">
@@ -112,44 +112,7 @@
 $(document).ready(function(){
 	$("#img_userimage").on('click', function() {
 	    $("#input_userimage").trigger('click');
-	    readImage($("#input_userimage"));
 	  });	  
-
-  formdata = new FormData();
-  /*
-  $("#imgAccount").change(function(){
-    // readURL(this);
-    var file = this.files[0];
-    var file_size = file.size/1024/1024;
-    if(file_size < 2){
-      formdata.append("image", file);
-      var xhr = new XMLHttpRequest();
-      $('#message_account').empty();
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-          var jsonData = JSON.parse(xhr.responseText);
-          if(jsonData) {
-            if(jsonData['status'] == 'error'){
-              $('#message_account').append( '<span class="text-danger">'+jsonData['msg']+'<span>' );
-              $('#imgAccount').focus();
-              return false;
-            }
-            if(jsonData['status'] == 'success'){
-              $('#message_account').empty();
-              $("#account_img").val(jsonData['ProfilePic']);
-              $("#account_picture").attr("src", jsonData['ProfilePic']);
-            }
-          }
-        }
-      }
-      xhr.open("POST","users/ajaxUpload");
-      xhr.send(formdata);
-    }else{
-      alert('File too large. File must be less than 2 MB.');
-    }
-    });
-  */
-});
 </script>
 <script>
 function displayUploadImg(input, PlaceholderID) {
@@ -163,7 +126,7 @@ function displayUploadImg(input, PlaceholderID) {
 	      return false;
 	    }
 	    var file_size = upfile.size/1024/1024;
-	    if(file_size < 5){
+	    if(file_size < 2){
 	      var reader = new FileReader();
 	      reader.onload = function (e) {
 	        $('#'+PlaceholderID)
@@ -173,7 +136,7 @@ function displayUploadImg(input, PlaceholderID) {
 	        };
 	      reader.readAsDataURL(upfile);
 	    }else{
-	      alert('File too large. File must be less than 5 MB.');
+	      alert('File too large. File must be less than 2 MB.');
 	      $("#"+input.id).val('');
 	      return false;
 	    }

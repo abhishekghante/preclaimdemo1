@@ -43,6 +43,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="box-body" id="update_role_form">
+                        	<jsp:include page="edit_role.jsp"></jsp:include>
                         </div>
                     </form>
                 </div>
@@ -94,6 +95,14 @@
     </div>
   </div><!-- content -->
 </div>
+<script>
+$(document).ready(function(){
+	
+	$( '#add_role_form').show();
+    $( '#update_role_form').hide();
+	
+});
+</script>
 <script type="text/javascript">
     //Role Validation
     function addRole() {
@@ -128,16 +137,9 @@
         return false;
     }
     //Edit Role
-    function edit_role( roleId ) {
-        var account_data    = 'roleId=' + roleId;
-        $.ajax({
-            type : "POST",
-            url  : 'users/edit_role',
-            data : account_data,
-            success: function( data ) { 
-                $( '#add_role_form' ).hide();
-                $( '#update_role_form' ).html( data );
-            }
-        });
+    function edit_role( roleId, role, roleCode ) {
+    	$( '#add_role_form').hide();
+        $( '#update_role_form').show();
+    	
     }
 </script>

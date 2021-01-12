@@ -325,7 +325,6 @@ function updateBannerStatus( bannerId, type, status ) {
 //DELETE ADMIN USER
 function deleteAdminUser( user_id ) {
 
-    var table2 = $('#adminuser_list').DataTable();
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -333,7 +332,7 @@ function deleteAdminUser( user_id ) {
     $( '#continuemodal'+user_id ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'users/deleteAdminUser',
+            url  : 'deleteAdminUser',
             data : { 'user_id' : user_id },
             beforeSend: function() {
                 $("#continuemodal"+user_id).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
@@ -343,7 +342,7 @@ function deleteAdminUser( user_id ) {
                 $("#continuemodal"+user_id).html('Yes');
                 $("#continuemodal"+user_id).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                window.location.reload();
             }
         });
         return false;
@@ -376,12 +375,11 @@ function deleteRole( roleId ) {
     });
 }
 //UPDATE ADMIN USER STATUS
-function updateUserStatus( user_id, type, status ) {
-    var table2 = $('#adminuser_list').DataTable();
+function updateUserStatus( user_id, status) {
     if(status == 1){
-        $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
-    }else{
         $( '#sm_modal_body' ).html( 'Do you really want to deactivate?' );
+    }else{
+        $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
@@ -389,17 +387,17 @@ function updateUserStatus( user_id, type, status ) {
     $( '#continuemodal'+user_id ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'users/updateUserStatus',
+            url  : 'updateUserStatus',
             data : { 'user_id' : user_id, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+user_id).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+user_id).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+user_id).prop('disabled', true);
             },
             success : function( msg ) {
                 $("#continuemodal"+user_id).html('Yes');
                 $("#continuemodal"+user_id).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                window.location.reload();
             }
         });
     });
@@ -710,46 +708,49 @@ function updateAccountValidate() {
     $('#user_email').removeClass('has-error-2');
     $('#status').removeClass('has-error-2');
     $('#account_type').removeClass('has-error-2');
-    if( full_name == "" ){
+    if( full_name == "" )
+    {
         $('#full_name').addClass('has-error-2');
         $('#full_name').focus();
         return false;
     }
-    if( username == "" ){
+    if( username == "" )
+    {
         $('#username').addClass('has-error-2');
         $('#username').focus();
         return false;
     }
-    if( password == "" ){
+    if( password == "" )
+    {
         $('#password').addClass('has-error-2');
         $('#password').focus();
         return false;
     }
-    if( account_type == "" ){
+    if( account_type == "" )
+    {
         $('#account_type').addClass('has-error-2');
         $('#account_type').focus();
         return false;
     }
-    if( status == "" ){
+    if( status == "" )
+    {    
         $('#status').addClass('has-error-2');
         $('#status').focus();
         return false;
     }
-    
+    $("#editaccountsubmit").html('<img src = "../../resources/img/input-spinner.gif"> Loading...');            
+    $("#editaccountsubmit").prop('disabled', true);
     $.ajax({
         type    : 'POST',
-        url     : 'users/updateAccountValidate',
+        url     : '../updateUserDetails',
         data    : {'full_name':full_name,'username':username,'user_email':user_email,
         "password":password,"account_type":account_type,"user_id":user_id,"account_img":account_img,"status":status},
-        beforeSend: function() { 
-            $("#editaccountsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-            $("#editaccountsubmit").prop('disabled', true);
-        },
         success : function( msg ) {
             $("#editaccountsubmit").html('Update');
             $("#editaccountsubmit").prop('disabled', false);
-            if( msg == 1 ) {
-                window.location.href = "users";
+            if( msg == "****" ) {
+            	toastr.success("User updated successfully",'success');
+                window.location.href = "../user_list";
             } else {
                 toastr.error(msg,'Error');
                 //$("#alert_msg").html('<div class="alert alert-danger">'+msg+'</div>');
@@ -817,4 +818,33 @@ $('.float-input').keypress(function(event) {
           }
       }
 });
+function displayUploadImg(input, PlaceholderID) {
+	  if (input.files && input.files[0]) {
+	    var upfile = input.files[0];
+	    var imagefile = upfile.type;
+	    var match= ["image/jpeg","image/png","image/jpg"];
+	    if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))){
+	      alert('Please select a valid image file (JPEG/JPG/PNG).');
+	      $("#"+input.id).val('');
+	      return false;
+	    }
+	    var file_size = upfile.size/1024/1024;
+	    if(file_size < 2){
+	      var reader = new FileReader();
+	      reader.onload = function (e) {
+	        $('#'+PlaceholderID)
+	            .attr('src', e.target.result)
+	            .width('auto')
+	            .height(160);
+	        };
+	      reader.readAsDataURL(upfile);
+	    }
+	    else
+	    {
+	      alert('File too large. File must be less than 2 MB.');
+	      $("#"+input.id).val('');
+	      return false;
+	    }
+	  }
+	}
 

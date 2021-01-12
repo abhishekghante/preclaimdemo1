@@ -9,19 +9,20 @@ public class UserDetails {
 	private String username;
 	private String user_email;	
 	private String password;
-	private String usertype;
+	private String account_type;
 	private int status;
 	private String userimage;
-	
+	private int userID;
 	
 	public UserDetails() {
 		this.full_name = "";
 		this.username = "";
 		this.password = "";
 		this.user_email = "";
-		this.usertype = "";
+		this.account_type = "";
 		this.status = 0;
 		this.userimage = "";
+		this.userID = 0;
 	}
 	
 	public String getFull_name() {
@@ -54,11 +55,11 @@ public class UserDetails {
 		Encoder encoder = Base64.getEncoder();
 		this.password = encoder.encodeToString(password.getBytes());
 	}
-	public String getUsertype() {
-		return usertype;
+	public String getAccount_type() {
+		return account_type;
 	}
-	public void setUsertype(String usertype) {
-		this.usertype = usertype;
+	public void setAccount_type(String account_type) {
+		this.account_type = account_type;
 	}
 	public int getStatus() {
 		return status;
@@ -72,10 +73,20 @@ public class UserDetails {
 	public void setUserimage(String userimage) {
 		this.userimage = userimage;
 	}
+	
+	public int getUserID() {
+		return userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
 	@Override
 	public String toString() {
-		return "UserDetails [Full Name=" + full_name + ", username=" + username + ", email=" + user_email + ", password=" + password
-				+ ", usertype=" + usertype + ", status=" + status + ", userimage=" + userimage + "]";
+		return "UserDetails [full_name=" + full_name + ", username=" + username + ", user_email=" + user_email
+				+ ", password=" + password + ", account_type=" + account_type + ", status=" + status + ", userimage="
+				+ userimage + ", userID=" + userID + "]";
 	}
 	
 	public void decodePassword(String encodedPassword)
