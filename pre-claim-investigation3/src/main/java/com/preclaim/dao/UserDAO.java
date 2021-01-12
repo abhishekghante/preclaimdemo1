@@ -13,6 +13,7 @@ public interface UserDAO {
 	public String deleteAdminUser(int user_id);
 	public String create_role(UserRole role);
 	public List<UserRole> role_lists();
+	public String updateUserRole(UserRole role);	
 	public String delete_role(UserRole role);
 	public String updateUserStatus(int user_id, int user_status);
 	public UserDetails getUserDetails(int user_id);

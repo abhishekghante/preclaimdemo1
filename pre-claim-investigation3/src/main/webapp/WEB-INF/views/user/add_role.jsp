@@ -70,7 +70,8 @@
 	                			<td>${role_list.role}</td>
 	                			<td>
 		                			<a class="btn btn-warning btn-xs" href="javascript:;" 
-		                				onclick="return edit_role( '${role_list.roleId}' );">
+		                				onclick="return edit_role( '${role_list.roleId}',
+		                				'${role_list.role}','${role_list.role_code}' );">
 		                				<i class="fa fa-edit"></i>
 		               				</a>
 		               				<a class="btn btn-danger btn-xs" href="javascript:;" 
@@ -140,6 +141,9 @@ $(document).ready(function(){
     function edit_role( roleId, role, roleCode ) {
     	$( '#add_role_form').hide();
         $( '#update_role_form').show();
-    	
+        $("#edit_role").val(role);
+    	$("#edit_role_code").val(roleCode);
+    	$("#edit_roleId").val(roleId);
+    	console.log(role, roleCode, roleId);
     }
 </script>

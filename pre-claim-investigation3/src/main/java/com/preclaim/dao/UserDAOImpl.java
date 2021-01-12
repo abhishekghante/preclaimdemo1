@@ -208,6 +208,24 @@ public class UserDAOImpl implements UserDAO{
 		}
 		return "****";
 	}
+
+	@Override
+	public String updateUserRole(UserRole role) {
+		try
+		{
+			String sql = "UPDATE user_role SET role = ?, role_code = ?, updated_on = ? where roleId = ?";
+			this.template.update(sql, role.getRole(), role.getRole_code(), 
+					LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+					role.getRoleId());
+					
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return "Failed updating user ID";
+		}
+		return "****";
+	}
 	
 	
 }

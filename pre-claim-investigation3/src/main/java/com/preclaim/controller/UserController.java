@@ -124,6 +124,17 @@ public class UserController {
 		return message;
 	}
 	
+	@RequestMapping(value = "/updateRole", method = RequestMethod.POST)
+	public @ResponseBody String update_role(HttpServletRequest request)
+	{
+		UserRole role = new UserRole();
+		role.setRoleId(Integer.parseInt(request.getParameter("edit_roleId")));
+		role.setRole_code(request.getParameter("edit_role_code"));
+		role.setRole(request.getParameter("edit_role"));
+		System.out.println(role.toString());
+		String message = dao.updateUserRole(role);
+		return message;
+	}
 	@RequestMapping(value = "/updateUserStatus", method = RequestMethod.POST)
 	public @ResponseBody String updateUserStatus(HttpServletRequest request)
 	{
