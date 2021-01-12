@@ -1,6 +1,7 @@
 package com.preclaim.controller;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.preclaim.dao.RegionDao;
-import com.preclaim.models.Group;
 import com.preclaim.models.Region;
 import com.preclaim.models.RegionList;
 import com.preclaim.models.ScreenDetails;
@@ -67,7 +68,7 @@ public class RegionController{
 		details.setMain_menu("Regions");
 		details.setSub_menu1("Pending Regions");
 		session.setAttribute("ScreenDetails", details);
-		List<RegionList> pending_region=regionDao.pending_region();
+		List<RegionList> pending_region=regionDao.region_list(1);
 		session.setAttribute("pending_region", pending_region);
 		return "common/templatecontent";
 	}
@@ -80,11 +81,20 @@ public class RegionController{
 		details.setMain_menu("Regions");
 		details.setSub_menu1("Active Regions");
 		session.setAttribute("ScreenDetails", details);
-		List<RegionList> active_region=regionDao.active_region();
+		List<RegionList> active_region=regionDao.region_list(4);
 		session.setAttribute("active_region", active_region);
 		return "common/templatecontent";
 	}
 	
+	@RequestMapping(value = "/deleteRegion",method = RequestMethod.POST)
+	public @ResponseBody String deleteRegion(HttpServletRequest request) {
+	
+		int RegionId=Integer.parseInt(request.getParameter("RegionId"));
+		System.out.println("RegionId :"+RegionId);
+		String message=regionDao.deleteRegion(RegionId);
+		
+		return message;
+	}
 	
 }
 

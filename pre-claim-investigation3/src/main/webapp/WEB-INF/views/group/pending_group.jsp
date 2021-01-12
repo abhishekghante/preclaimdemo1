@@ -124,8 +124,6 @@ session.removeAttribute("pending_list");
 									if (pending_list != null) {
 
 										for (GroupList list_group : pending_list) {
-											if(list_group.getStatus()!=0)
-												continue;
 									%>
 									<tr>
 										<td><%=list_group.getSrNo()%></td>
@@ -137,7 +135,7 @@ session.removeAttribute("pending_list");
 								   		  		class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
 									   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('.$group->groupId.',0,1);" 
 									   		  	class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
-									   		<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('.$group->groupId.',0);" 
+									   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId()%>');" 
 									   		   	class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
 										</td>
 

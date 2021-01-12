@@ -11,6 +11,7 @@ public class Group {
 	private String updatedDate;
 	private int updatedBy;
 	private int status;
+	private int group_id;
 	
 	public Group() {
 		this.groupName="";
@@ -19,6 +20,7 @@ public class Group {
 		this.updatedDate=LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		this.updatedBy=0;
 		this.status=0;
+		this.group_id=0;
 		
 	}
 
@@ -69,12 +71,24 @@ public class Group {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	
+
+	public int getGroup_id() {
+		return group_id;
+	}
+
+	public void setGroup_id(int group_id) {
+		this.group_id = group_id;
+	}
 
 	@Override
 	public String toString() {
 		return "Group [groupName=" + groupName + ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", updatedDate=" + updatedDate + ", updatedBy=" + updatedBy + ", status=" + status + "]";
+				+ ", updatedDate=" + updatedDate + ", updatedBy=" + updatedBy + ", status=" + status + ", group_id="
+				+ group_id + "]";
 	}
+
+	
 
 	
 }

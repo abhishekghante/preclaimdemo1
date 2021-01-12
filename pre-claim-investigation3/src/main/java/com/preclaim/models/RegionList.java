@@ -6,6 +6,7 @@ public class RegionList {
 	private String regionName;
 	private String createdDate;
 	private int status;
+	private int regionId;
 	
 	
 	public RegionList() {
@@ -14,6 +15,18 @@ public class RegionList {
 		this.regionName="";
 		this.createdDate="";
 		this.status=1;
+		this.regionId=0;
+	
+	}
+
+
+	public int getRegionId() {
+		return regionId;
+	}
+
+
+	public void setRegionId(int regionId) {
+		this.regionId = regionId;
 	}
 
 
@@ -54,6 +67,13 @@ public class RegionList {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+
+	@Override
+	public String toString() {
+		return "RegionList [srNo=" + srNo + ", regionName=" + regionName + ", createdDate=" + createdDate + ", status="
+				+ status + ", regionId=" + regionId + "]";
 	}
 	
 	

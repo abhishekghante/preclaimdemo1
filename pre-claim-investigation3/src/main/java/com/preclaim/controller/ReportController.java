@@ -17,7 +17,7 @@ public class ReportController {
     public String messages_status(HttpSession session) {
     	session.removeAttribute("ScreenDetails");
     	ScreenDetails details = new ScreenDetails();
-    	details.setScreen_name("/report/messages_status");
+    	details.setScreen_name("../report/messages_status.jsp");
     	details.setScreen_title("Cases Status Lists");
     	details.setMain_menu("Report");
     	details.setSub_menu1("All investigations");

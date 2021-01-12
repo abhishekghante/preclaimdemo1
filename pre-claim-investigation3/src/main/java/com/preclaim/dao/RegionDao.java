@@ -9,7 +9,7 @@ import com.preclaim.models.RegionList;
 public interface RegionDao {
 
 	public String create_region(Region region);
-	public List<RegionList> pending_region();
-	public List<RegionList> active_region();
+	public List<RegionList> region_list(int status);
+	public String deleteRegion(int regionId);
 
 }

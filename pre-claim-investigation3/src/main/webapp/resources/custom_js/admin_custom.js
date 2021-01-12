@@ -16,12 +16,7 @@ function updateMappingStatus( cmId, status ) {
     return false;
 }
 //DELETE GROUP
-function deleteGroup( groupId, type ) {
-    if(type == 1){
-        var table2 = $('#active_group_list').DataTable();
-    }else{
-        var table2 = $('#pending_group_list').DataTable();
-    }
+function deleteGroup( groupId ) {
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -29,17 +24,17 @@ function deleteGroup( groupId, type ) {
     $( '#continuemodal'+groupId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'groups/deleteGroup',
-            data : { 'groupId' : groupId },
+            url  : 'deleteGroup',
+            data : { 'GroupId' : groupId },
             beforeSend: function() { 
-                $("#continuemodal"+groupId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+groupId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+groupId).prop('disabled', true);
             },
             success : function( msg ) {
                 $("#continuemodal"+groupId).html('Yes');
                 $("#continuemodal"+groupId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
             }
         });
     });
@@ -138,12 +133,7 @@ function updateChannelStatus( channelId, type, status ) {
     });
 }
 //DELETE REGION
-function deleteRegion( regionId, type ) {
-    if(type == 1){
-        var table2 = $('#active_region_list').DataTable();
-    }else{
-        var table2 = $('#pending_region_list').DataTable();
-    }
+function deleteRegion( regionId) {
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -151,17 +141,17 @@ function deleteRegion( regionId, type ) {
     $( '#continuemodal'+regionId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'regions/deleteRegion',
-            data : { 'regionId' : regionId },
+            url  : 'deleteRegion',
+            data : { 'RegionId' : regionId },
             beforeSend: function() { 
-                $("#continuemodal"+regionId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+regionId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+regionId).prop('disabled', true);
             },
             success : function( msg ) {
                 $("#continuemodal"+regionId).html('Yes');
                 $("#continuemodal"+regionId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                
             }
         });
     });

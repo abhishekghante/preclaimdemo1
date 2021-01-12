@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%
 List<RegionList> pending_region = (List<RegionList>) session.getAttribute("pending_region");
+session.removeAttribute("pending_region");
 %>
 <link
 	href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css"
@@ -123,8 +124,6 @@ List<RegionList> pending_region = (List<RegionList>) session.getAttribute("pendi
 									<%
 									if (pending_region != null) {
 										for (RegionList list_region : pending_region) {
-											if (list_region.getStatus() != 1)
-										continue;
 									%>
 									<tr>
 										<td><%=list_region.getSrNo()%></td>
@@ -137,7 +136,7 @@ List<RegionList> pending_region = (List<RegionList>) session.getAttribute("pendi
 											    class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a> 
 											<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateRegionStatus('.$region->regionId.',0,1);"
 											    class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a> 
-											<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteRegion('.$region->regionId.',0);"
+											<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteRegion('<%=list_region.getRegionId()%>');"
 										        class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
 										</td>
 									</tr>

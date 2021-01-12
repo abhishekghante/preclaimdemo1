@@ -1,7 +1,8 @@
-package com.preclaim.controller;
+ package com.preclaim.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.preclaim.dao.GroupDao;
 import com.preclaim.models.Group;
@@ -66,7 +68,7 @@ public class GroupController {
     	details.setMain_menu("Groups");
     	details.setSub_menu1("Pending Groups");
     	session.setAttribute("ScreenDetails", details);
-    	List<GroupList> pending_list=groupDao.pending_list();
+    	List<GroupList> pending_list=groupDao.group_list(0);
     	session.setAttribute("pending_list", pending_list);
     	return "common/templatecontent";
     }
@@ -80,8 +82,17 @@ public class GroupController {
     	details.setMain_menu("Groups");
     	details.setSub_menu1("Active Groups");
     	session.setAttribute("ScreenDetails", details);
-    	List<GroupList> active_list=groupDao.active_list();
+    	List<GroupList> active_list=groupDao.group_list(1);
     	session.setAttribute("active_list", active_list);
     	return "common/templatecontent";
     }
+    
+    @RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
+	public @ResponseBody String deleteGroup(HttpServletRequest request)
+	{
+		int GroupId = Integer.parseInt(request.getParameter("GroupId"));
+		System.out.println("User ID:" + GroupId);
+		String message = groupDao.deleteGroup(GroupId);
+		return message;
+	}
 }

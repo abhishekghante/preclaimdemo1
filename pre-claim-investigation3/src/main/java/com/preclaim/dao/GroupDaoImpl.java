@@ -48,13 +48,14 @@ public class GroupDaoImpl implements GroupDao {
 		}
 
 	@Override
-	public List<GroupList> pending_list() {
-		String query="select * from group_lists";
+	public List<GroupList> group_list(int status) {
+		String query="select * from group_lists where status= " +status;
 		return this.template.query(query,new RowMapper<GroupList>() {
 
 			@Override
 			public GroupList mapRow(ResultSet rs, int rowNum) throws SQLException {
 				GroupList groupList=new GroupList();
+				groupList.setGroupId(rs.getInt("GroupId"));
 				groupList.setSrNo(rowNum);
 				groupList.setGroupName(rs.getString("groupName"));
 				groupList.setCreatedDate(rs.getString("createdDate"));
@@ -66,23 +67,22 @@ public class GroupDaoImpl implements GroupDao {
 		
 		
 	}
-
 	@Override
-	public List<GroupList> active_list() {
-		String query="select * from group_lists";
-		return this.template.query(query,new RowMapper<GroupList>() {
-
-			@Override
-			public GroupList mapRow(ResultSet rs, int rowNum) throws SQLException {
-				GroupList groupList=new GroupList();
-				groupList.setSrNo(rowNum);
-				groupList.setGroupName(rs.getString("groupName"));
-				groupList.setCreatedDate(rs.getString("createdDate"));
-				groupList.setStatus(rs.getInt("status"));		          
-				return groupList;
-			}
-			
-		});
+	public String deleteGroup(int groupId) {
+		try
+		{
+		String query="DELETE FROM group_lists where groupId = ?";
+		int message=this.template.update(query, groupId);
+		
+		System.out.println("Deletion" + message);	
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error in deleteGroup() method" + e.getMessage());
+			e.printStackTrace();
+			return "Error deleting group. Kindly contact system administrator";
+		}
+		return "Group deleted successfully";
 	}
 
 }

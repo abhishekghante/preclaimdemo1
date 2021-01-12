@@ -8,7 +8,7 @@ import com.preclaim.models.GroupList;
 public interface GroupDao {
 	
 public String add_group(Group group);
-public List<GroupList> pending_list();
-public List<GroupList> active_list();
+public List<GroupList> group_list(int status);
+public String deleteGroup(int groupId);
 
 }

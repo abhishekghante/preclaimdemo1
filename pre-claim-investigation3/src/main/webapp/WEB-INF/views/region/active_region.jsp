@@ -73,8 +73,6 @@ session.removeAttribute("active_region");
 									<%
 									if (active_region != null) {
 										for (RegionList list_region : active_region) {
-											if (list_region.getStatus() != 4)
-										continue;
 									%>
 									<tr>
 									     <td><%=list_region.getSrNo() %></td>
@@ -86,7 +84,7 @@ session.removeAttribute("active_region");
 									     	     class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
 									     	<a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateRegionStatus('.$region->regionId.',1,2);" 
 									     	     class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i></a>     
-									     	<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteRegion('.$region->regionId.',1);" 
+									     	<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteRegion('<%=list_region.getRegionId()%>',1);" 
 									     	     class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
 									     
 									     

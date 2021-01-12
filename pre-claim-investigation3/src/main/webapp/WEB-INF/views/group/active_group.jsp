@@ -56,9 +56,7 @@ session.removeAttribute("active_list");
                     if(active_list!=null){
                     	
                     	for(GroupList list_group : active_list){
-                    		if(list_group.getStatus()!=1)
-                    			continue;
-                    %>
+                         %>
                     		<tr>
                     			<td><%=list_group.getSrNo() %></td>
                     		    <td><%=list_group.getGroupName() %></td>
@@ -69,7 +67,7 @@ session.removeAttribute("active_list");
                     		             class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
                     		         <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('.$group->groupId.',1,1);" 
                     		             class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
-                    		         <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('.$group->groupId.',1);" 
+                    		         <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId() %>');" 
                     		             class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
                     		    </td>
                     		</tr>
