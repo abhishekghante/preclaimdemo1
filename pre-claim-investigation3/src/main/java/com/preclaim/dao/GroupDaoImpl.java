@@ -76,4 +76,19 @@ public class GroupDaoImpl implements GroupDao {
 		return "Group deleted successfully";
 	}
 
+	@Override
+	public String updateGroup(int groupId, String group_name) {
+		try
+		{
+			String sql = "UPDATE group_lists SET groupName = ? , updatedDate = now() where groupId =?";
+			template.update(sql, group_name, groupId);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return "Error updating region. Kindly contact system administrator";
+		}
+		return "****";
+	}
+	
 }

@@ -63,22 +63,24 @@ session.removeAttribute("active_list");
                     		    <td><%=list_group.getCreatedDate() %></td>
                     		    <td><span class="label label-sm label-success">Active</span></td>
                     		    <td>
-                    		         <a href="'.base_url().'groups/pendinglist/'.$group->groupId.'" data-toggle="tooltip" title="Edit" 
-                    		             class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
-                    		         <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('.$group->groupId.',1,1);" 
-                    		             class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
+                    		         <a href="${pageContext.request.contextPath}/group/pending_group/
+                    		         	<%=list_group.getGroupName() %>/<%=list_group.getGroupId() %>" 
+                    		         	data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
+                    		         	<i class="glyphicon glyphicon-edit"></i>
+                   		         	</a>
+                    		         <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('<%=list_group.getGroupId() %>',1,1);" 
+                    		             class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i>
+                   		             </a>
                     		         <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId() %>');" 
-                    		             class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                    		             class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>
+                   		             </a>
                     		    </td>
                     		</tr>
                     		
                     		<%
-                    	     }
+                    	     	}
                              }
-                            %>                   
-                    
-                    
-                    
+                            %>     
                     </tbody>
                   </table>
                 </div>
@@ -92,38 +94,6 @@ session.removeAttribute("active_list");
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-  var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  /*
-  table = $('#active_group_list').DataTable({
-      language: {
-        processing: "<img src='pageContext.request.contextPath/resources/img/loading.gif'>",
-      },
-      "processing": true, //Feature control the processing indicator.
-      "serverSide": true, //Feature control DataTables' server-side processing mode.
-      "order": [], //Initial no order.
-      'autoWidth': false,
-      "ajax": {
-          "data": function(d) {
-            d.csrf_test_name = csrf_hash;
-          },
-          "url": "<?php echo site_url('/groups/activeGroupTableResponse')?>",
-          "type": "POST"
-      },
-      "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
-      "lengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
-      //Set column definition initialisation properties.
-      "columnDefs": [{
-          "targets": [0,4],
-          "orderable": false, //set not orderable
-      },
-      {
-          "targets": [0,4],
-          "searchable": false, //set orderable
-      } ],
-      buttons: []
-  });
-  */
   var i = 0;
   $('#active_group_list tfoot th').each( function () {
     if( i == 1 ){
@@ -140,16 +110,12 @@ $(document).ready(function() {
     var that = this;
     $( 'input', this.footer() ).on( 'keyup change', function () {
       if ( that.search() !== this.value ) {
-        that
-          .search( this.value )
-          .draw();
+        that.search( this.value ).draw();
       }
     });
     $( 'select', this.footer() ).on( 'change', function () {
       if ( that.search() !== this.value ) {
-        that
-          .search( this.value )
-          .draw();
+        that.search( this.value ).draw();
       }
     });
   });

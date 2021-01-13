@@ -16,7 +16,8 @@ session.removeAttribute("region");
 			<div class="portlet-title">
 				<div class="caption">
 					<i class="icon-users font-green-sharp"></i>
-					<span class="caption-subject font-green-sharp sbold"> <%= region == null ? "Add " : "Update " %>
+					<span class="caption-subject font-green-sharp sbold">
+						<%= region == null ? "Add " : "Update " %>
 						Region
 					</span>
 				</div>
@@ -76,10 +77,9 @@ session.removeAttribute("region");
 				<div class="actions">
 					<div class="btn-group">
 						<a href="${pageContext.request.contextPath}/region/add_region"
-							data-toggle="tooltip" title="Add"
-							class="btn green-haze btn-outline btn-xs pull-right"
-							data-toggle="tooltip" title="" style="margin-right: 5px;"
-							data-original-title="Add New"> <i class="fa fa-plus"></i>
+							data-toggle="tooltip" title="Add" data-original-title="Add New"
+							class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip"
+							style="margin-right: 5px;"><i class="fa fa-plus"></i>
 						</a>
 						<!-- <?php } ?>
               <?php } ?>  -->
@@ -137,7 +137,7 @@ session.removeAttribute("region");
 										</td>
 									</tr>
 									<%
-									}
+										}
 									}
 									%>
 
@@ -158,13 +158,8 @@ session.removeAttribute("region");
 <script type="text/javascript">
 $(document).ready(function() {
 					
-	var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';				
-	var csrf_hash = '<?php echo $this->security->get_csrf_hash(); ?>';				
-	var i = 0;
-					
-					 
-	$('#pending_region_list tfoot th').each(function() {
-										
+	var i = 0;					 
+	$('#pending_region_list tfoot th').each(function() {									
 		if (i == 1) 
 		{										
 			$(this).html('<input type="text" class="form-control" placeholder="" />');										
@@ -202,32 +197,32 @@ function addRegion() {
 		toastr.error('Region Name Cannot be empty', 'Error');
 		return false;
 	}
-		var formdata = {'regionName' : regionName};
-		$.ajax({		
-			type : "POST",
-			url : '${pageContext.request.contextPath}/region/addRegion',
-			data : formdata,
-			beforeSend : function() {
-				$("#addregionsubmit")
-						.html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-				$("#addregionsubmit").prop('disabled', true);
-			},
-			success : function(data) {
-				if (data == "****") {
-					$("#addregionsubmit").html('Add Region');
-					$("#addregionsubmit").prop('disabled', false);
-					toastr.success('Region Added successfully.',
-							'Success');
-					$('#add_region_form #regionName').val('');
-					location.reload();
-				} else {
-					toastr.error(data, 'Error');
-					$("#addregionsubmit").html('Add Region');
-					$("#addregionsubmit").prop('disabled', false);
-				}
+	var formdata = {'regionName' : regionName};
+	$.ajax({		
+		type : "POST",
+		url : '${pageContext.request.contextPath}/region/addRegion',
+		data : formdata,
+		beforeSend : function() {
+			$("#addregionsubmit")
+					.html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+			$("#addregionsubmit").prop('disabled', true);
+		},
+		success : function(data) {
+			if (data == "****") {
+				$("#addregionsubmit").html('Add Region');
+				$("#addregionsubmit").prop('disabled', false);
+				toastr.success('Region Added successfully.',
+						'Success');
+				$('#add_region_form #regionName').val('');
+				location.reload();
+			} else {
+				toastr.error(data, 'Error');
+				$("#addregionsubmit").html('Add Region');
+				$("#addregionsubmit").prop('disabled', false);
 			}
-		});
-	}
+		}
+	});
+}
 
 function updateRegion() {
 	var table2 = $('#pending_region_list').DataTable();
@@ -237,33 +232,33 @@ function updateRegion() {
 		toastr.error('Region Name Cannot be empty', 'Error');
 		return false;
 	}
-		var formdata = {'regionName' : regionName, 'regionId' : regionId};
-		$.ajax({
-			type : "POST",
-			url : '${pageContext.request.contextPath}/region/updateRegion',
-			data : formdata,
-			beforeSend : function() {
-				$("#editregionsubmit")
-						.html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-				$("#editregionsubmit").prop('disabled', true);
-			},
-			success : function(data) {
+	var formdata = {'regionName' : regionName, 'regionId' : regionId};
+	$.ajax({
+		type : "POST",
+		url : '${pageContext.request.contextPath}/region/updateRegion',
+		data : formdata,
+		beforeSend : function() {
+			$("#editregionsubmit")
+					.html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+			$("#editregionsubmit").prop('disabled', true);
+		},
+		success : function(data) {
+			$("#editregionsubmit").html('Update');
+			$("#editregionsubmit").prop('disabled', true);
+			if (data == "****") 
+			{
 				$("#editregionsubmit").html('Update');
-				$("#editregionsubmit").prop('disabled', true);
-				if (data == "****") 
-				{
-					$("#editregionsubmit").html('Update');
-					$("#editregionsubmit").prop('disabled', false);
-					toastr.success('Region Updated successfully.', 'Success');
-					location.href ="${pageContext.request.contextPath}/region/pending_region";
-				} 
-				else 
-				{
-					toastr.error(data, 'Error');
-					$("#editregionsubmit").html('Update');
-					$("#editregionsubmit").prop('disabled', false);
-				}
+				$("#editregionsubmit").prop('disabled', false);
+				toastr.success('Region Updated successfully.', 'Success');
+				location.href ="${pageContext.request.contextPath}/region/pending_region";
+			} 
+			else 
+			{
+				toastr.error(data, 'Error');
+				$("#editregionsubmit").html('Update');
+				$("#editregionsubmit").prop('disabled', false);
 			}
-		});
-	}
+		}
+	});
+}
 </script>
