@@ -22,7 +22,7 @@ $assetUrl  = $this->config->item( 'base_url' );
     <div class="box box-primary">
       <!-- form start -->
       <div id="message_account"></div>
-      <form novalidate="" id="add_group_form" role="form" method="post" class="form-horizontal" action="create_group">
+      <form novalidate="" id="add_group_form" role="form" method="post" class="form-horizontal">
         <div class="box-body">
           <div class="row">
             <div class="col-md-6">
@@ -38,7 +38,7 @@ $assetUrl  = $this->config->item( 'base_url' );
         <!-- /.box-body -->
         <div class="box-footer">
           <div class="col-md-offset-2 col-md-10">
-            <button class="btn btn-info" id="addgroupsubmit" onClick="return addGroup();" type="submit">Add Group</button>
+            <button class="btn btn-info" id="addgroupsubmit" onClick="return addGroup();" type="button">Add Group</button>
             <button class="btn btn-danger" type="reset" value="">Clear</button>
           </div>
         </div>
@@ -53,34 +53,31 @@ function addGroup() {
     toastr.error('Group Name Cannot be empty','Error');
     return false;
   }
-  var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  if(groupName){
-      var formdata = {csrf_test_name:csrf_hash,'groupName':groupName};
-      $.ajax({
-        type: "POST",
-        url: adminurl + 'groups/addGroup',
-        data: formdata,
-        beforeSend: function() { 
-            $("#addgroupsubmit").html('<img src="'+adminurl+'${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-            $("#addgroupsubmit").prop('disabled', true);
-        },
-        success: function( data ) {
-          if(data == 1){
-            $("#addgroupsubmit").html('Add Group');
-            $("#addgroupsubmit").prop('disabled', false);
-            toastr.success( 'Group Added successfully.','Success' );
-            $( '#add_group_form #groupName' ).val(''); 
-            /*setTimeout( function() {
-              window.location.href = adminurl + 'groups';
-            }, 2000 );*/
-          }else{
-            toastr.error( data,'Error' );
-            $("#addgroupsubmit").html('Add Group');
-            $("#addgroupsubmit").prop('disabled', false);
-          }
-        }
-      });
-  }   
+  var formdata ={'groupName':groupName};
+  $.ajax({
+    type: "POST",
+    url: 'addGroup',
+    data: formdata,
+    beforeSend: function() { 
+        $("#addgroupsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+        $("#addgroupsubmit").prop('disabled', true);
+    },
+    success: function( data ) {
+      if(data == "****"){
+        $("#addgroupsubmit").html('Add Group');
+        $("#addgroupsubmit").prop('disabled', false);
+        toastr.success( 'Group Added successfully.','Success' );
+        $( '#add_group_form #groupName' ).val(''); 
+        /*setTimeout( function() {
+          window.location.href = adminurl + 'groups';
+        }, 2000 );*/
+      }else{
+        toastr.error( data,'Error' );
+        $("#addgroupsubmit").html('Add Group');
+        $("#addgroupsubmit").prop('disabled', false);
+      }
+    }
+  });
+     
 }
 </script>

@@ -39,7 +39,7 @@ $assetUrl  = $this->config->item( 'base_url' );
                 <label class="col-md-4 control-label">investigations Image (English) </label>
                 <div class="col-md-8">
                   <a href="javascript:void(0);">
-                    <img src="${pageContext.request.contextPath}/uploads/default_img.png" id="categoryImgEn" style="height:160px;width:auto;" data-src="#" />
+                    <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" id="categoryImgEn" style="height:160px;width:auto;" data-src="#" />
                     <input type="file" onchange="displayUploadImg(this, 'categoryImgEn');" name="imgCatEng" id="imgCatEng" class="placeImg" accept="image/*" />
                   </a>
                 </div>
@@ -64,7 +64,7 @@ $assetUrl  = $this->config->item( 'base_url' );
                 <label class="col-md-4 control-label">Upload Image</label>
                 <div class="col-md-8">
                   <a href="javascript:void(0);">
-                    <img src="${pageContext.request.contextPath}/uploads/default_img.png" id="categoryImgThai" style="height:160px;width: auto;" data-src="#" /> <br />
+                    <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" id="categoryImgThai" style="height:160px;width: auto;" data-src="#" /> <br />
                     <input type="file" onchange="displayUploadImg(this, 'categoryImgThai');" name="imgCatThai" id="imgCatThai" class="placeImg" accept="image/*" />
                   </a>
                 </div>

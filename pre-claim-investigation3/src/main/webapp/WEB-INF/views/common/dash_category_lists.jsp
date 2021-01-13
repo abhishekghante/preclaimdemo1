@@ -44,13 +44,13 @@
                     <div class="mt-action-row">
                         <div class="mt-action-info ">
                             <div class="mt-action-details ">
-                                <span class="mt-action-author"><?= substr($aCatlist->categoryNameEn,0,35); ?></span>
+                                <span class="mt-action-author"><!-- <?= substr($aCatlist->categoryNameEn,0,35); ?> --></span>
                             </div>
                         </div>
                         <div class="mt-action-datetime ">
-                            <span class="mt-action-date"><?= date('d M',strtotime($aCatlist->createdDate)); ?></span>
+                            <span class="mt-action-date"><!-- <?= date('d M',strtotime($aCatlist->createdDate)); ?> --></span>
                             <span class="mt-action-dot bg-green"></span>
-                            <span class="mt=action-time"><?= date('h:i:s A',strtotime($aCatlist->createdDate)); ?></span>
+                            <span class="mt=action-time"><!-- <?= date('h:i:s A',strtotime($aCatlist->createdDate)); ?> --></span>
                         </div>
                     </div>
                     <!-- 

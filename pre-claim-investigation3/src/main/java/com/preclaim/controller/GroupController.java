@@ -38,27 +38,7 @@ public class GroupController {
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
     }
-    
-    @RequestMapping(value = "/create_group", method = RequestMethod.POST)
-    public String create_group(HttpSession session,@ModelAttribute Group group) {
-    	String message = groupDao.add_group(group);
-    	session.removeAttribute("ScreenDetails");
-    	ScreenDetails details = new ScreenDetails();
-    	details.setScreen_name("../group/add_group.jsp");
-    	details.setScreen_title("Add Group");
-    	details.setMain_menu("Groups");
-    	details.setSub_menu1("Add Group");
-    	details.setSub_menu2("Manage Groups");
-    	details.setSub_menu2_path("/group/pending_group");
-    	if(message.equals("****"))
-    		details.setSuccess_message1("Group added succesfully");
-    	else
-    		details.setError_message1(message);
-    	session.setAttribute("ScreenDetails", details);
-    	return "common/templatecontent";
-    }
    
-    
     @RequestMapping(value = "/pending_group",method = RequestMethod.GET)
     public String pending_group(HttpSession session) {
     	session.removeAttribute("ScreenDetails");

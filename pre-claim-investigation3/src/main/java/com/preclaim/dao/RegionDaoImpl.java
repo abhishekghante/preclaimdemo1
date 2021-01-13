@@ -27,48 +27,51 @@ public class RegionDaoImpl implements RegionDao {
 	}
 
 	@Override
-	public String create_region(Region region) {
-		try
-		{
-			String query = "INSERT INTO region_lists(regionName, createdBy, createdDate, updatedDate,"
-					+ "updatedBy, status) values(?,?,?,?,?,?)";
-			template.update(query, region.getRegionName(), region.getCreatedBy(), region.getCreatedDate(), 
-					region.getUpdatedDate(), region.getUpdatedBy(), region.getStatus());
-		} 
-		catch (Exception e) 
-		{
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			return "Error adding region";
-		}
+	public String create_region(Region region) 
+	{
+		try {
+				String RegionCheck = "select count(*) from region_lists where regionName='" + region.getRegionName() + "'";
+				int RegionCount = this.template.queryForObject(RegionCheck, Integer.class);
+				if (RegionCount == 0) 
+				 {
+					String query = "INSERT INTO region_lists(regionName, createdBy, createdDate, updatedDate,"
+									+ "updatedBy, status) values(?,?,?,?,?,?)";
+					template.update(query, region.getRegionName(), region.getCreatedBy(), region.getCreatedDate(),
+									region.getUpdatedDate(), region.getUpdatedBy(), region.getStatus());
+				 } 
+				else 
+				    {
+				     return "Region name already exists";
+				    }
+		    } catch (Exception e) 
+		      {
+			    System.out.println(e.getMessage());
+			    e.printStackTrace();
+		        return "Error adding region";
+		      }
 		return "****";
 	}
 
 	@Override
 	public List<RegionList> region_list(int status) {
 		String query = "select * from region_lists where status=" + status;
-		return template.query(query, 
-				(ResultSet rs, int rowNum) -> 
-				{
-					RegionList regionList = new RegionList();
-					regionList.setRegionId(rs.getInt("regionId"));
-					regionList.setSrNo(rowNum + 1);
-					regionList.setRegionName(rs.getString("regionName"));
-					regionList.setCreatedDate(rs.getString("createdDate"));
-					regionList.setStatus(rs.getInt("status"));
-					return regionList;
-				});
+		return template.query(query, (ResultSet rs, int rowNum) -> {
+			RegionList regionList = new RegionList();
+			regionList.setRegionId(rs.getInt("regionId"));
+			regionList.setSrNo(rowNum + 1);
+			regionList.setRegionName(rs.getString("regionName"));
+			regionList.setCreatedDate(rs.getString("createdDate"));
+			regionList.setStatus(rs.getInt("status"));
+			return regionList;
+		});
 	}
 
 	@Override
 	public String deleteRegion(int regionId) {
-		try 
-		{
+		try {
 			String query = "DELETE FROM region_lists where regionId= ?";
 			template.update(query, regionId);
-		} 
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
 			System.out.println("Deletion" + e.getMessage());
 			e.printStackTrace();
 			return "Error deleting region. Kindly contact system administrator";
@@ -78,13 +81,10 @@ public class RegionDaoImpl implements RegionDao {
 
 	@Override
 	public String updateRegion(int regionId, String region_name) {
-		try
-		{
+		try {
 			String sql = "UPDATE region_lists SET regionName = ? , updatedDate = now() where regionId =?";
-			template.update(sql,region_name, regionId);
-		}
-		catch(Exception e)
-		{
+			template.update(sql, region_name, regionId);
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "Error updating region. Kindly contact system administrator";
 		}

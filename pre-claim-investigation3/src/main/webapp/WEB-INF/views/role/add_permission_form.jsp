@@ -44,7 +44,7 @@
                             <tbody>
                             	<tr>
 			                    	<td>
-			                    		<input type="checkbox" <%if(role_permission.equals("appUsers")) {%>checked <%} %> value = "appUsers"> <label for="appUsers">App Users</label>
+			                    		<input type="checkbox" <%if(role_permission.equals("appUsers")) {%>checked <%} %> name="appUsers[]" id="appUsers" class="allPLCheck0"  value = "appUsers"> <label for="appUsers">App Users</label>
 			                    	</td>
 			                    	<td>
 			                    		<input type="checkbox" <%if(role_permission.equals("appUsers/index")) {%>checked <%} %> name="appUsers[]" id="appUsers_index" class="indPLCheck0" value="appUsers/index"> <label for="appUsers_index">View</label>

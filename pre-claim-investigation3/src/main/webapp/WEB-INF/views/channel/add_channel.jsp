@@ -44,7 +44,7 @@ $assetUrl  = $this->config->item( 'base_url' );
         <!-- /.box-body -->
         <div class="box-footer">
           <div class="col-md-offset-2 col-md-10">
-            <button class="btn btn-info" id="addchannelsubmit" onClick="return addChannel();" type="submit">Add Channel</button>
+            <button class="btn btn-info" id="addchannelsubmit" onClick="return addChannel();" type="button">Add Channel</button>
             <button class="btn btn-danger" type="reset" value="">Clear</button>
           </div>
         </div>
@@ -64,20 +64,18 @@ function addChannel() {
     toastr.error('Channel Code Cannot be empty','Error');
     return false;
   }
-  var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
   if(channelName && channelCode){
-      var formdata = {csrf_test_name:csrf_hash,'channelName':channelName,'channelCode':channelCode};
+      var formdata = {'channelName':channelName,'channelCode':channelCode};
       $.ajax({
         type: "POST",
-        url: adminurl + 'channels/addChannel',
+        url: 'addChannel',
         data: formdata,
         beforeSend: function() { 
-            $("#addchannelsubmit").html('<img src="'${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+            $("#addchannelsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
             $("#addchannelsubmit").prop('disabled', true);
         },
         success: function( data ) {
-          if(data == 1){
+          if(data == "****"){
             $("#addchannelsubmit").html('Add Channel');
             $("#addchannelsubmit").prop('disabled', false);
             toastr.success( 'Channel Added successfully.','Success' );

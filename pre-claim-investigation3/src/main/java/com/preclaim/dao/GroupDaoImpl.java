@@ -13,11 +13,11 @@ import com.preclaim.models.GroupList;
 
 public class GroupDaoImpl implements GroupDao {
 
-	
 	@Autowired
 	DataSource datasource;
-	
-	private JdbcTemplate template;	
+
+	private JdbcTemplate template;
+
 	public JdbcTemplate getTemplate() {
 		return template;
 	}
@@ -29,46 +29,45 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public String add_group(Group group) {
 		try {
-		System.out.println(group.toString());
-		String query = "INSERT INTO group_lists(groupName, createdBy, createdDate, updatedDate, updatedBy, "
-				+ "status) values(?,?,?,?,?,?)";
-		template.update(query, group.getGroupName(), group.getCreatedBy(), group.getCreatedDate(), 
-				group.getUpdatedDate(), group.getUpdatedBy(), group.getStatus());
-		}
-		catch(Exception e)
-		{
+			String GroupCheck = "select count(*) from group_lists where groupName='" + group.getGroupName() + "'";
+			int groupCount = this.template.queryForObject(GroupCheck, Integer.class);
+			System.out.println(group.toString());
+			if (groupCount == 0) {
+				String query = "INSERT INTO group_lists(groupName, createdBy, createdDate, updatedDate, updatedBy, "
+					         	+ "status) values(?,?,?,?,?,?)";
+				template.update(query, group.getGroupName(), group.getCreatedBy(), group.getCreatedDate(),
+								group.getUpdatedDate(), group.getUpdatedBy(), group.getStatus());
+			} else {
+					return "Group already exists";
+				   }
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			return "Error adding group";
 		}
-		return "****";  
-		}
+		return "****";
+	}
 
 	@Override
 	public List<GroupList> group_list(int status) {
-		String query="select * from group_lists where status= " + status;
-		return this.template.query(query,
-			(ResultSet rs, int rowNum) -> 
-			{
-				GroupList groupList=new GroupList();
-				groupList.setGroupId(rs.getInt("GroupId"));
-				groupList.setSrNo(rowNum + 1);
-				groupList.setGroupName(rs.getString("groupName"));
-				groupList.setCreatedDate(rs.getString("createdDate"));
-				groupList.setStatus(rs.getInt("status"));		          
-				return groupList;
-			});
+		String query = "select * from group_lists where status= " + status;
+		return this.template.query(query, (ResultSet rs, int rowNum) -> {
+			GroupList groupList = new GroupList();
+			groupList.setGroupId(rs.getInt("GroupId"));
+			groupList.setSrNo(rowNum + 1);
+			groupList.setGroupName(rs.getString("groupName"));
+			groupList.setCreatedDate(rs.getString("createdDate"));
+			groupList.setStatus(rs.getInt("status"));
+			return groupList;
+		});
 	}
-	
+
 	@Override
 	public String deleteGroup(int groupId) {
-		try
-		{
-			String query="DELETE FROM group_lists where groupId = ?";
+		try {
+			String query = "DELETE FROM group_lists where groupId = ?";
 			template.update(query, groupId);
-					}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			System.out.println("Error in deleteGroup() method" + e.getMessage());
 			e.printStackTrace();
 			return "Error deleting group. Kindly contact system administrator";
@@ -78,17 +77,14 @@ public class GroupDaoImpl implements GroupDao {
 
 	@Override
 	public String updateGroup(int groupId, String group_name) {
-		try
-		{
+		try {
 			String sql = "UPDATE group_lists SET groupName = ? , updatedDate = now() where groupId =?";
 			template.update(sql, group_name, groupId);
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "Error updating region. Kindly contact system administrator";
 		}
 		return "****";
 	}
-	
+
 }
