@@ -52,7 +52,7 @@ public class GroupDaoImpl implements GroupDao {
 			{
 				GroupList groupList=new GroupList();
 				groupList.setGroupId(rs.getInt("GroupId"));
-				groupList.setSrNo(rowNum);
+				groupList.setSrNo(rowNum + 1);
 				groupList.setGroupName(rs.getString("groupName"));
 				groupList.setCreatedDate(rs.getString("createdDate"));
 				groupList.setStatus(rs.getInt("status"));		          

@@ -30,6 +30,7 @@ public class LoginDAOImpl implements LoginDAO {
 				new Object[] {login.getUsername(),login.getPassword()},
 				(ResultSet rs, int arg1) ->{
 					UserDetails login_user = new UserDetails();
+					login_user.setUserID(rs.getInt("user_id"));
 					login_user.setUsername(rs.getString("username"));
 					login_user.setPassword(rs.getString("password"));
 					login_user.setFull_name(rs.getString("full_name"));

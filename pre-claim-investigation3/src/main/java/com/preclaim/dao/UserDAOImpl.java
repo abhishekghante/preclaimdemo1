@@ -103,7 +103,7 @@ public class UserDAOImpl implements UserDAO{
 			List<UserList> user_list = this.template.query(sql, 
 					(ResultSet rs, int count) -> {
 						UserList user = new UserList();
-						user.setSrno(count);
+						user.setSrno(count + 1);
 						user.setUser_id(rs.getInt("user_id"));
 						user.setFull_name(rs.getString("full_name"));
 						user.setAccount_type(rs.getString("role"));
