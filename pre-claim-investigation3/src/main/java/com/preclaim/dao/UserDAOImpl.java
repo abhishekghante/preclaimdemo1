@@ -248,11 +248,43 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public String addPermission(List<Permission> role_permission) {
-		
-		
-		
+				
 		return null;
 	}
-	
-	
+
+	@Override
+	public String accountValidate(String username) {
+		try
+		{
+			String sql = "SELECT count(*) from admin_user where username = '" + username + "'";
+			int usernameExists = template.queryForObject(sql, Integer.class);
+			if(usernameExists > 0)
+				return "Username already exists";
+			return "****";	
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return "Error in database. Kindly contact system administrator";
+		}
+	}
+
+	@Override
+	public String updateProfile(UserDetails user_details) {
+		try
+		{
+			String sql = "UPDATE admin_user SET full_name = ?, username = ?,"
+					+ "user_email = ?, password = ?, user_image = ? where user_id = ?";
+			template.update(sql, user_details.getFull_name(), user_details.getUsername(), 
+					user_details.getUser_email(), user_details.getPassword(),user_details.getUserimage(), 
+					user_details.getUserID());				
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return "Failed updating user ID";
+		}
+		return "****";
+	}
+		
 }

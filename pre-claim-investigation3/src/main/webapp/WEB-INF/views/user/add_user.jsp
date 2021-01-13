@@ -1,6 +1,7 @@
 <%@page import="com.preclaim.models.UserRole" %>
 <%@page import = "java.util.List" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<link href = "${pageContext.request.contextPath}/resources/custom_css/custom.css">
 <style type="text/css">
 #imgAccount { display:none;}
 </style>
@@ -27,8 +28,8 @@
       <!-- /.box-header -->
       <!-- form start -->
       <div id="message_account"></div>
-      <form id="add_account_form" role="form" method="post" class="form-horizontal" 
-      	action = "create_user" modelAttribute = "user_details">
+      <form novalidate id="add_account_form" role="form" method="post" class="form-horizontal" 
+      	action = "create_user" modelAttribute = "user_details" onsubmit = "return accountValidate()">
         <div class="box-body">
           <div class="row">
             <div class="col-md-6">
@@ -112,34 +113,89 @@
 $(document).ready(function(){
 	$("#img_userimage").on('click', function() {
 	    $("#input_userimage").trigger('click');
-	  });	  
+	  });
+});
 </script>
 <script>
-function displayUploadImg(input, PlaceholderID) {
-	  if (input.files && input.files[0]) {
-	    var upfile = input.files[0];
-	    var imagefile = upfile.type;
-	    var match= ["image/jpeg","image/png","image/jpg"];
-	    if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))){
-	      alert('Please select a valid image file (JPEG/JPG/PNG).');
-	      $("#"+input.id).val('');
-	      return false;
-	    }
-	    var file_size = upfile.size/1024/1024;
-	    if(file_size < 2){
-	      var reader = new FileReader();
-	      reader.onload = function (e) {
-	        $('#'+PlaceholderID)
-	            .attr('src', e.target.result)
-	            .width('auto')
-	            .height(160);
-	        };
-	      reader.readAsDataURL(upfile);
-	    }else{
-	      alert('File too large. File must be less than 2 MB.');
-	      $("#"+input.id).val('');
-	      return false;
-	    }
-	  }
-	}
+function accountValidate() {
+    
+    var full_name    = $.trim($('#add_account_form #full_name').val());
+    var username     = $.trim($('#add_account_form #username').val());
+    var user_email   = $.trim($('#add_account_form #user_email').val());
+    var password     = $.trim($('#add_account_form #password').val());
+    var account_img  = $.trim($('#add_account_form #account_img').val());
+    var account_type = $.trim($('#add_account_form #account_type').val());
+    var status       = $.trim($('#add_account_form #status').val());
+    $('#full_name').removeClass('has-error-2');
+    $('#username').removeClass('has-error-2');
+    $('#password').removeClass('has-error-2');
+    $('#user_email').removeClass('has-error-2');
+    $('#status').removeClass('has-error-2');
+    $('#account_type').removeClass('has-error-2');
+    let validflag = 1;
+    if( status == "" ){
+        $('#status').addClass('has-error-2');
+        $('#status').focus();
+        validflag = 0;
+        toastr.error("Kindly select User profile status","Error");
+    }
+    if( account_type == "" ){
+        $('#account_type').addClass('has-error-2');
+        $('#account_type').focus();
+        validflag = 0;
+        toastr.error("Kindly select User Type","Error");
+    }
+    if( password == "" ){
+        $('#password').addClass('has-error-2');
+        $('#password').focus();
+        validflag = 0;
+        toastr.error("Kindly enter Password","Error");
+    }
+    if(user_email == "")
+   	{
+    	$('#user_email').addClass('has-error-2');
+        $('#user_email').focus();
+        validflag = 0;
+        toastr.error("Kindly enter Email-ID","Error");
+   	}
+    if( username == "" ){
+        $('#username').addClass('has-error-2');
+        $('#username').focus();
+        validflag = 0;
+        toastr.error("Kindly enter Username","Error");
+    }
+    else
+   	{
+	    $.ajax({
+	        type    : 'POST',
+	        url     : 'accountValidate',
+	        data    : {'username':username},
+	        beforeSend: function() { 
+	            $("#addaccountsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+	            $("#addaccountsubmit").prop('disabled', true);
+	        },
+	        success : function( msg ) {
+	            $("#addaccountsubmit").html('Create');
+	            $("#addaccountsubmit").prop('disabled', false);
+	            if( msg != "****" ) {
+	                toastr.error(msg,'Error');
+	                $('#username').addClass('has-error-2');
+	                $('#username').focus();	            
+	                validflag = 0;
+	            }
+	        }
+	    });
+   	}
+    
+    if( full_name == "" ){
+        $('#full_name').addClass('has-error-2');
+        $('#full_name').focus();
+        validflag = 0;
+        toastr.error("Full Name cannot be blank","Error");
+    }
+    if(validflag == 1)
+    	return true;
+    return false;
+}
+
 </script>

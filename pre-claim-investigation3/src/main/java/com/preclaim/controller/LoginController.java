@@ -68,15 +68,5 @@ public class LoginController {
     	details.setMain_menu("Dashboard");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
-    }
-    
-    @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String edit(HttpSession session) {
-    	session.removeAttribute("ScreenDetails");    	
-		ScreenDetails details = new ScreenDetails();
-    	details.setScreen_name("../profile/edit_profile.jsp");
-    	details.setScreen_title("Edit Profile");
-    	session.setAttribute("ScreenDetails", details);
-		return "common/templatecontent";
-    }
+    }    
 }

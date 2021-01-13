@@ -75,7 +75,7 @@ UserDetails user = (UserDetails) session.getAttribute("User_Login");
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">
                                 <li>
-                                	<a href="${pageContext.request.contextPath}/profile">
+                                	<a href="${pageContext.request.contextPath}/profile/edit">
                                 		<i class="icon-user"></i> My Profile 
                                		</a>
                            		</li>

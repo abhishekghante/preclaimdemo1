@@ -201,14 +201,21 @@ public class UserController {
     	List<Permission> role_permission = dao.retrievePermission(roleID);
     	session.setAttribute("role_id", String.valueOf(roleID));
     	session.setAttribute("permission", role_permission);
-    	System.out.println(role_permission.equals("appUsers"));
     	return "common/templatecontent";
 	}
 	
 	@RequestMapping(value = "/addPermission", method = RequestMethod.POST)
-	public @ResponseBody String addPermission(HttpSession session)
+	public @ResponseBody String addPermission(HttpServletRequest request)
 	{
 		
 		return "****";
+	}
+	
+	@RequestMapping(value = "/accountValidate", method = RequestMethod.POST)
+	public @ResponseBody String accountValidate(HttpServletRequest request)
+	{
+		String username = request.getParameter("username"); 
+		System.out.println(username);
+		return dao.accountValidate(username);
 	}
 }

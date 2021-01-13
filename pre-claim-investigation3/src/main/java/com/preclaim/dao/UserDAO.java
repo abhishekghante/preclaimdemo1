@@ -21,4 +21,6 @@ public interface UserDAO {
 	public String updateUserDetails(UserDetails user_details);
 	public List<Permission>	retrievePermission(int roleID);
 	public String addPermission(List<Permission> role_permission);
+	public String accountValidate(String username);
+	public String updateProfile(UserDetails user_details);
 }

@@ -1,7 +1,6 @@
 <%@page import="com.preclaim.models.UserDetails" %>
 <%
 UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
-//user_details.decodePassword(user_details.getPassword());
 %>
 <style type="text/css">
 #userImage { display:none;}
@@ -59,9 +58,9 @@ UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
               <div class="form-group">
                 <label class="col-md-4 control-label" for="username">Username <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required value="<%= user_details.getFull_name()%>" 
+                  <input type="text" value="<%= user_details.getUsername()%>" 
                   	placeholder="User name" maxlength="15" id="username" class="username form-control" 
-                  	name="username">
+                  	name="username" readonly disabled>
                 </div>
               </div>
               <div class="form-group">
@@ -77,7 +76,7 @@ UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
           <!-- /.box-body -->
           <div class="box-footer">
             <div class="col-md-offset-2 col-md-10">
-              <input type="hidden" value="<%=user_details.getUsername() %>" id="user_id" name="user_id">
+              <input type="hidden" value="<%=user_details.getUserID() %>" id="user_id" name="user_id">
               <button class="btn btn-info" id="editprofilesubmit" type="submit">Update</button>
               <a href="${pageContext.request.contextPath}/dashboard" class="btn btn-danger" value="">Back</a>
             </div>
@@ -111,28 +110,24 @@ $(document).ready(function(){
     $('#username').removeClass('has-error-2');
     $('#password').removeClass('has-error-2');
     $('#user_email').removeClass('has-error-2');
-    if( full_name == "" ){
-        $('#full_name').addClass('has-error-2');
-        $('#full_name').focus();
-        return false;
-    }
-    if( username == "" ){
-        $('#username').addClass('has-error-2');
-        $('#username').focus();
-        return false;
-    }
-    if( password == "" ){
-        $('#password').addClass('has-error-2');
-        $('#password').focus();
-        return false;
-    }
+    
     if(user_email){
       if (!ValidateEmail(user_email)) {
         $('#user_email').addClass('has-error-2');
         $('#user_email').focus();
-        return false;
       }
     }
+    
+    if( password == "" ){
+        $('#password').addClass('has-error-2');
+        $('#password').focus();
+    }
+          
+    if( full_name == "" ){
+        $('#full_name').addClass('has-error-2');
+        $('#full_name').focus();
+    }
+    
     $.ajax({
         type    : 'POST',
         url     : 'updateProfile',
@@ -146,11 +141,11 @@ $(document).ready(function(){
           $('#edit_profile_form').css("opacity",".5");
         },
         success : function( data ) {
-          if(data == 1){
+          if(data == "****"){
             $("#editprofilesubmit").html('Update');
             $("#editprofilesubmit").prop('disabled', false);
-            //window.location.href = adminurl + "users";
             toastr.success( 'Profile Updated successfully.','Success' );
+          	window.location.href = "${pageContext.request.contextPath}/dashboard";            
             $("#delImgMsgEn").val(0);
             $("#delImgMsgThai").val(0);
           }else{
@@ -163,31 +158,4 @@ $(document).ready(function(){
     });
   });
 });
-function displayUploadImg(input, PlaceholderID) {
-  if (input.files && input.files[0]) {
-    var upfile = input.files[0];
-    var imagefile = upfile.type;
-    var match= ["image/jpeg","image/png","image/jpg"];
-    if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))){
-      alert('Please select a valid image file (JPEG/JPG/PNG).');
-      $("#"+input.id).val('');
-      return false;
-    }
-    var file_size = upfile.size/1024/1024;
-    if(file_size < 5){
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        $('#'+PlaceholderID)
-            .attr('src', e.target.result)
-            .width('auto')
-            .height(160);
-        };
-      reader.readAsDataURL(upfile);
-    }else{
-      alert('File too large. File must be less than 5 MB.');
-      $("#"+input.id).val('');
-      return false;
-    }
-  }
-}
 </script>
