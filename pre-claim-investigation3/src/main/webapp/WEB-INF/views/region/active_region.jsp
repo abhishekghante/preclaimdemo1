@@ -4,20 +4,10 @@
 List<RegionList> active_region = (List<RegionList>) session.getAttribute("active_region");
 session.removeAttribute("active_region");
 %>
-
-
-<link
-	href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css"
-	rel="stylesheet" type="text/css" />
-<script
-	src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js"
-	type="text/javascript"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
-	type="text/javascript"></script>
+<link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
 <div class="row">
 	<div class="col-xs-12 col-sm-12">
 		<div class="portlet box">
@@ -80,14 +70,14 @@ session.removeAttribute("active_region");
 									     <td><%=list_region.getCreatedDate() %></td>
 									     <td><span class="label label-sm label-success">Active</span></td>
 									     <td>
-									     	<a href="'.base_url().'regions/pendinglist/'.$region->regionId.'" data-toggle="tooltip" title="Edit" 
-									     	     class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
+									     	<a href="${pageContext.request.contextPath}/region/pending_region/
+										     	<%=list_region.getRegionName() %>/<%=list_region.getRegionId() %>" 
+										     	data-toggle="tooltip" title="Edit" 
+							     	    		class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
 									     	<a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateRegionStatus('.$region->regionId.',1,2);" 
-									     	     class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i></a>     
+								     	     	class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i></a>     
 									     	<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteRegion('<%=list_region.getRegionId()%>',1);" 
-									     	     class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
-									     
-									     
+								     	     	class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
 									     </td>
 									     
 									</tr>
@@ -112,86 +102,32 @@ session.removeAttribute("active_region");
 	<!-- content -->
 </div>
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
-						var csrf_hash = '<?php echo $this->security->get_csrf_hash(); ?>';
-						/*
-						table = $('#active_region_list').DataTable({
-						    language: {
-						      processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
-						    },
-						    "processing": true, //Feature control the processing indicator.
-						    "serverSide": true, //Feature control DataTables' server-side processing mode.
-						    "order": [], //Initial no order.
-						    'autoWidth': false,
-						    "ajax": {
-						        "data": function(d) {
-						          d.csrf_test_name = csrf_hash;
-						        },
-						        "url": "<?php echo site_url('/regions/activeRegionTableResponse')?>",
-						        "type": "POST"
-						    },
-						    "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
-						    "lengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
-						    //Set column definition initialisation properties.
-						    "columnDefs": [{
-						        "targets": [0,4],
-						        "orderable": false, //set not orderable
-						    },
-						    {
-						        "targets": [0,4],
-						        "searchable": false, //set orderable
-						    } ],
-						    buttons: []
-						});
-						 */
-						var i = 0;
-						$('#active_region_list tfoot th')
-								.each(
-										function() {
-											if (i == 1) {
-												$(this)
-														.html(
-																'<input type="text" class="form-control" placeholder="" />');
-											}
-											i++;
-										});
+$(document).ready(function() {
+	var i = 0;
+	$('#active_region_list tfoot th').each(function() {
+						
+		if (i == 1) {
+			$(this).html('<input type="text" class="form-control" placeholder="" />');
+		}
+		i++;
+	});
 
-						// DataTable
-						var table = $('#active_region_list').DataTable();
+	// DataTable
+	var table = $('#active_region_list').DataTable();
 
-						// Apply the search
-						table
-								.columns()
-								.every(
-										function() {
-											var that = this;
-											$('input', this.footer())
-													.on(
-															'keyup change',
-															function() {
-																if (that
-																		.search() !== this.value) {
-																	that
-																			.search(
-																					this.value)
-																			.draw();
-																}
-															});
-											$('select', this.footer())
-													.on(
-															'change',
-															function() {
-																if (that
-																		.search() !== this.value) {
-																	that
-																			.search(
-																					this.value)
-																			.draw();
-																}
-															});
-										});
-					});
+	// Apply the search
+	table.columns().every(function() {						
+		var that = this;
+		$('input', this.footer()).on('keyup change',function() {
+			if (that.search() !== this.value) {
+				that.search(this.value).draw();
+			}
+		});
+		$('select', this.footer()).on('change',function() {
+			if (that.search() !== this.value) {
+				that.search(this.value).draw();
+			}
+		});
+	});
+});
 </script>

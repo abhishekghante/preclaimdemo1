@@ -130,9 +130,9 @@ public class RegionController{
 	@RequestMapping(value = "/updateRegion",method = RequestMethod.POST)
 	public @ResponseBody String updateRegion(HttpServletRequest request) 
 	{	
-		int RegionId=Integer.parseInt(request.getParameter("regionId"));
+		int RegionId=Integer.parseInt(request.getParameter("regionId"));		
 		String RegionName = request.getParameter("regionName");
-		System.out.println("RegionId :"+RegionId);
+		System.out.println("RegionId :"+ RegionId);
 		String message=regionDao.updateRegion(RegionId,RegionName);		
 		return message;
 	}

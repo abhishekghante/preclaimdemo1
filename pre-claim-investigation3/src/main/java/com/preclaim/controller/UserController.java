@@ -93,7 +93,7 @@ public class UserController {
 	{
 		session.removeAttribute("ScreenDetails");    	
 		ScreenDetails details = new ScreenDetails();
-    	details.setScreen_name("../user/add_role.jsp");
+    	details.setScreen_name("../role/add_role.jsp");
     	details.setScreen_title("Role lists");
     	details.setMain_menu("Users");
     	details.setSub_menu1("User Role");
@@ -195,7 +195,7 @@ public class UserController {
 	{
 		session.removeAttribute("ScreenDetails");    	
 		ScreenDetails details = new ScreenDetails();
-    	details.setScreen_name("../user/add_permission_form.jsp");
+    	details.setScreen_name("../role/add_permission_form.jsp");
     	details.setScreen_title("Manage Permission");
     	session.setAttribute("ScreenDetails", details);
     	List<Permission> role_permission = dao.retrievePermission(roleID);

@@ -228,7 +228,7 @@ function addRegion() {
 			}
 		});
 	}
-}
+
 function updateRegion() {
 	var table2 = $('#pending_region_list').DataTable();
 	var regionName = $('#add_region_form #regionName').val();

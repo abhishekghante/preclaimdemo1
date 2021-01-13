@@ -85,7 +85,7 @@ public class RegionDaoImpl implements RegionDao {
 	public String updateRegion(int regionId, String region_name) {
 		try
 		{
-			String sql = "UPDATE region_lists SET regionName = ? where regionId =?";
+			String sql = "UPDATE region_lists SET regionName = ? , updatedDate = now() where regionId =?";
 			template.update(sql,region_name, regionId);
 		}
 		catch(Exception e)
