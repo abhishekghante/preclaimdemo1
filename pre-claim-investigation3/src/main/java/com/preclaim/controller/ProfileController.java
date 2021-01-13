@@ -24,7 +24,7 @@ public class ProfileController {
     public String edit(HttpSession session) {
     	UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
     	if(user_details == null)
-    		return "redirect:common/login";
+    		return "common/login";
     	session.removeAttribute("ScreenDetails");    	
 		ScreenDetails details = new ScreenDetails();
     	details.setScreen_name("../profile/edit_profile.jsp");

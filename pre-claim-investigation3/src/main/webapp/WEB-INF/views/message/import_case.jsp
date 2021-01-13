@@ -57,7 +57,7 @@ $random_pass    = randomPassword();
                   <input type="submit" value="Import" class="btn btn-info btn-sm" name="importfile" />
                 </div>
                 <div class="col-md-12 text-center">
-                  <div><a style="display: inline-block;" href="../uploads/sample_user.xls">Click to download sample "Excel" file</a></div>
+                  <div><a style="display: inline-block;" href="../resources/uploads/sample_user.xls">Click to download sample "Excel" file</a></div>
                 </div>
               </div>
             <!-- <?php echo form_close(); ?> -->

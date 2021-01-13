@@ -122,7 +122,7 @@
 	    	var formdata = {"username":username,"password":password};
 	    	$.ajax({
 	    		type: "POST",
-	            url: "login_validate",
+	            url: "${pageContext.request.contextPath}/login_validate",
 	            data: formdata,
 	            success : function( msg ) {
 	            	console.log("Received:" + msg);
