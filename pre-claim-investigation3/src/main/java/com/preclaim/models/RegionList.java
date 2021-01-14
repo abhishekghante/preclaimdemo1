@@ -8,7 +8,6 @@ public class RegionList {
 	private int status;
 	private int regionId;
 	
-	
 	public RegionList() {
 	
 		this.srNo=0;
@@ -19,56 +18,45 @@ public class RegionList {
 	
 	}
 
-
 	public int getRegionId() {
 		return regionId;
 	}
-
 
 	public void setRegionId(int regionId) {
 		this.regionId = regionId;
 	}
 
-
 	public int getSrNo() {
 		return srNo;
 	}
-
 
 	public void setSrNo(int srNo) {
 		this.srNo = srNo;
 	}
 
-
 	public String getRegionName() {
 		return regionName;
 	}
-
 
 	public void setRegionName(String regionName) {
 		this.regionName = regionName;
 	}
 
-
 	public String getCreatedDate() {
 		return createdDate;
 	}
-
 
 	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 
-
 	public int getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
 
 	@Override
 	public String toString() {

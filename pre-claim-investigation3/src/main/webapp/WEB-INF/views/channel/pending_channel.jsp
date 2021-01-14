@@ -1,3 +1,11 @@
+<%@page import="com.preclaim.models.ChannelList"%>
+<%@page import="java.util.List"%>
+<%
+List<ChannelList> pending_list = (List<ChannelList>) session.getAttribute("pending_channel");
+session.removeAttribute("pending_channel");
+ChannelList channel = (ChannelList) session.getAttribute("channel");
+session.removeAttribute("channel");
+%>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
@@ -8,14 +16,14 @@
       <div class="portlet-title">
         <div class="caption">
           <i class="icon-users font-green-sharp"></i>
-          <span class="caption-subject font-green-sharp sbold">Channel</span>
+          <span class="caption-subject font-green-sharp sbold"><%=channel == null ? "Add" : "Update" %> Channel</span>
         </div>
       </div>
     </div>
     <div class="portlet light bordered">
       <div class="portlet-body">
         <div id="message_account"></div>
-        <form novalidate="" id="add_channel_form" role="form" method="post" class="form-horizontal">
+        <form novalidate id="add_channel_form" role="form" method="post" class="form-horizontal">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -32,11 +40,14 @@
               </div>
               <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
-                    <input type="hidden" id="channelId" name="channelId">
+                	<% if(channel != null){ %>
+                    <input type="hidden" id="channelId" name="channelId">                    
                     <button class="btn btn-info" id="editchannelsubmit" onClick="return updateChannel();" type="button">Update</button>
-                    <a href="${pageContext.request.contextPath}/channel/pending_channel" class="btn btn-danger" value="">Back</a>
+                    <a href="${pageContext.request.contextPath}/channel/pending_channel" class="btn btn-danger">Back</a>
+                    <% }else{ %>
                     <button class="btn btn-info" id="addchannelsubmit" onClick="return addChannel();" type="button">Add Channel</button>
                     <button class="btn btn-danger" type="reset" value="">Clear</button>
+                	<% } %>
                 </div>
               </div>
             </div>
@@ -91,6 +102,37 @@
                         <th class="head2 no-sort"></th>
                       </tr>
                     </tfoot>
+					<tbody>
+						<%
+						if (pending_list != null) {
+		
+							for (ChannelList list_channel : pending_list) {
+						%>
+						<tr>
+							<td><%=list_channel.getSrNo()%></td>
+							<td><%=list_channel.getChannelName()%></td>
+							<td><%=list_channel.getChannelCode()%></td>
+							<td><%=list_channel.getCreatedDate()%></td>										
+							<td><span class="label label-sm label-danger">Pending</span></td>											
+							<td>
+								<a href="${pageContext.request.contextPath}/group/pending_group/
+									<%=list_channel.getChannelName() %>/<%=list_channel.getChannelCode() %>" 
+									data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
+									<i class="glyphicon glyphicon-edit"></i>
+				   		  		</a>
+						   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateChannel('<%=list_channel.getChannelCode()%>',1);" 
+						   		  	class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
+						   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteChannel('<%=list_channel.getChannelCode()%>');" 
+						   		   	class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
+							</td>
+		
+						</tr>
+		
+						<%
+							}
+						}
+						%>
+					</tbody>
                   </table>
                 </div>
               <div class="clearfix"></div>
@@ -103,38 +145,6 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-  var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  /*
-  table = $('#pending_channel_list').DataTable({
-      language: {
-        processing: "<img src='$pageContext.request.contextPath/resources/img/loading.gif'>",
-      },
-      "processing": true, //Feature control the processing indicator.
-      "serverSide": true, //Feature control DataTables' server-side processing mode.
-      "order": [], //Initial no order.
-      'autoWidth': false,
-      "ajax": {
-          "data": function(d) {
-            d.csrf_test_name = csrf_hash;
-          },
-          "url": "<?php echo site_url('/channels/pendingChannelTableResponse')?>",
-          "type": "POST"
-      },
-      "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
-      "lengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
-      //Set column definition initialisation properties.
-      "columnDefs": [{
-          "targets": [0,5],
-          "orderable": false, //set not orderable
-      },
-      {
-          "targets": [0,5],
-          "searchable": false, //set orderable
-      } ],
-      buttons: []
-  });
-  */
   var i = 0;
   $('#pending_channel_list tfoot th').each( function () {
     if( i == 1 || i == 2 ){
@@ -177,20 +187,18 @@ function addChannel() {
     toastr.error('Channel Code Cannot be empty','Error');
     return false;
   }
-  var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
   if(channelName && channelCode){
-      var formdata = {csrf_test_name:csrf_hash,'channelName':channelName,'channelCode':channelCode};
+      var formdata = {'channelName':channelName,'channelCode':channelCode};
       $.ajax({
         type: "POST",
-        url: adminurl + 'channels/addChannel',
+        url: 'addChannel',
         data: formdata,
         beforeSend: function() { 
             $("#addchannelsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
             $("#addchannelsubmit").prop('disabled', true);
         },
         success: function( data ) {
-          if(data == 1){
+          if(data == "****"){
             $("#addchannelsubmit").html('Add Channel');
             $("#addchannelsubmit").prop('disabled', false);
             toastr.success( 'Channel Added successfully.','Success' );
@@ -219,20 +227,18 @@ function updateChannel() {
     toastr.error('Channel Code Cannot be empty','Error');
     return false;
   }
-  var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
   if(channelName && channelCode){
-      var formdata = {csrf_test_name:csrf_hash,'channelName':channelName,'channelCode':channelCode,'channelId':channelId};
+      var formdata = {'channelName':channelName,'channelCode':channelCode,'channelId':channelId};
       $.ajax({
         type: "POST",
-        url: 'channels/updateChannel',
+        url: 'updateChannel',
         data: formdata,
         beforeSend: function() { 
             $("#editchannelsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
             $("#editchannelsubmit").prop('disabled', true);
         },
         success: function( data ) {
-          if(data == 1){
+          if(data == "****"){
             $("#editchannelsubmit").html('Update');
             $("#editchannelsubmit").prop('disabled', false);
             toastr.success( 'Channel Updated successfully.','Success' );

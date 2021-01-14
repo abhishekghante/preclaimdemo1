@@ -1,14 +1,14 @@
 package com.preclaim.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -27,7 +27,6 @@ public class UserDAOImpl implements UserDAO{
 		this.template = template;
 	}
 
-	DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	@Override
 	public List<UserRole> role_lists() {
 		String sql = "select * from user_role where status = 1";
@@ -46,15 +45,13 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public String create_user(UserDetails user) {
-		String created_date = LocalDateTime.now().format(format);
 		String sql = "INSERT INTO admin_user(full_name, account_type, username, user_email, "
 				+ "contact_number, password, address, permissions, status, user_image, createdon, "
-				+ "web_active, last_login) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "web_active, last_login) VALUES(?,?,?,?,'',?,'','',?,?,now(),1,now())";
 		System.out.println(user.getPassword());
 		try {
 			template.update(sql, user.getFull_name(), user.getAccount_type(), user.getUsername(),
-					user.getUser_email(), "", user.getPassword(), "", "", user.getStatus(), "",
-					created_date, 1, created_date);
+					user.getUser_email(), user.getPassword(), user.getStatus(), "");
 		}
 		catch(Exception e)
 		{
@@ -68,9 +65,8 @@ public class UserDAOImpl implements UserDAO{
 		try
 		{
 			String sql = "INSERT INTO user_role(role, role_code, status, created_on, updated_on) "
-					+ "VALUES(?,?,?,?,?)";
-			template.update(sql, role.getRole(), role.getRole_code(), role.getStatus(), role.getCreated_on(),
-				role.getUpdated_on());
+					+ "VALUES(?,?,?,now(),now())";
+			template.update(sql, role.getRole(), role.getRole_code(), role.getStatus());
 		}
 		catch(Exception ex)
 		{
@@ -84,7 +80,7 @@ public class UserDAOImpl implements UserDAO{
 	public String delete_role(UserRole role) {
 		try
 		{
-			String sql = "UPDATE user_role SET status = ? where roleId = ?";
+			String sql = "UPDATE user_role SET status = ?, updated_on = now() where roleId = ?";
 			template.update(sql,role.getStatus(),role.getRoleId());
 		}
 		catch(Exception ex)
@@ -209,10 +205,8 @@ public class UserDAOImpl implements UserDAO{
 	public String updateUserRole(UserRole role) {
 		try
 		{
-			String sql = "UPDATE user_role SET role = ?, role_code = ?, updated_on = ? where roleId = ?";
-			template.update(sql, role.getRole(), role.getRole_code(), 
-					LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-					role.getRoleId());
+			String sql = "UPDATE user_role SET role = ?, role_code = ?, updated_on = now() where roleId = ?";
+			template.update(sql, role.getRole(), role.getRole_code(), role.getRoleId());
 					
 		}
 		catch(Exception e)
@@ -252,11 +246,27 @@ public class UserDAOImpl implements UserDAO{
 		{
 			String sql = "DELETE FROM permission where role_id = ?";
 			template.update(sql,roleID);
-			for(String items: role_permission)
-			{
-				sql = "INSERT INTO permission(module, role_id, status, created_on, updated_on)"
-						+ "VALUES(?,?,1,now(),now())";
-				template.update(sql, items, roleID);
+			sql = "INSERT INTO permission(module, role_id, status, created_on, updated_on)"
+					+ "VALUES(?,?,1,now(),now())";
+			int batch_size = 3;
+			for (int i = 0; i < role_permission.size(); i += batch_size) {
+
+				final List<String> batchList = role_permission.subList(i,
+						i + batch_size > role_permission.size() ? role_permission.size() : i + batch_size);
+
+				template.batchUpdate(sql, new BatchPreparedStatementSetter() {
+					@Override
+					public void setValues(PreparedStatement pStmt, int rowCount) throws SQLException {
+						pStmt.setString(1, batchList.get(rowCount));
+						pStmt.setInt(2, roleID);
+					}
+
+					@Override
+					public int getBatchSize() {
+						return batchList.size();
+					}
+
+				});
 			}
 		}
 		catch(Exception ex)

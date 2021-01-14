@@ -18,29 +18,29 @@ public class GroupDaoImpl implements GroupDao {
 
 	private JdbcTemplate template;
 
-	public JdbcTemplate getTemplate() {
-		return template;
-	}
-
 	public void setTemplate(JdbcTemplate template) {
 		this.template = template;
 	}
 
 	@Override
 	public String add_group(Group group) {
-		try {
+		try 
+		{
 			String GroupCheck = "select count(*) from group_lists where groupName='" + group.getGroupName() + "'";
 			int groupCount = this.template.queryForObject(GroupCheck, Integer.class);
 			System.out.println(group.toString());
-			if (groupCount == 0) {
-				String query = "INSERT INTO group_lists(groupName, createdBy, createdDate, updatedDate, updatedBy, "
-					         	+ "status) values(?,?,?,?,?,?)";
-				template.update(query, group.getGroupName(), group.getCreatedBy(), group.getCreatedDate(),
-								group.getUpdatedDate(), group.getUpdatedBy(), group.getStatus());
-			} else {
-					return "Group already exists";
-				   }
-		} catch (Exception e) {
+			if (groupCount == 0) 
+			{
+				String query = "INSERT INTO group_lists(groupName, createdBy, createdDate, updatedDate, "
+						+ "updatedBy, status) values(?,?,now(),now(),?,?)";
+				template.update(query, group.getGroupName(), group.getCreatedBy(), group.getUpdatedBy(), 
+						group.getStatus());
+			} 
+			else 
+				return "Group already exists";				   
+		} 
+		catch (Exception e)
+		{
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			return "Error adding group";

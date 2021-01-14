@@ -25,7 +25,7 @@ public class LoginDAOImpl implements LoginDAO {
 	
 	public UserDetails validateUser(Login login)	  
 	{	
-		String sql = "select * from admin_user where username = ? and password = ?";
+		String sql = "SELECT * FROM admin_user WHERE username = ? and password = ?";
 		List<UserDetails> user_list = template.query(sql, 
 				new Object[] {login.getUsername(),login.getPassword()},
 				(ResultSet rs, int arg1) ->{
