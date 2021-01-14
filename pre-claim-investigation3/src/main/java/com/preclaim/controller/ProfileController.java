@@ -37,12 +37,12 @@ public class ProfileController {
 	public @ResponseBody String updateProfile(HttpServletRequest request)
 	{
 		UserDetails user_details = new UserDetails();
-		user_details.setUserID(Integer.parseInt(request.getParameter("user_id")));
 		user_details.setFull_name(request.getParameter("full_name"));
-		user_details.setPassword(request.getParameter("password"));
 		user_details.setUser_email(request.getParameter("user_email"));
 		user_details.setUsername(request.getParameter("username"));
+		user_details.setPassword(request.getParameter("password"));
 		user_details.setUserimage(request.getParameter("account_img"));		
+		user_details.setUserID(Integer.parseInt(request.getParameter("user_id")));				
 		System.out.println(user_details.toString());
 		return dao.updateProfile(user_details);
 	}

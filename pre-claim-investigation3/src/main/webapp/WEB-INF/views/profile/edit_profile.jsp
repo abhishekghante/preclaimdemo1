@@ -1,6 +1,7 @@
 <%@page import="com.preclaim.models.UserDetails" %>
 <%
 UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
+//user_details.decodePassword(user_details.getPassword().trim());
 %>
 <style type="text/css">
 #userImage { display:none;}
@@ -26,7 +27,7 @@ UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
       <!-- /.box-header -->
       <!-- form start -->
       <div id="message_account"></div>
-      <form novalidate="" id="edit_profile_form" role="form" method="post" class="form-horizontal">
+      <form novalidate id="edit_profile_form" role="form" method="post" class="form-horizontal">
         <div class="box-body">
           <div class="row">
             <div class="col-md-6">
@@ -102,22 +103,24 @@ $(document).ready(function(){
   });
   $("#edit_profile_form").on('submit', function(e){
     e.preventDefault();
-    var full_name   = $.trim($('#edit_profile_form #full_name').val());
+    var full_name    = $.trim($('#edit_profile_form #full_name').val());
     var username     = $.trim($('#edit_profile_form #username').val());
-    var user_email  = $.trim($('#edit_profile_form #user_email').val());
+    var user_email   = $.trim($('#edit_profile_form #user_email').val());
     var password     = $.trim($('#edit_profile_form #password').val());
+    var user_id      = $.trim($('#edit_profile_form #user_id').val());
     $('#full_name').removeClass('has-error-2');
     $('#username').removeClass('has-error-2');
     $('#password').removeClass('has-error-2');
     $('#user_email').removeClass('has-error-2');
     
+    /*
     if(user_email){
       if (!ValidateEmail(user_email)) {
         $('#user_email').addClass('has-error-2');
         $('#user_email').focus();
       }
     }
-    
+    */
     if( password == "" ){
         $('#password').addClass('has-error-2');
         $('#password').focus();
@@ -127,14 +130,13 @@ $(document).ready(function(){
         $('#full_name').addClass('has-error-2');
         $('#full_name').focus();
     }
-    
+    var newdata = {"full_name":full_name,"username":username,"user_email":user_email,
+    		"password":password,"account_img":"","user_id":user_id};
+    console.log(newdata);
     $.ajax({
         type    : 'POST',
         url     : 'updateProfile',
-        data    : new FormData(this),
-        contentType: false,
-        cache: false,
-        processData:false,
+        data    : newdata,
         beforeSend: function() { 
           $("#editprofilesubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
           $("#editprofilesubmit").prop('disabled', true);

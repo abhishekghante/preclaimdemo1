@@ -1,5 +1,7 @@
 package com.preclaim.controller;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -207,7 +209,20 @@ public class UserController {
 	@RequestMapping(value = "/addPermission", method = RequestMethod.POST)
 	public @ResponseBody String addPermission(HttpServletRequest request)
 	{
-		
+		int roleID = Integer.parseInt(request.getParameter("roleId"));
+		Enumeration<String> parameterNames = request.getParameterNames();
+		List<String> role_permission = new ArrayList<String>();
+		while (parameterNames.hasMoreElements()) 
+		{
+			String paramName = parameterNames.nextElement();
+			String[] paramValues = request.getParameterValues(paramName);
+			for (int i = 0; i < paramValues.length; i++) {
+				String paramValue = paramValues[i];
+				role_permission.add(paramValue);
+			}
+		}
+		role_permission.remove(role_permission.size() - 1);
+		dao.addPermission(role_permission, roleID);
 		return "****";
 	}
 	

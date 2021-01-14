@@ -247,9 +247,25 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public String addPermission(List<Permission> role_permission) {
-				
-		return null;
+	public String addPermission(List<String> role_permission, int roleID) {		
+		try
+		{
+			String sql = "DELETE FROM permission where role_id = ?";
+			template.update(sql,roleID);
+			for(String items: role_permission)
+			{
+				sql = "INSERT INTO permission(module, role_id, status, created_on, updated_on)"
+						+ "VALUES(?,?,1,now(),now())";
+				template.update(sql, items, roleID);
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return "Error adding permission";
+		}
+		
+		return "****";
 	}
 
 	@Override

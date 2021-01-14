@@ -32,9 +32,10 @@ public class LoginDAOImpl implements LoginDAO {
 					UserDetails login_user = new UserDetails();
 					login_user.setUserID(rs.getInt("user_id"));
 					login_user.setUsername(rs.getString("username"));
-					login_user.setPassword(rs.getString("password"));
+					login_user.decodePassword(rs.getString("password"));
 					login_user.setFull_name(rs.getString("full_name"));
 					login_user.setStatus(rs.getInt("status"));
+					login_user.setUser_email(rs.getString("user_email"));
 					return login_user;
 				});
 		return user_list.size() > 0 ? user_list.get(0) : null ;

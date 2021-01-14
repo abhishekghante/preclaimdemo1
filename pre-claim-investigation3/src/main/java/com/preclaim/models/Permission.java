@@ -1,7 +1,5 @@
 package com.preclaim.models;
 
-import java.util.Objects;
-
 public class Permission {
 
 	private String module;
@@ -40,16 +38,5 @@ public class Permission {
 	public String toString() {
 		return "Permission [module=" + module + ", role_id=" + role_id + ", status=" + status + "]";
 	}
-	
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		String other = (String) obj;
-		return Objects.equals(module, other);
-	}
-		
+			
 }
