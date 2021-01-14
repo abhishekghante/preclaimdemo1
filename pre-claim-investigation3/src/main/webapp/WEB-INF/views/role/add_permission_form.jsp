@@ -1,11 +1,8 @@
 <%@page import = "java.util.ArrayList" %>
-<%@page import="com.preclaim.models.Permission" %>
-<%@page import="com.preclaim.config.CustomMethods"%>
 <% 
-ArrayList<Permission> role_permission = (ArrayList<Permission>) session.getAttribute("permission");
-session.removeAttribute("permission");
-if(role_permission == null)
-	role_permission = new ArrayList<Permission>();
+ArrayList<String> role_permission = new ArrayList<String>();
+role_permission = (ArrayList<String>) session.getAttribute("permission");
+session.removeAttribute("permission"); 
 int roleId = Integer.parseInt((String)session.getAttribute("role_id"));
 session.removeAttribute("role_id");
 %>
@@ -45,125 +42,125 @@ session.removeAttribute("role_id");
                             <tbody>
                             	<tr>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"appUsers")) {%>checked <%} %> name="appUsers[]" id="appUsers" class="allPLCheck0"  value = "appUsers"> <label for="appUsers">App Users</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("appUsers")) {%>checked <%} %> name="appUsers[]" id="appUsers" class="allPLCheck0"  value = "appUsers"> <label for="appUsers">App Users</label>
 			                    	</td>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"appUsers/index")) {%>checked <%} %> name="appUsers[]" id="appUsers_index" class="indPLCheck0" value="appUsers/index"> <label for="appUsers_index">View</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"appUsers/delete")) {%>checked <%} %> name="appUsers[]" id="appUsers_delete" class="indPLCheck0" value="appUsers/delete"> <label for="appUsers_delete">Delete</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"appUsers/status")) {%>checked <%} %> name="appUsers[]" id="appUsers_status" class="indPLCheck0" value="appUsers/status"> <label for="appUsers_status">Approve Status</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"appUsers/import")) {%>checked <%} %> name="appUsers[]" id="appUsers_import" class="indPLCheck0" value="appUsers/import"> <label for="appUsers_import">Import</label>
-			                    	</td>
-			                    </tr>
-			                    <tr>
-			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"groups")) {%>checked <%} %> name="groups[]" id="groups" class="allPLCheck1" value="groups"> <label for="groups">Groups</label>
-			                    	</td>
-			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"groups/index")) {%>checked <%} %> name="groups[]" id="groups_index" class="indPLCheck1" value="groups/index"> <label for="groups_index">View</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"groups/add")) {%>checked <%} %> name="groups[]" id="groups_add" class="indPLCheck1" value="groups/add"> <label for="groups_add">Add</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"groups/delete")) {%>checked <%} %> name="groups[]" id="groups_delete" class="indPLCheck1" value="groups/delete"> <label for="groups_delete">Delete</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"groups/status")) {%>checked <%} %> name="groups[]" id="groups_status" class="indPLCheck1" value="groups/status"> <label for="groups_status">Approve Status</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("appUsers/index")) {%>checked <%} %> name="appUsers[]" id="appUsers_index" class="indPLCheck0" value="appUsers/index"> <label for="appUsers_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("appUsers/delete")) {%>checked <%} %> name="appUsers[]" id="appUsers_delete" class="indPLCheck0" value="appUsers/delete"> <label for="appUsers_delete">Delete</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("appUsers/status")) {%>checked <%} %> name="appUsers[]" id="appUsers_status" class="indPLCheck0" value="appUsers/status"> <label for="appUsers_status">Approve Status</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("appUsers/import")) {%>checked <%} %> name="appUsers[]" id="appUsers_import" class="indPLCheck0" value="appUsers/import"> <label for="appUsers_import">Import</label>
 			                    	</td>
 			                    </tr>
 			                    <tr>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"channels")) {%>checked <%} %> name="channels[]" id="channels" class="allPLCheck2" value="channels"> <label for="channels">Channels</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("groups")) {%>checked <%} %> name="groups[]" id="groups" class="allPLCheck1" value="groups"> <label for="groups">Groups</label>
 			                    	</td>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"channels/index")) {%>checked <%} %> name="channels[]" id="channels_index" class="indPLCheck2" value="channels/index"> <label for="channels_index">View</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"channels/add")) {%>checked <%} %> name="channels[]" id="channels_add" class="indPLCheck2" value="channels/add"> <label for="channels_add">Add</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"channels/delete")) {%>checked <%} %> name="channels[]" id="channels_delete" class="indPLCheck2" value="channels/delete"> <label for="channels_delete">Delete</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"channels/status")) {%>checked <%} %> name="channels[]" id="channels_status" class="indPLCheck2" value="channels/status"> <label for="channels_status">Approve Status</label>
-			                    	</td>
-			                    </tr>
-			                    <tr>
-			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"regions")) {%>checked <%} %> name="regions[]" id="regions" class="allPLCheck3" value="regions"> <label for="regions">Regions</label>
-			                    	</td>
-			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"regions/index")) {%>checked <%} %> name="regions[]" id="regions_index" class="indPLCheck3" value="regions/index"> <label for="regions_index">View</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"regions/add")) {%>checked <%} %> name="regions[]" id="regions_add" class="indPLCheck3" value="regions/add"> <label for="regions_add">Add</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"regions/delete")) {%>checked <%} %> name="regions[]" id="regions_delete" class="indPLCheck3" value="regions/delete"> <label for="regions_delete">Delete</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"regions/status")) {%>checked <%} %> name="regions[]" id="regions_status" class="indPLCheck3" value="regions/status"> <label for="regions_status">Approve Status</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("groups/index")) {%>checked <%} %> name="groups[]" id="groups_index" class="indPLCheck1" value="groups/index"> <label for="groups_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("groups/add")) {%>checked <%} %> name="groups[]" id="groups_add" class="indPLCheck1" value="groups/add"> <label for="groups_add">Add</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("groups/delete")) {%>checked <%} %> name="groups[]" id="groups_delete" class="indPLCheck1" value="groups/delete"> <label for="groups_delete">Delete</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("groups/status")) {%>checked <%} %> name="groups[]" id="groups_status" class="indPLCheck1" value="groups/status"> <label for="groups_status">Approve Status</label>
 			                    	</td>
 			                    </tr>
 			                    <tr>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"category")) {%>checked <%} %> name="category[]" id="category" class="allPLCheck4" value="category"> <label for="category">Category</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("channels")) {%>checked <%} %> name="channels[]" id="channels" class="allPLCheck2" value="channels"> <label for="channels">Channels</label>
 			                    	</td>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"category/index")) {%>checked <%} %> name="category[]" id="category_index" class="indPLCheck4" value="category/index"> <label for="category_index">View</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"category/add")) {%>checked <%} %> name="category[]" id="category_add" class="indPLCheck4" value="category/add"> <label for="category_add">Add</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"category/delete")) {%>checked <%} %> name="category[]" id="category_delete" class="indPLCheck4" value="category/delete"> <label for="category_delete">Delete</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"category/status")) {%>checked <%} %> name="category[]" id="category_status" class="indPLCheck4" value="category/status"> <label for="category_status">Approve Status</label>
-			                    	</td>
-			                    </tr>
-			                    <tr>
-			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"mapping")) {%>checked <%} %> name="mapping[]" id="mapping" class="allPLCheck5" value="mapping"> <label for="mapping">Mapping</label>
-			                    	</td>
-			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"mapping/index")) {%>checked <%} %> name="mapping[]" id="mapping_index" class="indPLCheck5" value="mapping/index"> <label for="mapping_index">View</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"mapping/add")) {%>checked <%} %> name="mapping[]" id="mapping_add" class="indPLCheck5" value="mapping/add"> <label for="mapping_add">Add</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"mapping/status")) {%>checked <%} %> name="mapping[]" id="mapping_status" class="indPLCheck5" value="mapping/status"> <label for="mapping_status">UnMapping</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("channels/index")) {%>checked <%} %> name="channels[]" id="channels_index" class="indPLCheck2" value="channels/index"> <label for="channels_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("channels/add")) {%>checked <%} %> name="channels[]" id="channels_add" class="indPLCheck2" value="channels/add"> <label for="channels_add">Add</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("channels/delete")) {%>checked <%} %> name="channels[]" id="channels_delete" class="indPLCheck2" value="channels/delete"> <label for="channels_delete">Delete</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("channels/status")) {%>checked <%} %> name="channels[]" id="channels_status" class="indPLCheck2" value="channels/status"> <label for="channels_status">Approve Status</label>
 			                    	</td>
 			                    </tr>
 			                    <tr>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"banner")) {%>checked <%} %> name="banner[]" id="banner" class="allPLCheck6" value="banner"> <label for="banner">Banner</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("regions")) {%>checked <%} %> name="regions[]" id="regions" class="allPLCheck3" value="regions"> <label for="regions">Regions</label>
 			                    	</td>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"banner/index")) {%>checked <%} %> name="banner[]" id="banner_index" class="indPLCheck6" value="banner/index"> <label for="banner_index">View</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"banner/add")) {%>checked <%} %> name="banner[]" id="banner_add" class="indPLCheck6" value="banner/add"> <label for="banner_add">Add</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"banner/delete")) {%>checked <%} %> name="banner[]" id="banner_delete" class="indPLCheck6" value="banner/delete"> <label for="banner_delete">Delete</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"banner/status")) {%>checked <%} %> name="banner[]" id="banner_status" class="indPLCheck6" value="banner/status"> <label for="banner_status">Approve Status</label>
-			                    	</td>
-			                    </tr>
-			                    <tr>
-			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"messages")) {%>checked <%} %> name="messages[]" id="messages" class="allPLCheck7" value="messages"> <label for="messages">Broadcast</label>
-			                    	</td>
-			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"messages/index")) {%>checked <%} %> name="messages[]" id="messages_index" class="indPLCheck7" value="messages/index"> <label for="messages_index">View</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"messages/add")) {%>checked <%} %> name="messages[]" id="messages_add" class="indPLCheck7" value="messages/add"> <label for="messages_add">Add</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"messages/delete")) {%>checked <%} %> name="messages[]" id="messages_delete" class="indPLCheck7" value="messages/delete"> <label for="messages_delete">Delete</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"messages/status")) {%>checked <%} %> name="messages[]" id="messages_status" class="indPLCheck7" value="messages/status"> <label for="messages_status">Approve Status</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("regions/index")) {%>checked <%} %> name="regions[]" id="regions_index" class="indPLCheck3" value="regions/index"> <label for="regions_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("regions/add")) {%>checked <%} %> name="regions[]" id="regions_add" class="indPLCheck3" value="regions/add"> <label for="regions_add">Add</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("regions/delete")) {%>checked <%} %> name="regions[]" id="regions_delete" class="indPLCheck3" value="regions/delete"> <label for="regions_delete">Delete</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("regions/status")) {%>checked <%} %> name="regions[]" id="regions_status" class="indPLCheck3" value="regions/status"> <label for="regions_status">Approve Status</label>
 			                    	</td>
 			                    </tr>
 			                    <tr>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"users")) {%>checked <%} %> name="users[]" id="users" class="allPLCheck8" value="users"> <label for="users">Users</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("category")) {%>checked <%} %> name="category[]" id="category" class="allPLCheck4" value="category"> <label for="category">Category</label>
 			                    	</td>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"users/index")) {%>checked <%} %> name="users[]" id="users_index" class="indPLCheck8" value="users/index"> <label for="users_index">View</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"users/add")) {%>checked <%} %> name="users[]" id="users_add" class="indPLCheck8" value="users/add"> <label for="users_add">Add</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"users/delete")) {%>checked <%} %> name="users[]" id="users_delete" class="indPLCheck8" value="users/delete"> <label for="users_delete">Delete</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"users/status")) {%>checked <%} %> name="users[]" id="users_status" class="indPLCheck8" value="users/status"> <label for="users_status">Approve Status</label>
-			                    	</td>
-			                    </tr>
-			                    <tr>
-			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"role")) {%>checked <%} %> name="role[]" id="role" class="allPLCheck9" value="role"> <label for="role">Role</label>
-			                    	</td>
-			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"role/index")) {%>checked <%} %> name="role[]" id="role_index" class="indPLCheck9" value="role/index"> <label for="role_index">View</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"role/add")) {%>checked <%} %> name="role[]" id="role_add" class="indPLCheck9" value="role/add"> <label for="role_add">Add</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"role/delete")) {%>checked <%} %> name="role[]" id="role_delete" class="indPLCheck9" value="role/delete"> <label for="role_delete">Delete</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"role/status")) {%>checked <%} %> name="role[]" id="role_permission" class="indPLCheck9" value="role/permission"> <label for="role_permission">Add Permission</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("category/index")) {%>checked <%} %> name="category[]" id="category_index" class="indPLCheck4" value="category/index"> <label for="category_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("category/add")) {%>checked <%} %> name="category[]" id="category_add" class="indPLCheck4" value="category/add"> <label for="category_add">Add</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("category/delete")) {%>checked <%} %> name="category[]" id="category_delete" class="indPLCheck4" value="category/delete"> <label for="category_delete">Delete</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("category/status")) {%>checked <%} %> name="category[]" id="category_status" class="indPLCheck4" value="category/status"> <label for="category_status">Approve Status</label>
 			                    	</td>
 			                    </tr>
 			                    <tr>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"report")) {%>checked <%} %> name="report[]" id="report" class="allPLCheck10" value="report"> <label for="report">Report</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("mapping")) {%>checked <%} %> name="mapping[]" id="mapping" class="allPLCheck5" value="mapping"> <label for="mapping">Mapping</label>
 			                    	</td>
 			                    	<td>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"report/index")) {%>checked <%} %> name="report[]" id="report_index" class="indPLCheck10" value="report/index"> <label for="report_index">View</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"report/messages")) {%>checked <%} %> name="report[]" id="report_messagesStatus" class="indPLCheck10" value="report/messagesStatus"> <label for="report_messagesStatus">Message Status</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"report/readmessages")) {%>checked <%} %> name="report[]" id="report_readmessages" class="indPLCheck10" value="report/readmessages"> <label for="report_readmessages">Read Messages</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"report/likemessage")) {%>checked <%} %> name="report[]" id="report_likemessage" class="indPLCheck10" value="report/likemessage"> <label for="report_likemessage">Like</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"report/favouritemessage")) {%>checked <%} %> name="report[]" id="report_favouritemessage" class="indPLCheck10" value="report/favouritemessage"> <label for="report_favouritemessage">Favourite</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"report/viewrating")) {%>checked <%} %> name="report[]" id="report_viewrating" class="indPLCheck10" value="report/viewrating"> <label for="report_viewrating">Rate App</label>
-			                    		<input type="checkbox" <%if(CustomMethods.findString(role_permission,"report/loginDetails")) {%>checked <%} %> name="report[]" id="report_loginDetails" class="indPLCheck10" value="report/loginDetails"> <label for="report_loginDetails">Log In Details</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("mapping/index")) {%>checked <%} %> name="mapping[]" id="mapping_index" class="indPLCheck5" value="mapping/index"> <label for="mapping_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("mapping/add")) {%>checked <%} %> name="mapping[]" id="mapping_add" class="indPLCheck5" value="mapping/add"> <label for="mapping_add">Add</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("mapping/status")) {%>checked <%} %> name="mapping[]" id="mapping_status" class="indPLCheck5" value="mapping/status"> <label for="mapping_status">UnMapping</label>
+			                    	</td>
+			                    </tr>
+			                    <tr>
+			                    	<td>
+			                    		<input type="checkbox" <%if(role_permission.contains("banner")) {%>checked <%} %> name="banner[]" id="banner" class="allPLCheck6" value="banner"> <label for="banner">Banner</label>
+			                    	</td>
+			                    	<td>
+			                    		<input type="checkbox" <%if(role_permission.contains("banner/index")) {%>checked <%} %> name="banner[]" id="banner_index" class="indPLCheck6" value="banner/index"> <label for="banner_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("banner/add")) {%>checked <%} %> name="banner[]" id="banner_add" class="indPLCheck6" value="banner/add"> <label for="banner_add">Add</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("banner/delete")) {%>checked <%} %> name="banner[]" id="banner_delete" class="indPLCheck6" value="banner/delete"> <label for="banner_delete">Delete</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("banner/status")) {%>checked <%} %> name="banner[]" id="banner_status" class="indPLCheck6" value="banner/status"> <label for="banner_status">Approve Status</label>
+			                    	</td>
+			                    </tr>
+			                    <tr>
+			                    	<td>
+			                    		<input type="checkbox" <%if(role_permission.contains("messages")) {%>checked <%} %> name="messages[]" id="messages" class="allPLCheck7" value="messages"> <label for="messages">Broadcast</label>
+			                    	</td>
+			                    	<td>
+			                    		<input type="checkbox" <%if(role_permission.contains("messages/index")) {%>checked <%} %> name="messages[]" id="messages_index" class="indPLCheck7" value="messages/index"> <label for="messages_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("messages/add")) {%>checked <%} %> name="messages[]" id="messages_add" class="indPLCheck7" value="messages/add"> <label for="messages_add">Add</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("messages/delete")) {%>checked <%} %> name="messages[]" id="messages_delete" class="indPLCheck7" value="messages/delete"> <label for="messages_delete">Delete</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("messages/status")) {%>checked <%} %> name="messages[]" id="messages_status" class="indPLCheck7" value="messages/status"> <label for="messages_status">Approve Status</label>
+			                    	</td>
+			                    </tr>
+			                    <tr>
+			                    	<td>
+			                    		<input type="checkbox" <%if(role_permission.contains("users")) {%>checked <%} %> name="users[]" id="users" class="allPLCheck8" value="users"> <label for="users">Users</label>
+			                    	</td>
+			                    	<td>
+			                    		<input type="checkbox" <%if(role_permission.contains("users/index")) {%>checked <%} %> name="users[]" id="users_index" class="indPLCheck8" value="users/index"> <label for="users_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("users/add")) {%>checked <%} %> name="users[]" id="users_add" class="indPLCheck8" value="users/add"> <label for="users_add">Add</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("users/delete")) {%>checked <%} %> name="users[]" id="users_delete" class="indPLCheck8" value="users/delete"> <label for="users_delete">Delete</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("users/status")) {%>checked <%} %> name="users[]" id="users_status" class="indPLCheck8" value="users/status"> <label for="users_status">Approve Status</label>
+			                    	</td>
+			                    </tr>
+			                    <tr>
+			                    	<td>
+			                    		<input type="checkbox" <%if(role_permission.contains("role")) {%>checked <%} %> name="role[]" id="role" class="allPLCheck9" value="role"> <label for="role">Role</label>
+			                    	</td>
+			                    	<td>
+			                    		<input type="checkbox" <%if(role_permission.contains("role/index")) {%>checked <%} %> name="role[]" id="role_index" class="indPLCheck9" value="role/index"> <label for="role_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("role/add")) {%>checked <%} %> name="role[]" id="role_add" class="indPLCheck9" value="role/add"> <label for="role_add">Add</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("role/delete")) {%>checked <%} %> name="role[]" id="role_delete" class="indPLCheck9" value="role/delete"> <label for="role_delete">Delete</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("role/status")) {%>checked <%} %> name="role[]" id="role_permission" class="indPLCheck9" value="role/permission"> <label for="role_permission">Add Permission</label>
+			                    	</td>
+			                    </tr>
+			                    <tr>
+			                    	<td>
+			                    		<input type="checkbox" <%if(role_permission.contains("report")) {%>checked <%} %> name="report[]" id="report" class="allPLCheck10" value="report"> <label for="report">Report</label>
+			                    	</td>
+			                    	<td>
+			                    		<input type="checkbox" <%if(role_permission.contains("report/index")) {%>checked <%} %> name="report[]" id="report_index" class="indPLCheck10" value="report/index"> <label for="report_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("report/messages")) {%>checked <%} %> name="report[]" id="report_messagesStatus" class="indPLCheck10" value="report/messagesStatus"> <label for="report_messagesStatus">Message Status</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("report/readmessages")) {%>checked <%} %> name="report[]" id="report_readmessages" class="indPLCheck10" value="report/readmessages"> <label for="report_readmessages">Read Messages</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("report/likemessage")) {%>checked <%} %> name="report[]" id="report_likemessage" class="indPLCheck10" value="report/likemessage"> <label for="report_likemessage">Like</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("report/favouritemessage")) {%>checked <%} %> name="report[]" id="report_favouritemessage" class="indPLCheck10" value="report/favouritemessage"> <label for="report_favouritemessage">Favourite</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("report/viewrating")) {%>checked <%} %> name="report[]" id="report_viewrating" class="indPLCheck10" value="report/viewrating"> <label for="report_viewrating">Rate App</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("report/loginDetails")) {%>checked <%} %> name="report[]" id="report_loginDetails" class="indPLCheck10" value="report/loginDetails"> <label for="report_loginDetails">Log In Details</label>
 			                    	</td>
 			                    </tr>
 		                	</tbody>

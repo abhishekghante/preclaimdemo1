@@ -115,9 +115,10 @@ $(document).ready(function(){
 	    $("#input_userimage").trigger('click');
 	  });
 	$("#input_userimage").change(function(e){ 
-		 $("#account_image").val(e.target.files[0].name);
-		 console.log($("#account_image").val());
-		 uploadFiles($("#username").val());
+		var filename = $("#username").val() + "_" +e.target.files[0].name;
+		$("#account_image").val(filename); 
+		console.log($("#account_image").val());
+		uploadFiles($("#username").val());
 	  });
 	
 });
@@ -220,7 +221,7 @@ function uploadFiles(prefix) {
 		formData.append("prefix",prefix);
     $.ajax({
         type: "POST",
-        url: '${pageContext.request.contextPath}/fileuploader',
+        url: '${pageContext.request.contextPath}/uploadFile',
         data: formData,
         contentType: false, //used for multipart/form-data
         processData: false, //doesn't modify or encode the String

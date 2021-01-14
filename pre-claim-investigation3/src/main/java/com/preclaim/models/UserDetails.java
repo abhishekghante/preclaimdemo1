@@ -1,7 +1,16 @@
 package com.preclaim.models;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.Base64;
 import java.util.Base64.Encoder;
+
+import javax.imageio.ImageIO;
+import javax.xml.bind.DatatypeConverter;
+
+import org.apache.commons.io.FilenameUtils;
+
 import java.util.Base64.Decoder;
 
 public class UserDetails {
@@ -13,6 +22,7 @@ public class UserDetails {
 	private int status;
 	private String userimage;
 	private int userID;
+	private String userImageb64;
 	
 	public UserDetails() {
 		this.full_name = "";
@@ -23,6 +33,7 @@ public class UserDetails {
 		this.status = 0;
 		this.userimage = "";
 		this.userID = 0;
+		this.userImageb64 = "";
 	}
 	
 	public String getFull_name() {
@@ -82,6 +93,36 @@ public class UserDetails {
 		this.userID = userID;
 	}
 
+	public String getUserImageb64() {
+		return userImageb64;
+	}
+
+	public void setUserImageb64(String userImageb64) {
+		try
+		{
+			this.userImageb64 = "";
+			if(userImageb64.equals(""))
+		    	return;
+		    File candidatePhoto = new File(userImageb64);
+		    if(!candidatePhoto.isFile())
+		    	return;		    
+		    String extension = FilenameUtils.getExtension(userImageb64);  						      	    
+		    System.out.println(extension.toLowerCase());
+		    BufferedImage bImage = ImageIO.read(new File(userImageb64));
+		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		    ImageIO.write( bImage, extension.toLowerCase(), baos);
+		    baos.flush();
+		    byte[] imageInByteArray = baos.toByteArray();
+		    baos.close();            
+		    this.userImageb64 = DatatypeConverter.printBase64Binary(imageInByteArray);
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error" + e.getMessage());
+			this.userImageb64 = "";
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return "UserDetails [full_name=" + full_name + ", username=" + username + ", user_email=" + user_email

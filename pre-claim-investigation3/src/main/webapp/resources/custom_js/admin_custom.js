@@ -1,29 +1,3 @@
-//Upload Files
-function uploadFiles(prefix) {
-    var formData = new FormData();
-	var files = $("input[type = 'file']");
-	$(files).each(function (i,value) {
-         		formData.append('file[]', value.files[i]);
-    });
-    if(prefix != undefined)
-		formData.append("prefix",prefix);
-    $.ajax({
-        type: "POST",
-        url: '${pageContext.request.contextPath}/fileuploader',
-        data: formData,
-        contentType: false, //used for multipart/form-data
-        processData: false, //doesn't modify or encode the String
-        cache: false, 
-        async: false,//wait till the execution finishes
-        success:function(result)
-        {
-			if(result == "****")
-				toastr.success("Sucess","File uploaded successfully","success");
-        }
-    });
-    return false;
-}
-
 //Update Mapping Status
 function updateMappingStatus( cmId, status ) {
 

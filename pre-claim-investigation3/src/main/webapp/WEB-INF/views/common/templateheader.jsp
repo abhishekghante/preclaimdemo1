@@ -67,8 +67,12 @@ UserDetails user = (UserDetails) session.getAttribute("User_Login");
                         <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                         <li class="dropdown dropdown-user">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <img alt="No Image" class="img-circle" 
+                                <img alt="No Image" class="img-circle"
+                                	<%if(!user.getUserImageb64().equals("")) {%>
+                                	src ="data:image/jpg;base64,<%=user.getUserImageb64() %>"
+                                	<%}else{ %> 
                                 	src="${pageContext.request.contextPath}/resources/img/avatar.png">
+                                	<%} %>
                                 <span class="username username-hide-on-mobile">
                                 	Welcome, <%= user == null ? "" : user.getFull_name() %></span>
                                 <i class="fa fa-angle-down"></i>

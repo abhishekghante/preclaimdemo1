@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.preclaim.dao.UserDAO;
-import com.preclaim.models.Permission;
 import com.preclaim.models.ScreenDetails;
 import com.preclaim.models.UserDetails;
 import com.preclaim.models.UserList;
@@ -200,7 +199,7 @@ public class UserController {
     	details.setScreen_name("../role/add_permission_form.jsp");
     	details.setScreen_title("Manage Permission");
     	session.setAttribute("ScreenDetails", details);
-    	List<Permission> role_permission = dao.retrievePermission(roleID);
+    	List<String> role_permission = dao.retrievePermission(roleID);
     	session.setAttribute("role_id", String.valueOf(roleID));
     	session.setAttribute("permission", role_permission);
     	return "common/templatecontent";
@@ -233,4 +232,5 @@ public class UserController {
 		System.out.println(username);
 		return dao.accountValidate(username);
 	}
+	
 }

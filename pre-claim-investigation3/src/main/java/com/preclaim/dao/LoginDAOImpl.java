@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.preclaim.config.Config;
 import com.preclaim.models.Login;
 import com.preclaim.models.UserDetails;
 
@@ -36,6 +37,8 @@ public class LoginDAOImpl implements LoginDAO {
 					login_user.setFull_name(rs.getString("full_name"));
 					login_user.setStatus(rs.getInt("status"));
 					login_user.setUser_email(rs.getString("user_email"));
+					login_user.setUserimage(rs.getString("user_image"));
+					login_user.setUserImageb64(Config.upload_directory + rs.getString("user_image"));
 					return login_user;
 				});
 		return user_list.size() > 0 ? user_list.get(0) : null ;

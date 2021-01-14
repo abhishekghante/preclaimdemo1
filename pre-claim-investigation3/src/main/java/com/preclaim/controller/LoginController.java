@@ -78,7 +78,7 @@ public class LoginController {
     	return "common/templatecontent";
     } 
     
-    @RequestMapping(value = "/fileuploader", method = RequestMethod.POST)
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public @ResponseBody String fileuploader(@RequestParam("file[]") ArrayList<MultipartFile> multipartFiles,HttpServletRequest request){
         String prefix = request.getParameter("prefix");
         for(MultipartFile item :multipartFiles)

@@ -41,11 +41,14 @@ public class ProfileController {
 		user_details.setUser_email(request.getParameter("user_email"));
 		user_details.setUsername(request.getParameter("username"));
 		user_details.setPassword(request.getParameter("password"));
-		user_details.setUserimage(request.getParameter("account_img"));		
+		user_details.setUserimage(request.getParameter("account_img"));
+		System.out.println(request.getParameter("account_img"));
 		user_details.setUserID(Integer.parseInt(request.getParameter("user_id")));				
 		System.out.println(user_details.toString());
 		session.removeAttribute("User_Login");
+		user_details.decodePassword(user_details.getPassword());
 		session.setAttribute("User_Login",user_details);
 		return dao.updateProfile(user_details);
 	}
+    
 }

@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.preclaim.models.Permission;
+import com.preclaim.config.Config;
 import com.preclaim.models.UserDetails;
 import com.preclaim.models.UserList;
 import com.preclaim.models.UserRole;
@@ -165,6 +165,7 @@ public class UserDAOImpl implements UserDAO{
 						details.setStatus(rs.getInt("status"));
 						details.setUser_email(rs.getString("user_email"));
 						details.setUserimage(rs.getString("user_image"));
+						details.setUserImageb64(Config.upload_directory + rs.getString("user_image"));
 						details.setAccount_type(rs.getString("account_type"));
 						details.setUsername(rs.getString("username"));
 						details.setUserID(rs.getInt("user_id"));
@@ -218,18 +219,14 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public List<Permission> retrievePermission(int roleID) {
+	public List<String> retrievePermission(int roleID) {
 		try
 		{
 			String sql = "SELECT * from permission where role_id = ?";
 			return template.query(sql, new Object[] {roleID}, 
 					(ResultSet rs, int rowCount) ->
-					{
-						Permission role_permission = new Permission();
-						role_permission.setModule(rs.getString("module"));
-						role_permission.setRole_id(rs.getInt("role_id"));
-						role_permission.setStatus(rs.getInt("status"));
-						return role_permission;
+					{						
+						return rs.getString("module");
 					}
 					);
 		}

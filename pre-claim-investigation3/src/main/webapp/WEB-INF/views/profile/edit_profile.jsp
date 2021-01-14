@@ -1,7 +1,6 @@
 <%@page import="com.preclaim.models.UserDetails" %>
 <%
 UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
-//user_details.decodePassword(user_details.getPassword().trim());
 %>
 <style type="text/css">
 #userImage { display:none;}
@@ -16,7 +15,7 @@ UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
         </div>
         <div class="actions">
             <div class="btn-group">
-              <a href="<?= base_url(); ?>dashboard" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
+              <a href="${pageContext.request.contextPath}/dashboard" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
                 <i class="fa fa-reply"></i>
               </a>
             </div>
@@ -48,8 +47,13 @@ UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
                 <div class="col-md-8">
                   <a href="javascript:void(0);">
                     <span data-imgID="account_picture" data-delID="delUserImg" data-ID="userImage" id="userLblDelBtn" class="delete_btn" data-toggle="tooltip" data-toggle="tooltip" title="Remove"><i class="fa fa-remove"></i></span>
-                    <img src="${pageContext.request.contextPath}/resources/img/default_img.png" id="account_picture" style="height:160px;width: auto;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload" />
-                    <input type="hidden" name="account_image" id="account_image" value="<%=user_details.getUserimage() %>" />
+                    <img id="account_picture" style="height:160px;width: auto;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload"
+                    <%if(user_details.getUserImageb64().equals("")) {%>
+                    src="${pageContext.request.contextPath}/resources/img/default_img.png"
+                    <%}else{ %>
+                    src="data:image/jpg;base64,<%=user_details.getUserImageb64() %>"
+                    ><%} %>
+                    <input type="hidden" name="account_image" id="account_image" value="<%=user_details.getUserimage() %>">
                     <input type='file' name="userImage" id="userImage" accept="image/*"  
                     	onchange="displayUploadImg(this, 'account_picture');">
                   </a>
@@ -80,7 +84,7 @@ UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
             <div class="col-md-offset-2 col-md-10">
               <input type="hidden" value="<%=user_details.getUserID() %>" id="user_id" name="user_id">
               <button class="btn btn-info" id="editprofilesubmit" type="submit">Update</button>
-              <a href="${pageContext.request.contextPath}/dashboard" class="btn btn-danger" value="">Back</a>
+              <a href="${pageContext.request.contextPath}/dashboard" class="btn btn-danger">Back</a>
             </div>
           </div>
         </div>
@@ -93,10 +97,11 @@ $(document).ready(function(){
   $("#account_picture").on('click', function() {
     $("#userImage").trigger('click');
   });
-  $("#userImage").change(function(e){ 
-	 $("#account_image").val(e.target.files[0].name);
-	 console.log($("#account_image").val());
-	 uploadFiles($("#username").val());
+  $("#userImage").change(function(e){
+	  uploadFiles($("#username").val());
+	  var filename = $("#username").val() + "_" +e.target.files[0].name;
+	  $("#account_image").val(filename);	 
+	  console.log(filename); 
   });
   $("#edit_profile_form").on('submit', function(e){
     e.preventDefault();
@@ -106,7 +111,8 @@ $(document).ready(function(){
     var password     = $.trim($('#edit_profile_form #password').val());
     var user_id      = $.trim($('#edit_profile_form #user_id').val());
     var acc_img      = $.trim($('#edit_profile_form #account_image').val());
-    $('#full_name').removeClass('has-error-2');
+
+    	$('#full_name').removeClass('has-error-2');
     $('#username').removeClass('has-error-2');
     $('#password').removeClass('has-error-2');
     $('#user_email').removeClass('has-error-2');
@@ -172,7 +178,7 @@ function uploadFiles(prefix) {
 		formData.append("prefix",prefix);
     $.ajax({
         type: "POST",
-        url: '${pageContext.request.contextPath}/fileuploader',
+        url: "${pageContext.request.contextPath}/uploadFile",
         data: formData,
         contentType: false, //used for multipart/form-data
         processData: false, //doesn't modify or encode the String

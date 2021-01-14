@@ -79,8 +79,8 @@ session.removeAttribute("role_list");
                 <div class="col-md-8">
                   <a href="javascript:void(0);">
                     <% 
-                    if(!user_details.getUserimage().equals("")){ %>
-                      <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" id="account_picture" 
+                    if(!user_details.getUserImageb64().equals("")){ %>
+                      <img src="data:image/jpg;base64,<%=user_details.getUserImageb64() %>" id="account_picture" 
                       	style="height:160px;width: auto;" data-src="#"> <br />
                     <% 
                     }else {
@@ -145,10 +145,11 @@ $(document).ready(function(){
   $("#account_picture").on('click', function() {
     $("#imgAccount").trigger('click');
   });
-  $("#imgAccount").change(function(e){ 
-		 $("#account_image").val(e.target.files[0].name);
-		 console.log($("#account_image").val());
-		 uploadFiles($("#username").val());
+  $("#imgAccount").change(function(e){
+	 var filename = $("#username").val() + "_" +e.target.files[0].name;
+	 $("#account_image").val(filename);
+	 console.log($("#account_image").val());
+	 uploadFiles($("#username").val());
 	  });
 });
 </script>
@@ -163,7 +164,7 @@ function uploadFiles(prefix) {
 		formData.append("prefix",prefix);
     $.ajax({
         type: "POST",
-        url: '${pageContext.request.contextPath}/fileuploader',
+        url: '${pageContext.request.contextPath}/uploadFile',
         data: formData,
         contentType: false, //used for multipart/form-data
         processData: false, //doesn't modify or encode the String
