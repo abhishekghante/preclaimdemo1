@@ -34,7 +34,7 @@ session.removeAttribute("role_list");
       <!-- /.box-header -->
       <!-- form start -->
       <div id="message_account"></div>
-      <form novalidate="" id="edit_account_form" role="form" method="post" class="form-horizontal"
+      <form novalidate id="edit_account_form" role="form" method="post" class="form-horizontal"
       	modelAttribute = "user_details">
         <div class="box-body">
           <div class="row">
@@ -42,7 +42,7 @@ session.removeAttribute("role_list");
               <div class="form-group">
                 <label class="col-md-4 control-label" for="full_name">Name<span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" value="<%= user_details.getFull_name()%>" placeholder="Name" 
+                  <input type="text" value="<%= user_details.getFull_name()%>" placeholder="Name" 
                   	id="full_name" class="form-control" name="full_name">
                 </div>
               </div>
@@ -59,8 +59,8 @@ session.removeAttribute("role_list");
                	</label>
                 <div class="col-md-8">
                   <select name="account_type" id="account_type" class="form-control selecter_1" 
-                  	tabindex="-1" required>
-                    <option value="-1" required disabled >Select</option>
+                  	tabindex="-1">
+                    <option value="-1" selected disabled >Select</option>
                     <%if(role_list != null){
                     	for(UserRole roles: role_list){
                     	%>
@@ -93,7 +93,7 @@ session.removeAttribute("role_list");
                     <input type='file' id="imgAccount" accept="image/*" 
                     	onchange="displayUploadImg(this, 'account_picture');">
                   </a>
-                  <input type="hidden" id="account_img" name="account_img" value="">
+                  <input type="hidden" id="account_image" name="account_image" value="">
                 </div>
               </div>
             </div>
@@ -101,14 +101,14 @@ session.removeAttribute("role_list");
               <div class="form-group">
                 <label class="col-md-4 control-label" for="username">Username<span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" value="<%=user_details.getUsername() %>" placeholder="User name" 
+                  <input type="text" value="<%=user_details.getUsername() %>" placeholder="User name" 
                   	maxlength="15" id="username" class="username form-control" name="username">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-4 control-label" for="password">Password<span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="password" required value="<%=user_details.getPassword() %>" maxlength="15" 
+                  <input type="password" value="<%=user_details.getPassword() %>" maxlength="15" 
                   	placeholder="Password" id="password" class="allow_password form-control" 
                   	name="password">
                 </div>
@@ -145,5 +145,42 @@ $(document).ready(function(){
   $("#account_picture").on('click', function() {
     $("#imgAccount").trigger('click');
   });
+  $("#imgAccount").change(function(e){ 
+		 $("#account_image").val(e.target.files[0].name);
+		 console.log($("#account_image").val());
+		 uploadFiles($("#username").val());
+	  });
 });
+</script>
+<script>
+function uploadFiles(prefix) {
+    var formData = new FormData();
+	var files = $("input[type = 'file']");
+	$(files).each(function (i,value) {
+         		formData.append('file[]', value.files[i]);
+    });
+    if(prefix != undefined)
+		formData.append("prefix",prefix);
+    $.ajax({
+        type: "POST",
+        url: '${pageContext.request.contextPath}/fileuploader',
+        data: formData,
+        contentType: false, //used for multipart/form-data
+        processData: false, //doesn't modify or encode the String
+        cache: false, 
+        async: false,//wait till the execution finishes
+        success:function(result)
+        {
+			if(result == "****")
+				toastr.success("File uploaded successfully","Success");
+        }
+    });
+    return false;
+}
+
+//Validate Email
+function ValidateEmail(email) {
+  var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+  return expr.test(email);
+}
 </script>

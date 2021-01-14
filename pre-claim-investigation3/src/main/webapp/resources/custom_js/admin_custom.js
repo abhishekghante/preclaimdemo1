@@ -1,3 +1,30 @@
+//Upload Files
+function uploadFiles(prefix) {
+    var formData = new FormData();
+	var files = $("input[type = 'file']");
+	$(files).each(function (i,value) {
+         		formData.append('file[]', value.files[i]);
+    });
+    if(prefix != undefined)
+		formData.append("prefix",prefix);
+    $.ajax({
+        type: "POST",
+        url: '${pageContext.request.contextPath}/fileuploader',
+        data: formData,
+        contentType: false, //used for multipart/form-data
+        processData: false, //doesn't modify or encode the String
+        cache: false, 
+        async: false,//wait till the execution finishes
+        success:function(result)
+        {
+			if(result == "****")
+				toastr.success("Sucess","File uploaded successfully","success");
+        }
+    });
+    return false;
+}
+
+//Update Mapping Status
 function updateMappingStatus( cmId, status ) {
 
     var table2 = $('#mapping_list').DataTable();
@@ -624,7 +651,7 @@ function updateAccountValidate() {
     var username     = $.trim($('#edit_account_form #username').val());
     var user_email   = $.trim($('#edit_account_form #user_email').val());
     var password     = $.trim($('#edit_account_form #password').val());
-    var account_img  = $.trim($('#edit_account_form #account_img').val());
+    var account_img  = $.trim($('#edit_account_form #account_image').val());
     var account_type = $.trim($('#edit_account_form #account_type').val());
     var user_id      = $.trim($('#edit_account_form #user_id').val());
     var status       = $.trim($('#edit_account_form #status').val());

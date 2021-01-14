@@ -34,13 +34,13 @@ UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
               <div class="form-group">
                 <label class="col-md-4 control-label" for="full_name">Name <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" value="<%=user_details.getFull_name() %>" placeholder="Name" id="full_name" class="form-control" name="full_name">
+                  <input type="text" value="<%=user_details.getFull_name() %>" placeholder="Name" id="full_name" class="form-control" name="full_name">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-4 control-label" for="user_email">Email <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="email" required="" value="<%= user_details.getUser_email() %>" placeholder="Email" id="user_email" class="form-control" name="user_email">
+                  <input type="email" value="<%= user_details.getUser_email() %>" placeholder="Email" id="user_email" class="form-control" name="user_email">
                 </div>
               </div>
               <div class="form-group">
@@ -49,8 +49,9 @@ UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
                   <a href="javascript:void(0);">
                     <span data-imgID="account_picture" data-delID="delUserImg" data-ID="userImage" id="userLblDelBtn" class="delete_btn" data-toggle="tooltip" data-toggle="tooltip" title="Remove"><i class="fa fa-remove"></i></span>
                     <img src="${pageContext.request.contextPath}/resources/img/default_img.png" id="account_picture" style="height:160px;width: auto;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload" />
-                    <input type="hidden" name="delUserImg" id="delUserImg" value="0" />
-                    <input type='file' onchange="displayUploadImg(this, 'account_picture');" name="userImage" id="userImage" accept="image/*" />
+                    <input type="hidden" name="account_image" id="account_image" value="<%=user_details.getUserimage() %>" />
+                    <input type='file' name="userImage" id="userImage" accept="image/*"  
+                    	onchange="displayUploadImg(this, 'account_picture');">
                   </a>
                 </div>
               </div>
@@ -89,17 +90,13 @@ UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
-  $(".delete_btn").on('click', function() {
-    var msgImgID = $(this).attr('data-imgID');
-    var imgID    = $(this).attr('data-ID');
-    var delImgID = $(this).attr('data-delID');
-    $("#"+msgImgID).attr("src", adminurl+'uploads/default_img.png');
-    $("#"+imgID).val('');
-    $("#"+delImgID).val(1);
-    $("#"+this.id).hide();
-  });
   $("#account_picture").on('click', function() {
     $("#userImage").trigger('click');
+  });
+  $("#userImage").change(function(e){ 
+	 $("#account_image").val(e.target.files[0].name);
+	 console.log($("#account_image").val());
+	 uploadFiles($("#username").val());
   });
   $("#edit_profile_form").on('submit', function(e){
     e.preventDefault();
@@ -108,19 +105,24 @@ $(document).ready(function(){
     var user_email   = $.trim($('#edit_profile_form #user_email').val());
     var password     = $.trim($('#edit_profile_form #password').val());
     var user_id      = $.trim($('#edit_profile_form #user_id').val());
+    var acc_img      = $.trim($('#edit_profile_form #account_image').val());
     $('#full_name').removeClass('has-error-2');
     $('#username').removeClass('has-error-2');
     $('#password').removeClass('has-error-2');
     $('#user_email').removeClass('has-error-2');
-    
-    /*
     if(user_email){
       if (!ValidateEmail(user_email)) {
         $('#user_email').addClass('has-error-2');
         $('#user_email').focus();
+        toastr.error("Email ID not in correct format","Error");
       }
     }
-    */
+    else
+   	{
+    	$('#user_email').addClass('has-error-2');
+        $('#user_email').focus();
+        toastr.error("Email-ID cannot be blank");
+   	}
     if( password == "" ){
         $('#password').addClass('has-error-2');
         $('#password').focus();
@@ -131,7 +133,7 @@ $(document).ready(function(){
         $('#full_name').focus();
     }
     var newdata = {"full_name":full_name,"username":username,"user_email":user_email,
-    		"password":password,"account_img":"","user_id":user_id};
+    		"password":password,"account_img":acc_img,"user_id":user_id};
     console.log(newdata);
     $.ajax({
         type    : 'POST',
@@ -160,4 +162,32 @@ $(document).ready(function(){
     });
   });
 });
+function uploadFiles(prefix) {
+    var formData = new FormData();
+	var files = $("input[type = 'file']");
+	$(files).each(function (i,value) {
+         		formData.append('file[]', value.files[i]);
+    });
+    if(prefix != undefined)
+		formData.append("prefix",prefix);
+    $.ajax({
+        type: "POST",
+        url: '${pageContext.request.contextPath}/fileuploader',
+        data: formData,
+        contentType: false, //used for multipart/form-data
+        processData: false, //doesn't modify or encode the String
+        cache: false, 
+        async: false,//wait till the execution finishes
+        success:function(result)
+        {
+			if(result == "****")
+				toastr.success("File uploaded successfully","Success");
+        }
+    });
+}
+//Validate Email
+function ValidateEmail(email) {
+  var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+  return expr.test(email);
+}
 </script>

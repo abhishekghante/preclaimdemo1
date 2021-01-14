@@ -34,7 +34,7 @@ public class ProfileController {
     }
     
     @RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
-	public @ResponseBody String updateProfile(HttpServletRequest request)
+	public @ResponseBody String updateProfile(HttpSession session, HttpServletRequest request)
 	{
 		UserDetails user_details = new UserDetails();
 		user_details.setFull_name(request.getParameter("full_name"));
@@ -44,6 +44,8 @@ public class ProfileController {
 		user_details.setUserimage(request.getParameter("account_img"));		
 		user_details.setUserID(Integer.parseInt(request.getParameter("user_id")));				
 		System.out.println(user_details.toString());
+		session.removeAttribute("User_Login");
+		session.setAttribute("User_Login",user_details);
 		return dao.updateProfile(user_details);
 	}
 }

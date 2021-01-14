@@ -1,5 +1,10 @@
 package com.preclaim.controller;
 
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Base64;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,12 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.preclaim.dao.LoginDAO;
 import com.preclaim.models.Login;
 import com.preclaim.models.ScreenDetails;
 import com.preclaim.models.UserDetails;
+import com.preclaim.config.Config;
 
 @Controller
 public class LoginController {
@@ -68,5 +76,29 @@ public class LoginController {
     	details.setMain_menu("Dashboard");
     	session.setAttribute("ScreenDetails", details);
     	return "common/templatecontent";
-    }    
+    } 
+    
+    @RequestMapping(value = "/fileuploader", method = RequestMethod.POST)
+    public @ResponseBody String fileuploader(@RequestParam("file[]") ArrayList<MultipartFile> multipartFiles,HttpServletRequest request){
+        String prefix = request.getParameter("prefix");
+        for(MultipartFile item :multipartFiles)
+    	{
+    		try 
+    		{
+	    		byte[] temp = item.getBytes();
+	    		String filename = item.getOriginalFilename();
+	    		filename = prefix == null ? filename : prefix + "_" + filename;
+	    		Path path = Paths.get(Config.upload_directory + filename);
+	    		System.out.println("Entered");
+				Files.write(path, temp);
+			} 
+    		catch (Exception e) 
+    		{
+				e.printStackTrace();
+			}
+    	}
+    	
+    	return "****";
+    }
+    
 }

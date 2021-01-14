@@ -68,7 +68,7 @@
                     <input type='file' id="input_userimage" accept="image/*" style = "display:none"
                     	onchange="displayUploadImg(this, 'img_userimage');">
                   </a>
-                  <input type="hidden" id="userimage" name="userimage">
+                  <input type="hidden" id="account_image" name="account_image">
                 </div>
               </div>
             </div>
@@ -114,18 +114,24 @@ $(document).ready(function(){
 	$("#img_userimage").on('click', function() {
 	    $("#input_userimage").trigger('click');
 	  });
+	$("#input_userimage").change(function(e){ 
+		 $("#account_image").val(e.target.files[0].name);
+		 console.log($("#account_image").val());
+		 uploadFiles($("#username").val());
+	  });
+	
 });
 </script>
 <script>
 function accountValidate() {
-    
     var full_name    = $.trim($('#add_account_form #full_name').val());
     var username     = $.trim($('#add_account_form #username').val());
     var user_email   = $.trim($('#add_account_form #user_email').val());
     var password     = $.trim($('#add_account_form #password').val());
-    var account_img  = $.trim($('#add_account_form #account_img').val());
+    var account_img  = $.trim($('#add_account_form #account_image').val());
     var account_type = $.trim($('#add_account_form #account_type').val());
     var status       = $.trim($('#add_account_form #status').val());
+   	
     $('#full_name').removeClass('has-error-2');
     $('#username').removeClass('has-error-2');
     $('#password').removeClass('has-error-2');
@@ -151,12 +157,19 @@ function accountValidate() {
         validflag = 0;
         toastr.error("Kindly enter Password","Error");
     }
-    if(user_email == "")
+    if(user_email){
+        if (!ValidateEmail(user_email)) 
+        {
+          $('#user_email').addClass('has-error-2');
+          $('#user_email').focus();
+          toastr.error("Email ID not in correct format","Error");
+        }
+      }
+    else
    	{
     	$('#user_email').addClass('has-error-2');
         $('#user_email').focus();
-        validflag = 0;
-        toastr.error("Kindly enter Email-ID","Error");
+        toastr.error("Email-ID cannot be blank");
    	}
     if( username == "" ){
         $('#username').addClass('has-error-2');
@@ -197,5 +210,34 @@ function accountValidate() {
     	return true;
     return false;
 }
+function uploadFiles(prefix) {
+    var formData = new FormData();
+	var files = $("input[type = 'file']");
+	$(files).each(function (i,value) {
+         		formData.append('file[]', value.files[i]);
+    });
+    if(prefix != undefined)
+		formData.append("prefix",prefix);
+    $.ajax({
+        type: "POST",
+        url: '${pageContext.request.contextPath}/fileuploader',
+        data: formData,
+        contentType: false, //used for multipart/form-data
+        processData: false, //doesn't modify or encode the String
+        cache: false, 
+        async: false,//wait till the execution finishes
+        success:function(result)
+        {
+			if(result == "****")
+				toastr.success("File uploaded successfully","Success");
+        }
+    });
+    return false;
+}
 
+//Validate Email
+function ValidateEmail(email) {
+  var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+  return expr.test(email);
+}
 </script>
