@@ -1,8 +1,5 @@
 package com.preclaim.models;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class Region {
 
 	private String regionName;
