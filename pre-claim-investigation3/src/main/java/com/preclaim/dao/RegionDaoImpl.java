@@ -15,7 +15,7 @@ public class RegionDaoImpl implements RegionDao {
 
 	@Autowired
 	DataSource datasource;
-
+	
 	private JdbcTemplate template;
 
 	public void setTemplate(JdbcTemplate template) {
@@ -51,7 +51,11 @@ public class RegionDaoImpl implements RegionDao {
 
 	@Override
 	public List<RegionList> region_list(int status) {
-		String query = "SELECT * FROM region_lists WHERE status=" + status;
+		String query="";
+		if(status==0) 
+	      query = "SELECT * FROM region_lists WHERE status=" + status;
+	    else 
+	    	query = "select * from region_lists where status = 1 or status = 2";
 		return template.query(query, (ResultSet rs, int rowNum) -> {
 			RegionList regionList = new RegionList();
 			regionList.setRegionId(rs.getInt("regionId"));
@@ -91,6 +95,21 @@ public class RegionDaoImpl implements RegionDao {
 			e.printStackTrace();
 			return "Error updating region. Kindly contact system administrator";
 		}
+		return "****";
+	}
+
+	@Override
+	public String updateRegionStatus(int RegionId, int status) {
+		try {
+			
+			  String query="update region_lists set status=? where regionId=?";
+              this.template.update(query,status,RegionId);	
+            
+		   }
+	    catch(Exception e) 
+		{
+		     return "Error Status update ";
+	    }
 		return "****";
 	}
 }

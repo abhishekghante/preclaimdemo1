@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.preclaim.dao.ChannelDao;
+import com.preclaim.dao.UserDAO;
 import com.preclaim.models.Channel;
 import com.preclaim.models.ChannelList;
 import com.preclaim.models.ScreenDetails;
@@ -23,6 +24,9 @@ public class ChannelController {
 
 	@Autowired
 	private ChannelDao channelDao;
+	
+	@Autowired
+	private UserDAO userDao;
 
 	@RequestMapping(value = "/add_channel", method = RequestMethod.GET)
 	public String add_channel(HttpSession session) {
@@ -57,9 +61,9 @@ public class ChannelController {
 			@PathVariable("channelCode") String channelCode, HttpSession session) {
 		session.removeAttribute("ScreenDetails");
 		ScreenDetails details=new ScreenDetails();
-		details.setScreen_name("../group/pending_group.jsp");
-		details.setScreen_title("Pending Group");
-		details.setMain_menu("Channel Lists");
+		details.setScreen_name("../channel/pending_channel.jsp");
+		details.setScreen_title("Pending Channels");
+		details.setMain_menu("Channels");
 		details.setSub_menu1("Pending Channels");
 		session.setAttribute("ScreenDetails", details);
 		List<ChannelList> pending_channel = channelDao.channel_list(0);
@@ -80,8 +84,8 @@ public class ChannelController {
 		details.setMain_menu("Channels");
 		details.setSub_menu1("Active Channels");
 		session.setAttribute("ScreenDetails", details);
-		List<ChannelList> pending_list= channelDao.channel_list(0);
-    	session.setAttribute("pending_channel", pending_list);		
+		List<ChannelList> active_list= channelDao.channel_list(1);
+    	session.setAttribute("active_list", active_list);		
 		return "common/templatecontent";
 	}
 	
@@ -94,14 +98,16 @@ public class ChannelController {
 		channel.setChannelName(ChannelName);;
 		channel.setChannelCode(ChannelCode);
 		String message =channelDao.create_channel(channel);		
+		userDao.activity_log("CHANNEL", 0, "ADD", 0, request.getRemoteAddr());
 		return message;
 	}
 
 	@RequestMapping(value = "/deleteChannel", method = RequestMethod.POST)
 	public @ResponseBody String deleteChannel(HttpServletRequest request)
 	{
-		String channelCode = request.getParameter("GroupId");
-		String message = channelDao.deleteChannel(channelCode);
+		int channelId = Integer.parseInt(request.getParameter("channelId"));
+		String message = channelDao.deleteChannel(channelId);
+		userDao.activity_log("CHANNEL", channelId, "DELETE", 0, request.getRemoteAddr());
 		return message;
 	}
 	
@@ -110,7 +116,21 @@ public class ChannelController {
 	{	
 		String channelCode = request.getParameter("channelCode");		
 		String channelName = request.getParameter("channelName");
-		String message = channelDao.updateChannel(channelName, channelCode);		
+		int channelId = Integer.parseInt(request.getParameter("channelId"));
+		String message = channelDao.updateChannel(channelName, channelCode);	
+		userDao.activity_log("CHANNEL", channelId, "UPDATE", 0, request.getRemoteAddr());
 		return message;
 	}
+	@RequestMapping(value = "/updateChannelStatus",method = RequestMethod.POST)
+	public @ResponseBody String updateChannelStatus(HttpServletRequest request) 
+	{	
+		int channelId =Integer.parseInt(request.getParameter("channelId"));		
+		int status =Integer.parseInt(request.getParameter("status"));
+		String message=channelDao.updateChannelStatus(channelId, status);
+	    userDao.activity_log("CHANNEL", channelId, status == 1 ? "ACTIVE" : "DEACTIVE", 0,request.getRemoteAddr());
+		return message;
+	}
+	
+	
+	
 }

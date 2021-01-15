@@ -6,13 +6,22 @@ public class Region {
 	private int createdBy;
 	private int updatedBy;
 	private int status;
-	
+	private int regionId;
 	
 	public Region() {
 		this.regionName = "";
 		this.createdBy = 0;
 		this.updatedBy = 0;
-		this.status = 1;
+		this.status = 0;
+		this.regionId=0;
+	}
+	
+	public int getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(int regionId) {
+		this.regionId = regionId;
 	}
 
 	public String getRegionName() {
@@ -50,7 +59,7 @@ public class Region {
 	@Override
 	public String toString() {
 		return "Region [regionName=" + regionName + ", createdBy=" + createdBy + ", updatedBy=" + updatedBy
-				+ ", status=" + status + "]";
+				+ ", status=" + status + ", regionId=" + regionId + "]";
 	}
 	
 	

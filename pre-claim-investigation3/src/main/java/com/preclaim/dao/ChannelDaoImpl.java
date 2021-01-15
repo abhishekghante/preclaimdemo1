@@ -51,7 +51,11 @@ public class ChannelDaoImpl implements ChannelDao {
 
 	@Override
 	public List<ChannelList> channel_list(int status) {
-		String query = "SELECT * FROM channel_lists WHERE status=" + status;
+		String query="";
+		if(status==0) 
+		  query = "SELECT * FROM channel_lists WHERE status=" + status;
+		else
+		  query = "select * from channel_lists where status = 1 or status = 2";
 		return template.query(query, (ResultSet rs, int rowNum) -> {
 			ChannelList channelList = new ChannelList();
 			channelList.setSrNo(rowNum + 1);
@@ -59,17 +63,18 @@ public class ChannelDaoImpl implements ChannelDao {
 			channelList.setChannelCode(rs.getString("channelCode"));
 			channelList.setCreatedDate(rs.getString("createdDate"));
 			channelList.setStatus(rs.getInt("status"));
+			channelList.setChannelId(rs.getInt("channelId"));
 			return channelList;
 		});
 		
 	}
 
 	@Override
-	public String deleteChannel(String channelCode) {
+	public String deleteChannel(int channelId) {
 		try
 		{
-			String sql = "DELETE FROM channel_lists where channelCode = ?";
-			template.update(sql, channelCode);
+			String sql = "DELETE FROM channel_lists where channelId = ?";
+			template.update(sql, channelId);
 		}
 		catch(Exception ex)
 		{
@@ -94,4 +99,18 @@ public class ChannelDaoImpl implements ChannelDao {
 		}
 		return "Channel updated successfully";
 	}
+
+	@Override
+	public String updateChannelStatus(int channelId, int status) {
+		try 
+		{			
+	       String sql="update channel_lists set status=? where channelId=?";
+           this.template.update(sql,status,channelId);				
+		}catch(Exception e)
+		{
+			System.out.println("error status update");
+		}
+		return "****";
+	}
+	
 }

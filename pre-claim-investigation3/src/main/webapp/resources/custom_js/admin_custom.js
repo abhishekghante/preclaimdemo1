@@ -74,12 +74,8 @@ function updateGroupStatus( groupId, status ) {
     });
 }
 //DELETE CHANNEL
-function deleteChannel( channelId, type ) {
-    if(type == 1){
-        var table2 = $('#active_channel_list').DataTable();
-    }else{
-        var table2 = $('#pending_channel_list').DataTable();
-    }
+function deleteChannel( channelId) {
+    
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -87,27 +83,22 @@ function deleteChannel( channelId, type ) {
     $( '#continuemodal'+channelId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'channels/deleteChannel',
+            url  : 'deleteChannel',
             data : { 'channelId' : channelId },
             beforeSend: function() { 
-                $("#continuemodal"+channelId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+channelId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+channelId).prop('disabled', true);
             },
             success : function( msg ) {
                 $("#continuemodal"+channelId).html('Yes');
                 $("#continuemodal"+channelId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
             }
         });
     });
 }
-function updateChannelStatus( channelId, type, status ) {
-    if(type == 1){
-        var table2 = $('#active_channel_list').DataTable();
-    }else{
-        var table2 = $('#pending_channel_list').DataTable();
-    }
+function updateChannelStatus( channelId,status ) {
     if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }else{
@@ -119,17 +110,22 @@ function updateChannelStatus( channelId, type, status ) {
     $( '#continuemodal'+channelId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'channels/updateChannelStatus',
+            url  : 'updateChannelStatus',
             data : { 'channelId' : channelId, 'status' : status },
             beforeSend: function() { 
                 $("#continuemodal"+channelId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+channelId).prop('disabled', true);
             },
             success : function( msg ) {
+            if(msg="****"){
+               toastr.success("Group status updated successfully",'success');
                 $("#continuemodal"+channelId).html('Yes');
                 $("#continuemodal"+channelId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
+                }
+            else
+                toastr.error(msg,'Error');
             }
         });
     });
@@ -158,12 +154,7 @@ function deleteRegion( regionId) {
         });
     });
 }
-function updateRegionStatus( regionId, type, status ) {
-    if(type == 1){
-        var table2 = $('#active_region_list').DataTable();
-    }else{
-        var table2 = $('#pending_region_list').DataTable();
-    }
+function updateRegionStatus( regionId,status ) {
     if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }else{
@@ -175,18 +166,25 @@ function updateRegionStatus( regionId, type, status ) {
     $( '#continuemodal'+regionId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'regions/updateRegionStatus',
+            url  : 'updateRegionStatus',
             data : { 'regionId' : regionId, 'status' : status },
             beforeSend: function() { 
                 $("#continuemodal"+regionId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+regionId).prop('disabled', true);
             },
             success : function( msg ) {
+            if (msg="****"){
+            toastr.success("User updated successfully",'success');
                 $("#continuemodal"+regionId).html('Yes');
                 $("#continuemodal"+regionId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
             }
+            else
+            toastr.error(msg,Error)
+            }
+            
+            
         });
     });
 }

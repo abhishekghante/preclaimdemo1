@@ -29,19 +29,21 @@ session.removeAttribute("channel");
               <div class="form-group">
                 <label class="col-md-4 control-label" for="channelName">Channel Name <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required id="channelName" name="channelName" maxlength="40" class="form-control" placeholder="Channel Name">
+                  <input type="text" required id="channelName" name="channelName" maxlength="40" class="form-control" placeholder="Channel Name" 
+                  	value = "<%=channel == null ? "" : channel.getChannelName()%>">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-4 control-label" for="channelCode">Channel Code <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required id="channelCode" name="channelCode" maxlength="10" class="form-control username" placeholder="Channel Code">
+                  <input type="text" required id="channelCode" name="channelCode" maxlength="10" class="form-control username" placeholder="Channel Code" 
+                  	value = "<%= channel == null ? "" : channel.getChannelCode()%>">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
                 	<% if(channel != null){ %>
-                    <input type="hidden" id="channelId" name="channelId">                    
+                    <input type="hidden" id="channelId" name="channelId" value = "<%= channel == null ? "" : channel.getChannelId()%>">                    
                     <button class="btn btn-info" id="editchannelsubmit" onClick="return updateChannel();" type="button">Update</button>
                     <a href="${pageContext.request.contextPath}/channel/pending_channel" class="btn btn-danger">Back</a>
                     <% }else{ %>
@@ -115,14 +117,15 @@ session.removeAttribute("channel");
 							<td><%=list_channel.getCreatedDate()%></td>										
 							<td><span class="label label-sm label-danger">Pending</span></td>											
 							<td>
-								<a href="${pageContext.request.contextPath}/group/pending_group/
+								<a href="${pageContext.request.contextPath}/channel/pending_channel/
 									<%=list_channel.getChannelName() %>/<%=list_channel.getChannelCode() %>" 
 									data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
 									<i class="glyphicon glyphicon-edit"></i>
 				   		  		</a>
-						   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateChannel('<%=list_channel.getChannelCode()%>',1);" 
-						   		  	class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
-						   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteChannel('<%=list_channel.getChannelCode()%>');" 
+						   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateChannelStatus('<%=list_channel.getChannelId() %>',1);" 
+						   		class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
+						   		
+						   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteChannel('<%=list_channel.getChannelId() %>');" 
 						   		   	class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
 							</td>
 		
@@ -194,7 +197,7 @@ function addChannel() {
         url: 'addChannel',
         data: formdata,
         beforeSend: function() { 
-            $("#addchannelsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#addchannelsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
             $("#addchannelsubmit").prop('disabled', true);
         },
         success: function( data ) {
@@ -204,7 +207,7 @@ function addChannel() {
             toastr.success( 'Channel Added successfully.','Success' );
             $( '#add_channel_form #channelName' ).val('');
             $( '#add_channel_form #channelCode' ).val('');
-            table2.ajax.reload();
+            location.reload();
           }else{
             toastr.error( data,'Error' );
             $("#addchannelsubmit").html('Add Channel');
@@ -231,10 +234,10 @@ function updateChannel() {
       var formdata = {'channelName':channelName,'channelCode':channelCode,'channelId':channelId};
       $.ajax({
         type: "POST",
-        url: 'updateChannel',
+        url: '${pageContext.request.contextPath}/channel/updateChannel',
         data: formdata,
         beforeSend: function() { 
-            $("#editchannelsubmit").html('<img src="'+adminurl+'assets/img/input-spinner.gif"> Loading...');
+            $("#editchannelsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
             $("#editchannelsubmit").prop('disabled', true);
         },
         success: function( data ) {
@@ -242,7 +245,7 @@ function updateChannel() {
             $("#editchannelsubmit").html('Update');
             $("#editchannelsubmit").prop('disabled', false);
             toastr.success( 'Channel Updated successfully.','Success' );
-            table2.ajax.reload();
+            location.reload();
           }else{
             toastr.error( data,'Error' );
             $("#editchannelsubmit").html('Update');

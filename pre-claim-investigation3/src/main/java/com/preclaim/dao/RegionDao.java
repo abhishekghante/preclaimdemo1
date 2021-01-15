@@ -11,5 +11,5 @@ public interface RegionDao {
 	public List<RegionList> region_list(int status);
 	public String deleteRegion(int regionId);
 	public String updateRegion(int regionId, String region_name);
-
+    public String updateRegionStatus(int RegionId,int status);
 }

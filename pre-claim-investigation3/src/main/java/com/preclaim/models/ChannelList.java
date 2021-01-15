@@ -7,14 +7,23 @@ public class ChannelList {
 	private String channelCode;
 	private String createdDate;
 	private int status;
-		
-	public ChannelList() 
-	{
-		this.srNo =  0;
+	private int channelId;
+
+	public ChannelList() {
+		this.srNo = 0;
 		this.channelName = "";
 		this.channelCode = "";
 		this.createdDate = "";
 		this.status = 0;
+		this.channelId = 0;
+	}
+
+	public int getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(int channelId) {
+		this.channelId = channelId;
 	}
 
 	public int getSrNo() {
@@ -60,7 +69,7 @@ public class ChannelList {
 	@Override
 	public String toString() {
 		return "ChannelList [srNo=" + srNo + ", channelName=" + channelName + ", channelCode=" + channelCode
-				+ ", createdDate=" + createdDate + ", status=" + status + "]";
+				+ ", createdDate=" + createdDate + ", status=" + status + ", channelId=" + channelId + "]";
 	}
-	
+
 }

@@ -1,8 +1,9 @@
-<!-- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl   = $this->config->item( 'base_url' );
-global $permission_arr;
-?> -->
+<%@page import="com.preclaim.models.ChannelList"%>
+<%@page import="java.util.List"%>
+<%
+List<ChannelList>active_list=(List<ChannelList>)session.getAttribute("active_list");
+session.removeAttribute("active_list");
+%>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
@@ -55,6 +56,51 @@ global $permission_arr;
                         <th class="head2 no-sort"></th>
                       </tr>
                     </tfoot>
+                    <body>
+                        <%
+                    if(active_list!=null){
+                    	
+                    	for(ChannelList list_channel : active_list){
+                         %>
+                    		<tr>
+                    			<td><%=list_channel.getSrNo() %></td>
+                    		    <td><%=list_channel.getChannelName() %></td>
+                    	   	    <td><%=list_channel.getChannelCode()%></td>
+                    		    <td><%=list_channel.getCreatedDate() %></td>
+                    		    <td>
+	                    		    <% if(list_channel.getStatus()==1){ %> 
+	                    		    	<span class="label label-sm label-success">Active</span>
+	                    		    <%}else{%>
+	                    		    	<span class="label label-sm label-danger">Inactive</span>
+	                    		   <%} %>
+                    		    </td>
+	                            <td>
+	                           		 <a href="${pageContext.request.contextPath}/channel/pending_channel/<%=list_channel.getChannelName() %>/<%=list_channel.getChannelCode() %>" 
+                           			 	data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>
+	                            	 </a>
+	                            <% if(list_channel.getStatus()==1){ %> 
+	                      			 <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateChannelStatus('<%=list_channel.getChannelId() %>',2);" 
+	                            		 class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i>
+	                            	 </a>
+	                            <%}else{%>
+	                                 <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateChannelStatus('<%=list_channel.getChannelId() %>',1);" 
+	                            		 class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i>
+	                            	 </a>
+	                             <%} %>	 	 
+	                                 <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteChannel('<%=list_channel.getChannelId() %>');" 
+	                            	 	 class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>
+	                            	 </a>
+	                            	 
+	                            </td>
+                    		</tr>
+                    		
+                    		<%
+                    	     	}
+                             }
+                            %>
+                    
+                    
+                    </body>
                   </table>
                 </div>
               <div class="clearfix"></div>

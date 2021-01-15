@@ -68,16 +68,30 @@ session.removeAttribute("active_region");
 									     <td><%=list_region.getSrNo() %></td>
 									     <td><%=list_region.getRegionName() %></td>
 									     <td><%=list_region.getCreatedDate() %></td>
-									     <td><span class="label label-sm label-success">Active</span></td>
+									     <td><%if(list_region.getStatus()==1){ %>
+									     <span class="label label-sm label-success">Active</span>
+									     <%}else{ %>
+									     	<span class="label label-sm label-danger">Inactive</span>
+									     <%} %>
+									     </td>
 									     <td>
-									     	<a href="${pageContext.request.contextPath}/region/pending_region/
-										     	<%=list_region.getRegionName() %>/<%=list_region.getRegionId() %>" 
+										     	<a href="${pageContext.request.contextPath}/region/pending_region/
+									     	<%=list_region.getRegionName() %>/<%=list_region.getRegionId() %>" 
 										     	data-toggle="tooltip" title="Edit" 
 							     	    		class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
-									     	<a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateRegionStatus('.$region->regionId.',1,2);" 
-								     	     	class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i></a>     
-									     	<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteRegion('<%=list_region.getRegionId()%>',1);" 
-								     	     	class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
+							     	    		
+						     	    		<% if(list_region.getStatus()==1){ %> 
+									     			<a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateRegionStatus('<%=list_region.getRegionId()%>',2);" 
+								     	     		class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i></a>  
+						     	     		<%}else{%>
+						     	     				<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateRegionStatus('<%=list_region.getRegionId()%>',1);" 
+								     	     		class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>  
+								     	    <%} %>    
+									     			<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteRegion('<%=list_region.getRegionId()%>',1);" 
+								     	     		class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>
+								     	     		</a> 
+								     	   
+								     	     	
 									     </td>
 									     
 									</tr>

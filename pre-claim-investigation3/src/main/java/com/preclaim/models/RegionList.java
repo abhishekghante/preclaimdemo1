@@ -13,7 +13,7 @@ public class RegionList {
 		this.srNo=0;
 		this.regionName="";
 		this.createdDate="";
-		this.status=1;
+		this.status=0;
 		this.regionId=0;
 	
 	}
