@@ -70,7 +70,7 @@ session.removeAttribute("active_list");
                     		    </td>
                     		    <td>
                     		         <a href="${pageContext.request.contextPath}/group/pending_group/
-                    		         	<%=list_group.getGroupName() %>/<%=list_group.getGroupId() %>" 
+                    		         	<%=list_group.getGroupName().trim() %>/<%=list_group.getGroupId() %>" 
                     		         	data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
                     		         	<i class="glyphicon glyphicon-edit"></i>
                    		         	</a>

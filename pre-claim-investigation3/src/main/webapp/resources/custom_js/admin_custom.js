@@ -52,7 +52,7 @@ function updateGroupStatus( groupId, status ) {
     $( '#continuemodal'+groupId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'updateGroupStatus',
+            url  : '${pageContext.request.contextPath}/group/updateGroupStatus',
             data : { 'groupId' : groupId, 'status' : status },
             beforeSend: function() { 
                 $("#continuemodal"+groupId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');

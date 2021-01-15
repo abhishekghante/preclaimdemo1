@@ -48,7 +48,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/create_user", method = RequestMethod.POST)
-	public String create_user(@ModelAttribute("user_details") UserDetails user, HttpSession session)
+	public String create_user(@ModelAttribute("user_details") UserDetails user, 
+			HttpSession session, HttpServletRequest request)
 	{
 		System.out.println(user.toString());
 		String message = dao.create_user(user);
@@ -59,7 +60,10 @@ public class UserController {
     	details.setMain_menu("Users");
     	details.setSub_menu1("User Lists");
     	if(message.equals("****"))
+    	{
     		details.setSuccess_message1("User created successfully");
+    		dao.activity_log("USER",user.getUserID(), "ADD", 0, request.getRemoteAddr());
+    	}    		
     	else
     		details.setError_message1(message);
     	session.setAttribute("ScreenDetails", details);
@@ -112,6 +116,7 @@ public class UserController {
 		role.setRole_code(request.getParameter("role_code"));
 		role.setStatus(1);
 		String message = dao.create_role(role);
+		dao.activity_log("ROLE", 0, "ADD", 0, request.getRemoteAddr());
 		return message;
 	}
 	
@@ -123,6 +128,7 @@ public class UserController {
 		role.setStatus(0);
 		System.out.println(role.toString());
 		String message = dao.delete_role(role);
+		dao.activity_log("ROLE",role.getRoleId(), "DELETE", 0, request.getRemoteAddr());
 		return message;
 	}
 	
@@ -135,6 +141,7 @@ public class UserController {
 		role.setRole(request.getParameter("edit_role"));
 		System.out.println(role.toString());
 		String message = dao.updateUserRole(role);
+		dao.activity_log("ROLE",role.getRoleId(), "UPDATE", 0, request.getRemoteAddr());
 		return message;
 	}
 	@RequestMapping(value = "/updateUserStatus", method = RequestMethod.POST)
@@ -144,6 +151,7 @@ public class UserController {
 		int user_status = Integer.parseInt(request.getParameter("status"));
 		System.out.println("User ID:" + user_id + " User_Status:" + user_status);
 		String message = dao.updateUserStatus(user_id, user_status);
+		dao.activity_log("USER",user_id, user_status == 1 ? "ACTIVE" : "DEACTIVE", 0, request.getRemoteAddr());
 		return message;
 	}
 	
@@ -153,6 +161,7 @@ public class UserController {
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
 		System.out.println("User ID:" + user_id);
 		String message = dao.deleteAdminUser(user_id);
+		dao.activity_log("USER",user_id, "DELETE", 0, request.getRemoteAddr());
 		return message;
 	}
 	
@@ -188,6 +197,7 @@ public class UserController {
 		user_details.setUsername(request.getParameter("username"));
 		user_details.setUserimage(request.getParameter("account_img"));		
 		System.out.println(user_details.toString());
+		dao.activity_log("USER",user_details.getUserID(), "UPDATE", 0, request.getRemoteAddr());
 		return dao.updateUserDetails(user_details);
 	}
 	
@@ -222,6 +232,7 @@ public class UserController {
 		}
 		role_permission.remove(role_permission.size() - 1);
 		dao.addPermission(role_permission, roleID);
+		dao.activity_log("PERMISSION",roleID, "ADD", 0, request.getRemoteAddr());
 		return "****";
 	}
 	

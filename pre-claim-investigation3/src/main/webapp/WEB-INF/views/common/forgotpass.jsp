@@ -1,116 +1,102 @@
-<?php
-$base_url  = $this->config->item( 'base_url' );
-$this->load->library('encrypt');
-error_reporting(0);
-$key    = $this->config->item( 'encryption_key' );
-?>
-
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MIDASCOM | Log in</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="<?php echo $this->config->item('base_url'); ?>assets/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?php echo $this->config->item('base_url'); ?>assets/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="<?php echo $this->config->item('base_url'); ?>assets/Ionicons/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo $this->config->item('base_url'); ?>assets/css/AdminLTE.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="<?php echo $this->config->item('base_url'); ?>plugins/iCheck/square/blue.css">
-  <link rel="stylesheet" href="<?php echo $this->config->item('base_url'); ?>assets/css/custom.css">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-  <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-</head>
-<body id="login_pg_bg" class="hold-transition login-page">
-<div class="login-box">
-  <div class="login-logo">
-    <center>
-    <a href="<?php echo $this->config->item('base_url'); ?>">
-      <img src="<?php echo $base_url;?>assets/img/midascom-logo.png" class="img-responsive" alt="Midascom Logo">
-    </a>
-  </center>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg">Enter your email address below and we'll email your password.</p>
-
-    <?php echo form_open( '#', 'class="form-signin" autocomplete="off"' ); ?>
-      <?php 
-      if( $this->session->flashdata( 'err_msg' ) ) { ?>
-        <div class="text-danger">
-            <?php echo $this->session->flashdata( 'err_msg' ); ?>
-        </div>  
-      <?php 
-      } ?>
-      <div class="form-group has-feedback">
-        <?php
-        $attr = array(
-                    'class'         => 'form-control',
-                    'autocomplete'  => 'off',
-                    'id'            => 'useremail',
-                    'name'          => 'useremail',
-                    'placeholder'   => 'User Email',
-                    'value'         => set_value('useremail'),
-                );
-        echo form_input( $attr );
-        ?>
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+<html lang="en">
+  <!--<![endif]-->
+  <!-- BEGIN HEAD -->
+  <head>
+      <meta charset="utf-8" />
+      <title>Pre-Claim Investigation | Login</title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta content="width=device-width, initial-scale=1" name="viewport" />
+      <meta content="" name="description" />
+      <meta content="" name="author" />
+      <!-- BEGIN GLOBAL MANDATORY STYLES -->
+      <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+      <link href="${pageContext.request.contextPath}/resources/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+      <link href="${pageContext.request.contextPath}/resources/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet">
+      <link href="${pageContext.request.contextPath}/resources/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="${pageContext.request.contextPath}/resources/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+      <link href="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+      <!-- END GLOBAL MANDATORY STYLES -->
+      <!-- BEGIN PAGE LEVEL PLUGINS -->
+      <link href="${pageContext.request.contextPath}/resources/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+      <link href="${pageContext.request.contextPath}/resources/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+      <!-- END PAGE LEVEL PLUGINS -->
+      <!-- BEGIN THEME GLOBAL STYLES -->
+      <link href="${pageContext.request.contextPath}/resources/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+      <link href="${pageContext.request.contextPath}/resources/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+      <!-- END THEME GLOBAL STYLES -->
+      <!-- BEGIN PAGE LEVEL STYLES -->
+      <link href="${pageContext.request.contextPath}/resources/pages/css/login-4.min.css" rel="stylesheet" type="text/css" />
+      <link href="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
+      <link href="${pageContext.request.contextPath}/resources/custom_css/custom.css" rel="stylesheet" type="text/css" />
+      <!-- END PAGE LEVEL STYLES -->
+      <!-- BEGIN THEME LAYOUT STYLES -->
+      <!-- END THEME LAYOUT STYLES -->
+      <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico" />
+    </head>
+  <!-- END HEAD -->
+  <body class="login">
+      <!-- BEGIN LOGO -->
+      <div class="logo">
+          <a href="${pageContext.request.contextPath}/login">
+            <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo">
+          </a>
       </div>
-      <div class="row">
-        <!-- /.col -->
-        <div class="col-xs-4 col-offset-2">
-          <a href="<?php echo $assetUrl; ?>login" id="back-btn" class="btn btn-default pull-right btn-block btn-flat">Back</a>
-        </div>
-        <div class="pull-right col-xs-4 col-offset-2">
-          <?php
-          $attr = array(
-                        'class'         => 'btn btn-success pull-right btn-block btn-flat',
-                        'id'            => 'login_submit',
-                        'name'          => 'forgot_submit',
-                        'content'       => 'Send',
-                        'onClick'       => 'forgotValidate();'
-                    );
-          echo form_button( $attr );
-          ?>
-        </div>
-        <!-- /.col -->
-      </div>
-    <?php echo form_close(); ?>
-    <!-- /.social-auth-links -->
-  </div>
-  <!-- /.login-box-body -->
-</div>
-<!-- /.login-box -->
-<script> var adminurl = '<?php echo $this->config->item('base_url'); ?>'; </script>
-<!-- jQuery 3 -->
-<script src="<?php echo $this->config->item('base_url'); ?>assets/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="<?php echo $this->config->item('base_url'); ?>assets/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- iCheck -->
-<script src="<?php echo $this->config->item('base_url'); ?>plugins/iCheck/icheck.min.js"></script>
-<script src="<?php echo $this->config->item('base_url'); ?>assets/js/custom_1.js" type="text/javascript"></script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
-</body>
-</html>
+      <!-- END LOGO -->
+      <!-- BEGIN LOGIN -->
+      <div class="content">
+      	<p class = "text-center" style = "font-size:70px;margin-top:-5px"><i class = "fa fa-lock"></i></p>
+      	<h3 class = "text-center" style = "margin-top:-24px">Forgot Password?</h3>
+		  <div class="login-box-body">
+		    <p class="login-box-msg">Enter your username below and we'll mail your password.</p>
+			<form>			
+		      <div class="row" style = "padding-left:5px;padding-right:5px;margin-bottom:5px">
+                <div class="form-group">
+                  <label class="control-label visible-ie8 visible-ie9">Username</label>
+                  <div class="input-icon">
+                    <i class="fa fa-user"></i>
+                    <input type="text" class="form-control placeholder-no-fix" id="username" 
+                    	name="username" placeholder="Username">
+                  </div>
+              	</div>
+		      </div>
+		      <div class = "row" style = "margin-bottom:10px;padding-left:5px;padding-right:5px">
+		        <div class="form-group">
+		          <button type = "button" class = "btn btn-success pull-right btn-block btn-flat" 
+		          	id = "login_submit" name = "login_submit" onClick = "forgotValidate()">
+		          	Send My Password
+		          	</button> 
+		          
+		        </div>
+		      </div>
+		    </form>
+		  </div>
+		  <!-- /.login-box-body -->
+		</div>
+
+      <!-- END LOGIN -->
+      <!-- BEGIN COPYRIGHT -->
+      <div class="copyright" style="color:#7a1315;"> 2020 &copy; Pre-Claim Investigation. </div>
+      <!-- END COPYRIGHT -->
+      <!-- BEGIN CORE PLUGINS -->
+      <script src="${pageContext.request.contextPath}/resources/global/plugins/jquery.min.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+      <!-- END CORE PLUGINS -->
+      <!-- BEGIN PAGE LEVEL PLUGINS -->
+      <script src="${pageContext.request.contextPath}/resources/global/plugins/backstretch/jquery.backstretch.min.js" type="text/javascript"></script>
+      <!-- END PAGE LEVEL PLUGINS -->
+      <!-- BEGIN THEME GLOBAL SCRIPTS -->
+      <script src="${pageContext.request.contextPath}/resources/global/scripts/app.min.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+      <!-- END THEME GLOBAL SCRIPTS -->
+      <!-- BEGIN PAGE LEVEL SCRIPTS -->
+      <script src="${pageContext.request.contextPath}/resources/custom_js/login_script.js" type="text/javascript"></script>
+      <!-- END PAGE LEVEL SCRIPTS -->
+      <!-- BEGIN THEME LAYOUT SCRIPTS -->
+      <!-- END THEME LAYOUT SCRIPTS -->

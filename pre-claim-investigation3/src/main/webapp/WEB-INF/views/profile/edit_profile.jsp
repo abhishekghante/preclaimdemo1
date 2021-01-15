@@ -1,6 +1,7 @@
 <%@page import="com.preclaim.models.UserDetails" %>
 <%
-UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
+UserDetails user_details = new UserDetails();
+user_details = (UserDetails) session.getAttribute("User_Login");
 %>
 <style type="text/css">
 #userImage { display:none;}
@@ -73,7 +74,7 @@ UserDetails user_details = (UserDetails) session.getAttribute("User_Login");
                 <label class="col-md-4 control-label" for="password">Password <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <input type="text" required maxlength="15" placeholder="Password" id="password" 
-                  	value="<%=user_details.getPassword() %>"                  	
+                  	value="<%=user_details.getDecodedPassword() %>"                  	
                   	class="allow_password form-control" name="password">
                 </div>
               </div>
@@ -112,7 +113,7 @@ $(document).ready(function(){
     var user_id      = $.trim($('#edit_profile_form #user_id').val());
     var acc_img      = $.trim($('#edit_profile_form #account_image').val());
 
-    	$('#full_name').removeClass('has-error-2');
+    $('#full_name').removeClass('has-error-2');
     $('#username').removeClass('has-error-2');
     $('#password').removeClass('has-error-2');
     $('#user_email').removeClass('has-error-2');

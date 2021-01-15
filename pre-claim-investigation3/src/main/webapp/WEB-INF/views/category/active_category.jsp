@@ -1,8 +1,3 @@
-<!-- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl   = $this->config->item( 'base_url' );
-global $permission_arr;
-?> -->
 <script src="${pageContext.request.contextPath}/resources/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />

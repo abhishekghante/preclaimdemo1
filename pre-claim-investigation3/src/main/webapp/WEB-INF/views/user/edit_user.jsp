@@ -3,7 +3,8 @@
 <%@page import="com.preclaim.models.UserDetails" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <% 
-UserDetails user_details = (UserDetails) session.getAttribute("user_details");
+UserDetails user_details = new UserDetails();
+user_details = (UserDetails) session.getAttribute("user_details");
 session.removeAttribute("user_details");
 List<UserRole>role_list = (List<UserRole>) session.getAttribute("role_list");
 session.removeAttribute("role_list");
@@ -108,7 +109,7 @@ session.removeAttribute("role_list");
               <div class="form-group">
                 <label class="col-md-4 control-label" for="password">Password<span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="password" value="<%=user_details.getPassword() %>" maxlength="15" 
+                  <input type="password" value="<%=user_details.getDecodedPassword() %>" maxlength="15" 
                   	placeholder="Password" id="password" class="allow_password form-control" 
                   	name="password">
                 </div>

@@ -2,21 +2,18 @@
 
 //FORGOT PASSWORD
 function forgotValidate() {
-    var useremail    = $( '#useremail' ).val();
+    var username    = $( '#username' ).val();
     
-    var data = { 'useremail' : useremail }
+    var data = { 'username' : username }
     $.ajax({
         type    : 'POST',
-        url     : adminurl + 'forgotpassword/validate',
+        url     : 'changePassword',
         data    : data,
         success : function( msg ) {
-            if( msg == 1 ) {
-                alert('Password has been sent to your e-mail address.');
-                window.location.href = adminurl + "login";
-            } else if( msg == 2 ) {
-                alert('Some Problems found in Sending Email.');
+            if( msg == "****" ) {
+                toastr.success('Password has been sent to your e-mail address.',"success");
             } else {
-                alert('Please enter registered email address.');
+                toastr.error(msg,"error");
             }
         }
     });

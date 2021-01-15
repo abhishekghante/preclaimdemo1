@@ -2,7 +2,8 @@
 <%@page import = "com.preclaim.config.Config" %>
 <%@page import = "com.preclaim.models.UserDetails" %>
 <%
-UserDetails user = (UserDetails) session.getAttribute("User_Login");
+UserDetails user = new UserDetails();
+user = (UserDetails) session.getAttribute("User_Login");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,11 +69,9 @@ UserDetails user = (UserDetails) session.getAttribute("User_Login");
                         <li class="dropdown dropdown-user">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <img alt="No Image" class="img-circle"
-                                	<%if(user!= null )
-                                		{
-                                			if(!user.getUserImageb64().equals("")) {%>
+                                	<%if(!user.getUserImageb64().equals("")) {%>
                                 			src ="data:image/jpg;base64,<%=user.getUserImageb64() %>"
-                                	<%}}else{ %> 
+                                	<%}else{ %> 
                                 			src="${pageContext.request.contextPath}/resources/img/avatar.png">
                                 	<%} %>
                                 <span class="username username-hide-on-mobile">

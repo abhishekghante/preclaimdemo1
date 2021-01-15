@@ -37,12 +37,54 @@ public class LoginDAOImpl implements LoginDAO {
 					login_user.setFull_name(rs.getString("full_name"));
 					login_user.setStatus(rs.getInt("status"));
 					login_user.setUser_email(rs.getString("user_email"));
+					login_user.setAccount_type(rs.getString("account_type"));
 					login_user.setUserimage(rs.getString("user_image"));
 					login_user.setUserImageb64(Config.upload_directory + rs.getString("user_image"));
 					return login_user;
 				});
 		return user_list.size() > 0 ? user_list.get(0) : null ;
 	  }
+
+	@Override
+	public UserDetails checkUser(String username) {
+		try
+		{
+			String sql = "SELECT * FROM admin_user where username = ?";
+			List<UserDetails> user_list = template.query(sql, 
+					new Object[] {username},
+					(ResultSet rs, int arg1) ->{
+						UserDetails login_user = new UserDetails();
+						login_user.setUserID(rs.getInt("user_id"));
+						login_user.setUsername(rs.getString("username"));
+						login_user.decodePassword(rs.getString("password"));
+						login_user.setFull_name(rs.getString("full_name"));
+						login_user.setStatus(rs.getInt("status"));
+						login_user.setUser_email(rs.getString("user_email"));
+						login_user.setUserimage(rs.getString("user_image"));
+						login_user.setUserImageb64(Config.upload_directory + rs.getString("user_image"));
+						return login_user;
+					});
+			return user_list.size() > 0 ? user_list.get(0) : null ;
+		}
+		catch(Exception ex)
+		{
+			return null;
+		}
+	}
+
+	@Override
+	public String updatePassword(String username, String password) {
+		try
+		{
+			String sql = "UPDATE admin_user set password = ? where username = ?";
+			template.update(sql, username, password);
+		}
+		catch(Exception ex)
+		{
+			return "Error updating Password";
+		}
+		return "****";
+	}
 
 }
 

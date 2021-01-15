@@ -47,7 +47,7 @@ session.removeAttribute("group");
 										name="groupId">
 									<button class="btn btn-info" id="editgroupsubmit"
 										onClick="return updateGroup();" type="button">Update</button>
-									<a href="${pageContext.request.contextPath}/groups/pending_group"
+									<a href="${pageContext.request.contextPath}/group/pending_group"
 										class="btn btn-danger">Back</a>
 									<% }else{ %> 
 									<button class="btn btn-info" id="addgroupsubmit"
@@ -249,15 +249,4 @@ function updateGroup() {
 			}
 		});
 }
-function name() {
-	
-}
-
-
-
-
-
-
-
-
 </script>

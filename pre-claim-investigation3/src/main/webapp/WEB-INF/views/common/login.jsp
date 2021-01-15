@@ -73,6 +73,9 @@
                     <input type="checkbox" name="remember" checked> Remember me </label>
                     <button type="button" id="login_submit" class="btn green pull-right" name="login_submit" onclick="loginValidate()">Login</button>
               </div>
+              <div>
+              	<a href = "${pageContext.request.contextPath}/forgotpass">Forgot Password</a>
+              </div>
               <div class="forget-password">
                 <p class="text-center">UAT Version 2.1</p>
               </div>

@@ -18,6 +18,7 @@ public class UserDetails {
 	private String username;
 	private String user_email;	
 	private String password;
+	private String decodedPassword;
 	private String account_type;
 	private int status;
 	private String userimage;
@@ -28,43 +29,45 @@ public class UserDetails {
 		this.full_name = "";
 		this.username = "";
 		this.password = "";
+		this.decodedPassword ="";
 		this.user_email = "";
 		this.account_type = "";
 		this.status = 0;
 		this.userimage = "";
 		this.userID = 0;
 		this.userImageb64 = "";
-	}
-	
+	}	
 	public String getFull_name() {
 		return full_name;
 	}
-
 	public void setFull_name(String full_name) {
 		this.full_name = full_name;
 	}
-
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
-	}
-	
+	}	
 	public String getUser_email() {
 		return user_email;
 	}
-
 	public void setUser_email(String user_email) {
 		this.user_email = user_email;
 	}
-
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
+		this.decodedPassword = password;
 		Encoder encoder = Base64.getEncoder();
 		this.password = encoder.encodeToString(password.getBytes());
+	}	
+	public String getDecodedPassword() {
+		return decodedPassword;
+	}
+	public void setDecodedPassword(String decodedPassword) {
+		this.decodedPassword = decodedPassword;
 	}
 	public String getAccount_type() {
 		return account_type;
@@ -132,8 +135,9 @@ public class UserDetails {
 	
 	public void decodePassword(String encodedPassword)
 	{
+		this.password = encodedPassword;
 		Decoder decoder = Base64.getDecoder();
-		this.password = new String(decoder.decode(encodedPassword));
+		this.decodedPassword = new String(decoder.decode(encodedPassword));
 	}
 	
 }
