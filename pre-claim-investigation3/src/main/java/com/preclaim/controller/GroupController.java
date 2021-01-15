@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.preclaim.dao.GroupDao;
+import com.preclaim.dao.UserDAO;
 import com.preclaim.models.Group;
 import com.preclaim.models.GroupList;
 import com.preclaim.models.ScreenDetails;
@@ -23,6 +24,9 @@ public class GroupController {
 	
     @Autowired
 	private GroupDao groupDao;
+    
+    @Autowired
+    private UserDAO userDao;
 
     @RequestMapping(value = "/add_group", method = RequestMethod.GET)
     public String add_group(HttpSession session) {
@@ -91,6 +95,7 @@ public class GroupController {
 		int GroupId = Integer.parseInt(request.getParameter("GroupId"));
 		System.out.println("User ID:" + GroupId);
 		String message = groupDao.deleteGroup(GroupId);
+		userDao.activity_log("GROUP", GroupId, "DELETE", 0, request.getRemoteAddr());
 		return message;
 	}
     
@@ -100,7 +105,8 @@ public class GroupController {
 		String GroupName = request.getParameter("groupName");
 		Group group = new Group();
 		group.setGroupName(GroupName);
-		String message = groupDao.add_group(group);		
+		String message = groupDao.add_group(group);
+		userDao.activity_log("GROUP", 0, "ADD", 0, request.getRemoteAddr());
 		return message;
 	}
 	
@@ -110,7 +116,19 @@ public class GroupController {
 		int GroupId=Integer.parseInt(request.getParameter("groupId"));		
 		String GroupName = request.getParameter("groupName");
 		System.out.println("GroupId : "+ GroupId);
-		String message = groupDao.updateGroup(GroupId, GroupName);		
+		String message = groupDao.updateGroup(GroupId, GroupName);
+		userDao.activity_log("GROUP", GroupId, "UPDATE", 0, request.getRemoteAddr());
 		return message;
 	}
+	
+	@RequestMapping(value = "/updateGroupStatus",method = RequestMethod.POST)
+	public @ResponseBody String updateGroupStatus(HttpServletRequest request) 
+	{	
+		int GroupId=Integer.parseInt(request.getParameter("groupId"));	
+		int status=Integer.parseInt(request.getParameter("status"));
+		String message = groupDao.updateGroupStatus(GroupId, status);
+		userDao.activity_log("GROUP", GroupId, status == 1 ? "ACTIVE" : "DEACTIVE", 0, request.getRemoteAddr());
+		return message;
+	}
+	
 }

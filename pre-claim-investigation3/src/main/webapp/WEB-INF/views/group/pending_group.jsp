@@ -127,7 +127,7 @@ session.removeAttribute("group");
 												data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
 												<i class="glyphicon glyphicon-edit"></i>
 							   		  		</a>
-									   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('<%=list_group.getGroupId()%>',0,1);" 
+									   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('<%=list_group.getGroupId()%>',1);" 
 									   		  	class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
 									   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId()%>');" 
 									   		   	class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
@@ -249,4 +249,15 @@ function updateGroup() {
 			}
 		});
 }
+function name() {
+	
+}
+
+
+
+
+
+
+
+
 </script>

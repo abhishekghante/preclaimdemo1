@@ -40,12 +40,7 @@ function deleteGroup( groupId ) {
         });
     });
 }
-function updateGroupStatus( groupId, type, status ) {
-    if(type == 1){
-        var table2 = $('#active_group_list').DataTable();
-    }else{
-        var table2 = $('#pending_group_list').DataTable();
-    }
+function updateGroupStatus( groupId, status ) {
     if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }else{
@@ -57,17 +52,23 @@ function updateGroupStatus( groupId, type, status ) {
     $( '#continuemodal'+groupId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'groups/updateGroupStatus',
+            url  : 'updateGroupStatus',
             data : { 'groupId' : groupId, 'status' : status },
             beforeSend: function() { 
                 $("#continuemodal"+groupId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+groupId).prop('disabled', true);
             },
             success : function( msg ) {
-                $("#continuemodal"+groupId).html('Yes');
-                $("#continuemodal"+groupId).prop('disabled', false);
-                $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                if(msg="****")
+                {
+                  toastr.success("Group status updated successfully",'success');
+		            $("#continuemodal"+groupId).html('Yes');
+		            $("#continuemodal"+groupId).prop('disabled', false);
+		            $('#small_modal').modal('hide');
+		            location.reload();
+	            }
+	            else
+	            	 toastr.error(msg,'Error');
             }
         });
     });

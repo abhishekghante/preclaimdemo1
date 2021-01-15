@@ -24,23 +24,18 @@ public class GroupDaoImpl implements GroupDao {
 
 	@Override
 	public String add_group(Group group) {
-		try 
-		{
+		try {
 			String GroupCheck = "select count(*) from group_lists where groupName='" + group.getGroupName() + "'";
 			int groupCount = this.template.queryForObject(GroupCheck, Integer.class);
 			System.out.println(group.toString());
-			if (groupCount == 0) 
-			{
+			if (groupCount == 0) {
 				String query = "INSERT INTO group_lists(groupName, createdBy, createdDate, updatedDate, "
 						+ "updatedBy, status) values(?,?,now(),now(),?,?)";
-				template.update(query, group.getGroupName(), group.getCreatedBy(), group.getUpdatedBy(), 
+				template.update(query, group.getGroupName(), group.getCreatedBy(), group.getUpdatedBy(),
 						group.getStatus());
-			} 
-			else 
-				return "Group already exists";				   
-		} 
-		catch (Exception e)
-		{
+			} else
+				return "Group already exists";
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			return "Error adding group";
@@ -50,7 +45,11 @@ public class GroupDaoImpl implements GroupDao {
 
 	@Override
 	public List<GroupList> group_list(int status) {
-		String query = "select * from group_lists where status= " + status;
+		String query = "";		
+		if(status==0) 
+			query = "select * from group_lists where status= " + status;
+		else 
+			query = "select * from group_lists where status = 1 or status = 2";
 		return this.template.query(query, (ResultSet rs, int rowNum) -> {
 			GroupList groupList = new GroupList();
 			groupList.setGroupId(rs.getInt("GroupId"));
@@ -87,4 +86,16 @@ public class GroupDaoImpl implements GroupDao {
 		return "****";
 	}
 
-}
+	@Override
+	public String updateGroupStatus(int groupId, int status) {
+		try {
+		String sql=" update group_lists set status=?,updatedDate=now() where groupId=?";
+	           int updateCount= template.update(sql,status,groupId);	
+	           return  "****";
+		}catch(Exception e){
+			return "Error updating Group status";
+		}
+		
+	
+
+}}

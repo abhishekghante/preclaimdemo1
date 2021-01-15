@@ -61,17 +61,29 @@ session.removeAttribute("active_list");
                     			<td><%=list_group.getSrNo() %></td>
                     		    <td><%=list_group.getGroupName() %></td>
                     		    <td><%=list_group.getCreatedDate() %></td>
-                    		    <td><span class="label label-sm label-success">Active</span></td>
+                    		    <td>
+	                    		    <% if(list_group.getStatus()==1){ %> 
+	                    		    	<span class="label label-sm label-success">Active</span>
+	                    		    <%}else{%>
+	                    		    	<span class="label label-sm label-danger">Inactive</span>
+	                    		   <%} %>
+                    		    </td>
                     		    <td>
                     		         <a href="${pageContext.request.contextPath}/group/pending_group/
                     		         	<%=list_group.getGroupName() %>/<%=list_group.getGroupId() %>" 
                     		         	data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
                     		         	<i class="glyphicon glyphicon-edit"></i>
                    		         	</a>
-                    		         <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('<%=list_group.getGroupId() %>',1,1);" 
-                    		             class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i>
-                   		             </a>
-                    		         <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId() %>');" 
+               		         	  	<% if(list_group.getStatus()==1){ %> 
+	                    		         <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateGroupStatus('<%=list_group.getGroupId() %>',2);" 
+	                    		             class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i>               		            
+	                   		             </a>
+               		               	<%}else{%>
+	                  		              <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('<%=list_group.getGroupId() %>',1);" 
+	                   		            	 class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i>
+	                  		              </a>
+               		                <%} %>
+                     		         <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId() %>');" 
                     		             class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>
                    		             </a>
                     		    </td>
