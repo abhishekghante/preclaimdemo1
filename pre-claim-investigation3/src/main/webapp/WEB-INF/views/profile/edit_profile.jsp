@@ -94,13 +94,14 @@ user_details = (UserDetails) session.getAttribute("User_Login");
   </div>
 </div>
 <script type="text/javascript">
+var filename = "";
 $(document).ready(function(){
   $("#account_picture").on('click', function() {
     $("#userImage").trigger('click');
   });
   $("#userImage").change(function(e){
 	  uploadFiles($("#username").val());
-	  var filename = $("#username").val() + "_" +e.target.files[0].name;
+	  filename = $("#username").val() + "_" +e.target.files[0].name;
 	  $("#account_image").val(filename);	 
 	  console.log(filename); 
   });
@@ -140,7 +141,7 @@ $(document).ready(function(){
         $('#full_name').focus();
     }
     var newdata = {"full_name":full_name,"username":username,"user_email":user_email,
-    		"password":password,"account_img":acc_img,"user_id":user_id};
+    		"password":password,"account_img":filename,"user_id":user_id};
     console.log(newdata);
     $.ajax({
         type    : 'POST',

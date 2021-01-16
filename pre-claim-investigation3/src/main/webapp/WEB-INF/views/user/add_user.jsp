@@ -115,11 +115,12 @@ List<String> user_permission=(List<String>)session.getAttribute("user_permission
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
+	var filename ="";
 	$("#img_userimage").on('click', function() {
 	    $("#input_userimage").trigger('click');
 	  });
 	$("#input_userimage").change(function(e){ 
-		var filename = $("#username").val() + "_" +e.target.files[0].name;
+		filename = $("#username").val() + "_" +e.target.files[0].name;
 		$("#account_image").val(filename); 
 		console.log($("#account_image").val());
 		uploadFiles($("#username").val());
