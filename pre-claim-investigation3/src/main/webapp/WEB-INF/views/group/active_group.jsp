@@ -3,6 +3,9 @@
 <%
 List<GroupList>active_list=(List<GroupList>)session.getAttribute("active_list");
 session.removeAttribute("active_list");
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+boolean allow_statusChg = user_permission.contains("groups/status");
+boolean allow_delete = user_permission.contains("groups/delete");
 %>
 
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
@@ -75,15 +78,15 @@ session.removeAttribute("active_list");
                     		         	<i class="glyphicon glyphicon-edit"></i>
                    		         	</a>
                		         	  	<% if(list_group.getStatus()==1){ %> 
-	                    		         <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateGroupStatus('<%=list_group.getGroupId() %>',2);" 
+	                    		         <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateGroupStatus('<%=list_group.getGroupId() %>',2,<%=allow_statusChg%>);" 
 	                    		             class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i>               		            
 	                   		             </a>
                		               	<%}else{%>
-	                  		              <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('<%=list_group.getGroupId() %>',1);" 
+	                  		              <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('<%=list_group.getGroupId() %>',1,<%=allow_statusChg%>);" 
 	                   		            	 class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i>
 	                  		              </a>
                		                <%} %>
-                     		         <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId() %>');" 
+                     		         <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId() %>',<%=allow_delete %>);" 
                     		             class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>
                    		             </a>
                     		    </td>

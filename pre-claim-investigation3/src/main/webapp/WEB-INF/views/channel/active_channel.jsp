@@ -3,6 +3,9 @@
 <%
 List<ChannelList>active_list=(List<ChannelList>)session.getAttribute("active_list");
 session.removeAttribute("active_list");
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+boolean allow_statusChg = user_permission.contains("channels/status");
+boolean allow_delete = user_permission.contains("channels/delete");
 %>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -79,15 +82,15 @@ session.removeAttribute("active_list");
                            			 	data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>
 	                            	 </a>
 	                            <% if(list_channel.getStatus()==1){ %> 
-	                      			 <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateChannelStatus('<%=list_channel.getChannelId() %>',2);" 
+	                      			 <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateChannelStatus('<%=list_channel.getChannelId() %>',2,<%=allow_statusChg%>);" 
 	                            		 class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i>
 	                            	 </a>
 	                            <%}else{%>
-	                                 <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateChannelStatus('<%=list_channel.getChannelId() %>',1);" 
+	                                 <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateChannelStatus('<%=list_channel.getChannelId() %>',1,<%=allow_statusChg%>);" 
 	                            		 class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i>
 	                            	 </a>
 	                             <%} %>	 	 
-	                                 <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteChannel('<%=list_channel.getChannelId() %>');" 
+	                                 <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteChannel('<%=list_channel.getChannelId() %>',<%=allow_delete %>);" 
 	                            	 	 class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>
 	                            	 </a>
 	                            	 
@@ -113,38 +116,6 @@ session.removeAttribute("active_list");
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-  var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  /*
-  table = $('#active_channel_list').DataTable({
-      language: {
-        processing: "<img src='${pageContext.request.contextPath}/resources/img/loading.gif'>",
-      },
-      "processing": true, //Feature control the processing indicator.
-      "serverSide": true, //Feature control DataTables' server-side processing mode.
-      "order": [], //Initial no order.
-      'autoWidth': false,
-      "ajax": {
-          "data": function(d) {
-            d.csrf_test_name = csrf_hash;
-          },
-          "url": "<?php echo site_url('/channels/activeChannelTableResponse')?>",
-          "type": "POST"
-      },
-      "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
-      "lengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
-      //Set column definition initialisation properties.
-      "columnDefs": [{
-          "targets": [0,5],
-          "orderable": false, //set not orderable
-      },
-      {
-          "targets": [0,5],
-          "searchable": false, //set orderable
-      } ],
-      buttons: []
-  });
-  */
   var i = 0;
   $('#active_channel_list tfoot th').each( function () {
     if( i == 1 || i == 2 ){

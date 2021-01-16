@@ -5,6 +5,9 @@ List<GroupList> pending_list = (List<GroupList>) session.getAttribute("pending_g
 session.removeAttribute("pending_group");
 GroupList group = (GroupList) session.getAttribute("group");
 session.removeAttribute("group");
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+boolean allow_statusChg = user_permission.contains("groups/status");
+boolean allow_delete = user_permission.contains("groups/delete");
 %>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -127,9 +130,9 @@ session.removeAttribute("group");
 												data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
 												<i class="glyphicon glyphicon-edit"></i>
 							   		  		</a>
-									   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('<%=list_group.getGroupId()%>',1);" 
+									   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('<%=list_group.getGroupId()%>',1,,<%=allow_statusChg %>);" 
 									   		  	class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
-									   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId()%>');" 
+									   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId()%>',<%=allow_delete %>);" 
 									   		   	class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
 										</td>
 
@@ -186,7 +189,10 @@ $(document).ready(function()
 });
 
 function addGroup() {
-	
+	<%if(!user_permission.contains("groups/add")){%>
+		toastr.error("Access Denied","Error");
+		return false;
+	<%}%>
 	var groupName = $('#add_group_form #groupName').val();
 	if (groupName == '') {
 		toastr.error('Group Name Cannot be empty', 'Error');
@@ -219,6 +225,10 @@ function addGroup() {
 }
 
 function updateGroup() {
+	<%if(!user_permission.contains("groups/add")){%>
+		toastr.error("Access Denied","Error");
+		return false;
+	<%}%>
 	var groupName = $('#add_group_form #groupName').val();
 	var groupId = $('#add_group_form #groupId').val();
 	if (groupName == '') {

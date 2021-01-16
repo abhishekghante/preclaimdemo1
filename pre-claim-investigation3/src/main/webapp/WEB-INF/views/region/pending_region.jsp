@@ -1,10 +1,14 @@
 <%@page import="com.preclaim.models.RegionList"%>
 <%@page import="java.util.List"%>
+<%@page import="java.net.URLEncoder"%>
 <%
 List<RegionList> pending_region = (List<RegionList>) session.getAttribute("pending_region");
 session.removeAttribute("pending_region");
 RegionList region = (RegionList) session.getAttribute("region");
 session.removeAttribute("region");
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+boolean allow_statusChg = user_permission.contains("regions/status");
+boolean allow_delete = user_permission.contains("regions/delete");
 %>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -126,13 +130,13 @@ session.removeAttribute("region");
 										<td><span class="label label-sm label-danger">Pending</span></td>
 										<td>
 										   <a href="${pageContext.request.contextPath}/region/pending_region/
-										   <%=list_region.getRegionName() %>/<%=list_region.getRegionId() %>" 
+										   <%=list_region.getRegionName() %>/<%=list_region.getRegionId() %>" 										   										   
 										   		data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
 										   		<i class="glyphicon glyphicon-edit"></i>
 									   		</a> 
-											<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateRegionStatus(<%=list_region.getRegionId() %>,1);"
+											<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateRegionStatus(<%=list_region.getRegionId() %>,1,<%=allow_statusChg%>);"
 											    class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a> 
-											<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteRegion('<%=list_region.getRegionId()%>');"
+											<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteRegion('<%=list_region.getRegionId()%>',<%=allow_delete %>);"
 										        class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
 										</td>
 									</tr>
@@ -191,7 +195,10 @@ $(document).ready(function() {
 				
 });
 function addRegion() {
-	var table2 = $('#pending_region_list').DataTable();
+	<%if(!user_permission.contains("regions/add")){%>
+		toastr.error("Access Denied","Error");
+		return false;
+	<%}%>
 	var regionName = $('#add_region_form #regionName').val();
 	if (regionName == '') {
 		toastr.error('Region Name Cannot be empty', 'Error');
@@ -225,6 +232,10 @@ function addRegion() {
 }
 
 function updateRegion() {
+	<%if(!user_permission.contains("regions/add")){%>
+		toastr.error("Access Denied","Error");
+		return false;
+	<%}%>
 	var table2 = $('#pending_region_list').DataTable();
 	var regionName = $('#add_region_form #regionName').val();
 	var regionId = $('#add_region_form #regionId').val();

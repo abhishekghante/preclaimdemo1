@@ -1,8 +1,10 @@
 //Update Mapping Status
-function updateMappingStatus( cmId, status ) {
-
-    var table2 = $('#mapping_list').DataTable();
-    
+function updateMappingStatus( cmId, status, checkAuthority ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     $.ajax({
         type : 'POST',
         url  : 'mapping/updateMappingStatus',
@@ -11,13 +13,18 @@ function updateMappingStatus( cmId, status ) {
             $("#mappingStatus"+cmId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
         },
         success : function( msg ) {
-            table2.ajax.reload();
+            location.reload();
         }
     });
     return false;
 }
 //DELETE GROUP
-function deleteGroup( groupId ) {
+function deleteGroup( groupId, checkAuthority ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -40,7 +47,12 @@ function deleteGroup( groupId ) {
         });
     });
 }
-function updateGroupStatus( groupId, status ) {
+function updateGroupStatus( groupId, status, checkAuthority ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }else{
@@ -74,8 +86,13 @@ function updateGroupStatus( groupId, status ) {
     });
 }
 //DELETE CHANNEL
-function deleteChannel( channelId) {
-    
+function deleteChannel( channelId, checkAuthority) {
+
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -98,7 +115,12 @@ function deleteChannel( channelId) {
         });
     });
 }
-function updateChannelStatus( channelId,status ) {
+function updateChannelStatus( channelId, status, checkAuthority ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }else{
@@ -131,7 +153,12 @@ function updateChannelStatus( channelId,status ) {
     });
 }
 //DELETE REGION
-function deleteRegion( regionId) {
+function deleteRegion( regionId , checkAuthority) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -154,7 +181,12 @@ function deleteRegion( regionId) {
         });
     });
 }
-function updateRegionStatus( regionId,status ) {
+function updateRegionStatus( regionId, status, checkAuthority ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }else{
@@ -189,7 +221,12 @@ function updateRegionStatus( regionId,status ) {
     });
 }
 //DELETE CATEGORY
-function deleteCategory( categoryId, type ) {
+function deleteCategory( categoryId, type, checkAuthority) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     if(type == 1){
         var table2 = $('#active_category_list').DataTable();
     }else{
@@ -212,13 +249,18 @@ function deleteCategory( categoryId, type ) {
                 $("#continuemodal"+categoryId).html('Yes');
                 $("#continuemodal"+categoryId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
             }
         });
         return false;
     });
 }
-function updateCategoryStatus( categoryId, type, status ) {
+function updateCategoryStatus( categoryId, status, checkAuthority ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     if(type == 1){
         var table2 = $('#active_category_list').DataTable();
     }else{
@@ -245,18 +287,19 @@ function updateCategoryStatus( categoryId, type, status ) {
                 $("#continuemodal"+categoryId).html('Yes');
                 $("#continuemodal"+categoryId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
             }
         });
     });
 }
 //DELETE BANNER
-function deleteBanner( bannerId, type ) {
-    if(type == 1){
-        var table2 = $('#active_banner_list').DataTable();
-    }else{
-        var table2 = $('#pending_banner_list').DataTable();
-    }
+function deleteBanner( bannerId, checkAuthority ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
+    
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -274,19 +317,19 @@ function deleteBanner( bannerId, type ) {
                 $("#continuemodal"+bannerId).html('Yes');
                 $("#continuemodal"+bannerId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
             }
         });
         return false;
     });
 }
-function updateBannerStatus( bannerId, type, status ) {
-    if(type == 1){
-        var table2 = $('#active_banner_list').DataTable();
-    }else{
-        var table2 = $('#pending_banner_list').DataTable();
-    }
-    if(status == 1){
+function updateBannerStatus( bannerId, status, checkAuthority  ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}    
+	if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }else{
         $( '#sm_modal_body' ).html( 'Do you really want to deactivate?' );
@@ -297,7 +340,7 @@ function updateBannerStatus( bannerId, type, status ) {
     $( '#continuemodal'+bannerId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'banner/updateBannerStatus',
+            url  : 'updateBannerStatus',
             data : { 'bannerId' : bannerId, 'status' : status },
             beforeSend: function() { 
                 $("#continuemodal"+bannerId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
@@ -307,14 +350,18 @@ function updateBannerStatus( bannerId, type, status ) {
                 $("#continuemodal"+bannerId).html('Yes');
                 $("#continuemodal"+bannerId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
             }
         });
     });
 }
 //DELETE ADMIN USER
-function deleteAdminUser( user_id ) {
-
+function deleteAdminUser( user_id, checkAuthority  ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -339,8 +386,12 @@ function deleteAdminUser( user_id ) {
     });
 }
 //DELETE USER ROLE
-function deleteRole( roleId ) {
-
+function deleteRole( roleId, checkAuthority  ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -365,7 +416,12 @@ function deleteRole( roleId ) {
     });
 }
 //UPDATE ADMIN USER STATUS
-function updateUserStatus( user_id, status) {
+function updateUserStatus( user_id, status, checkAuthority ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to deactivate?' );
     }else{
@@ -393,8 +449,12 @@ function updateUserStatus( user_id, status) {
     });
 }
 //DELETE APP USER
-function deleteAppUser( appUserId ) {
-
+function deleteAppUser( appUserId, checkAuthority  ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     var table2 = $('#app_user_list').DataTable();
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
@@ -413,15 +473,20 @@ function deleteAppUser( appUserId ) {
                 $("#continuemodal"+appUserId).html('Yes');
                 $("#continuemodal"+appUserId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
             }
         });
         return false;
     });
 }
-function updateAppUserStatus( appUserId, type, status ) {
+function updateAppUserStatus( appUserId, status, checkAuthority  ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     var table2 = $('#app_user_list').DataTable();
-    if(type == 1){
+    if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to deactivate?' );
     }else{
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
@@ -442,18 +507,18 @@ function updateAppUserStatus( appUserId, type, status ) {
                 $("#continuemodal"+appUserId).html('Yes');
                 $("#continuemodal"+appUserId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
             }
         });
     });
 }
 //MESSAGE STATUS
-function updateMessageStatus( msgId, type, status ) {
-    if(type == 1){
-        var table2 = $('#active_message_list').DataTable();
-    }else{
-        var table2 = $('#pending_message_list').DataTable();
-    }
+function updateMessageStatus( msgId, status, checkAuthority  ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}    
     if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }else{
@@ -475,18 +540,18 @@ function updateMessageStatus( msgId, type, status ) {
                 $("#continuemodal"+msgId).html('Yes');
                 $("#continuemodal"+msgId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
             }
         });
     });
 }
 //DELETE MESSAGE
-function deleteMessage( msgId, type ) {
-    if(type == 1){
-        var table2 = $('#active_message_list').DataTable();
-    }else{
-        var table2 = $('#pending_message_list').DataTable();
-    }
+function deleteMessage( msgId, checkAuthority) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -504,14 +569,18 @@ function deleteMessage( msgId, type ) {
                 $("#continuemodal"+msgId).html('Yes');
                 $("#continuemodal"+msgId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                table2.ajax.reload();
+                location.reload();
             }
         });
         return false;
     });
 }
-function updateDashMessageStatus( msgId, status ) {
-    
+function updateDashMessageStatus( msgId, status, checkAuthority  ) {
+	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}    
     if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }else{
@@ -538,9 +607,13 @@ function updateDashMessageStatus( msgId, status ) {
         });
     });
 }
-function updateDashCategoryStatus( categoryId, status ) {
-    
-    if(status == 1){
+function updateDashCategoryStatus( categoryId, status, checkAuthority  ) {
+  	if(!checkAuthority)
+	{
+		toastr.error("Access Denied", "Error");
+		return false;
+	}  
+	if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }else{
         $( '#sm_modal_body' ).html( 'Do you really want to Reject?' );

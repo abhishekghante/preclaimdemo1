@@ -1,7 +1,7 @@
-<!-- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl  = $this->config->item( 'base_url' );
-?> -->
+<%@page import="java.util.List"%>
+<%
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+%>
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
@@ -48,36 +48,41 @@ $assetUrl  = $this->config->item( 'base_url' );
 </div>
 <script type="text/javascript">
 function addGroup() {
-  var groupName = $( '#add_group_form #groupName' ).val(); 
-  if(groupName == ''){
-    toastr.error('Group Name Cannot be empty','Error');
-    return false;
-  }
-  var formdata ={'groupName':groupName};
-  $.ajax({
-    type: "POST",
-    url: 'addGroup',
-    data: formdata,
-    beforeSend: function() { 
-        $("#addgroupsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-        $("#addgroupsubmit").prop('disabled', true);
-    },
-    success: function( data ) {
-      if(data == "****"){
-        $("#addgroupsubmit").html('Add Group');
-        $("#addgroupsubmit").prop('disabled', false);
-        toastr.success( 'Group Added successfully.','Success' );
-        $( '#add_group_form #groupName' ).val(''); 
-        /*setTimeout( function() {
-          window.location.href = adminurl + 'groups';
-        }, 2000 );*/
-      }else{
-        toastr.error( data,'Error' );
-        $("#addgroupsubmit").html('Add Group');
-        $("#addgroupsubmit").prop('disabled', false);
-      }
-    }
-  });
+	<%if(!user_permission.contains("groups/add")){%>
+		toastr.error("Access Denied","Error");
+		return false;
+	<%}%>
+
+	var groupName = $( '#add_group_form #groupName' ).val(); 
+	if(groupName == ''){
+	  toastr.error('Group Name Cannot be empty','Error');
+	  return false;
+	}
+	var formdata ={'groupName':groupName};
+	$.ajax({
+	  type: "POST",
+	  url: 'addGroup',
+	  data: formdata,
+	  beforeSend: function() { 
+	      $("#addgroupsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+	      $("#addgroupsubmit").prop('disabled', true);
+	  },
+	  success: function( data ) {
+	    if(data == "****"){
+	      $("#addgroupsubmit").html('Add Group');
+	      $("#addgroupsubmit").prop('disabled', false);
+	      toastr.success( 'Group Added successfully.','Success' );
+	      $( '#add_group_form #groupName' ).val(''); 
+	      /*setTimeout( function() {
+	        window.location.href = adminurl + 'groups';
+	      }, 2000 );*/
+	    }else{
+	      toastr.error( data,'Error' );
+	      $("#addgroupsubmit").html('Add Group');
+	      $("#addgroupsubmit").prop('disabled', false);
+	    }
+	  }
+	});
      
 }
 </script>

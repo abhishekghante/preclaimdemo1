@@ -1,7 +1,7 @@
-<!-- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl  = $this->config->item( 'base_url' );
-?>  -->
+<%@page import="java.util.List"%>
+<%
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+%>
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
@@ -48,34 +48,38 @@ $assetUrl  = $this->config->item( 'base_url' );
 </div>
 <script type="text/javascript">
 function addRegion() {
-  var regionName = $( '#add_region_form #regionName' ).val(); 
-  if(regionName == ''){
-    toastr.error('Region Name Cannot be empty','Error');
-    return false;
-  }
-  if(regionName){
-      var formdata = {'regionName':regionName};
-      $.ajax({
-        type: "POST",
-        url:'addRegion',
-        data: formdata,
-        beforeSend: function() { 
-            $("#addregionsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-            $("#addregionsubmit").prop('disabled', true);
-        },
-        success: function( data ) {
-          if(data == "****"){
-            $("#addregionsubmit").html('Add Region');
-            $("#addregionsubmit").prop('disabled', false);
-            toastr.success( 'Region Added successfully.','Success' );
-            $( '#add_region_form #regionName' ).val(''); 
-          }else{
-            toastr.error( data,'Error' );
-            $("#addregionsubmit").html('Add Region');
-            $("#addregionsubmit").prop('disabled', false);
-          }
-        }
-      });
-  }   
+	<%if(!user_permission.contains("regions/add")){%>
+		toastr.error("Access Denied","Error");
+		return false;
+	<%}%>
+	var regionName = $( '#add_region_form #regionName' ).val(); 
+	if(regionName == ''){
+	  toastr.error('Region Name Cannot be empty','Error');
+	  return false;
+	}
+	if(regionName){
+	    var formdata = {'regionName':regionName};
+	    $.ajax({
+	      type: "POST",
+	      url:'addRegion',
+	      data: formdata,
+	      beforeSend: function() { 
+	          $("#addregionsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+	          $("#addregionsubmit").prop('disabled', true);
+	      },
+	      success: function( data ) {
+	        if(data == "****"){
+	          $("#addregionsubmit").html('Add Region');
+	          $("#addregionsubmit").prop('disabled', false);
+	          toastr.success( 'Region Added successfully.','Success' );
+	          $( '#add_region_form #regionName' ).val(''); 
+	        }else{
+	          toastr.error( data,'Error' );
+	          $("#addregionsubmit").html('Add Region');
+	          $("#addregionsubmit").prop('disabled', false);
+	        }
+	      }
+	    });
+	}   
 }
 </script>

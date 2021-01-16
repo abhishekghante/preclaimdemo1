@@ -1,3 +1,8 @@
+<%@page import = "java.util.List" %>
+<%
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+boolean allow_delete = user_permission.contains("role/delete");
+%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <style type="text/css">
 #imgspecialization { display:none;}
@@ -71,11 +76,11 @@
 	                			<td>
 		                			<a class="btn btn-warning btn-xs" href="javascript:;" 
 		                				onclick="return edit_role( '${role_list.roleId}',
-		                				'${role_list.role}','${role_list.role_code}' );">
+		                				'${role_list.role}','${role_list.role_code}');">
 		                				<i class="fa fa-edit"></i>
 		               				</a>
 		               				<a class="btn btn-danger btn-xs" href="javascript:;" 
-		               					onclick="return deleteRole( '${role_list.roleId}' );">
+		               					onclick="return deleteRole( '${role_list.roleId}', <%=allow_delete %>);">
 		               					<i class="fa fa-trash"></i>
 		           					</a>
 		           					<a class="btn btn-success btn-xs" 
@@ -108,6 +113,10 @@ $(document).ready(function(){
 <script type="text/javascript">
     //Role Validation
     function addRole() {
+    	<%if(user_permission.contains("role/add")){%>
+    		toastr.error("Access Denied", "Error");
+    		return false;
+   		<%}%>
       var role      = $.trim($('#role_form #role').val());
       $('#role').removeClass('has-error-2');
       if( role == "" ){

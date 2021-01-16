@@ -1,5 +1,9 @@
 <%@page import="com.preclaim.models.UserRole" %>
 <%@page import = "java.util.List" %>
+<%@page import="java.util.List"%>
+<%
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <link href = "${pageContext.request.contextPath}/resources/custom_css/custom.css">
 <style type="text/css">
@@ -125,6 +129,10 @@ $(document).ready(function(){
 </script>
 <script>
 function accountValidate() {
+	<%if(!user_permission.contains("users/add")){%>
+		toastr.error("Access Denied","Error");
+		return false;
+	<%}%>
     var full_name    = $.trim($('#add_account_form #full_name').val());
     var username     = $.trim($('#add_account_form #username').val());
     var user_email   = $.trim($('#add_account_form #user_email').val());

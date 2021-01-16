@@ -6,6 +6,9 @@ List<UserList> user_list = (List<UserList>) session.getAttribute("user_list");
 session.removeAttribute("user_list");
 List<UserRole> user_role = (List<UserRole>) session.getAttribute("role_list");
 session.removeAttribute("role_list");
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+boolean allow_statusChg = user_permission.contains("users/status");
+boolean allow_delete = user_permission.contains("users/delete");
 %>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -85,19 +88,19 @@ session.removeAttribute("role_list");
                    					</a>
                     				<% if(items.getUser_status() == 1) {%>
 									<a href="javascript:;" data-toggle="tooltip" title="Inactive" 
-										onClick="return updateUserStatus(<%=items.getUser_id() %>,0);" 
+										onClick="return updateUserStatus(<%=items.getUser_id() %>,0,<%=allow_statusChg%>);" 
 										class="btn btn-warning btn-xs">
 										<i class="glyphicon glyphicon-ban-circle"></i>
 									</a>
 									<%}else{ %>
 									<a href="javascript:;" data-toggle="tooltip" title="Active" 
-										onClick="return updateUserStatus(<%=items.getUser_id() %>,1);"
+										onClick="return updateUserStatus(<%=items.getUser_id() %>,1,<%=allow_statusChg%>);"
 										class="btn btn-success btn-xs">
 										<i class="glyphicon glyphicon-ok-circle"></i>
 									</a>
 									<%} %>
 									<a href="#" data-toggle="tooltip" title="Delete" 
-                    					onClick="return deleteAdminUser('<%=items.getUser_id() %>');" 
+                    					onClick="return deleteAdminUser('<%=items.getUser_id() %>',<%=allow_delete %>);" 
                     					class="btn btn-danger btn-xs">
                     					<i class="glyphicon glyphicon-remove"></i>
                    					</a>                    				

@@ -5,6 +5,9 @@ List<ChannelList> pending_list = (List<ChannelList>) session.getAttribute("pendi
 session.removeAttribute("pending_channel");
 ChannelList channel = (ChannelList) session.getAttribute("channel");
 session.removeAttribute("channel");
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+boolean allow_statusChg = user_permission.contains("channels/status");
+boolean allow_delete = user_permission.contains("channels/delete");
 %>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -122,10 +125,10 @@ session.removeAttribute("channel");
 									data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
 									<i class="glyphicon glyphicon-edit"></i>
 				   		  		</a>
-						   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateChannelStatus('<%=list_channel.getChannelId() %>',1);" 
+						   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateChannelStatus('<%=list_channel.getChannelId() %>',1,,<%=allow_statusChg %>);" 
 						   		class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
 						   		
-						   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteChannel('<%=list_channel.getChannelId() %>');" 
+						   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteChannel('<%=list_channel.getChannelId() %>',<%=allow_delete %>);" 
 						   		   	class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
 							</td>
 		
@@ -179,80 +182,86 @@ $(document).ready(function() {
   });
 });
 function addChannel() {
-  var table2      = $('#pending_channel_list').DataTable();
-  var channelName = $( '#add_channel_form #channelName' ).val();
-  var channelCode = $( '#add_channel_form #channelCode' ).val();
-  if(channelName == ''){
-    toastr.error('Channel Name Cannot be empty','Error');
-    return false;
-  }
-  if(channelCode == ''){
-    toastr.error('Channel Code Cannot be empty','Error');
-    return false;
-  }
-  if(channelName && channelCode){
-      var formdata = {'channelName':channelName,'channelCode':channelCode};
-      $.ajax({
-        type: "POST",
-        url: 'addChannel',
-        data: formdata,
-        beforeSend: function() { 
-            $("#addchannelsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-            $("#addchannelsubmit").prop('disabled', true);
-        },
-        success: function( data ) {
-          if(data == "****"){
-            $("#addchannelsubmit").html('Add Channel');
-            $("#addchannelsubmit").prop('disabled', false);
-            toastr.success( 'Channel Added successfully.','Success' );
-            $( '#add_channel_form #channelName' ).val('');
-            $( '#add_channel_form #channelCode' ).val('');
-            location.reload();
-          }else{
-            toastr.error( data,'Error' );
-            $("#addchannelsubmit").html('Add Channel');
-            $("#addchannelsubmit").prop('disabled', false);
-          }
-        }
-      });
-  }   
+	<%if(!user_permission.contains("channels/add")){%>
+		toastr.error("Access Denied","Error");
+		return false;
+	<%}%>	
+  	var channelName = $( '#add_channel_form #channelName' ).val();
+	var channelCode = $( '#add_channel_form #channelCode' ).val();
+	if(channelName == ''){
+	  toastr.error('Channel Name Cannot be empty','Error');
+	  return false;
+	}
+	if(channelCode == ''){
+	  toastr.error('Channel Code Cannot be empty','Error');
+	  return false;
+	}
+	if(channelName && channelCode){
+	    var formdata = {'channelName':channelName,'channelCode':channelCode};
+	    $.ajax({
+	      type: "POST",
+	      url: 'addChannel',
+	      data: formdata,
+	      beforeSend: function() { 
+	          $("#addchannelsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+	          $("#addchannelsubmit").prop('disabled', true);
+	      },
+	      success: function( data ) {
+	        if(data == "****"){
+	          $("#addchannelsubmit").html('Add Channel');
+	          $("#addchannelsubmit").prop('disabled', false);
+	          toastr.success( 'Channel Added successfully.','Success' );
+	          $( '#add_channel_form #channelName' ).val('');
+	          $( '#add_channel_form #channelCode' ).val('');
+	          location.reload();
+	        }else{
+	          toastr.error( data,'Error' );
+	          $("#addchannelsubmit").html('Add Channel');
+	          $("#addchannelsubmit").prop('disabled', false);
+	        }
+	      }
+	    });
+	}   
 }
 function updateChannel() {
-  var table2      = $('#pending_channel_list').DataTable();
-  var channelName = $( '#add_channel_form #channelName' ).val();
-  var channelId   = $( '#add_channel_form #channelId' ).val();
-  var channelCode = $( '#add_channel_form #channelCode' ).val();
-  if(channelName == ''){
-    toastr.error('Channel Name Cannot be empty','Error');
-    return false;
-  }
-  if(channelCode == ''){
-    toastr.error('Channel Code Cannot be empty','Error');
-    return false;
-  }
-  if(channelName && channelCode){
-      var formdata = {'channelName':channelName,'channelCode':channelCode,'channelId':channelId};
-      $.ajax({
-        type: "POST",
-        url: '${pageContext.request.contextPath}/channel/updateChannel',
-        data: formdata,
-        beforeSend: function() { 
-            $("#editchannelsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-            $("#editchannelsubmit").prop('disabled', true);
-        },
-        success: function( data ) {
-          if(data == "****"){
-            $("#editchannelsubmit").html('Update');
-            $("#editchannelsubmit").prop('disabled', false);
-            toastr.success( 'Channel Updated successfully.','Success' );
-            location.reload();
-          }else{
-            toastr.error( data,'Error' );
-            $("#editchannelsubmit").html('Update');
-            $("#editchannelsubmit").prop('disabled', false);
-          }
-        }
-      });
-  }   
+	<%if(!user_permission.contains("channels/add")){%>
+		toastr.error("Access Denied","Error");
+		return false;
+	<%}%>
+	var channelName = $( '#add_channel_form #channelName' ).val();
+	var channelId   = $( '#add_channel_form #channelId' ).val();
+	var channelCode = $( '#add_channel_form #channelCode' ).val();
+	if(channelName == ''){
+	  toastr.error('Channel Name Cannot be empty','Error');
+	  return false;
+	}
+	if(channelCode == ''){
+	  toastr.error('Channel Code Cannot be empty','Error');
+	  return false;
+	}
+	if(channelName && channelCode){
+	    var formdata = {'channelName':channelName,'channelCode':channelCode,'channelId':channelId};
+	    $.ajax({
+	      type: "POST",
+	      url: '${pageContext.request.contextPath}/channel/updateChannel',
+	      data: formdata,
+	      beforeSend: function() { 
+	          $("#editchannelsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+	          $("#editchannelsubmit").prop('disabled', true);
+	      },
+	      success: function( data ) {
+	        if(data == "****"){
+	          $("#editchannelsubmit").html('Update');
+	          $("#editchannelsubmit").prop('disabled', false);
+	          toastr.success( 'Channel Updated successfully.','Success' );
+	          location.reload();
+	        }else{
+	          toastr.error( data,'Error' );
+	          $("#editchannelsubmit").html('Update');
+	          $("#editchannelsubmit").prop('disabled', false);
+	        }
+	      }
+	    });
+	}   
 }
 </script>

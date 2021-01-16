@@ -3,6 +3,9 @@
 <%
 List<RegionList> active_region = (List<RegionList>) session.getAttribute("active_region");
 session.removeAttribute("active_region");
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+boolean allow_statusChg = user_permission.contains("regions/status");
+boolean allow_delete = user_permission.contains("regions/delete");
 %>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -81,13 +84,13 @@ session.removeAttribute("active_region");
 							     	    		class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
 							     	    		
 						     	    		<% if(list_region.getStatus()==1){ %> 
-									     			<a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateRegionStatus('<%=list_region.getRegionId()%>',2);" 
+									     			<a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateRegionStatus('<%=list_region.getRegionId()%>',2,<%=allow_statusChg%>);" 
 								     	     		class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i></a>  
 						     	     		<%}else{%>
-						     	     				<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateRegionStatus('<%=list_region.getRegionId()%>',1);" 
+						     	     				<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateRegionStatus('<%=list_region.getRegionId()%>',1,<%=allow_statusChg%>);" 
 								     	     		class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>  
 								     	    <%} %>    
-									     			<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteRegion('<%=list_region.getRegionId()%>',1);" 
+									     			<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteRegion('<%=list_region.getRegionId()%>',1,<%=allow_delete %>);" 
 								     	     		class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>
 								     	     		</a> 
 								     	   
