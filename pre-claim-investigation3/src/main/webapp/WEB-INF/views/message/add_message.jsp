@@ -1,8 +1,20 @@
-<!-- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl       = $this->config->item( 'base_url' );
-$random_pass    = randomPassword();
-?> -->
+<%@page import = "java.util.List" %>
+<%@page import = "java.util.ArrayList" %>
+
+<%@page import = "com.preclaim.models.Region" %>
+<%@page import = "com.preclaim.models.Group" %>
+<%@page import = "com.preclaim.models.Channel" %>
+<%
+List<Region> regionList = (List<Region>) session.getAttribute("region_list");
+List<Group> groupList = (List<Group>) session.getAttribute("group_list");
+List<Channel> channelList = (List<Channel>) session.getAttribute("channel_list");
+if(regionList == null)
+	regionList = new ArrayList<Region>();
+if(groupList == null)
+	groupList = new ArrayList<Group>();
+if(channelList == null)
+	channelList = new ArrayList<Channel>();
+%>
 <style type="text/css">
 .placeImg { display:none !important;}
 </style>
@@ -32,7 +44,7 @@ $random_pass    = randomPassword();
       <!-- /.box-header -->
       <!-- form start -->
       <div id="message_alert"></div>
-      <form novalidate="" id="add_message_form" role="form" method="post" class="form-horizontal" enctype="multipart/form-data">
+      <form novalidate id="add_message_form" role="form" method="post" class="form-horizontal" enctype="multipart/form-data">
         <div class="box-body">
           <div class="row">
             <div class="col-sm-10 col-md-10 col-xs-12">
@@ -40,13 +52,10 @@ $random_pass    = randomPassword();
                 <label class="col-md-4 control-label" for="msgGroup">Select Group <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <select name="msgGroup" id="msgGroup" class="form-control" tabindex="-1" >
-                    <!-- <?php 
-                    if($groupLists){
-                      foreach ($groupLists as $groupInfo) {
-                        ?><option value="<?php echo $groupInfo->groupId; ?>"><?php echo $groupInfo->groupName; ?></option><?php
-                      }
-                    }
-                    ?> -->
+                    <option value = "-1" selected disabled>Select</option>
+                    <%for(Group group : groupList) {%>
+                    	<option value = "<%= group.getGroup_id()%>"><%=group.getGroupName()%></option>
+                   	<%} %>
                   </select>
                 </div>
               </div>
@@ -54,14 +63,10 @@ $random_pass    = randomPassword();
                 <label class="col-md-4 control-label" for="msgRegion">Select Region <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <select name="msgRegion[]" id="msgRegion" class="form-control select2-multiple" tabindex="-1" multiple>
-                    <option value="">Select</option>
-                   <!--  <?php 
-                    if($regionLists){
-                      foreach ($regionLists as $regionInfo) {
-                        ?><option selected value="<?php echo $regionInfo->regionId; ?>"><?php echo $regionInfo->regionName; ?></option><?php
-                      }
-                    }
-                    ?> -->
+                    <option value="" disabled>Select</option>
+                   <%for(Region region : regionList) {%>
+                    	<option value = "<%= region.getRegionId()%>"><%=region.getRegionName()%></option>
+                   	<%} %>
                   </select>
                 </div>
               </div>
@@ -70,13 +75,9 @@ $random_pass    = randomPassword();
                 <div class="col-md-8">
                   <select name="msgChannel" id="msgChannel" class="form-control select2" tabindex="-1">
                     <option value="">Select</option>
-                    <!-- <?php 
-                    if($channelLists){
-                      foreach ($channelLists as $channelInfo) {
-                        ?><option value="<?php echo $channelInfo->channelId; ?>"><?php echo $channelInfo->channelName; ?></option><?php
-                      }
-                    }
-                    ?> -->
+                    <%for(Channel channel : channelList) {%>
+                    	<option value = "<%= channel.getChannelCode()%>"><%= channel.getChannelName()%></option>
+                   	<%} %>
                   </select>
                 </div>
               </div>
@@ -84,7 +85,7 @@ $random_pass    = randomPassword();
                 <label class="col-md-4 control-label" for="msgCategory">Select Category <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <select name="msgCategory" id="msgCategory" class="form-control select2" tabindex="-1">
-                    <option value="">Select</option>
+                    <option value="-1" selected disabled>Select</option>
                     <!-- <?php 
                     if($categoryLists){
                       foreach ($categoryLists as $categoryInfo) {
@@ -134,9 +135,9 @@ $random_pass    = randomPassword();
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-md-4 control-label" for="msgTitleThai">Case Title(Hindi) <span class="text-danger">*</span></label>
+                <label class="col-md-4 control-label" for="msgTitleHin">Case Title(Hindi) <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" placeholder="Case Title" name="msgTitleThai" id="msgTitleThai" class="form-control">
+                  <input type="text" required="" placeholder="Case Title" name="msgTitleHin" id="msgTitleHin" class="form-control">
                 </div>
               </div>
               <div class="form-group">
@@ -146,9 +147,9 @@ $random_pass    = randomPassword();
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-md-4 control-label" for="msgContentThai">Case Content(Hindi)</label>
+                <label class="col-md-4 control-label" for="msgContentHin">Case Content(Hindi)</label>
                 <div class="col-md-8">
-                  <textarea required="" placeholder="" name="msgContentThai" id="msgContentThai" class="form-control" rows="6"></textarea>
+                  <textarea required="" placeholder="" name="msgContentHin" id="msgContentHin" class="form-control" rows="6"></textarea>
                 </div>
               </div>
               <div class="form-group selectDiv">
@@ -295,76 +296,76 @@ $random_pass    = randomPassword();
                     <div class="col-md-3">
                       <a href="javascript:void(0);">
                         <div class="uploadFileDiv">
-                          <span data-imgID="imgMsgThaiLbl_1" data-ID="imgMsgThai_1" id="thaiLblDelBtn_1" class="delete_btn" data-linkID="link_msgImgThai_1" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
+                          <span data-imgID="imgMsgHinLbl_1" data-ID="imgMsgHin_1" id="HinLblDelBtn_1" class="delete_btn" data-linkID="link_msgImgHin_1" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
                             <i class="fa fa-remove"></i>
                           </span>
-                          <span class="add_link_btn" data-val="" id="link_msgImgThai_1" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
+                          <span class="add_link_btn" data-val="" id="link_msgImgHin_1" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_1" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 1" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgHinLbl" id="imgMsgHinLbl_1" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 1" />
                         </div>
-                        <input type="file" onchange="displayUploadImg(this, 'imgMsgThaiLbl_1', 'thaiLblDelBtn_1', 'link_msgImgThai_1');" name="imgMsgThai_1" id="imgMsgThai_1" class="placeImg" accept="image/*" />
-                        <input type="hidden" name="d_link_msgImgThai_1" id="d_link_msgImgThai_1" />
+                        <input type="file" onchange="displayUploadImg(this, 'imgMsgHinLbl_1', 'HinLblDelBtn_1', 'link_msgImgHin_1');" name="imgMsgHin_1" id="imgMsgHin_1" class="placeImg" accept="image/*" />
+                        <input type="hidden" name="d_link_msgImgHin_1" id="d_link_msgImgHin_1" />
                       </a>
                     </div>
                     <div class="col-md-3">
                       <a href="javascript:void(0);">
                         <div class="uploadFileDiv">
-                          <span data-imgID="imgMsgThaiLbl_2" data-ID="imgMsgThai_2" id="thaiLblDelBtn_2" class="delete_btn" data-linkID="link_msgImgThai_2" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
+                          <span data-imgID="imgMsgHinLbl_2" data-ID="imgMsgHin_2" id="HinLblDelBtn_2" class="delete_btn" data-linkID="link_msgImgHin_2" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
                             <i class="fa fa-remove"></i>
                           </span>
-                          <span class="add_link_btn" data-val="" id="link_msgImgThai_2" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
+                          <span class="add_link_btn" data-val="" id="link_msgImgHin_2" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_2" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 2" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgHinLbl" id="imgMsgHinLbl_2" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 2" />
                         </div>
-                        <input type="file" onchange="displayUploadImg(this, 'imgMsgThaiLbl_2', 'thaiLblDelBtn_2', 'link_msgImgThai_2');" name="imgMsgThai_2" id="imgMsgThai_2" class="placeImg" accept="image/*" />
-                        <input type="hidden" name="d_link_msgImgThai_2" id="d_link_msgImgThai_2" />
+                        <input type="file" onchange="displayUploadImg(this, 'imgMsgHinLbl_2', 'HinLblDelBtn_2', 'link_msgImgHin_2');" name="imgMsgHin_2" id="imgMsgHin_2" class="placeImg" accept="image/*" />
+                        <input type="hidden" name="d_link_msgImgHin_2" id="d_link_msgImgHin_2" />
                       </a>
                     </div>
                     <div class="col-md-3">
                       <a href="javascript:void(0);">
                         <div class="uploadFileDiv">
-                          <span data-imgID="imgMsgThaiLbl_3" data-ID="imgMsgThai_3" id="thaiLblDelBtn_3" class="delete_btn" data-linkID="link_msgImgThai_3" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
+                          <span data-imgID="imgMsgHinLbl_3" data-ID="imgMsgHin_3" id="HinLblDelBtn_3" class="delete_btn" data-linkID="link_msgImgHin_3" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
                             <i class="fa fa-remove"></i>
                           </span>
-                          <span class="add_link_btn" data-val="" id="link_msgImgThai_3" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
+                          <span class="add_link_btn" data-val="" id="link_msgImgHin_3" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_3" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 3" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgHinLbl" id="imgMsgHinLbl_3" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 3" />
                         </div>
-                        <input type="file" onchange="displayUploadImg(this, 'imgMsgThaiLbl_3', 'thaiLblDelBtn_3', 'link_msgImgThai_3');" name="imgMsgThai_3" id="imgMsgThai_3" class="placeImg" accept="image/*" />
-                        <input type="hidden" name="d_link_msgImgThai_3" id="d_link_msgImgThai_3" />
+                        <input type="file" onchange="displayUploadImg(this, 'imgMsgHinLbl_3', 'HinLblDelBtn_3', 'link_msgImgHin_3');" name="imgMsgHin_3" id="imgMsgHin_3" class="placeImg" accept="image/*" />
+                        <input type="hidden" name="d_link_msgImgHin_3" id="d_link_msgImgHin_3" />
                       </a>
                     </div>
                     <div class="col-md-3">
                       <a href="javascript:void(0);">
                         <div class="uploadFileDiv">
-                          <span data-imgID="imgMsgThaiLbl_4" data-ID="imgMsgThai_4" id="thaiLblDelBtn_4" class="delete_btn" data-linkID="link_msgImgThai_4" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
+                          <span data-imgID="imgMsgHinLbl_4" data-ID="imgMsgHin_4" id="HinLblDelBtn_4" class="delete_btn" data-linkID="link_msgImgHin_4" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
                             <i class="fa fa-remove"></i>
                           </span>
-                          <span class="add_link_btn" data-val="" id="link_msgImgThai_4" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
+                          <span class="add_link_btn" data-val="" id="link_msgImgHin_4" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_4" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 4" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgHinLbl" id="imgMsgHinLbl_4" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 4" />
                         </div>
-                        <input type="file" onchange="displayUploadImg(this, 'imgMsgThaiLbl_4', 'thaiLblDelBtn_4', 'link_msgImgThai_4');" name="imgMsgThai_4" id="imgMsgThai_4" class="placeImg" accept="image/*" />
-                        <input type="hidden" name="d_link_msgImgThai_4" id="d_link_msgImgThai_4" />
+                        <input type="file" onchange="displayUploadImg(this, 'imgMsgHinLbl_4', 'HinLblDelBtn_4', 'link_msgImgHin_4');" name="imgMsgHin_4" id="imgMsgHin_4" class="placeImg" accept="image/*" />
+                        <input type="hidden" name="d_link_msgImgHin_4" id="d_link_msgImgHin_4" />
                       </a>
                     </div>
                     <div class="col-md-3">
                       <a href="javascript:void(0);">
                         <div class="uploadFileDiv">
-                          <span data-imgID="imgMsgThaiLbl_5" data-ID="imgMsgThai_5" id="thaiLblDelBtn_5" class="delete_btn" data-linkID="link_msgImgThai_5" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
+                          <span data-imgID="imgMsgHinLbl_5" data-ID="imgMsgHin_5" id="HinLblDelBtn_5" class="delete_btn" data-linkID="link_msgImgHin_5" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
                             <i class="fa fa-remove"></i>
                           </span>
-                          <span class="add_link_btn" data-val="" id="link_msgImgThai_5" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
+                          <span class="add_link_btn" data-val="" id="link_msgImgHin_5" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
                             <i class="fa fa-link"></i>
                           </span>
-                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgThaiLbl" id="imgMsgThaiLbl_5" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 5" />
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgHinLbl" id="imgMsgHinLbl_5" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 5" />
                         </div>
-                        <input type="file" onchange="displayUploadImg(this, 'imgMsgThaiLbl_5', 'thaiLblDelBtn_5', 'link_msgImgThai_5');" name="imgMsgThai_5" id="imgMsgThai_5" class="placeImg" accept="image/*" />
-                        <input type="hidden" name="d_link_msgImgThai_5" id="d_link_msgImgThai_5" />
+                        <input type="file" onchange="displayUploadImg(this, 'imgMsgHinLbl_5', 'HinLblDelBtn_5', 'link_msgImgHin_5');" name="imgMsgHin_5" id="imgMsgHin_5" class="placeImg" accept="image/*" />
+                        <input type="hidden" name="d_link_msgImgHin_5" id="d_link_msgImgHin_5" />
                       </a>
                     </div>
                   </div>
@@ -386,7 +387,7 @@ $random_pass    = randomPassword();
               <div class="form-group">
                 <label class="col-md-4 control-label">Upload PDF(Hindi)</label>
                 <div class="col-md-8">
-                  <input type="file" name="msgThaiFile" id="msgThaiFile" accept="application/pdf" />
+                  <input type="file" name="msgHinFile" id="msgHinFile" accept="application/pdf" />
                 </div>
               </div>
               <div class="form-group">
@@ -477,18 +478,18 @@ $(document).ready(function(){
     $("#imgMsgEn_"+imgId).trigger('click');
   });
   //MESSAGE Hindi Image
-  $(".imgMsgThaiLbl").on('click', function() {
-    var imgMsgThaiId = $(this).attr('id');
-    var ret   = imgMsgThaiId.split("_");
+  $(".imgMsgHinLbl").on('click', function() {
+    var imgMsgHinId = $(this).attr('id');
+    var ret   = imgMsgHinId.split("_");
     var imgId = ret[1];
-    $("#imgMsgThai_"+imgId).trigger('click');
+    $("#imgMsgHin_"+imgId).trigger('click');
   });
   $(".delete_btn").on('click', function() {
     var msgImgID = $(this).attr('data-imgID');
     var imgID    = $(this).attr('data-ID');
     var linkID   = $(this).attr('data-linkID');
 
-    $("#"+msgImgID).attr("src", adminurl+'uploads/default_img.png');
+    $("#"+msgImgID).attr("src", '${pageContext.request.contextPath}/resources/uploads/default_img.png');
     $("#"+imgID).val('');
     $("#"+this.id).hide();
     $("#"+linkID).hide();
@@ -515,10 +516,10 @@ $(document).ready(function(){
         }
         $.ajax({
             type : 'POST',
-            url  : adminurl + 'messages/updateHperLink',
+            url  : 'messages/updateHperLink',
             data : { 'hyperlink' : linkvalue,'linkKey' : linkKey,'msgId' : msgId },
             beforeSend: function() {
-                $("#continuemodal"+linkKey).html('<img src="'+adminurl+'${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+linkKey).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+linkKey).prop('disabled', true);
             },
             success : function( msg ) {
@@ -549,21 +550,21 @@ $(document).ready(function(){
     var postDateTime    = $( '#add_message_form #postDateTime' ).val();
     var expiryDate      = $( '#add_message_form #expiryDate' ).val();
     var msgTitleEn      = $( '#add_message_form #msgTitleEn' ).val();
-    var msgTitleThai    = $( '#add_message_form #msgTitleThai' ).val();
-    if(msgGroup == ''){
-      toastr.error('Group Cannot be empty','Error');
+    var msgTitleHin    = $( '#add_message_form #msgTitleHin' ).val();
+    if(msgGroup == '-1'){
+      toastr.error('Group cannot be empty','Error');
       return false;
     }
-    if(msgRegion == null || msgRegion == ''){
-      toastr.error('Region Cannot be empty','Error');
+    if(msgRegion == '-1'){
+      toastr.error('Region cannot be empty','Error');
       return false;
     }
-    if(msgChannel == ''){
-      toastr.error('Channel Cannot be empty','Error');
+    if(msgChannel == '-1'){
+      toastr.error('Channel cannot be empty','Error');
       return false;
     }
-    if(msgCategory == ''){
-      toastr.error('Category Cannot be empty','Error');
+    if(msgCategory == '-1'){
+      toastr.error('Category cannot be empty','Error');
       return false;
     }
     if(postDateTime == ''){
@@ -571,27 +572,27 @@ $(document).ready(function(){
       return false;
     }
     if(expiryDate == ''){
-      toastr.error('Expiry Date Cannot be empty','Error');
+      toastr.error('Expiry Date cannot be empty','Error');
       return false;
     }
     if(msgTitleEn == ''){
-      toastr.error('Title English Cannot be empty','Error');
+      toastr.error('Title English cannot be empty','Error');
       return false;
     }
-    if(msgTitleThai == ''){
-      toastr.error('Title Thai Cannot be empty','Error');
+    if(msgTitleHin == ''){
+      toastr.error('Title Hin cannot be empty','Error');
       return false;
     }
-    if(msgGroup && msgCategory && msgChannel && msgRegion && msgTitleEn && msgTitleThai){
+    if(msgGroup && msgCategory && msgChannel && msgRegion && msgTitleEn && msgTitleHin){
         $.ajax({
           type: "POST",
-          url: adminurl + 'messages/addMessage',
+          url: 'messages/addMessage',
           data: new FormData(this),
           contentType: false,
           cache: false,
           processData:false,
           beforeSend: function() { 
-              $("#addmessagesubmit").html('<img src="'+adminurl+'${pageContext.request.contextPath}/img/input-spinner.gif"> Loading...');
+              $("#addmessagesubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
               $("#addmessagesubmit").prop('disabled', true);
               $('#add_message_form').css("opacity",".5");
           },
@@ -603,16 +604,16 @@ $(document).ready(function(){
               $("form#add_message_form").trigger("reset");
               $("#msgCategory").select2("val", "");
               $("#msgChannel").select2("val", "");
-              $("#imgMsgEnLbl_1").attr("src", adminurl+'uploads/default_img.png');
-              $("#imgMsgEnLbl_2").attr("src", adminurl+'uploads/default_img.png');
-              $("#imgMsgEnLbl_3").attr("src", adminurl+'uploads/default_img.png');
-              $("#imgMsgEnLbl_4").attr("src", adminurl+'uploads/default_img.png');
-              $("#imgMsgEnLbl_5").attr("src", adminurl+'uploads/default_img.png');
-              $("#imgMsgThaiLbl_1").attr("src", adminurl+'uploads/default_img.png');
-              $("#imgMsgThaiLbl_2").attr("src", adminurl+'uploads/default_img.png');
-              $("#imgMsgThaiLbl_3").attr("src", adminurl+'uploads/default_img.png');
-              $("#imgMsgThaiLbl_4").attr("src", adminurl+'uploads/default_img.png');
-              $("#imgMsgThaiLbl_5").attr("src", adminurl+'uploads/default_img.png');
+              $("#imgMsgEnLbl_1").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+              $("#imgMsgEnLbl_2").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+              $("#imgMsgEnLbl_3").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+              $("#imgMsgEnLbl_4").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+              $("#imgMsgEnLbl_5").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+              $("#imgMsgHinLbl_1").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+              $("#imgMsgHinLbl_2").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+              $("#imgMsgHinLbl_3").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+              $("#imgMsgHinLbl_4").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+              $("#imgMsgHinLbl_5").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
               $(".delete_btn").hide();
               $(".add_link_btn").hide();
               $('.add_link_btn').attr('data-val','');
@@ -636,16 +637,16 @@ function clearForm(){
     $("form#add_message_form").trigger("reset");
     $("#msgCategory").select2("val", "");
     $("#msgChannel").select2("val", "");
-    $("#imgMsgEnLbl_1").attr("src", adminurl+'uploads/default_img.png');
-    $("#imgMsgEnLbl_2").attr("src", adminurl+'uploads/default_img.png');
-    $("#imgMsgEnLbl_3").attr("src", adminurl+'uploads/default_img.png');
-    $("#imgMsgEnLbl_4").attr("src", adminurl+'uploads/default_img.png');
-    $("#imgMsgEnLbl_5").attr("src", adminurl+'uploads/default_img.png');
-    $("#imgMsgThaiLbl_1").attr("src", adminurl+'uploads/default_img.png');
-    $("#imgMsgThaiLbl_2").attr("src", adminurl+'uploads/default_img.png');
-    $("#imgMsgThaiLbl_3").attr("src", adminurl+'uploads/default_img.png');
-    $("#imgMsgThaiLbl_4").attr("src", adminurl+'uploads/default_img.png');
-    $("#imgMsgThaiLbl_5").attr("src", adminurl+'uploads/default_img.png');
+    $("#imgMsgEnLbl_1").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+    $("#imgMsgEnLbl_2").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+    $("#imgMsgEnLbl_3").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+    $("#imgMsgEnLbl_4").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+    $("#imgMsgEnLbl_5").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+    $("#imgMsgHinLbl_1").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+    $("#imgMsgHinLbl_2").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+    $("#imgMsgHinLbl_3").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+    $("#imgMsgHinLbl_4").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+    $("#imgMsgHinLbl_5").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
     $(".delete_btn").hide();
     $(".add_link_btn").hide();
     $('.add_link_btn').attr('data-val','');

@@ -90,7 +90,7 @@ public class GroupDaoImpl implements GroupDao {
 	public String updateGroupStatus(int groupId, int status) {
 		try {
 		String sql=" update group_lists set status=?,updatedDate=now() where groupId=?";
-	           int updateCount= template.update(sql,status,groupId);	
+	           template.update(sql,status,groupId);	
 	           return  "****";
 		}catch(Exception e){
 			return "Error updating Group status";

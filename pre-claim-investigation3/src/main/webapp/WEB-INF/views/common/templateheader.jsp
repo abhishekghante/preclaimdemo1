@@ -2,8 +2,9 @@
 <%@page import = "com.preclaim.config.Config" %>
 <%@page import = "com.preclaim.models.UserDetails" %>
 <%
-UserDetails user = new UserDetails();
-user = (UserDetails) session.getAttribute("User_Login");
+UserDetails user = (UserDetails) session.getAttribute("User_Login");
+if(user == null)
+	user = new UserDetails();
 %>
 <!DOCTYPE html>
 <html lang="en">

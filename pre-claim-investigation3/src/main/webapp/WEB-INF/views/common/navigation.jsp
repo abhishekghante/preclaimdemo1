@@ -1,9 +1,10 @@
 <%@page import="com.preclaim.controller.LoginController"%>
 <%@page import="com.preclaim.models.ScreenDetails" %>
 <%@page import="java.util.List" %>
+<%@page import="java.util.ArrayList" %>
 <%
 ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
-List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+ArrayList<String> user_permission = (ArrayList<String>)session.getAttribute("user_permission");
 %>
 <!-- BEGIN SIDEBAR -->
 <div class="page-sidebar-wrapper">
