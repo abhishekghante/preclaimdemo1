@@ -61,4 +61,7 @@
  		<beans:property name="template" ref="jt"/>    
 	</beans:bean>
 	
+	<beans:bean id="appuserdao" class="com.preclaim.dao.AppUserDaoImpl" >
+ 		<beans:property name="template" ref="jt"/>    
+	</beans:bean>	
 </beans:beans>

@@ -1,12 +1,27 @@
-<!-- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl   = $this->config->item( 'base_url' );
-global $permission_arr;
-?> -->
-<link href="$pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="$pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
-<script src="$pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="$pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.preclaim.models.AppUserList"%>
+<%@page import="com.preclaim.models.Region"%>
+<%@page import="com.preclaim.models.Channel"%>
+<%
+List<AppUserList> appUserList = (List<AppUserList>) session.getAttribute("AppUserList");
+session.removeAttribute("AppUserList");
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+boolean allowDelete = user_permission.contains("appUsers/delete");
+boolean allowStatusChg = user_permission.contains("appUsers/status");
+List<Region> regionList = (List<Region>) session.getAttribute("region_list");
+List<Channel> channelList = (List<Channel>) session.getAttribute("channel_list");
+session.removeAttribute("region_list");
+session.removeAttribute("channel_list");
+if(regionList == null)
+	regionList = new ArrayList<Region>();
+if(channelList == null)
+	channelList = new ArrayList<Channel>();
+%>
+<link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
 <div class="row">
   <div class="col-xs-12 col-sm-12">
     <div class="portlet box">
@@ -17,13 +32,15 @@ global $permission_arr;
         </div>
         <div class="actions">
             <div class="btn-group">
-             <!--  <?php if( in_array( 'appUsers/import', $permission_arr ) ) { ?>  -->
-              <a href="${pageContext.request.contextPath}/app_user/import" data-toggle="tooltip" title="Import" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="#" data-toggle="tooltip" onclick = "checkImportAuth()" title="Import"
+              	class="btn green-haze btn-outline btn-xs pull-right" style="margin-right: 5px;"
+              	data-original-title="Add New">
                 <i class="fa fa-plus"></i></a>
-              <a href="${pageContext.request.contextPath}/app_user/deleteOldUsers" onclick="return confirm(' you want to delete?');" data-toggle="tooltip" title="Delete old users" class="btn red-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Delete old users">
+              <a href="#" onclick="checkDeleteAuth()" data-toggle="tooltip" title="Delete old users" 
+              	class="btn red-haze btn-outline btn-xs pull-right" style="margin-right: 5px;"
+              	data-original-title="Delete old users">
                 <i class="fa fa-remove"></i>
               </a>
-           <!-- <?php } ?> -->   
             </div>
         </div>
       </div>
@@ -67,6 +84,53 @@ global $permission_arr;
                         <th class="head2 no-sort"></th>
                       </tr>
                     </tfoot>
+                    <tbody>
+                    	<%if(appUserList != null) 
+                    	{
+                    		for(AppUserList appuser: appUserList)
+                    		{
+                    	%>
+                    	<tr>
+                    		<td><%= appuser.getSrno()%></td>
+                    		<td><%= appuser.getUsername()%></td>
+                    		<td><%= appuser.getAgentname()%></td>
+                    		<td><%= appuser.getChannelcode()%></td>
+                    		<td><%= appuser.getChannelname()%></td>
+                    		<td><%= appuser.getRegion()%></td>
+                    		<td><%= appuser.getPassword()%></td>
+                    		<td><%= appuser.getLatitude()%></td>
+                    		<td><%= appuser.getLongitude()%></td>
+                    		<td><%= appuser.getZipcode()%></td>
+                    		<td>                    			
+                    			<% if(appuser.getStatus() == 1) {%>
+                    				<span class="label label-sm label-success">Active</span>
+                   				<%}else{ %>
+                   					<span class="label label-sm label-danger">Inactive</span>
+                   				<%} %>
+                   			</td>
+                    		<td>
+                    			<% if(appuser.getStatus() == 1) {%>
+                    			<a href="javascript:;" data-toggle="tooltip" title="Inactive" 
+                    				onClick="return updateAppUserStatus(<%=appuser.getAppuserId() %>,1,
+                    				<%=allowStatusChg %>);" class="btn btn-warning btn-xs">
+                    				<i class="glyphicon glyphicon-ban-circle"></i>
+                   				</a>
+                   				<%}else{ %>
+                   				<a href="javascript:;" data-toggle="tooltip" title="Acctive" 
+                    				onClick="return updateAppUserStatus(<%=appuser.getAppuserId() %>,1,
+                    				<%=allowStatusChg %>);" class="btn btn-success btn-xs">
+                    				<i class="glyphicon glyphicon-ok-circle"></i>
+                   				</a>
+                   				<%} %>
+                  				<a href="javascript:;" data-toggle="tooltip" title="Delete" 
+                  					onClick="return deleteAppUser(<%=appuser.getAppuserId() %>,
+                  					<%=allowDelete %>);" class="btn btn-danger btn-xs">
+                  					<i class="glyphicon glyphicon-remove"></i>
+               					</a>                    		
+                    		</td>
+                    	</tr>
+                    	<%}} %>
+                    </tbody>
                   </table>
                 </div>
               <div class="clearfix"></div>
@@ -81,63 +145,32 @@ global $permission_arr;
 $(document).ready(function() {
   var start = '';
   var end = '';
-  table = $('#app_user_list').DataTable({
-      language: {
-        processing: "<img src='$pageContext.request.contextPath}/resources/img/loading.gif'>",
-      },
-      "processing": true, //Feature control the processing indicator.
-      "serverSide": true, //Feature control DataTables' server-side processing mode.
-      "order": [], //Initial no order.
-      'autoWidth': false,
-      "ajax": {
-          "data": function(d) {
-              d.minDate = start;
-              d.maxDate = end;
-          },
-          "url": "<?php echo site_url('/appUsers/appUserTableResponse')?>",
-          "type": "POST"
-      },
-      "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
-      "lengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
-      //Set column definition initialisation properties.
-      "columnDefs": [{
-          "targets": [0,11],
-          "orderable": false, //set not orderable
-      },
-      {
-          "targets": [0,11],
-          "searchable": false, //set orderable
-      } ],
-      buttons: []
-  });
   var i = 0;
-  var channelLists  = <?php echo json_encode($channelLists) ?>;
-  var regionLists   = <?php echo json_encode($regionLists) ?>;
   $('#app_user_list tfoot th').each( function () {
     if( i == 1 || i == 2 ){
       $(this).html( '<input type="text" class="form-control" placeholder="" />' );
     } else if(i == 3){
       var tech_selectbox = '<select name="channelCode" id="channelCode" class="form-control">'
                               +'<option value="">All</option>';
-      $.each(channelLists, function (i, elem) {
-          tech_selectbox += '<option value="'+ elem['channelId'] +'">'+ decodeURIComponent(elem['channelCode']) +'</option>';
-      });
+        <%for(Channel channel : channelList) {%>
+        tech_selectbox += "<option value = ''<%=channel.getChannelCode()%>''><%=channel.getChannelCode()%></option>"
+        <%}%>
         tech_selectbox += '</select>';
         $(this).html( tech_selectbox );
     } else if(i == 4){
       var tech_selectbox = '<select name="channelName" id="channelName" class="form-control">'
                               +'<option value="">All</option>';
-      $.each(channelLists, function (i, elem) {
-          tech_selectbox += '<option value="'+ elem['channelId'] +'">'+ decodeURIComponent(elem['channelName']) +'</option>';
-      });
+        <%for(Channel channel : channelList) { %>
+        	tech_selectbox += "<option value = '<%=channel.getChannelCode()%>'><%=channel.getChannelName()%></option>"
+        <%}%>
         tech_selectbox += '</select>';
         $(this).html( tech_selectbox );
     } else if(i == 5){
       var tech_selectbox = '<select name="region_id" id="region_id" class="form-control">'
                               +'<option value="">All</option>';
-      $.each(regionLists, function (i, elem) {
-          tech_selectbox += '<option value="'+ elem['regionId'] +'">'+ decodeURIComponent(elem['regionName']) +'</option>';
-      });
+        <%for(Region region : regionList) {%>
+        	tech_selectbox += "<option value = '<%=region.getRegionId()%>'><%=region.getRegionName()%></option>"
+        <%}%>      	
         tech_selectbox += '</select>';
         $(this).html( tech_selectbox );
     }
@@ -166,4 +199,24 @@ $(document).ready(function() {
     });
   });
 });
+</script>
+<script>
+function checkImportAuth()
+{
+	<%if(!user_permission.contains("appUsers/import")){%>
+		toastr.error("Access Denied", "Error");
+	<%}else{%>
+		location.href = "${pageContext.request.contextPath}/app_user/import";
+	<%}%>
+}
+function checkDeleteAuth()
+{
+	<%if(!user_permission.contains("appUsers/delete")){%>
+		toastr.error("Access Denied", "Error");
+	<%}else{%>
+		var response = confirm("Are you sure you want to delete");
+		if(response)
+			location.href = "${pageContext.request.contextPath}/app_user/import";
+	<%}%>
+}
 </script>

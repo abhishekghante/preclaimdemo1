@@ -8,20 +8,20 @@ import com.preclaim.models.UserRole;
 
 public interface UserDAO {
 	
-	public String create_user(UserDetails user);
-	public List<UserList> user_list();
-	public String deleteAdminUser(int user_id);
-	public String create_role(UserRole role);
-	public List<UserRole> role_lists();
-	public String updateUserRole(UserRole role);	
-	public String delete_role(UserRole role);
-	public String updateUserStatus(int user_id, int user_status);
-	public UserDetails getUserDetails(int user_id);
-	public String updateUserDetails(UserDetails user_details);
-	public List<String>	retrievePermission(int roleID);
-	public String addPermission(List<String> role_permission, int roleID);
-	public String accountValidate(String username);
-	public String updateProfile(UserDetails user_details);
-	public void activity_log(String moduleName,int moduleId,String moduleAction,int userId,String ip_address);
-	public String getUserRole(int roleId);
+	String create_user(UserDetails user);
+	List<UserList> user_list();
+	String deleteAdminUser(int user_id);
+	String create_role(UserRole role);
+	List<UserRole> role_lists();
+	String updateUserRole(UserRole role);	
+	String delete_role(UserRole role);
+	String updateUserStatus(int user_id, int user_status);
+	UserDetails getUserDetails(int user_id);
+	String updateUserDetails(UserDetails user_details);
+	List<String>	retrievePermission(int roleID);
+	String addPermission(List<String> role_permission, int roleID);
+	String accountValidate(String username);
+	String updateProfile(UserDetails user_details);
+	void activity_log(String moduleName,int moduleId,String moduleAction,int userId,String ip_address);
+	String getUserRole(int roleId);
 }

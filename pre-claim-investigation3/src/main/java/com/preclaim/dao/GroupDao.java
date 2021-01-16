@@ -7,9 +7,9 @@ import com.preclaim.models.GroupList;
 
 public interface GroupDao {
 	
-public String add_group(Group group);
-public List<GroupList> group_list(int status);
-public String deleteGroup(int groupId);
-public String updateGroup(int groupId, String group_name);
-public String updateGroupStatus(int groupId,int status);
+	String add_group(Group group);
+	List<GroupList> group_list(int status);
+	String deleteGroup(int groupId);
+	String updateGroup(int groupId, String group_name);
+	String updateGroupStatus(int groupId,int status);
 }

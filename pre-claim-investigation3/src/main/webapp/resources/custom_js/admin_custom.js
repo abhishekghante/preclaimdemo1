@@ -463,7 +463,7 @@ function deleteAppUser( appUserId, checkAuthority  ) {
     $( '#continuemodal'+appUserId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'appUsers/deleteAppUser',
+            url  : 'deleteAppUser',
             data : { 'appUserId' : appUserId },
             beforeSend: function() {
                 $("#continuemodal"+appUserId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
@@ -497,7 +497,7 @@ function updateAppUserStatus( appUserId, status, checkAuthority  ) {
     $( '#continuemodal'+appUserId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'appUsers/updateAppUserStatus',
+            url  : 'updateAppUserStatus',
             data : { 'appUserId' : appUserId, 'status' : status },
             beforeSend: function() { 
                 $("#continuemodal"+appUserId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');

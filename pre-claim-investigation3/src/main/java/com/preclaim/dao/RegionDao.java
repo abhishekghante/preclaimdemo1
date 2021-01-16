@@ -7,9 +7,9 @@ import com.preclaim.models.RegionList;
 
 public interface RegionDao {
 
-	public String create_region(Region region);
-	public List<RegionList> region_list(int status);
-	public String deleteRegion(int regionId);
-	public String updateRegion(int regionId, String region_name);
-    public String updateRegionStatus(int RegionId,int status);
+	String create_region(Region region);
+	List<RegionList> region_list(int status);
+	String deleteRegion(int regionId);
+	String updateRegion(int regionId, String region_name);
+    String updateRegionStatus(int RegionId,int status);
 }
