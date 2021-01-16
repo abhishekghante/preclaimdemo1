@@ -1,21 +1,3 @@
-<!-- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl   = $this->config->item( 'base_url' );
-global $permission_arr;
-if($categoryInfo){
-  $categoryNameEn   = $categoryInfo->categoryNameEn;
-  $categoryNameThai = $categoryInfo->categoryNameThai;
-  $categoryImgEn    = $categoryInfo->categoryImgEn;
-  $categoryImgThai  = $categoryInfo->categoryImgThai;
-  if($categoryInfo->isEnImageSame == 1){ $checked = 'checked'; }else{ $checked = ''; }
-}else{
-  $categoryNameEn   = '';
-  $categoryNameThai = '';
-  $categoryImgEn    = '';
-  $categoryImgThai  = '';
-  $checked          = '';
-}
-?> -->
 <style type="text/css">
 .placeImg { display:none !important;}
 .form-group { margin-bottom: 5px; }
@@ -42,13 +24,13 @@ if($categoryInfo){
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="col-md-4 control-label" for="categoryNameEn">investigations Name (English) <span class="text-danger">*</span></label>
+                <label class="col-md-4 control-label" for="categoryNameEn">Investigation Name (English) <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <input type="text" required id="categoryNameEn" name="categoryNameEn" maxlength="40" class="form-control" placeholder="investigations Name">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-md-4 control-label">investigations Image (English) </label>
+                <label class="col-md-4 control-label">Investigation Image (English) </label>
                 <div class="col-md-8">
                   <a href="javascript:void(0);">
                     <!-- <?php
@@ -77,9 +59,9 @@ if($categoryInfo){
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label class="col-md-4 control-label" for="categoryNameThai">investigations Name (Hindi) <span class="text-danger">*</span></label>
+                <label class="col-md-4 control-label" for="categoryNameHin">Investigation Name (Hindi) <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" name="categoryNameThai" id="categoryNameThai" maxlength="40" class="form-control" placeholder="investigations Name">
+                  <input type="text" required="" name="categoryNameHin" id="categoryNameHin" maxlength="40" class="form-control" placeholder="investigations Name">
                 </div>
               </div>
               <div class="form-group">
@@ -89,30 +71,29 @@ if($categoryInfo){
                 </label>
               </div>
               <div class="form-group">
-                <span class="col-md-12 text-center">OR</span>
-                <label class="col-md-4 control-label">Upload Image</label>
+                <label class="col-md-4 control-label">Investigation Name (Hindi)</label>
                 <div class="col-md-8">
                   <a href="javascript:void(0);">
                     <!-- <?php
-                    if($categoryImgThai){
-                      $tmp2 = explode('/', $categoryImgThai);
+                    if($categoryImgHin){
+                      $tmp2 = explode('/', $categoryImgHin);
                       $file_name2 = end($tmp2);
                       if (file_exists('uploads/category/'.$file_name2)) {
-                        $categoryImgThai = $categoryImgThai;
-                        $imgCatThaiSty   = 'style="display: block;"';
+                        $categoryImgHin = $categoryImgHin;
+                        $imgCatHinSty   = 'style="display: block;"';
                       }else{
-                        $categoryImgThai = $assetUrl.'uploads/default_img.png';
-                        $imgCatThaiSty   = '';
+                        $categoryImgHin = $assetUrl.'uploads/default_img.png';
+                        $imgCatHinSty   = '';
                       }
                     }else{
-                      $categoryImgThai = $assetUrl.'uploads/default_img.png';
-                      $imgCatThaiSty   = '';
+                      $categoryImgHin = $assetUrl.'uploads/default_img.png';
+                      $imgCatHinSty   = '';
                     }
                     ?> -->	
-                    <!-- <span <?= $imgCatThaiSty; ?> data-imgID="categoryImgThai" data-delID="delImgMsgThai" data-ID="imgCatThai" id="thaiLblDelBtn" class="delete_btn" data-toggle="tooltip" data-toggle="tooltip" title="Remove"><i class="fa fa-remove"></i></span> -->
-                    <img src="<?= $categoryImgThai; ?>" id="categoryImgThai" style="height:100px;width: auto;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload" />
-                    <input type="hidden" name="delImgMsgThai" id="delImgMsgThai" value="0" />
-                    <input type="file" onchange="displayUploadImg(this, 'categoryImgThai', 'thaiLblDelBtn');" name="imgCatThai" id="imgCatThai" class="placeImg" accept="image/*" />
+                    <!-- <span <?= $imgCatHinSty; ?> data-imgID="categoryImgHin" data-delID="delImgMsgHin" data-ID="imgCatHin" id="HinLblDelBtn" class="delete_btn" data-toggle="tooltip" data-toggle="tooltip" title="Remove"><i class="fa fa-remove"></i></span> -->
+                    <img src="<?= $categoryImgHin; ?>" id="categoryImgHin" style="height:100px;width: auto;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload" />
+                    <input type="hidden" name="delImgMsgHin" id="delImgMsgHin" value="0" />
+                    <input type="file" onchange="displayUploadImg(this, 'categoryImgHin', 'HinLblDelBtn');" name="imgCatHin" id="imgCatHin" class="placeImg" accept="image/*" />
                   </a>
                 </div>
               </div>
@@ -171,10 +152,10 @@ if($categoryInfo){
                     <thead>
                       <tr class="tbl_head_bg">
                         <th class="head1 no-sort">#</th>
-                        <th class="head1 no-sort">investigations Name(En)</th>
-                        <th class="head1 no-sort">investigations Name(Hindi)</th>
-                        <th class="head1 no-sort">investigations Image(En)</th>
-                        <th class="head1 no-sort">investigations Image(Hindi)</th>
+                        <th class="head1 no-sort">Investigation Name(En)</th>
+                        <th class="head1 no-sort">Investigation Name(Hindi)</th>
+                        <th class="head1 no-sort">Investigation Image(En)</th>
+                        <th class="head1 no-sort">Investigation Image(Hindi)</th>
                         <th class="head1 no-sort">Status</th>
                         <th class="head1 no-sort">Action</th>
                       </tr>
@@ -298,9 +279,9 @@ $(document).ready(function(){
   $("#categoryImgEn").on('click', function() {
     $("#imgCatEng").trigger('click');
   });
-  $("#categoryImgThai").on('click', function() {
+  $("#categoryImgHin").on('click', function() {
     $('input[name=isEnImageSame]').prop('checked', false);
-    $("#imgCatThai").trigger('click');
+    $("#imgCatHin").trigger('click');
   });
   $(".delete_btn").on('click', function() {
     var msgImgID = $(this).attr('data-imgID');
@@ -315,18 +296,18 @@ $(document).ready(function(){
     e.preventDefault();
     var table2      = $('#pending_category_list').DataTable();
     var categoryNameEn   = $( '#add_category_form #categoryNameEn' ).val();
-    var categoryNameThai = $( '#add_category_form #categoryNameThai' ).val();
+    var categoryNameHin = $( '#add_category_form #categoryNameHin' ).val();
     var categoryId       = $( '#add_category_form #categoryId' ).val();
     if(categoryNameEn == ''){
       toastr.error('Category Name English Cannot be empty','Error');
       return false;
     }
-    if(categoryNameThai == ''){
+    if(categoryNameHin == ''){
       toastr.error('investigations Name Hindi Cannot be empty','Error');
       return false;
     }
     if(categoryId){
-      if(categoryNameEn && categoryNameThai && categoryId){
+      if(categoryNameEn && categoryNameHin && categoryId){
         $.ajax({
           type: "POST",
           url: adminurl + 'category/updateCategory',
@@ -345,7 +326,7 @@ $(document).ready(function(){
               $("#editcategorysubmit").prop('disabled', false);
               toastr.success( 'investigations Updated successfully.','Success' );
               $("#delImgMsgEn").val(0);
-              $("#delImgMsgThai").val(0);
+              $("#delImgMsgHin").val(0);
               table2.ajax.reload();
             }else{
               toastr.error( data,'Error' );
@@ -357,7 +338,7 @@ $(document).ready(function(){
         });
       }
     }else{
-      if(categoryNameEn && categoryNameThai){
+      if(categoryNameEn && categoryNameHin){
         $.ajax({
           type: "POST",
           url: adminurl + 'category/addCategory',
@@ -377,7 +358,7 @@ $(document).ready(function(){
               toastr.success( 'investigations Added successfully.','Success' );
               $("form#add_category_form").trigger("reset");
               $("#categoryImgEn").attr("src", adminurl+'uploads/default_img.png');
-              $("#categoryImgThai").attr("src", adminurl+'uploads/default_img.png');
+              $("#categoryImgHin").attr("src", adminurl+'uploads/default_img.png');
               table2.ajax.reload();
             }else{
               toastr.error( data,'Error' );

@@ -12,7 +12,7 @@
       <div class="portlet-title">
         <div class="caption">
             <i class="icon-users font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp sbold">Active investigations</span>
+            <span class="caption-subject font-green-sharp sbold">Active Investigations</span>
         </div>
         <div class="actions">
             <div class="btn-group">
@@ -38,21 +38,32 @@
                       <tr class="tbl_head_bg">
                         <th class="no-sort"></th>
                         <th class="no-sort">#</th>
-                        <th class="no-sort">investigations Name(En)</th>
-                        <th class="no-sort">investigations Name(Hindi)</th>
-                        <th class="no-sort">investigations Image(En)</th>
-                        <th class="no-sort">investigations Image(Hindi)</th>
+                        <th class="no-sort">Investigation Name(En)</th>
+                        <th class="no-sort">Investigation Name(Hindi)</th>
+                        <th class="no-sort">Investigation Image(En)</th>
+                        <th class="no-sort">Investigation Image(Hindi)</th>
                         <th class="no-sort">Status</th>
                         <th class="no-sort">Action</th>
                       </tr>
                     </thead>
+                    <tfoot>
+                      <tr class="tbl_head_bg">
+                        <th class="head2 no-sort"></th>
+                        <th class="head2 no-sort"></th>
+                        <th class="head2 no-sort"></th>
+                        <th class="head2 no-sort"></th>
+                        <th class="head2 no-sort"></th>
+                        <th class="head2 no-sort">Status</th>
+                        <th class="head2 no-sort"></th>
+                      </tr>
+                    </tfoot>
                     <tbody class="row_position">
                     <!-- <?php
                       $trRow = '';
                       if($categoryLists){
                         $si_no  = 1;
                         $categoryImgEn   = '';
-                        $categoryImgThai = '';
+                        $categoryImgHin = '';
                         foreach ($categoryLists as $key => $category) {
                           if ($category->status == 1) {
                               $statuslbl   = '<span class="label label-sm label-success">Active</span>';
@@ -83,26 +94,26 @@
                                   $categoryImgEn = '<img src="'.$category->categoryImgEn.'" style="height:50px;width: 50px;" data-src="#">';
                               }else{ $categoryImgEn = ''; }
                           }else{ $categoryImgEn = ''; }
-                          if($category->categoryImgThai){
-                              $tmp2 = explode('/', $category->categoryImgThai);
+                          if($category->categoryImgHin){
+                              $tmp2 = explode('/', $category->categoryImgHin);
                               $file_name2 = end($tmp2);
                               if (file_exists('uploads/category/'.$file_name2)) {
-                                  $categoryImgThai = '<img src="'.$category->categoryImgThai.'" style="height:50px;width: 50px;" data-src="#">';
-                              }else{ $categoryImgThai = ''; }
+                                  $categoryImgHin = '<img src="'.$category->categoryImgHin.'" style="height:50px;width: 50px;" data-src="#">';
+                              }else{ $categoryImgHin = ''; }
                           }else{
                               if($category->isEnImageSame == 1){
-                                  $categoryImgThai = $categoryImgEn;
+                                  $categoryImgHin = $categoryImgEn;
                               }else{
-                                  $categoryImgThai = '';
+                                  $categoryImgHin = '';
                               }
                           }
                           $trRow .= '<tr id="'.$category->categoryId.'">';
                           $trRow .= '<td title="move" class="move_td"><i class="icon-cursor-move"></i></td>';
                           $trRow .= '<td>'.$si_no.'</td>';
                           $trRow .= '<td>'.$category->categoryNameEn.'</td>';
-                          $trRow .= '<td>'.$category->categoryNameThai.'</td>';
+                          $trRow .= '<td>'.$category->categoryNameHin.'</td>';
                           $trRow .= '<td>'.$categoryImgEn.'</td>';
-                          $trRow .= '<td>'.$categoryImgThai.'</td>';
+                          $trRow .= '<td>'.$categoryImgHin.'</td>';
                           $trRow .= '<td>'.$statuslbl.'</td>';
                           $trRow .= '<td>'.$editbtn.$statusbtn.$deletebtn.'</td>';
                           $trRow .= '</tr>';

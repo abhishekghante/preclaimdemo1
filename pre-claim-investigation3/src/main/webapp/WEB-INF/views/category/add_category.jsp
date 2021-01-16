@@ -74,7 +74,7 @@
         <!-- /.box-body -->
         <div class="box-footer">
           <div class="col-md-offset-2 col-md-10">
-            <button class="btn btn-info" id="addcategorysubmit" type="submit">Add investigations</button>
+            <button class="btn btn-info" id="addcategorysubmit" type="submit">Add Investigation</button>
             <button class="btn btn-danger" type="reset" value="">Clear</button>
           </div>
         </div>
@@ -124,11 +124,11 @@ $(document).ready(function(){
     var categoryNameEn   = $( '#add_category_form #categoryNameEn' ).val();
     var categoryNameHin  = $( '#add_category_form #categoryNameHin' ).val();
     if(categoryNameEn == ''){
-      toastr.error('investigations Name English Cannot be empty','Error');
+      toastr.error('Investigation Name English cannot be empty','Error');
       return false;
     }
     if(categoryNameHin == ''){
-      toastr.error('investigations Name Hindi Cannot be empty','Error');
+      toastr.error('Investigation Name Hindi cannot be empty','Error');
       return false;
     }
     if(categoryNameEn && categoryNameHin){
