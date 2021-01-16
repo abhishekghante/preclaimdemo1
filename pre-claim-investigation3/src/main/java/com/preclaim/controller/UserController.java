@@ -212,6 +212,8 @@ public class UserController {
     	List<String> role_permission = dao.retrievePermission(roleID);
     	session.setAttribute("role_id", String.valueOf(roleID));
     	session.setAttribute("permission", role_permission);
+        session.setAttribute("user role",dao.getUserRole(roleID)); 
+    	
     	return "common/templatecontent";
 	}
 	

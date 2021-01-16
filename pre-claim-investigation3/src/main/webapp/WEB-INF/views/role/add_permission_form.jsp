@@ -1,10 +1,12 @@
 <%@page import = "java.util.ArrayList" %>
-<% 
+<%
 ArrayList<String> role_permission = new ArrayList<String>();
 role_permission = (ArrayList<String>) session.getAttribute("permission");
 session.removeAttribute("permission"); 
 int roleId = Integer.parseInt((String)session.getAttribute("role_id"));
 session.removeAttribute("role_id");
+String roleName=(String)session.getAttribute("user role");
+session.removeAttribute("user role");
 %>
 <div class="row add-permission-form">
     <div class="col-xs-12 col-sm-12">
@@ -12,7 +14,8 @@ session.removeAttribute("role_id");
 	      <div class="portlet-title">
 	        <div class="caption">
 	            <i class="icon-users font-green-sharp"></i>
-	            <span class="caption-subject font-green-sharp sbold">Permission</span>
+	            <span class="caption-subject font-green-sharp sbold">Edit Permission - <%=roleName%></span>
+	            
 	        </div>
 	        <div class="actions">
 	          <div class="btn-group">

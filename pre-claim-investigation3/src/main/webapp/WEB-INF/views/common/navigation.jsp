@@ -1,6 +1,9 @@
+<%@page import="com.preclaim.controller.LoginController"%>
 <%@page import="com.preclaim.models.ScreenDetails" %>
+<%@page import="java.util.List" %>
 <%
 ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
 %>
 <!-- BEGIN SIDEBAR -->
 <div class="page-sidebar-wrapper">
@@ -28,20 +31,22 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                     <span class="title">Dashboard</span>
                 </a>
             </li>
+            
+            <%if(user_permission.contains("appUsers")) {%>
             <li class="nav-item start <%if(details.getMain_menu().equals("App Users Management")){%>active open<%}%>">
                 <a href="${pageContext.request.contextPath}/app_user/app_user" class="nav-link">
                     <i class="icon-user"></i>
                     <span class="title">App Users Management</span>
                 </a>
             </li>
-
+            <%} %> 
             <li class="nav-item <%if(details.getMain_menu().equals("Live Tracking")){%>active open<%}%>">
                 <a href="${pageContext.request.contextPath}/livetracking/index" class="nav-link">
                     <i class="icon-pointer"></i>
                     <span class="title">Live Tracking</span>
                 </a>
             </li>
-
+            <%if(user_permission.contains("messages")){ %>
             <li class="nav-item <%if(details.getMain_menu().equals("Case Management")){%>active open<%}%>">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-envelope-letter"></i>
@@ -56,14 +61,15 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                     <i class="icon-plus"></i> Bulk case uploads
                   </a>
                 </li>
-
+                <%if(user_permission.contains("messages/add")){ %>
                 <li class="nav-item <%if(details.getSub_menu1().equals("Create Case")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/message/add_message" 
                   	class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Create Case
                   </a>
                 </li>
-                
+                  <%} %>
+                  
                 <li class="nav-item <%if(details.getSub_menu1().equals("Pending Cases")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/message/pending_message" 
                   	class="nav-link nav-toggle">
@@ -84,11 +90,12 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                 </li>
               </ul>
             </li>
+            <%} %>
 
             <li class="heading">
                 <h3 class="uppercase">Settings</h3>
             </li>
-
+            <%if(user_permission.contains("users")){ %>
             <li class="nav-item <%if(details.getMain_menu().equals("Users")){%>active open<%}%>">
               <a href="${pageContext.request.contextPath}/users" class="nav-link nav-toggle">
                   <i class="icon-user"></i>
@@ -97,12 +104,14 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
               </a>
               <ul class="sub-menu">
                 
+                 <%if(user_permission.contains("users/add")){ %>
                 <li class="nav-item <%if(details.getSub_menu1().equals("Add User")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/user/add_user" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> Add User
                   </a>
                 </li>
-                
+                 <%} %>
+                 
                 <li class="nav-item <%if(details.getSub_menu1().equals("User Lists")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/user/user_list" class="nav-link nav-toggle">
                     <i class="icon-user-follow"></i> User Lists
@@ -116,7 +125,8 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                 </li>
               </ul>
             </li>
-
+             <%} %>
+             <%if(user_permission.contains("groups")){ %>
             <li class="nav-item <%if(details.getMain_menu().equals("Groups")){%>active open<%}%>">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-users"></i>
@@ -124,13 +134,13 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                   <span class="arrow "></span>
               </a>
               <ul class="sub-menu">
-
+                <%if(user_permission.contains("groups/add")){ %>
                 <li class="nav-item <%if(details.getSub_menu1().equals("Add Groups")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/group/add_group" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Groups
                   </a>
                 </li>
-
+                 <%} %>
                 <li class="nav-item <%if(details.getSub_menu1().equals("Pending Groups")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/group/pending_group" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Groups
@@ -144,7 +154,8 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                 </li>
               </ul>
             </li>
-
+             <%} %>
+             <%if(user_permission.contains("channels")){ %>
             <li class="nav-item <%if(details.getMain_menu().equals("Channels")){%>active open<%}%>">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-support"></i>
@@ -169,7 +180,8 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                 </li>
               </ul>
             </li>
-            
+            <%} %>
+            <%if(user_permission.contains("regions")){ %>
             <li class="nav-item <%if(details.getMain_menu().equals("Regions")){%>active open<%}%>">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-pointer"></i>
@@ -196,7 +208,8 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                 </li>
               </ul>
             </li>
-            
+            <%} %>
+            <%if(user_permission.contains("category")){ %>
             <li class="nav-item <%if(details.getMain_menu().equals("Type of Investigations")){%>active open<%}%>">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-grid"></i>
@@ -224,7 +237,8 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                 </li>
               </ul>
             </li>
-            
+            <%} %>
+            <%if(user_permission.contains("mapping")){ %>
             <li class="nav-item <%if(details.getMain_menu().equals("Mapping")){%>active open<%}%>">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-shuffle"></i>
@@ -244,11 +258,11 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                 </li>
               </ul>
             </li>
-            
+            <%} %>
             <li class="heading">
                 <h3 class="uppercase">----</h3>
             </li>
-
+            <%if(user_permission.contains("report")){ %> 
             <li class="nav-item <%if(details.getMain_menu().equals("Report")){%>active open<%}%>">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-folder-alt"></i>
@@ -289,7 +303,7 @@ ScreenDetails details = (ScreenDetails) session.getAttribute("ScreenDetails");
                 
               </ul>
             </li>
-           
+           <%} %>
             <li class="nav-item <%if(details.getMain_menu().equals("Billing Management")){%>active open<%}%>">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-grid"></i>

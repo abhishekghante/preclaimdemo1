@@ -320,5 +320,12 @@ public class UserDAOImpl implements UserDAO{
 		}
 		
 	}
+
+	@Override
+	public String getUserRole(int roleId) {
+		String sql="select role from user_role where roleId="+roleId;
+	    return this.template.queryForObject(sql,String.class);
+	
+	}
 		
 }
