@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,7 +42,7 @@ public class GroupController {
     }
    
     @RequestMapping(value = "/pending_group",method = RequestMethod.GET)
-    public String pending_group(HttpSession session) {
+    public String pending_group(HttpSession session, HttpServletRequest request) {
     	session.removeAttribute("ScreenDetails");
     	ScreenDetails details=new ScreenDetails();
     	details.setScreen_name("../group/pending_group.jsp");
@@ -53,27 +52,16 @@ public class GroupController {
     	session.setAttribute("ScreenDetails", details);
     	List<GroupList> pending_list= groupDao.group_list(0);
     	session.setAttribute("pending_group", pending_list);
+    	
+    	if(request.getParameter("groupName")!= null && request.getParameter("groupId") != null)
+    	{
+    		GroupList group = new GroupList();
+    		group.setGroupId(Integer.parseInt(request.getParameter("groupId")));
+    		group.setGroupName(request.getParameter("groupName"));
+    		session.setAttribute("group", group);
+    	}
     	return "common/templatecontent";
     }
-    
-    @RequestMapping(value = "/pending_group/{group_name}/{groupId}",method = RequestMethod.GET)
-	public String pending_group(@PathVariable("group_name") String group_name, 
-			@PathVariable("groupId") String groupId, HttpSession session) {
-		session.removeAttribute("ScreenDetails");
-		ScreenDetails details=new ScreenDetails();
-		details.setScreen_name("../group/pending_group.jsp");
-		details.setScreen_title("Pending Group");
-		details.setMain_menu("Groups Lists");
-		details.setSub_menu1("Pending Groups");
-		session.setAttribute("ScreenDetails", details);
-		List<GroupList> pending_group = groupDao.group_list(0);
-		session.setAttribute("pending_group", pending_group);
-		GroupList group = new GroupList();
-		group.setGroupId(Integer.parseInt(groupId));
-		group.setGroupName(group_name);
-		session.setAttribute("group", group);		
-		return "common/templatecontent";
-	}
     
     @RequestMapping(value="/active_group",method = RequestMethod.GET)
     public String active_group(HttpSession session) {

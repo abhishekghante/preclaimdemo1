@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,22 +40,7 @@ public class RegionController{
 	}
 	
 	@RequestMapping(value = "/pending_region",method = RequestMethod.GET)
-	public String pending_region(HttpSession session) {
-		session.removeAttribute("ScreenDetails");
-		ScreenDetails details=new ScreenDetails();
-		details.setScreen_name("../region/pending_region.jsp");
-		details.setScreen_title("Pending Region");
-		details.setMain_menu("Regions");
-		details.setSub_menu1("Pending Regions");
-		session.setAttribute("ScreenDetails", details);
-		List<RegionList> pending_region=regionDao.region_list(0);
-		session.setAttribute("pending_region", pending_region);		
-		return "common/templatecontent";
-	}
-	
-	@RequestMapping(value = "/pending_region/{region_name}/{regionId}",method = RequestMethod.GET)
-	public String pending_region(@PathVariable("region_name") String region_name, 
-			@PathVariable("regionId") String regionId, HttpSession session) {
+	public String pending_region(HttpSession session, HttpServletRequest request) {
 		session.removeAttribute("ScreenDetails");
 		ScreenDetails details=new ScreenDetails();
 		details.setScreen_name("../region/pending_region.jsp");
@@ -66,10 +50,14 @@ public class RegionController{
 		session.setAttribute("ScreenDetails", details);
 		List<RegionList> pending_region=regionDao.region_list(0);
 		session.setAttribute("pending_region", pending_region);
-		RegionList region = new RegionList();
-			region.setRegionId(Integer.parseInt(regionId));
-			region.setRegionName(region_name);
-			session.setAttribute("region", region);		
+		
+		if(request.getParameter("regionName")!= null && request.getParameter("regionId")!= null)
+		{
+			RegionList region = new RegionList();
+			region.setRegionId(Integer.parseInt(request.getParameter("regionId")));
+			region.setRegionName(request.getParameter("regionName"));
+			session.setAttribute("region", region);
+		}
 		return "common/templatecontent";
 	}
 	

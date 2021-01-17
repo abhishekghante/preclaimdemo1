@@ -129,8 +129,8 @@ boolean allow_delete = user_permission.contains("regions/delete");
 
 										<td><span class="label label-sm label-danger">Pending</span></td>
 										<td>
-										   <a href="${pageContext.request.contextPath}/region/pending_region/
-										   <%=list_region.getRegionName() %>/<%=list_region.getRegionId() %>" 										   										   
+										   <a href="${pageContext.request.contextPath}/region/pending_region?regionName= 
+										   <%=list_region.getRegionName() %>&regionId=<%=list_region.getRegionId() %>" 										   										   
 										   		data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
 										   		<i class="glyphicon glyphicon-edit"></i>
 									   		</a> 

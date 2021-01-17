@@ -125,8 +125,8 @@ boolean allow_delete = user_permission.contains("groups/delete");
 										<td><%=list_group.getCreatedDate()%></td>										
 										<td><span class="label label-sm label-danger">Pending</span></td>											
 										<td>
-											<a href="${pageContext.request.contextPath}/group/pending_group/
-												<%=list_group.getGroupName() %>/<%=list_group.getGroupId() %>" 
+											<a href="${pageContext.request.contextPath}/group/pending_group?groupName=
+												<%=list_group.getGroupName() %>&groupId=<%=list_group.getGroupId() %>" 
 												data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
 												<i class="glyphicon glyphicon-edit"></i>
 							   		  		</a>

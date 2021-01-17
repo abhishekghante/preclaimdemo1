@@ -78,7 +78,8 @@ boolean allow_delete = user_permission.contains("channels/delete");
 	                    		   <%} %>
                     		    </td>
 	                            <td>
-	                           		 <a href="${pageContext.request.contextPath}/channel/pending_channel/<%=list_channel.getChannelName() %>/<%=list_channel.getChannelCode() %>" 
+	                           		 <a href="${pageContext.request.contextPath}/channel/pending_channel?channelName=
+	                           		 	<%=list_channel.getChannelName() %>&channelCode=<%=list_channel.getChannelCode() %>" 
                            			 	data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>
 	                            	 </a>
 	                            <% if(list_channel.getStatus()==1){ %> 

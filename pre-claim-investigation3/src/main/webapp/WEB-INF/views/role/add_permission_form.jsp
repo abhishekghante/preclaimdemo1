@@ -7,6 +7,7 @@ int roleId = Integer.parseInt((String)session.getAttribute("role_id"));
 session.removeAttribute("role_id");
 String roleName=(String)session.getAttribute("user role");
 session.removeAttribute("user role");
+ArrayList<String> user_permission=(ArrayList<String>)session.getAttribute("user_permission");
 %>
 <div class="row add-permission-form">
     <div class="col-xs-12 col-sm-12">
@@ -30,7 +31,7 @@ session.removeAttribute("user role");
 	    </div>
         <div class="box box-primary">
             <div class="box-body">
-            	<form>
+           	  <form>
                 <div class="row">
                     <div class="col-md-12">
                       <div id="message_role"></div>
@@ -176,9 +177,9 @@ session.removeAttribute("user role");
 		    		  </div>	
                     </div>
                 </div>
+              </form>
             </div>
         </div>
-        </form>
     </div>
 </div>
 <script type="text/javascript">
@@ -262,7 +263,11 @@ session.removeAttribute("user role");
 	});
 	
    function addPermission() {
-   		$('#permission_table').css("opacity",".5");
+	   <%if(!user_permission.contains("role/add")){%>
+  		toastr.error("Access Denied", "Error");
+  		return;
+		<%}%>
+		$('#permission_table').css("opacity",".5");
         var form_name            = $( '.add-permission-form' ).find( 'input, select, button, textarea' );
         var permission_form_data = form_name.serialize();
         console.log(permission_form_data);
@@ -292,5 +297,4 @@ session.removeAttribute("user role");
         });
         return false;
     }
-	
-</script>
+   </script>	

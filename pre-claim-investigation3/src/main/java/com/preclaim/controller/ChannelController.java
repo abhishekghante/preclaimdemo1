@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,7 +42,7 @@ public class ChannelController {
 	}
 
 	@RequestMapping(value = "/pending_channel", method = RequestMethod.GET)
-	public String pending_channel(HttpSession session) {
+	public String pending_channel(HttpSession session, HttpServletRequest request) {
 		session.removeAttribute("ScreenDetails");
 		ScreenDetails details = new ScreenDetails();
 		details.setScreen_name("../channel/pending_channel.jsp");
@@ -53,28 +52,17 @@ public class ChannelController {
 		session.setAttribute("ScreenDetails", details);
 		List<ChannelList> pending_list= channelDao.channel_list(0);
     	session.setAttribute("pending_channel", pending_list);
+    	
+    	if(request.getParameter("channelCode")!= null && request.getParameter("channelName") != null)
+    	{
+	    	ChannelList channel = new ChannelList();
+			channel.setChannelCode(request.getParameter("channelCode"));
+			channel.setChannelName(request.getParameter("channelName"));
+			session.setAttribute("channel", channel);
+    	}
 		return "common/templatecontent";
 	}
 	
-	@RequestMapping(value = "/pending_channel/{channel_name}/{channelCode}",method = RequestMethod.GET)
-	public String pending_group(@PathVariable("channel_name") String channel_name, 
-			@PathVariable("channelCode") String channelCode, HttpSession session) {
-		session.removeAttribute("ScreenDetails");
-		ScreenDetails details=new ScreenDetails();
-		details.setScreen_name("../channel/pending_channel.jsp");
-		details.setScreen_title("Pending Channels");
-		details.setMain_menu("Channels");
-		details.setSub_menu1("Pending Channels");
-		session.setAttribute("ScreenDetails", details);
-		List<ChannelList> pending_channel = channelDao.channel_list(0);
-		session.setAttribute("pending_channel", pending_channel);
-		ChannelList channel = new ChannelList();
-		channel.setChannelCode(channelCode);
-		channel.setChannelName(channel_name);
-		session.setAttribute("channel", channel);		
-		return "common/templatecontent";
-	}
-
 	@RequestMapping(value = "/active_channel", method = RequestMethod.GET)
 	public String active_channel(HttpSession session) {
 		session.removeAttribute("ScreenDetails");
