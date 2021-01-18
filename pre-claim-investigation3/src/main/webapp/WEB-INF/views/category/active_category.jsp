@@ -1,3 +1,7 @@
+<%@page import="java.util.List" %>
+<%@page import="com.preclaim.models.CategoryList"%>
+<% List<CategoryList> activeList =(List<CategoryList>)session.getAttribute("active_list"); %>
+
 <script src="${pageContext.request.contextPath}/resources/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -36,7 +40,6 @@
                   <table id="active_category_list" class="table table-striped table-bordered table-hover table-checkable dataTable data-tbl">
                     <thead>
                       <tr class="tbl_head_bg">
-                        <th class="no-sort"></th>
                         <th class="no-sort">#</th>
                         <th class="no-sort">Investigation Name(En)</th>
                         <th class="no-sort">Investigation Name(Hindi)</th>
@@ -58,6 +61,47 @@
                       </tr>
                     </tfoot>
                     <tbody class="row_position">
+                     <%if(activeList!=null){
+                    	 
+                    	 for(CategoryList list_category :activeList){
+                     %>                   	 
+                            <tr>
+                               <td><%=list_category.getSrNo()%></td>
+                               <td><%=list_category.getCategoryNameEn() %></td>
+                               <td><%=list_category.getCategoryNameHin() %></td>
+                               <td><%=list_category.getImgCatEng()%></td>
+                               <td><%=list_category.getImgCatHin() %></td> 
+                              <%
+                               if(list_category.getStatus()==1){ %>
+                            	   <td><span class="label label-sm label-success">Active</span></td>
+                              <%}else{%>
+                            	   <td><span class="label label-sm label-danger">Inactive</span></td>
+                              <%}
+                              %>
+                              <td>
+                              		<a href="'.base_url().'category/pendinglist/'.$category->categoryId.'" data-toggle="tooltip" title="Edit" 
+                          				class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
+                               <%if(list_category.getStatus()==1){%>
+                                  <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateCategoryStatus('<%=list_category.getCategoryId() %>',2);" 
+                                  	  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i></a> 
+                              <%}else{ %>
+                                  <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateCategoryStatus('<%=list_category.getCategoryId() %>',1);" 
+                                  	  class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
+                              <%} %> 
+                                  <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteCategory('.$category->categoryId.',1);" 
+                                  	  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>                    
+                              </td>
+                              
+                              
+                            </tr>	 
+                     
+                     <%}	 
+                     }
+                     %>
+                     
+                    
+                    
+                    
                     <!-- <?php
                       $trRow = '';
                       if($categoryLists){

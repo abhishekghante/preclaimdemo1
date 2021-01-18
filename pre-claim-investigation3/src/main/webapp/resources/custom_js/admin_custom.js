@@ -64,10 +64,10 @@ function updateGroupStatus( groupId, status, checkAuthority ) {
     $( '#continuemodal'+groupId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : '${pageContext.request.contextPath}/group/updateGroupStatus',
+            url  : 'updateGroupStatus',
             data : { 'groupId' : groupId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+groupId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+groupId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+groupId).prop('disabled', true);
             },
             success : function( msg ) {

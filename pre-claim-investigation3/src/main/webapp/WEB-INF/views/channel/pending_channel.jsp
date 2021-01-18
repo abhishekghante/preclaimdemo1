@@ -125,7 +125,7 @@ boolean allow_delete = user_permission.contains("channels/delete");
 									data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
 									<i class="glyphicon glyphicon-edit"></i>
 				   		  		</a>
-						   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateChannelStatus('<%=list_channel.getChannelId() %>',1,,<%=allow_statusChg %>);" 
+						   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateChannelStatus('<%=list_channel.getChannelId() %>',1,<%=allow_statusChg %>);" 
 						   		class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
 						   		
 						   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteChannel('<%=list_channel.getChannelId() %>',<%=allow_delete %>);" 

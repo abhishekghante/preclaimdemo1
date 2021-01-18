@@ -1,3 +1,9 @@
+<%@page import="java.util.List" %>
+<%@page import="com.preclaim.models.CategoryList" %>
+<% List<CategoryList>pending_list=(List<CategoryList>)session.getAttribute("pending_category");
+session.removeAttribute("pending_category");
+%>
+
 <style type="text/css">
 .placeImg { display:none !important;}
 .form-group { margin-bottom: 5px; }
@@ -171,6 +177,36 @@
                         <th class="head2 no-sort"></th>
                       </tr>
                     </tfoot>
+                    <tbody>
+                             <%if(pending_list!=null){ 
+                             for(CategoryList list_category : pending_list){
+                            %>
+                            	<tr>
+                            	<td><%=list_category.getSrNo() %></td>
+                            	<td><%=list_category.getCategoryNameEn() %></td>
+                            	<td><%=list_category.getImgCatEng() %></td>
+                            	<td><%=list_category.getImgCatHin() %></td>
+                            	<td><%=list_category.getStatus() %></td>
+                            	<td><span class="label label-sm label-danger">Pending</span></td>
+                            	<td>
+                            		<a href="'.base_url().'category/pendinglist/'.$category->categoryId.'" data-toggle="tooltip" title="Edit" 
+                            	         class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
+                            	        
+                            	    <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateCategoryStatus('<%=list_category.getCategoryId() %>.',1);" 
+                            	    	  class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>    
+                            	        
+                            	    <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteCategory('.$category->categoryId.',0);" 
+                            	    	   class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
+                            	        </td>
+                            	        
+                            	</tr> 
+                            	 
+                            <%	 
+                             }
+                             } %>
+                                                        
+                    
+                    </tbody>
                   </table>
                 </div>
               <div class="clearfix"></div>

@@ -1,3 +1,7 @@
+<%@page import="java.util.List"%>
+<%
+List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+%>
 <style type="text/css">
 .placeImg { display:none !important;}
 </style>
@@ -145,7 +149,7 @@ $(document).ready(function(){
               $('#add_category_form').css("opacity",".5");
           },
           success: function( data ) {
-            if(data == 1){
+            if(data == "****"){
               $("#addcategorysubmit").html('Add investigations');
               $("#addcategorysubmit").prop('disabled', false);
               toastr.success( 'investigations Added successfully.','Success' );
@@ -164,3 +168,46 @@ $(document).ready(function(){
   });
 });
 </script>
+<%-- <script type="text/javascript">
+function addcategorysubmit() {
+	<%if(!user_permission.contains("category/add")){%>
+		toastr.error("Access Denied","Error");
+		return false;
+	<%}%>
+	var categoryNameEn = $( '#add_category_form #categoryNameEn' ).val();
+	var channelCode = $( '#add_category_form #channelCode' ).val();
+	if(channelName == ''){
+	  toastr.error('Investigation Cannot be empty','Error');
+	  return false;
+	}
+	if(channelCode == ''){
+	  toastr.error('Channel Code Cannot be empty','Error');
+	  return false;
+	}
+	if(channelName && channelCode){
+	    var formdata = {'channelName':channelName,'channelCode':channelCode};
+	    $.ajax({
+	      type: "POST",
+	      url: 'addChannel',
+	      data: formdata,
+	      beforeSend: function() { 
+	          $("#addchannelsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+	          $("#addchannelsubmit").prop('disabled', true);
+	      },
+	      success: function( data ) {
+	        if(data == "****"){
+	          $("#addchannelsubmit").html('Add Channel');
+	          $("#addchannelsubmit").prop('disabled', false);
+	          toastr.success( 'Channel Added successfully.','Success' );
+	          $( '#add_channel_form #channelName' ).val('');
+	          $( '#add_channel_form #channelCode' ).val('');
+	        }else{
+	          toastr.error( data,'Error' );
+	          $("#addchannelsubmit").html('Add Channel');
+	          $("#addchannelsubmit").prop('disabled', false);
+	        }
+	      }
+	    });
+	}   
+}
+</script> --%>
