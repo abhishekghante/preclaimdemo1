@@ -12,6 +12,7 @@ public class Category {
 	private int updatedBy;
 	private int  orderNo;
 	private int status;
+	private int categoryId;
 	
 	public Category() {
 		
@@ -26,7 +27,16 @@ public class Category {
 		this.updatedBy=0;
 		this.orderNo=1;
 		this.status=0;
+		this.categoryId=0;
 		
+	}
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getCategoryNameEn() {
@@ -124,9 +134,10 @@ public class Category {
 		return "Category [categoryNameEn=" + categoryNameEn + ", imgCatEng=" + imgCatEng + ", categoryNameHin="
 				+ categoryNameHin + ", imgCatHin=" + imgCatHin + ", isEnImageSame=" + isEnImageSame + ", createdBy="
 				+ createdBy + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", updatedBy="
-				+ updatedBy + ", orderNo=" + orderNo + ", status=" + status + "]";
+				+ updatedBy + ", orderNo=" + orderNo + ", status=" + status + ", categoryId=" + categoryId + "]";
 	}
-	
+
+
 	
 	
 	

@@ -7,6 +7,7 @@ public class CategoryList {
 	private String imgCatEng;
 	private String categoryNameHin;
 	private String imgCatHin;
+	private int isEnImageSame;
     private int status;
     private int categoryId;
 	
@@ -17,8 +18,24 @@ public class CategoryList {
     	this.imgCatEng="";
     	this.categoryNameEn="";
     	this.imgCatHin="";
+    	this.isEnImageSame=0;
     	this.status=0;
+    	this.categoryId=0;
       }
+    
+    
+
+	public int getIsEnImageSame() {
+		return isEnImageSame;
+	}
+
+
+
+	public void setIsEnImageSame(int isEnImageSame) {
+		this.isEnImageSame = isEnImageSame;
+	}
+
+
 
 	public String getCategoryNameEn() {
 		return categoryNameEn;

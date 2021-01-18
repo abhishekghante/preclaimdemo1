@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import com.preclaim.models.Category;
 import com.preclaim.models.CategoryList;
@@ -29,7 +30,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		try {
 			String sql = "insert into category_lists(categoryNameEn,categoryNameThai,categoryImgEn,categoryImgThai,isEnImageSame,"
-					+ "createdBy,createdDate,UpdatedDate,updatedBy,orderNo,status) values(?,?,?,?,?,?,now(),now(),?,?,?,?)";
+					+ "createdBy,createdDate,UpdatedDate,updatedBy,orderNo,status) values(?,?,?,?,?,?,now(),now(),?,?,?)";
 			this.template.update(sql, category.getCategoryNameEn(), category.getCategoryNameHin(),
 					category.getImgCatEng(), category.getImgCatHin(), category.getIsEnImageSame(),
 					category.getCreatedBy(), category.getUpdatedBy(), category.getOrderNo(), category.getStatus());
@@ -51,6 +52,7 @@ public class CategoryDaoImpl implements CategoryDao {
 		return template.query(query, (ResultSet rs, int rowNum) -> {
 			CategoryList categoryList = new CategoryList();
 			categoryList.setSrNo(rowNum + 1);
+			categoryList.setCategoryId(rs.getInt("categoryId"));
 			categoryList.setCategoryNameEn(rs.getString("CategoryNameEn"));
 			categoryList.setImgCatEng("categoryImgEn");
 			categoryList.setCategoryNameHin(rs.getString("categoryNameThai"));
@@ -63,13 +65,42 @@ public class CategoryDaoImpl implements CategoryDao {
 	public String updateCategoryStatus(int categoryId, int status) {
 		try 
 		{
-			String sql = "update category_lists set status=? categoryId=?";
+			String sql = "update category_lists set status=? where categoryId=?";
 			this.template.update(sql, categoryId, status);
 		} catch (Exception e) {
 			e.printStackTrace();
-            return"Error status update";
+            System.out.println("Error status update");
 	    }
 		return "****";
 	}
 
+	@Override
+	public String deleteCategory(int category_id) {
+		try 
+		{
+			String sql="delete from category_lists where categoryId=?";
+			this.template.update(sql,category_id);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("error category delete");	
+		}
+		return "delete category sucessfully";	
+		}
+	
+	@Override
+	public String updateCategory(String categoryNameEn, String categoryNameThai,String categoryImgEn,String categoryImgThai,int categoryId) {
+		try
+		{
+			String sql = "UPDATE category_lists SET categoryNameEn = ?, categoryNameThai = ?,categoryImgEn = ?,categoryImgThai = ? where categoryId = ?";
+			template.update(sql, categoryNameEn, categoryNameThai, categoryId);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return "Error updating category";
+		}
+		return "****";
+	}
+	
 }

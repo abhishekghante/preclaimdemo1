@@ -58,6 +58,7 @@ public class ChannelController {
 	    	ChannelList channel = new ChannelList();
 			channel.setChannelCode(request.getParameter("channelCode"));
 			channel.setChannelName(request.getParameter("channelName"));
+			channel.setChannelId(Integer.parseInt(request.getParameter("channelId")));
 			session.setAttribute("channel", channel);
     	}
 		return "common/templatecontent";
@@ -105,7 +106,7 @@ public class ChannelController {
 		String channelCode = request.getParameter("channelCode");		
 		String channelName = request.getParameter("channelName");
 		int channelId = Integer.parseInt(request.getParameter("channelId"));
-		String message = channelDao.updateChannel(channelName, channelCode);	
+		String message = channelDao.updateChannel(channelName, channelCode, channelId);	
 		userDao.activity_log("CHANNEL", channelId, "UPDATE", 0, request.getRemoteAddr());
 		return message;
 	}

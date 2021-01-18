@@ -86,18 +86,18 @@ public class ChannelDaoImpl implements ChannelDao {
 	}
 
 	@Override
-	public String updateChannel(String channelName, String channelCode) {
+	public String updateChannel(String channelName, String channelCode, int channelId) {
 		try
 		{
-			String sql = "UPDATE channel_lists SET channelName = ?, updatedDate = now() where channelCode = ?";
-			template.update(sql, channelName, channelCode);
+			String sql = "UPDATE channel_lists SET channelName = ?, channelCode = ?, updatedDate = now() where channelId = ?";
+			template.update(sql, channelName, channelCode, channelId);
 		}
 		catch(Exception ex)
 		{
 			ex.printStackTrace();
 			return "Error updating channel. Kindly contact system administrator";
 		}
-		return "Channel updated successfully";
+		return "****";
 	}
 
 	@Override

@@ -1,6 +1,10 @@
 <%@page import="java.util.List" %>
 <%@page import="com.preclaim.models.CategoryList"%>
-<% List<CategoryList> activeList =(List<CategoryList>)session.getAttribute("active_list"); %>
+<% List<CategoryList> activeList =(List<CategoryList>)session.getAttribute("active_list"); 
+List<String>user_permission=(List<String>)session.getAttribute("user_permission");
+boolean allow_statusChg = user_permission.contains("category/status");
+boolean allow_delete = user_permission.contains("category/delete");
+%>
 
 <script src="${pageContext.request.contextPath}/resources/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
@@ -79,16 +83,16 @@
                               <%}
                               %>
                               <td>
-                              		<a href="'.base_url().'category/pendinglist/'.$category->categoryId.'" data-toggle="tooltip" title="Edit" 
+                              		<a href="${pageContext.request.contextPath}/category/pending_category?categoryId=<%=list_category.getCategoryId()%>" data-toggle="tooltip" title="Edit" 
                           				class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
                                <%if(list_category.getStatus()==1){%>
-                                  <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateCategoryStatus('<%=list_category.getCategoryId() %>',2);" 
+                                  <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateCategoryStatus('<%=list_category.getCategoryId() %>',2,<%=allow_statusChg%>);" 
                                   	  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i></a> 
                               <%}else{ %>
-                                  <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateCategoryStatus('<%=list_category.getCategoryId() %>',1);" 
+                                  <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateCategoryStatus('<%=list_category.getCategoryId() %>',1,<%=allow_statusChg%>);" 
                                   	  class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
                               <%} %> 
-                                  <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteCategory('.$category->categoryId.',1);" 
+                                  <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteCategory('<%=list_category.getCategoryId() %>',<%=allow_delete%>);" 
                                   	  class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>                    
                               </td>
                               

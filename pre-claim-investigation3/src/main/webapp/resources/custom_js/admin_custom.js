@@ -201,7 +201,7 @@ function updateRegionStatus( regionId, status, checkAuthority ) {
             url  : 'updateRegionStatus',
             data : { 'regionId' : regionId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+regionId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+regionId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+regionId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -221,17 +221,12 @@ function updateRegionStatus( regionId, status, checkAuthority ) {
     });
 }
 //DELETE CATEGORY
-function deleteCategory( categoryId, type, checkAuthority) {
+function deleteCategory( categoryId,checkAuthority) {
 	if(!checkAuthority)
 	{
 		toastr.error("Access Denied", "Error");
 		return false;
 	}
-    if(type == 1){
-        var table2 = $('#active_category_list').DataTable();
-    }else{
-        var table2 = $('#pending_category_list').DataTable();
-    }
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
@@ -239,10 +234,10 @@ function deleteCategory( categoryId, type, checkAuthority) {
     $( '#continuemodal'+categoryId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'category/deleteCategory',
+            url  : 'deleteCategory',
             data : { 'categoryId' : categoryId },
             beforeSend: function() { 
-                $("#continuemodal"+categoryId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+categoryId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+categoryId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -261,11 +256,6 @@ function updateCategoryStatus( categoryId, status, checkAuthority ) {
 		toastr.error("Access Denied", "Error");
 		return false;
 	}
-    if(type == 1){
-        var table2 = $('#active_category_list').DataTable();
-    }else{
-        var table2 = $('#pending_category_list').DataTable();
-    }
     if(status == 1){
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
     }else{
@@ -277,17 +267,22 @@ function updateCategoryStatus( categoryId, status, checkAuthority ) {
     $( '#continuemodal'+categoryId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'category/updateCategoryStatus',
+            url  : 'updateCategoryStatus',
             data : { 'categoryId' : categoryId, 'status' : status },
             beforeSend: function() { 
                 $("#continuemodal"+categoryId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+categoryId).prop('disabled', true);
             },
             success : function( msg ) {
+                if(msg=="****"){
+                toastr.success("User updated successfully",'success');
                 $("#continuemodal"+categoryId).html('Yes');
                 $("#continuemodal"+categoryId).prop('disabled', false);
                 $('#small_modal').modal('hide');
                 location.reload();
+            }
+            else
+             toastr.error(msg,Error);
             }
         });
     });

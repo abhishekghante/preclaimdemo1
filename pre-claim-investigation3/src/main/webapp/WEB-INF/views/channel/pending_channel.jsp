@@ -120,8 +120,7 @@ boolean allow_delete = user_permission.contains("channels/delete");
 							<td><%=list_channel.getCreatedDate()%></td>										
 							<td><span class="label label-sm label-danger">Pending</span></td>											
 							<td>
-								<a href="${pageContext.request.contextPath}/channel/pending_channel?channelName=
-									<%=list_channel.getChannelName() %>&channelCode=<%=list_channel.getChannelCode() %>" 
+								<a href="${pageContext.request.contextPath}/channel/pending_channel?channelName=<%=list_channel.getChannelName() %>&channelCode=<%=list_channel.getChannelCode() %>&channelId=<%=list_channel.getChannelId() %>"
 									data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
 									<i class="glyphicon glyphicon-edit"></i>
 				   		  		</a>

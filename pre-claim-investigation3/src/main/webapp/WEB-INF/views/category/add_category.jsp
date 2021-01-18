@@ -68,7 +68,7 @@ List<String> user_permission=(List<String>)session.getAttribute("user_permission
                   Investigation Image (Hindi)
                 </label>
                 <div class="col-md-8" style = "padding-top:7px;">  
-                  <input type="checkbox" name="isEnImageSame" id="isEnImageSame" value = "1"checked>
+                  <input type="checkbox" name="isEnImageSame" id="isEnImageSame" value = "1" checked>
                   Same as English investigations Image 
                 </div>
               </div>
@@ -127,6 +127,10 @@ $(document).ready(function(){
     e.preventDefault();
     var categoryNameEn   = $( '#add_category_form #categoryNameEn' ).val();
     var categoryNameHin  = $( '#add_category_form #categoryNameHin' ).val();
+    var categoryImageEn   = $( '#add_category_form #categoryImageEn' ).val();
+    var categoryImageHin  = $( '#add_category_form #categoryImageHin' ).val();
+    var isEnImageSame = $( '#add_category_form #isEnImageSame' ).val();
+    
     if(categoryNameEn == ''){
       toastr.error('Investigation Name English cannot be empty','Error');
       return false;
@@ -139,10 +143,7 @@ $(document).ready(function(){
         $.ajax({
           type: "POST",
           url: 'addCategory',
-          data: new FormData(this),
-          contentType: false,
-          cache: false,
-          processData:false,
+          data: {"categoryNameEn":categoryNameEn,"categoryNameHin":categoryNameHin,"categoryImgEn":"","categoryImgHin":"","isEnImageSame":isEnImageSame},
           beforeSend: function() { 
               $("#addcategorysubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
               $("#addcategorysubmit").prop('disabled', true);
