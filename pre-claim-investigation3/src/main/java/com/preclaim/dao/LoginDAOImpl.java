@@ -49,7 +49,7 @@ public class LoginDAOImpl implements LoginDAO {
 	public UserDetails checkUser(String username) {
 		try
 		{
-			String sql = "SELECT * FROM admin_user where username = ?";
+			String sql = "SELECT * FROM admin_user WHERE username = ?";
 			List<UserDetails> user_list = template.query(sql, 
 					new Object[] {username},
 					(ResultSet rs, int arg1) ->{
@@ -68,6 +68,7 @@ public class LoginDAOImpl implements LoginDAO {
 		}
 		catch(Exception ex)
 		{
+			ex.printStackTrace();
 			return null;
 		}
 	}
@@ -76,12 +77,12 @@ public class LoginDAOImpl implements LoginDAO {
 	public String updatePassword(String username, String password) {
 		try
 		{
-			String sql = "UPDATE admin_user set password = ? where username = ?";
+			String sql = "UPDATE admin_user SET password = ? WHERE username = ?";
 			template.update(sql, username, password);
 		}
 		catch(Exception ex)
 		{
-			return "Error updating Password";
+			return "Error updating Password. Kindly contact system administrator";
 		}
 		return "****";
 	}

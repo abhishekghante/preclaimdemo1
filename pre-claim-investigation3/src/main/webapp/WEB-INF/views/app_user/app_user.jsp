@@ -6,7 +6,9 @@
 <%
 List<AppUserList> appUserList = (List<AppUserList>) session.getAttribute("AppUserList");
 session.removeAttribute("AppUserList");
-List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+List<String> user_permission = (ArrayList<String>)session.getAttribute("user_permission");
+if(user_permission == null)
+	user_permission = new ArrayList<String>();
 boolean allowDelete = user_permission.contains("appUsers/delete");
 boolean allowStatusChg = user_permission.contains("appUsers/status");
 List<Region> regionList = (List<Region>) session.getAttribute("region_list");
@@ -18,6 +20,7 @@ if(regionList == null)
 if(channelList == null)
 	channelList = new ArrayList<Channel>();
 %>
+
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
@@ -94,8 +97,8 @@ if(channelList == null)
                     		<td><%= appuser.getSrno()%></td>
                     		<td><%= appuser.getUsername()%></td>
                     		<td><%= appuser.getAgentname()%></td>
-                    		<td><%= appuser.getChannelcode()%></td>
-                    		<td><%= appuser.getChannelname()%></td>
+                    		<td><%= appuser.getChannelcode1()%></td>
+                    		<td><%= appuser.getChannelname1()%></td>
                     		<td><%= appuser.getRegion()%></td>
                     		<td><%= appuser.getPassword()%></td>
                     		<td><%= appuser.getLatitude()%></td>
@@ -111,7 +114,7 @@ if(channelList == null)
                     		<td>
                     			<% if(appuser.getStatus() == 1) {%>
                     			<a href="javascript:;" data-toggle="tooltip" title="Inactive" 
-                    				onClick="return updateAppUserStatus(<%=appuser.getAppuserId() %>,1,
+                    				onClick="return updateAppUserStatus(<%=appuser.getAppuserId() %>,2,
                     				<%=allowStatusChg %>);" class="btn btn-warning btn-xs">
                     				<i class="glyphicon glyphicon-ban-circle"></i>
                    				</a>
@@ -146,6 +149,9 @@ $(document).ready(function() {
   var start = '';
   var end = '';
   var i = 0;
+  // DataTable
+  var table = $('#app_user_list').DataTable();
+
   $('#app_user_list tfoot th').each( function () {
     if( i == 1 || i == 2 ){
       $(this).html( '<input type="text" class="form-control" placeholder="" />' );
@@ -176,9 +182,6 @@ $(document).ready(function() {
     }
     i++;
   });
-
-  // DataTable
-  var table = $('#app_user_list').DataTable();
 
   // Apply the search
   table.columns().every( function () {
@@ -216,7 +219,7 @@ function checkDeleteAuth()
 	<%}else{%>
 		var response = confirm("Are you sure you want to delete");
 		if(response)
-			location.href = "${pageContext.request.contextPath}/app_user/import";
+			location.href = "${pageContext.request.contextPath}/app_user/deleteAll";
 	<%}%>
 }
 </script>

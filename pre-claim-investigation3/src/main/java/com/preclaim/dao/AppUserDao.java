@@ -8,5 +8,8 @@ public interface AppUserDao {
 	List<AppUserList> getAppuserList();
 	String updateAppUserStatus(int appUserId, int status);
 	String deleteAppUser(int appUserId);
+	String deleteAllUsers();
+	String readAppUserxls(String filename);
+	String readAppUserxlsx(String filename);
 
 }

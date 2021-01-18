@@ -7,12 +7,13 @@ function updateMappingStatus( cmId, status, checkAuthority ) {
 	}
     $.ajax({
         type : 'POST',
-        url  : 'mapping/updateMappingStatus',
+        url  : 'updateMappingStatus',
         data : { 'cmId' : cmId, 'status' : status },
         beforeSend: function() {
-            $("#mappingStatus"+cmId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+            $("#mappingStatus"+cmId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
         },
-        success : function( msg ) {
+        success : function( msg ) 
+        {
             location.reload();
         }
     });
@@ -38,11 +39,18 @@ function deleteGroup( groupId, checkAuthority ) {
                 $("#continuemodal"+groupId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+groupId).prop('disabled', true);
             },
-            success : function( msg ) {
+            success : function( msg ) 
+            {
                 $("#continuemodal"+groupId).html('Yes');
                 $("#continuemodal"+groupId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                location.reload();
+                if(msg == "****")
+                {
+                	toastr.error("Group deleted successfully", "Success");
+                	location.reload();
+                }
+                else
+                	toastr.error(msg,"Error");
             }
         });
     });
@@ -70,13 +78,14 @@ function updateGroupStatus( groupId, status, checkAuthority ) {
                 $("#continuemodal"+groupId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+groupId).prop('disabled', true);
             },
-            success : function( msg ) {
+            success : function( msg ) 
+            {
+                $("#continuemodal"+groupId).html('Yes');
+	            $("#continuemodal"+groupId).prop('disabled', false);
+	            $('#small_modal').modal('hide');		            
                 if(msg="****")
                 {
-                  toastr.success("Group status updated successfully",'success');
-		            $("#continuemodal"+groupId).html('Yes');
-		            $("#continuemodal"+groupId).prop('disabled', false);
-		            $('#small_modal').modal('hide');
+                  	toastr.success("Group status updated successfully",'Success');
 		            location.reload();
 	            }
 	            else
@@ -106,11 +115,18 @@ function deleteChannel( channelId, checkAuthority) {
                 $("#continuemodal"+channelId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+channelId).prop('disabled', true);
             },
-            success : function( msg ) {
+            success : function( msg ) 
+            {
                 $("#continuemodal"+channelId).html('Yes');
                 $("#continuemodal"+channelId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                location.reload();
+                if(msg="****")
+                {
+                  	toastr.success("Channel deleted successfully",'Success');
+		            location.reload();
+	            }
+	            else
+	            	 toastr.error(msg,'Error');
             }
         });
     });
@@ -135,19 +151,22 @@ function updateChannelStatus( channelId, status, checkAuthority ) {
             url  : 'updateChannelStatus',
             data : { 'channelId' : channelId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+channelId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+channelId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+channelId).prop('disabled', true);
             },
-            success : function( msg ) {
-            if(msg="****"){
-               toastr.success("Group status updated successfully",'success');
-                $("#continuemodal"+channelId).html('Yes');
-                $("#continuemodal"+channelId).prop('disabled', false);
-                $('#small_modal').modal('hide');
-                location.reload();
-                }
-            else
-                toastr.error(msg,'Error');
+            success : function( msg ) 
+            {
+	            $("#continuemodal"+channelId).html('Yes');
+	            $("#continuemodal"+channelId).prop('disabled', false);
+	            $('#small_modal').modal('hide');
+                
+		        if(msg="****")
+		        {
+		           toastr.success("Group status updated successfully",'Success');
+		           location.reload();              
+		        }
+		        else
+		            toastr.error(msg,'Error');
             }
         });
     });
@@ -172,11 +191,18 @@ function deleteRegion( regionId , checkAuthority) {
                 $("#continuemodal"+regionId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+regionId).prop('disabled', true);
             },
-            success : function( msg ) {
+            success : function( msg ) 
+            {
                 $("#continuemodal"+regionId).html('Yes');
                 $("#continuemodal"+regionId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                location.reload();
+                if(msg="****")
+	            {
+	               toastr.success("Region deleted successfully",'Success');
+	               location.reload();              
+	            }
+	            else
+	                toastr.error(msg,'Error');
             }
         });
     });
@@ -205,8 +231,9 @@ function updateRegionStatus( regionId, status, checkAuthority ) {
                 $("#continuemodal"+regionId).prop('disabled', true);
             },
             success : function( msg ) {
-            if (msg="****"){
-            toastr.success("User updated successfully",'success');
+            if (msg="****")
+            {
+            toastr.success("Region status updated successfully",'success');
                 $("#continuemodal"+regionId).html('Yes');
                 $("#continuemodal"+regionId).prop('disabled', false);
                 $('#small_modal').modal('hide');
@@ -244,7 +271,13 @@ function deleteCategory( categoryId,checkAuthority) {
                 $("#continuemodal"+categoryId).html('Yes');
                 $("#continuemodal"+categoryId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                location.reload();
+                if(msg == "****")
+                {
+                	toastr.error("Category deleted successfully", "Success");
+                	location.reload();
+                }
+                else
+                	toastr.error(msg,"Error");
             }
         });
         return false;
@@ -270,7 +303,7 @@ function updateCategoryStatus( categoryId, status, checkAuthority ) {
             url  : 'updateCategoryStatus',
             data : { 'categoryId' : categoryId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+categoryId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+categoryId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+categoryId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -279,7 +312,13 @@ function updateCategoryStatus( categoryId, status, checkAuthority ) {
                 $("#continuemodal"+categoryId).html('Yes');
                 $("#continuemodal"+categoryId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                location.reload();
+                if(msg == "****")
+                {
+                	toastr.error("Category status updated successfully", "Success");
+                	location.reload();
+                }
+                else
+                	toastr.error(msg,"Error");
             }
             else
              toastr.error(msg,Error);
@@ -302,10 +341,10 @@ function deleteBanner( bannerId, checkAuthority ) {
     $( '#continuemodal'+bannerId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'banner/deleteBanner',
+            url  : 'deleteBanner',
             data : { 'bannerId' : bannerId },
             beforeSend: function() {
-                $("#continuemodal"+bannerId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+bannerId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+bannerId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -338,7 +377,7 @@ function updateBannerStatus( bannerId, status, checkAuthority  ) {
             url  : 'updateBannerStatus',
             data : { 'bannerId' : bannerId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+bannerId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+bannerId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+bannerId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -367,14 +406,20 @@ function deleteAdminUser( user_id, checkAuthority  ) {
             url  : 'deleteAdminUser',
             data : { 'user_id' : user_id },
             beforeSend: function() {
-                $("#continuemodal"+user_id).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+user_id).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+user_id).prop('disabled', true);
             },
             success : function( msg ) {
                 $("#continuemodal"+user_id).html('Yes');
                 $("#continuemodal"+user_id).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                window.location.reload();
+                if(msg == "****")
+                {
+                	toastr.error("User deleted successfully", "Success");
+                	location.reload();
+                }
+                else
+                	toastr.error(msg,"Error");
             }
         });
         return false;
@@ -397,14 +442,20 @@ function deleteRole( roleId, checkAuthority  ) {
             url  : 'deleteRole',
             data : { 'roleId' : roleId },
             beforeSend: function() {
-                $("#continuemodal"+roleId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+roleId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+roleId).prop('disabled', true);
             },
             success : function( msg ) {
                 $("#continuemodal"+roleId).html('Yes');
                 $("#continuemodal"+roleId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                location.reload();
+                if(msg == "****")
+                {
+                	toastr.error("Role deleted successfully", "Success");
+                	location.reload();
+                }
+                else
+                	toastr.error(msg,"Error");
             }
         });
         return false;
@@ -438,7 +489,13 @@ function updateUserStatus( user_id, status, checkAuthority ) {
                 $("#continuemodal"+user_id).html('Yes');
                 $("#continuemodal"+user_id).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                window.location.reload();
+                if(msg == "****")
+                {
+                	toastr.error("User status updated successfully", "Success");
+                	location.reload();
+                }
+                else
+                	toastr.error(msg,"Error");
             }
         });
     });
@@ -461,14 +518,20 @@ function deleteAppUser( appUserId, checkAuthority  ) {
             url  : 'deleteAppUser',
             data : { 'appUserId' : appUserId },
             beforeSend: function() {
-                $("#continuemodal"+appUserId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+appUserId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+appUserId).prop('disabled', true);
             },
             success : function( msg ) {
                 $("#continuemodal"+appUserId).html('Yes');
                 $("#continuemodal"+appUserId).prop('disabled', false);
                 $('#small_modal').modal('hide');
-                location.reload();
+                if(msg == "****")
+                {
+                	toastr.error("App user deleted successfully", "Success");
+                	location.reload();
+                }
+                else
+                	toastr.error(msg,"Error");
             }
         });
         return false;
@@ -495,14 +558,20 @@ function updateAppUserStatus( appUserId, status, checkAuthority  ) {
             url  : 'updateAppUserStatus',
             data : { 'appUserId' : appUserId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+appUserId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+appUserId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+appUserId).prop('disabled', true);
             },
             success : function( msg ) {
                 $("#continuemodal"+appUserId).html('Yes');
                 $("#continuemodal"+appUserId).prop('disabled', false);
-                $('#small_modal').modal('hide');
-                location.reload();
+                $('#small_modal').modal('hide');    
+                if(msg == "****")
+                {
+	                toastr.success("AppUser status updated successfully", "Success");
+	                location.reload();
+                }
+                else
+	                toastr.error(msg, "Error");
             }
         });
     });
@@ -525,10 +594,10 @@ function updateMessageStatus( msgId, status, checkAuthority  ) {
     $( '#continuemodal'+msgId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'messages/updateMessageStatus',
+            url  : 'updateMessageStatus',
             data : { 'msgId' : msgId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+msgId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+msgId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+msgId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -554,10 +623,10 @@ function deleteMessage( msgId, checkAuthority) {
     $( '#continuemodal'+msgId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'messages/deleteMessage',
+            url  : 'deleteMessage',
             data : { 'msgId' : msgId },
             beforeSend: function() {
-                $("#continuemodal"+msgId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+msgId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+msgId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -587,10 +656,10 @@ function updateDashMessageStatus( msgId, status, checkAuthority  ) {
     $( '#continuemodal'+msgId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'messages/updateMessageStatus',
+            url  : 'updateMessageStatus',
             data : { 'msgId' : msgId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+msgId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+msgId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+msgId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -619,10 +688,10 @@ function updateDashCategoryStatus( categoryId, status, checkAuthority  ) {
     $( '#continuemodal'+categoryId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'category/updateCategoryStatus',
+            url  : 'updateCategoryStatus',
             data : { 'categoryId' : categoryId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+categoryId).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+categoryId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
                 $("#continuemodal"+categoryId).prop('disabled', true);
             },
             success : function( msg ) {
@@ -638,7 +707,7 @@ function ajaxDashMessage() {
     var data = {}
     $.ajax({
         type    : 'POST',
-        url     : 'dashboard/ajaxDashMessageList',
+        url     : 'ajaxDashMessageList',
         data    : data,
         success : function( msg ) {
             $("#dash_message_lists").html(msg);
@@ -649,7 +718,7 @@ function ajaxDashCategory() {
     var data = {}
     $.ajax({
         type    : 'POST',
-        url     : 'dashboard/ajaxDashCategoryList',
+        url     : 'ajaxDashCategoryList',
         data    : data,
         success : function( msg ) {
             $("#dash_category_lists").html(msg);
@@ -665,10 +734,10 @@ function change_passValidate() {
     var data = { 'c_pass' : c_pass, 'n_pass': n_pass, 'confirm_pass' : confirm_pass }
     $.ajax({
         type    : 'POST',
-        url     : 'profile/change_passValidate',
+        url     : 'change_passValidate',
         data    : data,
         beforeSend: function() {
-            $("#changepasswordsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+            $("#changepasswordsubmit").html('<img src="../resources/img/input-spinner.gif"> Loading...');
             $("#changepasswordsubmit").prop('disabled', true);
         },
         success : function( msg ) {

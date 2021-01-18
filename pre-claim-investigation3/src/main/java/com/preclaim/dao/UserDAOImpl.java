@@ -55,7 +55,8 @@ public class UserDAOImpl implements UserDAO{
 		}
 		catch(Exception e)
 		{
-			return "Error in adding user";
+			e.printStackTrace();
+			return "Error in adding user. Kindly contact system administrator";
 		}
 		return "****";
 	}
@@ -132,7 +133,7 @@ public class UserDAOImpl implements UserDAO{
 			e.printStackTrace();
 			return "Error deleting user. Kindly contact system administrator";
 		}
-		return "User deleted successfully";
+		return "****";
 	}
 
 	@Override
@@ -148,7 +149,7 @@ public class UserDAOImpl implements UserDAO{
 			e.printStackTrace();
 			return "Error updating user status. Kindly contact system administrator";
 		}
-		return "User status updated successfully";
+		return "****";
 	}
 
 	@Override
@@ -197,7 +198,7 @@ public class UserDAOImpl implements UserDAO{
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			return "Failed updating user ID";
+			return "Failed updating user ID. Kindly contact system administrator";
 		}
 		return "****";
 	}
@@ -213,7 +214,7 @@ public class UserDAOImpl implements UserDAO{
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			return "Failed updating user ID";
+			return "Failed updating user ID. Kindly contact system administrator";
 		}
 		return "****";
 	}
@@ -305,17 +306,20 @@ public class UserDAOImpl implements UserDAO{
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			return "Failed updating user ID";
+			return "Failed updating user ID. Kindly contact system administrator";
 		}
 		return "****";
 	}
 
 	@Override
 	public void activity_log(String moduleName, int moduleId, String moduleAction, int userId, String ip_address) {
-		try {
+		try 
+		{
 		  	String sql="insert into activity_log(moduleName,moduleId,moduleAction,userId,logDate,ip_address) values(?,?,?,?,now(),?)";
 	          this.template.update(sql,moduleName,moduleId,moduleAction,userId,ip_address);	
-		}catch(Exception e) {
+		}
+		catch(Exception e) 
+		{
 			e.printStackTrace();
 		}
 		

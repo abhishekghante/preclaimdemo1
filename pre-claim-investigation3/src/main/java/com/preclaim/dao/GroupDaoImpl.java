@@ -38,7 +38,7 @@ public class GroupDaoImpl implements GroupDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			return "Error adding group";
+			return "Error adding group. Kimdly contact system administrator";
 		}
 		return "****";
 	}
@@ -46,10 +46,10 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public List<GroupList> group_list(int status) {
 		String query = "";		
-		if(status==0) 
-			query = "select * from group_lists where status= " + status;
+		if(status == 0) 
+			query = "SELECT * FROM group_lists WHERE status = " + status;
 		else 
-			query = "select * from group_lists where status = 1 or status = 2";
+			query = "SELECT * FROM group_lists WHERE status = 1 or status = 2";
 		return this.template.query(query, (ResultSet rs, int rowNum) -> {
 			GroupList groupList = new GroupList();
 			groupList.setGroupId(rs.getInt("GroupId"));
@@ -64,20 +64,20 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public String deleteGroup(int groupId) {
 		try {
-			String query = "DELETE FROM group_lists where groupId = ?";
+			String query = "DELETE FROM group_lists WHERE groupId = ?";
 			template.update(query, groupId);
 		} catch (Exception e) {
 			System.out.println("Error in deleteGroup() method" + e.getMessage());
 			e.printStackTrace();
 			return "Error deleting group. Kindly contact system administrator";
 		}
-		return "Group deleted successfully";
+		return "****";
 	}
 
 	@Override
 	public String updateGroup(int groupId, String group_name) {
 		try {
-			String sql = "UPDATE group_lists SET groupName = ? , updatedDate = now() where groupId =?";
+			String sql = "UPDATE group_lists SET groupName = ? , updatedDate = now() WHERE groupId = ?";
 			template.update(sql, group_name, groupId);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,11 +89,11 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public String updateGroupStatus(int groupId, int status) {
 		try {
-		String sql=" update group_lists set status=?,updatedDate=now() where groupId=?";
+		String sql="UPDATE group_lists SET status = ?, updatedDate = now() WHERE groupId = ?";
 	           template.update(sql,status,groupId);	
 	           return  "****";
 		}catch(Exception e){
-			return "Error updating Group status";
+			return "Error updating Group status. Kindly contact system administrator";
 		}
 		
 	

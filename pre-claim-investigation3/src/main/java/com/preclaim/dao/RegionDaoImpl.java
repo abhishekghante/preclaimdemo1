@@ -44,7 +44,7 @@ public class RegionDaoImpl implements RegionDao {
 		{
 		    System.out.println(e.getMessage());
 		    e.printStackTrace();
-	        return "Error adding region";	      
+	        return "Error adding region. Kindly contact system administrator";	      
 		}
 		return "****";
 	}
@@ -53,9 +53,9 @@ public class RegionDaoImpl implements RegionDao {
 	public List<RegionList> region_list(int status) {
 		String query="";
 		if(status==0) 
-	      query = "SELECT * FROM region_lists WHERE status=" + status;
+	      query = "SELECT * FROM region_lists WHERE status = " + status;
 	    else 
-	    	query = "select * from region_lists where status = 1 or status = 2";
+	    	query = "SELECT * FROM region_lists WHERE status = 1 or status = 2";
 		return template.query(query, (ResultSet rs, int rowNum) -> {
 			RegionList regionList = new RegionList();
 			regionList.setRegionId(rs.getInt("regionId"));
@@ -71,7 +71,7 @@ public class RegionDaoImpl implements RegionDao {
 	public String deleteRegion(int regionId) {
 		try 
 		{
-			String query = "DELETE FROM region_lists WHERE regionId= ?";
+			String query = "DELETE FROM region_lists WHERE regionId = ?";
 			template.update(query, regionId);
 		} 
 		catch (Exception e) 
@@ -80,14 +80,14 @@ public class RegionDaoImpl implements RegionDao {
 			e.printStackTrace();
 			return "Error deleting region. Kindly contact system administrator";
 		}
-		return "Region deleted successfully";
+		return "****";
 	}
 
 	@Override
 	public String updateRegion(int regionId, String region_name) {
 		try 
 		{
-			String sql = "UPDATE region_lists SET regionName = ? , updatedDate = now() where regionId =?";
+			String sql = "UPDATE region_lists SET regionName = ? , updatedDate = now() WHERE regionId = ?";
 			template.update(sql, region_name, regionId);
 		} 
 		catch (Exception e) 
@@ -102,13 +102,14 @@ public class RegionDaoImpl implements RegionDao {
 	public String updateRegionStatus(int RegionId, int status) {
 		try {
 			
-			  String query="update region_lists set status=? where regionId=?";
+			  String query="UPDATE region_lists SET status = ? WHERE regionId = ?";
               this.template.update(query,status,RegionId);	
             
 		   }
 	    catch(Exception e) 
 		{
-		     return "Error Status update ";
+	    	e.printStackTrace();
+		     return "Error updating region status. Kindly contact system administrator";
 	    }
 		return "****";
 	}

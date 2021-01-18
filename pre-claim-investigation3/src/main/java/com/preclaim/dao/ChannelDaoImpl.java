@@ -43,7 +43,7 @@ public class ChannelDaoImpl implements ChannelDao {
 		{	
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			return "Error adding channel";
+			return "Error adding channel. Kindly contact system administrator";
 		}
 		
 		return "****";
@@ -53,7 +53,7 @@ public class ChannelDaoImpl implements ChannelDao {
 	public List<ChannelList> channel_list(int status) {
 		String query="";
 		if(status==0) 
-		  query = "SELECT * FROM channel_lists WHERE status=" + status;
+		  query = "SELECT * FROM channel_lists WHERE status = " + status;
 		else
 		  query = "select * from channel_lists where status = 1 or status = 2";
 		return template.query(query, (ResultSet rs, int rowNum) -> {
@@ -82,7 +82,7 @@ public class ChannelDaoImpl implements ChannelDao {
 			return "Error deleting channel. Kindly contact system administrator";
 		}
 
-		return "Channel deleted successfully";
+		return "****";
 	}
 
 	@Override
@@ -104,11 +104,12 @@ public class ChannelDaoImpl implements ChannelDao {
 	public String updateChannelStatus(int channelId, int status) {
 		try 
 		{			
-	       String sql="update channel_lists set status=? where channelId=?";
+	       String sql="UPDATE channel_lists SET status = ? where channelId = ?";
            this.template.update(sql,status,channelId);				
 		}catch(Exception e)
 		{
-			System.out.println("error status update");
+			e.printStackTrace();
+			return "Error updating channel status. Kindly contact system administrator";
 		}
 		return "****";
 	}

@@ -7,11 +7,9 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 import com.preclaim.models.Category;
 import com.preclaim.models.CategoryList;
-import com.preclaim.models.ChannelList;
 
 public class CategoryDaoImpl implements CategoryDao {
 
@@ -29,14 +27,14 @@ public class CategoryDaoImpl implements CategoryDao {
 	public String add_category(Category category) {
 
 		try {
-			String sql = "insert into category_lists(categoryNameEn,categoryNameThai,categoryImgEn,categoryImgThai,isEnImageSame,"
+			String sql = "INSERT INTO category_lists(categoryNameEn,categoryNameThai,categoryImgEn,categoryImgThai,isEnImageSame,"
 					+ "createdBy,createdDate,UpdatedDate,updatedBy,orderNo,status) values(?,?,?,?,?,?,now(),now(),?,?,?)";
 			this.template.update(sql, category.getCategoryNameEn(), category.getCategoryNameHin(),
 					category.getImgCatEng(), category.getImgCatHin(), category.getIsEnImageSame(),
 					category.getCreatedBy(), category.getUpdatedBy(), category.getOrderNo(), category.getStatus());
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Error adding investigation");
+			return "Error adding investigation. Kindly contact system administrator";
 		}
 
 		return "****";
@@ -46,7 +44,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	public List<CategoryList> category_list(int status) {
 		String query = "";
 		if (status == 0)
-			query = "SELECT * FROM category_lists WHERE status=" + status;
+			query = "SELECT * FROM category_lists WHERE status = " + status;
 		else
 			query = "select * from category_lists where status = 1 or status = 2";
 		return template.query(query, (ResultSet rs, int rowNum) -> {
@@ -65,7 +63,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	public String updateCategoryStatus(int categoryId, int status) {
 		try 
 		{
-			String sql = "update category_lists set status=? where categoryId=?";
+			String sql = "UPDATE category_lists SET status = ? where categoryId = ?";
 			this.template.update(sql, categoryId, status);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,14 +76,14 @@ public class CategoryDaoImpl implements CategoryDao {
 	public String deleteCategory(int category_id) {
 		try 
 		{
-			String sql="delete from category_lists where categoryId=?";
+			String sql="DELETE FROM category_lists WHERE categoryId = ?";
 			this.template.update(sql,category_id);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("error category delete");	
 		}
-		return "delete category sucessfully";	
+		return "****";	
 		}
 	
 	@Override

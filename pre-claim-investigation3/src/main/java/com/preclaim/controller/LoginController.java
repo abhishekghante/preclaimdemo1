@@ -130,7 +130,7 @@ public class LoginController {
     	
     	String to = user.getUser_email();
         String from = "noxid9394@gmail.com";
-        String host = "localhost:8080";
+        String host = "203.194.104.202";
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.host", host);
 
@@ -159,6 +159,7 @@ public class LoginController {
            return "Password sent successfully....";
         } 
         catch (MessagingException mex) {
+        	mex.printStackTrace();
            return "Error resetting password. Kindly contact system administrator";
         }
      }

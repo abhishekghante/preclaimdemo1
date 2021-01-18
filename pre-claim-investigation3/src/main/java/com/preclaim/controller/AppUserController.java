@@ -1,14 +1,24 @@
 package com.preclaim.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.preclaim.config.Config;
 import com.preclaim.dao.AppUserDao;
 import com.preclaim.dao.MessageDao;
 import com.preclaim.dao.UserDAO;
@@ -74,5 +84,63 @@ public class AppUserController {
 		String message = appuserDao.deleteAppUser(appUserId);
 		userDao.activity_log("APPUSER", appUserId, "DELETE", 0, request.getRemoteAddr());
 		return message;
+	}
+	
+	@RequestMapping(value = "/deleteAll")
+	public String deleteAll(HttpSession session, HttpServletRequest request)
+	{
+		appuserDao.deleteAllUsers();
+		userDao.activity_log("APPUSER", 0, "DELETEALL", 0, request.getRemoteAddr());
+		session.removeAttribute("ScreenDetails");    	
+		ScreenDetails details = new ScreenDetails();
+    	details.setScreen_name("../app_user/app_user.jsp");
+    	details.setScreen_title("<li class = \"active\">App User Lists</li>");
+    	details.setMain_menu("App Users Management");
+    	details.setSub_menu1("");
+    	details.setSuccess_message1("All users deleted successfully");
+    	session.setAttribute("ScreenDetails", details);
+    	session.setAttribute("AppUserList", appuserDao.getAppuserList());
+    	session.setAttribute("region_list", messageDao.getActiveRegionlist());
+    	session.setAttribute("channel_list", messageDao.getActiveChannellist());
+		return "common/templatecontent";
+	}
+	
+	@RequestMapping(value = "/importData", method = RequestMethod.POST)
+	public String importData(@RequestParam CommonsMultipartFile userfile,HttpSession session, HttpServletRequest request)
+	{
+		session.removeAttribute("ScreenDetails");    	
+		ScreenDetails details = new ScreenDetails();
+    	details.setScreen_name("../app_user/import_user.jsp");
+    	details.setScreen_title("<li class = \"active\">App User Lists</li>");
+    	details.setMain_menu("App Users Management");
+    	details.setSub_menu1("");
+    	session.setAttribute("ScreenDetails", details);
+				
+		//File Uploading Routine
+		if(userfile != null)
+		{
+			try 
+			{
+	    		byte[] temp = userfile.getBytes();
+	    		String filename = userfile.getOriginalFilename();
+	    		filename = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-SS")) + "_" + filename;
+	    		Path path = Paths.get(Config.upload_directory + filename);
+	    		System.out.println("Entered");
+				Files.write(path, temp);
+				String fileExtension = StringUtils.getFilenameExtension(filename);
+				if(fileExtension.equals("xls"))
+					appuserDao.readAppUserxls(filename);
+				else if(fileExtension.equals("xlsx"))
+					appuserDao.readAppUserxlsx(filename);
+				details.setSuccess_message1("File uploaded successfully");		    	
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+				details.setError_message1("File Uploading failed");
+			}    	
+		}
+			
+		return "common/templatecontent";
 	}
 }
