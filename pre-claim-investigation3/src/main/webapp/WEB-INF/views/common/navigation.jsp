@@ -77,10 +77,10 @@ ArrayList<String> user_permission = (ArrayList<String>)session.getAttribute("use
                     <i class="icon-clock"></i> Pending Cases
                   </a>
                 </li>
-                <li class="nav-item <%if(details.getSub_menu1().equals("Active  Cases")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Active Cases")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/message/active_message" 
                   	class="nav-link nav-toggle">
-                    <i class="icon-check"></i>Active  Cases
+                    <i class="icon-check"></i> Active Cases
                   </a>
                 </li>
                 <li class="nav-item <%if(details.getSub_menu1().equals("Assigned Cases")){%>active<%}%>">
@@ -219,7 +219,7 @@ ArrayList<String> user_permission = (ArrayList<String>)session.getAttribute("use
               </a>
               <ul class="sub-menu">
                 
-                <li class="nav-item <%if(details.getSub_menu1().equals("Add Investigations")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Add Investigation")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/category/add_category" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Investigation
                   </a>

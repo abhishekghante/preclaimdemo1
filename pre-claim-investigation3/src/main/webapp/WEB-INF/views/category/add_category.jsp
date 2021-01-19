@@ -41,7 +41,8 @@ List<String> user_permission=(List<String>)session.getAttribute("user_permission
                 <div class="col-md-8">
                   <a href="javascript:void(0);">
                     <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" id="categoryImgEn" style="height:160px;width:auto;" data-src="#" />
-                    <input type="file" onchange="displayUploadImg(this, 'categoryImgEn');" name="imgCatEng" id="imgCatEng" class="placeImg" accept="image/*" />
+                    <input type="file" onchange="displayUploadImg(this, 'categoryImgEn');" 
+                    name="imgCatEng" id="imgCatEng" class="placeImg" accept="image/*" />
                   </a>
                 </div>
               </div>
@@ -68,7 +69,7 @@ List<String> user_permission=(List<String>)session.getAttribute("user_permission
                   Investigation Image (Hindi)
                 </label>
                 <div class="col-md-8" style = "padding-top:7px;">  
-                  <input type="checkbox" name="isEnImageSame" id="isEnImageSame" value = "1" checked>
+                  <input type="checkbox" name="isEnImageSame" id="isEnImageSame" value = "1">
                   Same as English investigations Image 
                 </div>
               </div>
@@ -98,16 +99,20 @@ function displayUploadImg(input, PlaceholderID) {
         return false;
     }
     var file_size = upfile.size/1024/1024;
-    if(file_size < 5){
+    if(file_size < 5)
+    {
       var reader = new FileReader();
-      reader.onload = function (e) {
+      reader.onload = function (e) 
+      {
         $('#'+PlaceholderID)
             .attr('src', e.target.result)
             .width('auto')
             .height(160);
-        };
       reader.readAsDataURL(upfile);
-    }else{
+      }
+    }
+    else
+    {
       alert('File too large. File must be less than 5 MB.');
       $("#"+input.id).val('');
       return false;
@@ -123,9 +128,24 @@ $(document).ready(function(){
     $("#imgCatHin").trigger('click');
   });
 
-  $("#add_category_form").on('submit', function(e){
-    e.preventDefault();
-    var categoryNameEn   = $( '#add_category_form #categoryNameEn' ).val();
+ $("#isEnImageSame").change(function(){
+	if($("#isEnImageSame").prop("checked"))
+	{
+		$("#categoryImgHin").attr("src",$("#categoryImgEn").attr("src"));
+	}		
+	else
+		$("#categoryImgHin").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+ });
+	
+});
+</script>
+<script>
+function addcategorysubmit() {
+	<%if(!user_permission.contains("category/add")){%>
+		toastr.error("Access Denied","Error");
+		return false;
+	<%}%>
+	var categoryNameEn   = $( '#add_category_form #categoryNameEn' ).val();
     var categoryNameHin  = $( '#add_category_form #categoryNameHin' ).val();
     var categoryImageEn   = $( '#add_category_form #categoryImageEn' ).val();
     var categoryImageHin  = $( '#add_category_form #categoryImageHin' ).val();
@@ -140,24 +160,35 @@ $(document).ready(function(){
       return false;
     }
     if(categoryNameEn && categoryNameHin){
-        $.ajax({
+        var formdata = 
+        {
+        		"categoryNameEn":categoryNameEn,
+        		"categoryNameHin":categoryNameHin,
+        		"categoryImgEn":"",
+        		"categoryImgHin":"",
+        		"isEnImageSame":isEnImageSame
+     	}
+    	$.ajax({
           type: "POST",
           url: 'addCategory',
-          data: {"categoryNameEn":categoryNameEn,"categoryNameHin":categoryNameHin,"categoryImgEn":"","categoryImgHin":"","isEnImageSame":isEnImageSame},
+          data: formdata,
           beforeSend: function() { 
               $("#addcategorysubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
               $("#addcategorysubmit").prop('disabled', true);
               $('#add_category_form').css("opacity",".5");
           },
           success: function( data ) {
-            if(data == "****"){
+            if(data == "****")
+            {
               $("#addcategorysubmit").html('Add investigations');
               $("#addcategorysubmit").prop('disabled', false);
               toastr.success( 'investigations Added successfully.','Success' );
               $("form#add_category_form").trigger("reset");
-              $("#categoryImgEn").attr("src", '${pageContext.request.contextPath}/uploads/default_img.png');
-              $("#categoryImgHin").attr("src",'${pageContext.request.contextPath}/uploads/default_img.png');
-            }else{
+              $("#categoryImgEn").attr("src", '${pageContext.request.contextPath}/resources/uploads/default_img.png');
+              $("#categoryImgHin").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
+            }
+            else
+            {
               toastr.error( data,'Error' );
               $("#addcategorysubmit").html('Add investigations');
               $("#addcategorysubmit").prop('disabled', false);
@@ -166,49 +197,5 @@ $(document).ready(function(){
           }
         });
     }
-  });
-});
+  }
 </script>
-<%-- <script type="text/javascript">
-function addcategorysubmit() {
-	<%if(!user_permission.contains("category/add")){%>
-		toastr.error("Access Denied","Error");
-		return false;
-	<%}%>
-	var categoryNameEn = $( '#add_category_form #categoryNameEn' ).val();
-	var channelCode = $( '#add_category_form #channelCode' ).val();
-	if(channelName == ''){
-	  toastr.error('Investigation Cannot be empty','Error');
-	  return false;
-	}
-	if(channelCode == ''){
-	  toastr.error('Channel Code Cannot be empty','Error');
-	  return false;
-	}
-	if(channelName && channelCode){
-	    var formdata = {'channelName':channelName,'channelCode':channelCode};
-	    $.ajax({
-	      type: "POST",
-	      url: 'addChannel',
-	      data: formdata,
-	      beforeSend: function() { 
-	          $("#addchannelsubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-	          $("#addchannelsubmit").prop('disabled', true);
-	      },
-	      success: function( data ) {
-	        if(data == "****"){
-	          $("#addchannelsubmit").html('Add Channel');
-	          $("#addchannelsubmit").prop('disabled', false);
-	          toastr.success( 'Channel Added successfully.','Success' );
-	          $( '#add_channel_form #channelName' ).val('');
-	          $( '#add_channel_form #channelCode' ).val('');
-	        }else{
-	          toastr.error( data,'Error' );
-	          $("#addchannelsubmit").html('Add Channel');
-	          $("#addchannelsubmit").prop('disabled', false);
-	        }
-	      }
-	    });
-	}   
-}
-</script> --%>

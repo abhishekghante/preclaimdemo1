@@ -1,8 +1,3 @@
-<!-- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl       = $this->config->item( 'base_url' );
-$random_pass    = randomPassword();
-?> -->
 <style type="text/css">
 #imgAccount { display:none;}
 </style>

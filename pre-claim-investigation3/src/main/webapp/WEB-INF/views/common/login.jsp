@@ -104,11 +104,7 @@
       <script src="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
       <!-- END THEME GLOBAL SCRIPTS -->
       <!-- BEGIN PAGE LEVEL SCRIPTS -->
-      <script src="${pageContext.request.contextPath}/resources/custom_js/login_script.js" type="text/javascript"></script>
-      <!-- END PAGE LEVEL SCRIPTS -->
-      <!-- BEGIN THEME LAYOUT SCRIPTS -->
-      <!-- END THEME LAYOUT SCRIPTS -->
-  
+      
   <script>
   function loginValidate() {
 	    var username = $('#username').val();

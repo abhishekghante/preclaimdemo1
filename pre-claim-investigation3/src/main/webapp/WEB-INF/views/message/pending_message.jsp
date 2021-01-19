@@ -1,8 +1,24 @@
-<!-- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-$assetUrl   = $this->config->item( 'base_url' );
-global $permission_arr;
-?> -->
+<%@page import="java.util.List" %>
+<%@page import = "java.util.ArrayList" %>
+
+<%@page import = "com.preclaim.models.Region" %>
+<%@page import = "com.preclaim.models.Group" %>
+<%@page import = "com.preclaim.models.Channel" %>
+
+<%
+List<String>user_permission=(List<String>)session.getAttribute("user_permission");
+boolean allow_statusChg = user_permission.contains("messages/status");
+boolean allow_delete = user_permission.contains("messages/delete");
+List<Region> regionList = (List<Region>) session.getAttribute("region_list");
+List<Group> groupList = (List<Group>) session.getAttribute("group_list");
+List<Channel> channelList = (List<Channel>) session.getAttribute("channel_list");
+if(regionList == null)
+	regionList = new ArrayList<Region>();
+if(groupList == null)
+	groupList = new ArrayList<Group>();
+if(channelList == null)
+	channelList = new ArrayList<Channel>();
+%>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
@@ -17,11 +33,9 @@ global $permission_arr;
         </div>
         <div class="actions">
             <div class="btn-group">
-              <!--<?php if( in_array( 'messages/add', $permission_arr ) ) { ?> -->
-              <a href="<?php echo base_url(); ?>messages/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/resources/messages/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
-              <!-- <?php } ?> -->
             </div>
         </div>
       </div>
@@ -43,9 +57,6 @@ global $permission_arr;
                           <th class="head1 no-sort">Group Name</th>
                           <th class="head1 no-sort">Investigation Name</th>
                           <th class="head1 no-sort">Channel Name</th>
-                          <th class="head1 no-sort">Creation Date</th>
-                          <th class="head1 no-sort">Expiry Date</th>
-                          <th class="head1 no-sort">CreatedBy</th>
                           <th class="head1 no-sort">Status</th>
                           <th class="head1 no-sort">Action</th>
                         </tr>
@@ -58,9 +69,6 @@ global $permission_arr;
                           <th class="head2 no-sort"></th>
                           <th class="head2 no-sort"></th>
                           <th class="head2 no-sort"></th>
-                          <th class="head2 no-sort"></th>
-                          <th class="head2 no-sort"></th>
-                          <th class="head1 no-sort"></th>
                           <th class="head2 no-sort"></th>
                           <th class="head2 no-sort"></th>
                           <th class="head2 no-sort"></th>
@@ -79,64 +87,34 @@ global $permission_arr;
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-  var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  table = $('#pending_message_list').DataTable({
-      language: {
-        processing: "<img src='${pageContext.request.contextPath}/img/loading.gif'>",
-      },
-      "processing": true, //Feature control the processing indicator.
-      "serverSide": true, //Feature control DataTables' server-side processing mode.
-      "order": [], //Initial no order.
-      'autoWidth': false,
-      "ajax": {
-          "data": function(d) {
-            d.csrf_test_name = csrf_hash;
-          },
-          "url": "<?php echo site_url('/messages/pendingMessageTableResponse')?>",
-          "type": "POST"
-      },
-      "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
-      "lengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
-      //Set column definition initialisation properties.
-      "columnDefs": [{
-          "targets": [0,11],
-          "orderable": false, //set not orderable
-      },
-      {
-          "targets": [0,11],
-          "searchable": false, //set orderable
-      } ],
-      buttons: []
-  });
-  var categoryLists = <?php echo json_encode($categoryLists) ?>;
-  var channelLists  = <?php echo json_encode($channelLists) ?>;
   var i = 0;
+  //DataTable  
+  var table = $('#pending_message_list').DataTable();
+
   $('#pending_message_list tfoot th').each( function () {
-    if( i == 1 || i == 2 || i == 9 ){
+    if( i == 1 || i == 2 || i == 3 || i == 4){
       $(this).html( '<input type="text" class="form-control" placeholder="" />' );
-    }else if(i == 5){
+    }
+    else if(i == 5)
+    {
       var cat_selectbox = '<select name="category" id="category" class="form-control">'
                               +'<option value="">All</option>';
-      $.each(categoryLists, function (i, elem) {
-          cat_selectbox += '<option value="'+ elem['categoryNameEn'] +'">'+ elem['categoryNameEn'] +'</option>';
-      });
+		
         cat_selectbox += '</select>';
         $(this).html( cat_selectbox );
-    }else if(i == 6){
+    }
+    else if(i == 6)
+    {
       var channelBox = '<select name="channel" id="channel" class="form-control">'
                               +'<option value="">All</option>';
-      $.each(channelLists, function (i, elem) {
-          channelBox += '<option value="'+ elem['channelName'] +'">'+ elem['channelName'] +'</option>';
-      });
-        channelBox += '</select>';
-        $(this).html( channelBox );
+      <%for(Channel channel : channelList) {%>                      		
+      	channelBox += '<option value = "<%= channel.getChannelCode()%>"><%= channel.getChannelName()%></option>';
+      <%} %>
+      channelBox += '</select>';     
+      $(this).html( channelBox );
     }
     i++;
   });
-
-  // DataTable
-  var table = $('#pending_message_list').DataTable();
 
   // Apply the search
   table.columns().every( function () {

@@ -5,6 +5,7 @@
 <%@page import = "com.preclaim.models.Group" %>
 <%@page import = "com.preclaim.models.Channel" %>
 <%
+List<String>user_permission=(List<String>)session.getAttribute("user_permission");
 List<Region> regionList = (List<Region>) session.getAttribute("region_list");
 List<Group> groupList = (List<Group>) session.getAttribute("group_list");
 List<Channel> channelList = (List<Channel>) session.getAttribute("channel_list");
