@@ -129,19 +129,28 @@ public class LoginController {
     		return "Email ID not present. Kindly contact system administrator to reset the password";
     	
     	String to = user.getUser_email();
-        String from = "noxid9394@gmail.com";
-        String host = "203.194.104.202";
+        String from = "mygcptut@gmail.com";
+        String frompassword = "123dixon";
         Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host", host);
-
+        //properties.setProperty("mail.smtp.host", host);
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        
         // Get the default Session object.
-        Session session = Session.getDefaultInstance(properties);
+        Session session = Session.getInstance(properties, new Authenticator() {
+        	@Override
+        	protected PasswordAuthentication getPasswordAuthentication() {
+        		return new PasswordAuthentication(from, frompassword);
+        	}
+        });
 
         try {
            MimeMessage message = new MimeMessage(session);
            message.setFrom(new InternetAddress(from));
            message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
-           message.setSubject("Forgot Password " + username);
+           message.setSubject("Forgot Password - " + username);
 
            String password = RandomStringUtils.random(6, true, true);
            user.setPassword(password);
@@ -155,8 +164,8 @@ public class LoginController {
 
            // Send message
            Transport.send(message);
-           dao.updatePassword(username, password);
-           return "Password sent successfully....";
+           dao.updatePassword(username, user.getPassword());
+           return "****";
         } 
         catch (MessagingException mex) {
         	mex.printStackTrace();

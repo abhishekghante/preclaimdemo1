@@ -78,7 +78,7 @@ public class LoginDAOImpl implements LoginDAO {
 		try
 		{
 			String sql = "UPDATE admin_user SET password = ? WHERE username = ?";
-			template.update(sql, username, password);
+			template.update(sql, password, username);
 		}
 		catch(Exception ex)
 		{

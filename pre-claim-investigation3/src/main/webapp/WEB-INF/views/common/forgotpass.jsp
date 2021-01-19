@@ -96,7 +96,35 @@
       <script src="${pageContext.request.contextPath}/resources/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
       <!-- END THEME GLOBAL SCRIPTS -->
       <!-- BEGIN PAGE LEVEL SCRIPTS -->
-      <script src="${pageContext.request.contextPath}/resources/custom_js/login_script.js" type="text/javascript"></script>
-      <!-- END PAGE LEVEL SCRIPTS -->
-      <!-- BEGIN THEME LAYOUT SCRIPTS -->
-      <!-- END THEME LAYOUT SCRIPTS -->
+      
+<script>   
+//FORGOT PASSWORD
+function forgotValidate() {
+    var username    = $( '#username' ).val();
+    
+    if(username == "")
+    	{
+    		toastr.error("Username cannot be blank", "Error");
+    		return;
+    	}
+    var data = { 'username' : username }
+    $.ajax({
+        type    : 'POST',
+        url     : 'changePassword',
+        data    : data,
+        beforeSend: function() {
+            $("#login_submit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+            $("#login_submit").prop("disabled",true);
+        },
+        success : function( msg ) {
+        	$("#login_submit").html("Send My Password");
+            $("#login_submit").prop("disabled",false);
+            if( msg == "****" ) {
+                toastr.success('Password has been sent to your e-mail address.',"Success");
+            } else {
+                toastr.error(msg,"Error");
+            }
+        }
+    });
+}
+</script>
