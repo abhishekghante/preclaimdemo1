@@ -1,6 +1,7 @@
 <%@page import="java.util.List" %>
-<%@page import="com.preclaim.models.CategoryList"%>
-<% List<CategoryList> activeList =(List<CategoryList>)session.getAttribute("active_list"); 
+<%@page import="com.preclaim.models.InvestigationTypeList"%>
+<%
+	List<InvestigationTypeList> activeList =(List<InvestigationTypeList>)session.getAttribute("active_list"); 
 List<String>user_permission=(List<String>)session.getAttribute("user_permission");
 boolean allow_statusChg = user_permission.contains("category/status");
 boolean allow_delete = user_permission.contains("category/delete");
@@ -65,9 +66,10 @@ boolean allow_delete = user_permission.contains("category/delete");
                       </tr>
                     </tfoot>
                     <tbody class="row_position">
-                     <%if(activeList!=null){
-                    	 
-                    	 for(CategoryList list_category :activeList){
+                     <%
+                     	if(activeList!=null){
+                                         	 
+                                         	 for(InvestigationTypeList list_category :activeList){
                      %>                   	 
                             <tr>
                                <td><%=list_category.getSrNo()%></td>

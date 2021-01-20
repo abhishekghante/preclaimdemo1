@@ -113,7 +113,7 @@ $(document).ready(function(){
 <script type="text/javascript">
     //Role Validation
     function addRole() {
-    	<%if(user_permission.contains("role/add")){%>
+    	<%if(!user_permission.contains("role/add")){%>
     		toastr.error("Access Denied", "Error");
     		return false;
    		<%}%>
@@ -125,7 +125,6 @@ $(document).ready(function(){
         return false;
       }
       var data    = $( "#role_form" ).find( "select, textarea, input" ).serialize();
-      console.log(data);
       $.ajax({
           type    : 'POST',
           url     : 'addRole',

@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.preclaim.dao.CategoryDao;
 import com.preclaim.dao.UserDAO;
-import com.preclaim.models.Category;
-import com.preclaim.models.CategoryList;
+import com.preclaim.models.InvestigationType;
+import com.preclaim.models.InvestigationTypeList;
 import com.preclaim.models.ScreenDetails;
 
 @Controller
 @RequestMapping(value = "/category")
-public class CategoryController {
+public class InvestigationTypeController {
 
 	@Autowired
 	private CategoryDao categorydao;
@@ -40,7 +40,7 @@ public class CategoryController {
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}
-
+/*
 	@RequestMapping(value = "/pending_category", method = RequestMethod.GET)
 	public String pending_category(HttpSession session,HttpServletRequest request) {
 		session.removeAttribute("ScreenDetails");
@@ -50,11 +50,11 @@ public class CategoryController {
 		details.setMain_menu("Type of Investigations");
 		details.setSub_menu1("Pending Investigations");
 		session.setAttribute("ScreenDetails", details);
-		List<CategoryList> pending_category = categorydao.category_list(0);
+		List<InvestigationTypeList> pending_category = categorydao.category_list(0);
 		session.setAttribute("pending_category", pending_category);
 		
 		if(request.getParameter("categoryId")!=null) {
-		Category category=new Category();
+		InvestigationType category=new InvestigationType();
 		category.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
 		category.setCategoryNameEn(request.getParameter("imgCatEng"));
 		category.setImgCatEng(request.getParameter("categoryImgEn"));
@@ -75,7 +75,7 @@ public class CategoryController {
 		details.setMain_menu("Type of Investigations");
 		details.setSub_menu1("Active investigations");
 		session.setAttribute("ScreenDetails", details);
-		List<CategoryList> activeList = categorydao.category_list(1);
+		List<InvestigationTypeList> activeList = categorydao.category_list(1);
 		session.setAttribute("active_list", activeList);
 		return "common/templatecontent";
 	}
@@ -87,7 +87,7 @@ public class CategoryController {
 		String categoryNameHin = request.getParameter("categoryNameHin");
 		String imgCatHin = request.getParameter("categoryImgHin");
 		int isEnImageSame = Integer.parseInt(request.getParameter("isEnImageSame"));
-		Category category = new Category();
+		InvestigationType category = new InvestigationType();
 		category.setCategoryNameEn(categoryNameEn);
 		category.setImgCatEng(imgCAtEng);
 		category.setCategoryNameHin(categoryNameHin);
@@ -125,6 +125,6 @@ public class CategoryController {
 		userDao.activity_log("CATEGORY", categoryId, status == 1 ? "ACTIVE" : "DEACTIVE", 0, request.getRemoteAddr());
 		return message;
 	}
-	  
+	 */ 
    
 }

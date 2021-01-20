@@ -49,96 +49,125 @@ if(channelList == null)
         <div class="box-body">
           <div class="row">
             <div class="col-sm-10 col-md-10 col-xs-12">
-           	  <div class="form-group">
-                <label class="col-md-4 control-label" for="caseID">Case ID 
-                	<span class="text-danger">*</span>
-               	</label>
-                <div class="col-md-8">
-                  <input type="text" placeholder="Case ID" name="caseID" id="caseID" class="form-control">
-                </div>
-              </div>
-			  <div class="form-group">
-                <label class="col-md-4 control-label" for="msgTitleEn">Policy Number 
-                	<span class="text-danger">*</span>
-               	</label>
-                <div class="col-md-8">
-                  <input type="text" placeholder="Policy Number" name="policyNumber" id="policyNummber" 
-                  	class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="insuredName">Insured Name 
-                	<span class="text-danger">*</span>
-               	</label>
-                <div class="col-md-8">
-                  <input type="text" placeholder="Insured Name" name="insuredName" id="insuredName" 
-                  	class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="claimantCity">Claimant City 
-                	<span class="text-danger">*</span>
-               	</label>
-                <div class="col-md-8">
-                  <input type="text" placeholder="Claimant City" name="claimantCity" id="claimantCity" 
-                  	class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="claimaintZone">Claimant Zone 
-                	<span class="text-danger">*</span>
-               	</label>
-                <div class="col-md-8">
-                  <input type="text" placeholder="Claimant Zone" name="claimantZone" id="claimantZone" 
-                  	class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="claimantState">Claimant State 
-                	<span class="text-danger">*</span>
-               	</label>
-                <div class="col-md-8">
-                  <input type="text" placeholder="Claimant State" name="claimantState" 
-                  	id="claimantState" class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="msgTitleEn">Status 
-                	<span class="text-danger">*</span>
-               	</label>
-                <div class="col-md-8">
-                  <input type="text" placeholder="Status" name="status" id="status" class="form-control"
-                  	value = "Open"  disabled readonly>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="subStatus">Sub-Status 
-                	<span class="text-danger">*</span>
-               	</label>
-                <div class="col-md-8">
-                  <input type="text" placeholder="Sub Status" name="subStatus" id="subStatus" 
-                  	class="form-control" value = "Pending for Assignment" disabled readonly>
-                </div>
-              </div>           
               <div class="form-group selectDiv">
-                <label class="col-md-4 control-label" for="msgCategory">Select Investigation Category 
-                	<span class="text-danger">*</span></label>
+                <label class="col-md-4 control-label" for="msgGroup">Select Group <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <select name="msgCategory" id="msgCategory" class="form-control" tabindex="-1">
-                    <option value="-1" selected disabled>Select</option>
-                    
+                  <select name="msgGroup" id="msgGroup" class="form-control" tabindex="-1" >
+                    <option value = "-1" selected disabled>Select</option>
+                    <%for(Group group : groupList) {%>
+                    	<option value = "<%= group.getGroup_id()%>"><%=group.getGroupName()%></option>
+                   	<%} %>
                   </select>
                 </div>
-              </div>            
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="sumAssured">Sum Assured 
-                	<span class="text-danger">*</span>
-               	</label>
+              </div>
+              <div class="form-group selectDiv">
+                <label class="col-md-4 control-label" for="msgRegion">Select Region <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="number" placeholder="Sub Status" name="sumAssured" id="sumAssured" 
-                  	class="form-control">
+                  <select name="msgRegion[]" id="msgRegion" class="form-control select2-multiple" tabindex="-1" multiple>
+                    <option value="" disabled>Select</option>
+                   <%for(Region region : regionList) {%>
+                    	<option value = "<%= region.getRegionId()%>"><%=region.getRegionName()%></option>
+                   	<%} %>
+                  </select>
                 </div>
-              </div> 
+              </div>
+              <div class="form-group selectDiv">
+                <label class="col-md-4 control-label" for="msgChannel">Select Channel <span class="text-danger">*</span></label>
+                <div class="col-md-8">
+                  <select name="msgChannel" id="msgChannel" class="form-control select2" tabindex="-1">
+                    <option value="">Select</option>
+                    <%for(Channel channel : channelList) {%>
+                    	<option value = "<%= channel.getChannelCode()%>"><%= channel.getChannelName()%></option>
+                   	<%} %>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group selectDiv">
+                <label class="col-md-4 control-label" for="msgCategory">Select Category <span class="text-danger">*</span></label>
+                <div class="col-md-8">
+                  <select name="msgCategory" id="msgCategory" class="form-control select2" tabindex="-1">
+                    <option value="-1" selected disabled>Select</option>
+                    <!-- <?php 
+                    if($categoryLists){
+                      foreach ($categoryLists as $categoryInfo) {
+                        ?><option value="<?php echo $categoryInfo->categoryId; ?>"><?php echo $categoryInfo->categoryNameEn; ?></option><?php
+                      }
+                    }
+                    ?> -->
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="postDateTime">Broadcast Post Date Time <span class="text-danger">*</span></label>
+                <div class="col-md-8">
+                    <div class="input-group date form_datetime">
+                        <input type="text" name="postDateTime" id="postDateTime" size="30" readonly class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn default date-set" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="expiryDate">Expiry Date Time <span class="text-danger">*</span></label>
+                <div class="col-md-8">
+                    <div class="input-group date form_datetime">
+                        <input type="text" name="expiryDate" id="expiryDate" size="30" readonly class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn default date-set" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="refNo">Reference No</label>
+                <div class="col-md-8">
+                  <input type="text" required="" name="refNo" id="refNo" maxlength="40" class="form-control" placeholder="Reference No">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="msgTitleEn">Case Title(En) <span class="text-danger">*</span></label>
+                <div class="col-md-8">
+                  <input type="text" required="" placeholder="Case Title" name="msgTitleEn" id="msgTitleEn" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="msgTitleHin">Case Title(Hindi) <span class="text-danger">*</span></label>
+                <div class="col-md-8">
+                  <input type="text" required="" placeholder="Case Title" name="msgTitleHin" id="msgTitleHin" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="msgContentEn">Case Content(En)</label>
+                <div class="col-md-8">
+                  <textarea required="" placeholder="" name="msgContentEn" id="msgContentEn" class="form-control" rows="6"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="msgContentHin">Case Content(Hindi)</label>
+                <div class="col-md-8">
+                  <textarea required="" placeholder="" name="msgContentHin" id="msgContentHin" class="form-control" rows="6"></textarea>
+                </div>
+              </div>
+              <div class="form-group selectDiv">
+                <label class="col-md-4 control-label" for="upload_type">Content Upload Type</label>
+                <div class="col-md-8">
+                  <select name="upload_type" id="upload_type" class="form-control" tabindex="-1" >
+                    <option value="1">Image</option>
+                    <option value="2">Video</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group" id="videoURLDiv" style="display:none;">
+                <label class="col-md-4 control-label" for="videoURL">Video URL</label>
+                <div class="col-md-8">
+                  <input type="text" required="" placeholder="Video URL Link(Youtube)" name="videoURL" id="videoURL" maxlength="150" class="form-control">
+                </div>
+              </div>
               <div id="uploadImageDiv">
                 <div class="form-group">
                   <label class="col-md-4 control-label">Upload Image(En)</label>
@@ -218,20 +247,169 @@ if(channelList == null)
                         <input type="hidden" name="d_link_msgImgEn_5" id="d_link_msgImgEn_5" />
                       </a>
                     </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-6 text-center2 control-label"><span><b>Upload Hindi Image</b></span></label>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label">Same as English Image</label>
+                  <div class="col-md-8 col-nopadding-l">
+                    <div class="col-md-2">
+                      <label class="control-label" for="isEnImageSame1">
+                        <input type="checkbox" name="isEnImageSame1" id="isEnImageSame1" value="1">
+                        Image 1
+                      </label>
+                      <div class="text-center"><label class="control-label">OR</label></div>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="control-label" for="isEnImageSame2">
+                        <input type="checkbox" name="isEnImageSame2" id="isEnImageSame2" value="1">
+                        Image 2
+                      </label>
+                      <div class="text-center"><label class="control-label">OR</label></div>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="control-label" for="isEnImageSame3">
+                        <input type="checkbox" name="isEnImageSame3" id="isEnImageSame3" value="1">
+                        Image 3
+                      </label>
+                      <div class="text-center"><label class="control-label">OR</label></div>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="control-label" for="isEnImageSame4">
+                        <input type="checkbox" name="isEnImageSame4" id="isEnImageSame4" value="1">
+                        Image 4
+                      </label>
+                      <div class="text-center"><label class="control-label">OR</label></div>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="control-label" for="isEnImageSame5">
+                        <input type="checkbox" name="isEnImageSame5" id="isEnImageSame5" value="1">
+                        Image 5
+                      </label>
+                      <div class="text-center"><label class="control-label">OR</label></div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <label class="col-md-4 control-label">Upload Image(Hindi) 1</label>
+                  <div class="col-md-8 col-nopadding-l">
+                    <div class="col-md-3">
+                      <a href="javascript:void(0);">
+                        <div class="uploadFileDiv">
+                          <span data-imgID="imgMsgHinLbl_1" data-ID="imgMsgHin_1" id="HinLblDelBtn_1" class="delete_btn" data-linkID="link_msgImgHin_1" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
+                            <i class="fa fa-remove"></i>
+                          </span>
+                          <span class="add_link_btn" data-val="" id="link_msgImgHin_1" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
+                            <i class="fa fa-link"></i>
+                          </span>
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgHinLbl" id="imgMsgHinLbl_1" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 1" />
+                        </div>
+                        <input type="file" onchange="displayUploadImg(this, 'imgMsgHinLbl_1', 'HinLblDelBtn_1', 'link_msgImgHin_1');" name="imgMsgHin_1" id="imgMsgHin_1" class="placeImg" accept="image/*" />
+                        <input type="hidden" name="d_link_msgImgHin_1" id="d_link_msgImgHin_1" />
+                      </a>
+                    </div>
+                    <div class="col-md-3">
+                      <a href="javascript:void(0);">
+                        <div class="uploadFileDiv">
+                          <span data-imgID="imgMsgHinLbl_2" data-ID="imgMsgHin_2" id="HinLblDelBtn_2" class="delete_btn" data-linkID="link_msgImgHin_2" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
+                            <i class="fa fa-remove"></i>
+                          </span>
+                          <span class="add_link_btn" data-val="" id="link_msgImgHin_2" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
+                            <i class="fa fa-link"></i>
+                          </span>
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgHinLbl" id="imgMsgHinLbl_2" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 2" />
+                        </div>
+                        <input type="file" onchange="displayUploadImg(this, 'imgMsgHinLbl_2', 'HinLblDelBtn_2', 'link_msgImgHin_2');" name="imgMsgHin_2" id="imgMsgHin_2" class="placeImg" accept="image/*" />
+                        <input type="hidden" name="d_link_msgImgHin_2" id="d_link_msgImgHin_2" />
+                      </a>
+                    </div>
+                    <div class="col-md-3">
+                      <a href="javascript:void(0);">
+                        <div class="uploadFileDiv">
+                          <span data-imgID="imgMsgHinLbl_3" data-ID="imgMsgHin_3" id="HinLblDelBtn_3" class="delete_btn" data-linkID="link_msgImgHin_3" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
+                            <i class="fa fa-remove"></i>
+                          </span>
+                          <span class="add_link_btn" data-val="" id="link_msgImgHin_3" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
+                            <i class="fa fa-link"></i>
+                          </span>
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgHinLbl" id="imgMsgHinLbl_3" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 3" />
+                        </div>
+                        <input type="file" onchange="displayUploadImg(this, 'imgMsgHinLbl_3', 'HinLblDelBtn_3', 'link_msgImgHin_3');" name="imgMsgHin_3" id="imgMsgHin_3" class="placeImg" accept="image/*" />
+                        <input type="hidden" name="d_link_msgImgHin_3" id="d_link_msgImgHin_3" />
+                      </a>
+                    </div>
+                    <div class="col-md-3">
+                      <a href="javascript:void(0);">
+                        <div class="uploadFileDiv">
+                          <span data-imgID="imgMsgHinLbl_4" data-ID="imgMsgHin_4" id="HinLblDelBtn_4" class="delete_btn" data-linkID="link_msgImgHin_4" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
+                            <i class="fa fa-remove"></i>
+                          </span>
+                          <span class="add_link_btn" data-val="" id="link_msgImgHin_4" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
+                            <i class="fa fa-link"></i>
+                          </span>
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgHinLbl" id="imgMsgHinLbl_4" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 4" />
+                        </div>
+                        <input type="file" onchange="displayUploadImg(this, 'imgMsgHinLbl_4', 'HinLblDelBtn_4', 'link_msgImgHin_4');" name="imgMsgHin_4" id="imgMsgHin_4" class="placeImg" accept="image/*" />
+                        <input type="hidden" name="d_link_msgImgHin_4" id="d_link_msgImgHin_4" />
+                      </a>
+                    </div>
+                    <div class="col-md-3">
+                      <a href="javascript:void(0);">
+                        <div class="uploadFileDiv">
+                          <span data-imgID="imgMsgHinLbl_5" data-ID="imgMsgHin_5" id="HinLblDelBtn_5" class="delete_btn" data-linkID="link_msgImgHin_5" data-toggle="tooltip" data-toggle="tooltip" title="Remove">
+                            <i class="fa fa-remove"></i>
+                          </span>
+                          <span class="add_link_btn" data-val="" id="link_msgImgHin_5" data-toggle="tooltip" data-toggle="tooltip" title="Update hyperlink">
+                            <i class="fa fa-link"></i>
+                          </span>
+                          <img src="${pageContext.request.contextPath}/resources/uploads/default_img.png" class="imgMsgHinLbl" id="imgMsgHinLbl_5" style="height:height:120px;width: 100%;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload Image 5" />
+                        </div>
+                        <input type="file" onchange="displayUploadImg(this, 'imgMsgHinLbl_5', 'HinLblDelBtn_5', 'link_msgImgHin_5');" name="imgMsgHin_5" id="imgMsgHin_5" class="placeImg" accept="image/*" />
+                        <input type="hidden" name="d_link_msgImgHin_5" id="d_link_msgImgHin_5" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label">Upload PDF(En)</label>
+                <div class="col-md-8">
+                  <input type="file" name="msgEnFile" id="msgEnFile" accept="application/pdf" />
+                </div>
               </div>
+              <div class="form-group">
+                <label class="col-md-offset-4 col-md-8 control-label text-left2" for="isEnFileSame">
+                  <input type="checkbox" name="isEnFileSame" id="isEnFileSame" value="1">
+                  Same as English File
+                </label>
+                <div class="col-md-offset-4 col-md-8"><div class="control-label text-left2">OR</div></div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label">Upload PDF(Hindi)</label>
+                <div class="col-md-8">
+                  <input type="file" name="msgHinFile" id="msgHinFile" accept="application/pdf" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label">Enable Notification</label>
+                <label class="col-md-8 control-label text-left2" for="enableNotification">
+                  <input type="checkbox" name="enableNotification" id="enableNotification" value="1">
+                </label>
               </div>
               <div class="box-footer">
                 <div class="row">
                   <div class="col-md-offset-4 col-md-8">
+                <!-- <?php
+                    $token_name = $this->security->get_csrf_token_name();
+                    $token_hash = $this->security->get_csrf_hash();
+                    ?> -->
                     <input type="hidden" id="csrf" name="<?= $token_name; ?>" value="<?= $token_hash; ?>" />
                     <button class="btn btn-info" id="addmessagesubmit" type="submit">Broadcast</button>
                     <button class="btn btn-danger" onClick="return clearForm();" type="button">Clear</button>
                   </div>
                 </div>
               </div>
-              
-              
             </div>
           </div>
         </div>

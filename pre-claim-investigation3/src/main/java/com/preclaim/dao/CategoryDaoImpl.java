@@ -8,8 +8,8 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.preclaim.models.Category;
-import com.preclaim.models.CategoryList;
+import com.preclaim.models.InvestigationType;
+import com.preclaim.models.InvestigationTypeList;
 
 public class CategoryDaoImpl implements CategoryDao {
 
@@ -22,9 +22,9 @@ public class CategoryDaoImpl implements CategoryDao {
 	public void setTemplate(JdbcTemplate template) {
 		this.template = template;
 	}
-
+/*
 	@Override
-	public String add_category(Category category) {
+	public String add_category(InvestigationType category) {
 
 		try {
 			String sql = "INSERT INTO category_lists(categoryNameEn,categoryNameThai,categoryImgEn,categoryImgThai,isEnImageSame,"
@@ -41,14 +41,14 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
-	public List<CategoryList> category_list(int status) {
+	public List<InvestigationTypeList> category_list(int status) {
 		String query = "";
 		if (status == 0)
 			query = "SELECT * FROM category_lists WHERE status = " + status;
 		else
 			query = "select * from category_lists where status = 1 or status = 2";
 		return template.query(query, (ResultSet rs, int rowNum) -> {
-			CategoryList categoryList = new CategoryList();
+			InvestigationTypeList categoryList = new InvestigationTypeList();
 			categoryList.setSrNo(rowNum + 1);
 			categoryList.setCategoryId(rs.getInt("categoryId"));
 			categoryList.setCategoryNameEn(rs.getString("CategoryNameEn"));
@@ -100,5 +100,5 @@ public class CategoryDaoImpl implements CategoryDao {
 		}
 		return "****";
 	}
-	
+	*/
 }

@@ -1,11 +1,12 @@
    <%@page import="java.util.List" %>
-<%@page import="com.preclaim.models.CategoryList" %>
-<% List<CategoryList>pending_list=(List<CategoryList>)session.getAttribute("pending_category");
+<%@page import="com.preclaim.models.InvestigationTypeList" %>
+<%
+	List<InvestigationTypeList>pending_list=(List<InvestigationTypeList>)session.getAttribute("pending_category");
 session.removeAttribute("pending_category");
 List<String>user_permission=(List<String>)session.getAttribute("user_permission");
 boolean allow_statusChg = user_permission.contains("category/status");
 boolean allow_delete = user_permission.contains("category/delete");
-CategoryList category =(CategoryList)session.getAttribute("category");
+InvestigationTypeList category =(InvestigationTypeList)session.getAttribute("category");
 session.removeAttribute("category");
 %>
 
@@ -25,7 +26,7 @@ session.removeAttribute("category");
         <div class="caption">
           <i class="icon-users font-green-sharp"></i>
           <span class="caption-subject font-green-sharp sbold">
-          <%= category == null ? "Add " : "Update " %> investigations</span>
+          <%=category == null ? "Add " : "Update "%> investigations</span>
         </div>
       </div>
     </div>
@@ -39,7 +40,7 @@ session.removeAttribute("category");
                 <label class="col-md-4 control-label" for="categoryNameEn">Investigation Name (English) <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <input type="text" required id="categoryNameEn" name="categoryNameEn" maxlength="40" class="form-control" placeholder="investigations Name"
-                  value = "<%= category == null ? "" : category.getCategoryNameEn() %>">
+                  value = "<%=category == null ? "" : category.getCategoryNameEn()%>">
                 </div>
               </div>
               <div class="form-group">
@@ -64,7 +65,7 @@ session.removeAttribute("category");
                     ?> -->
                     <!-- <span <?= $imgCatEngSty; ?> data-imgID="categoryImgEn" data-delID="delImgMsgEn" data-ID="imgCatEng" id="enLblDelBtn" class="delete_btn" data-toggle="tooltip" data-toggle="tooltip" title="Remove"><i class="fa fa-remove"></i></span> -->
                     <img src="${pageContext.request.contextPath}/resources/img/upload_img.png" id="categoryImgEn" style="height:100px;width:auto;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload" />
-                    <input type="hidden" name="delImgMsgEn" id="delImgMsgEn" value = "<%= category == null ? "" : category.getImgCatEng() %>"/>
+                    <input type="hidden" name="delImgMsgEn" id="delImgMsgEn" value = "<%=category == null ? "" : category.getImgCatEng()%>"/>
                     <input type="file" onchange="displayUploadImg(this, 'categoryImgEn', 'enLblDelBtn');" name="imgCatEng" id="imgCatEng" class="placeImg" accept="image/*" />
                   </a>
                 </div>
@@ -74,12 +75,12 @@ session.removeAttribute("category");
               <div class="form-group">
                 <label class="col-md-4 control-label" for="categoryNameHin">Investigation Name (Hindi) <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required="" name="categoryNameHin" id="categoryNameHin" maxlength="40" class="form-control" placeholder="investigations Name" value = "<%= category == null ? "" : category.getCategoryNameHin() %>">
+                  <input type="text" required="" name="categoryNameHin" id="categoryNameHin" maxlength="40" class="form-control" placeholder="investigations Name" value = "<%=category == null ? "" : category.getCategoryNameHin()%>">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-offset-4 col-md-6 control-label" for="isEnImageSame">
-                  <input type="checkbox"  name="isEnImageSame" id="isEnImageSame" value = "<%= category == null ? "" : category.getIsEnImageSame()%>"> 
+                  <input type="checkbox"  name="isEnImageSame" id="isEnImageSame" value = "<%=category == null ? "" : category.getIsEnImageSame()%>"> 
                   Same as English category Image
                 </label>
               </div>
@@ -105,7 +106,7 @@ session.removeAttribute("category");
                     ?> -->	
                     <!-- <span <?= $imgCatHinSty; ?> data-imgID="categoryImgHin" data-delID="delImgMsgHin" data-ID="imgCatHin" id="HinLblDelBtn" class="delete_btn" data-toggle="tooltip" data-toggle="tooltip" title="Remove"><i class="fa fa-remove"></i></span> -->
                     <img src="${pageContext.request.contextPath}/resources/img/upload_img.png" id="categoryImgHin" style="height:100px;width: auto;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload" />
-                    <input type="hidden" name="delImgMsgHin" id="delImgMsgHin" value = "<%= category == null ? "" : category.getImgCatHin() %>" />
+                    <input type="hidden" name="delImgMsgHin" id="delImgMsgHin" value = "<%=category == null ? "" : category.getImgCatHin()%>" />
                     <input type="file" onchange="displayUploadImg(this, 'categoryImgHin', 'HinLblDelBtn');" name="imgCatHin" id="imgCatHin" class="placeImg" accept="image/*" />
                   </a>
                 </div>
@@ -115,14 +116,20 @@ session.removeAttribute("category");
               <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                
-                 <% if(category != null){ %>
-                    <input type="hidden" value=<%=category.getCategoryId() %> id="categoryId" name="categoryId">
+                 <%
+                                	if(category != null){
+                                %>
+                    <input type="hidden" value=<%=category.getCategoryId()%> id="categoryId" name="categoryId">
                     <button class="btn btn-info" id="editcategorysubmit" type="submit">Update</button>
                     <a href="${pageContext.request.contextPath}/category/pending_category" class="btn btn-danger" value="">Back</a>
-                  <% }else{ %> 
+                  <%
+                  	}else{
+                  %> 
                     <button class="btn btn-info" id="addcategorysubmit" type="submit">Add Category</button>
                     <button class="btn btn-danger" type="reset" value="">Clear</button>
-                  <% } %>
+                  <%
+                  	}
+                  %>
                 </div>
               </div>
             </div>
@@ -184,9 +191,10 @@ session.removeAttribute("category");
                       </tr>
                     </tfoot>
                     <tbody>
-                             <%if(pending_list!=null){ 
-                             for(CategoryList list_category : pending_list){
-                            %>
+                             <%
+                             	if(pending_list!=null){ 
+                                                          for(InvestigationTypeList list_category : pending_list){
+                             %>
                             	<tr>
                             	<td><%=list_category.getSrNo() %></td>
                             	<td><%=list_category.getCategoryNameEn() %></td>

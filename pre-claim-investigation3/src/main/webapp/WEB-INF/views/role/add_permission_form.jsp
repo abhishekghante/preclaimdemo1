@@ -150,7 +150,7 @@ ArrayList<String> user_permission=(ArrayList<String>)session.getAttribute("user_
 			                    		<input type="checkbox" <%if(role_permission.contains("role/index")) {%>checked <%} %> name="role[]" id="role_index" class="indPLCheck9" value="role/index"> <label for="role_index">View</label>
 			                    		<input type="checkbox" <%if(role_permission.contains("role/add")) {%>checked <%} %> name="role[]" id="role_add" class="indPLCheck9" value="role/add"> <label for="role_add">Add</label>
 			                    		<input type="checkbox" <%if(role_permission.contains("role/delete")) {%>checked <%} %> name="role[]" id="role_delete" class="indPLCheck9" value="role/delete"> <label for="role_delete">Delete</label>
-			                    		<input type="checkbox" <%if(role_permission.contains("role/status")) {%>checked <%} %> name="role[]" id="role_permission" class="indPLCheck9" value="role/permission"> <label for="role_permission">Add Permission</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("role/permission")) {%>checked <%} %> name="role[]" id="role_permission" class="indPLCheck9" value="role/permission"> <label for="role_permission">Add Permission</label>
 			                    	</td>
 			                    </tr>
 			                    <tr>
