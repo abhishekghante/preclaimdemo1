@@ -210,32 +210,35 @@ ArrayList<String> user_permission = (ArrayList<String>)session.getAttribute("use
               </ul>
             </li>
             <%} %>
-            <%if(user_permission.contains("InvestigationType")){ %>
+            <%if(user_permission.contains("investigationType")){ %>
             <li class="nav-item <%if(details.getMain_menu().equals("Investigation Type")){%>active open<%}%>">
               <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="icon-grid"></i>
-                  <span class="title">Type of investigations</span>
+                  <span class="title">Investigation Types</span>
                   <span class="arrow "></span>
               </a>
               <ul class="sub-menu">
-                
+                <%if(user_permission.contains("investigationType/add")){ %>
                 <li class="nav-item <%if(details.getSub_menu1().equals("Add Investigation")){%>active<%}%>">
-                  <a href="${pageContext.request.contextPath}/InvestigationType/addInvestigationType" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/investigationType/addInvestigationType" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Investigation Type
                   </a>
                 </li>
-
+                <%} %>
+				<%if(user_permission.contains("investigationType/index")){ %>
                 <li class="nav-item <%if(details.getSub_menu1().equals("Pending Investigation Type")){%>active<%}%>">
-                  <a href="${pageContext.request.contextPath}/InvestigationType/pendingInvestigationType" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/investigationType/pendingInvestigationType" class="nav-link nav-toggle">
                     <i class="icon-clock"></i> Pending Investigation Type
                   </a>
                 </li>
-                
+                <%} %>
+                <%if(user_permission.contains("investigationType/index")){ %>
                 <li class="nav-item <%if(details.getSub_menu1().equals("Active Investigation Type")){%>active<%}%>">
-                  <a href="${pageContext.request.contextPath}/InvestigationType/activeInvestigationType" class="nav-link nav-toggle">
+                  <a href="${pageContext.request.contextPath}/investigationType/activeInvestigationType" class="nav-link nav-toggle">
                     <i class="icon-check"></i> Active Investigation Type
                   </a>
                 </li>
+                <%} %>
               </ul>
             </li>
             <%} %>

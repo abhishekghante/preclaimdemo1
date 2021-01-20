@@ -51,14 +51,14 @@ List<String> user_permission=(List<String>)session.getAttribute("user_permission
 </div>
 <script>
 function addInvestigationTypesubmit() {
-	<%if(!user_permission.contains("category/add")){%>
+	<%if(!user_permission.contains("ìnvestigationType/add")){%>
 		toastr.error("Access Denied","Error");
 		return false;
 	<%}%>
 	var investigationType   = $( '#add_investigation_type #investigationType' ).val();
     
     if(investigationType == ''){
-      toastr.error('Investigation Name English cannot be empty','Error');
+      toastr.error('Investigation Type cannot be blank','Error');
       return false;
     }
         var formdata = {"investigationType":investigationType}
@@ -78,8 +78,6 @@ function addInvestigationTypesubmit() {
               $("#addInvestigationTypesubmit").prop('disabled', false);
               toastr.success( 'Investigation Type added successfully.','Success' );
               $("form#add_investigation_type").trigger("reset");
-              $("#categoryImgEn").attr("src", '${pageContext.request.contextPath}/resources/uploads/default_img.png');
-              $("#categoryImgHin").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
             }
             else
             {

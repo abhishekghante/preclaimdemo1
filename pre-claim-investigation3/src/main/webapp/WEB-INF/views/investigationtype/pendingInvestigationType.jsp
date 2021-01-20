@@ -1,13 +1,14 @@
-   <%@page import="java.util.List" %>
+<%@page import="java.util.List" %>
 <%@page import="com.preclaim.models.InvestigationTypeList" %>
+<%@page import="com.preclaim.models.InvestigationType" %>
 <%
-	List<InvestigationTypeList>pending_list=(List<InvestigationTypeList>)session.getAttribute("pending_category");
-session.removeAttribute("pending_category");
-List<String>user_permission=(List<String>)session.getAttribute("user_permission");
-boolean allow_statusChg = user_permission.contains("category/status");
-boolean allow_delete = user_permission.contains("category/delete");
-InvestigationTypeList category =(InvestigationTypeList)session.getAttribute("category");
-session.removeAttribute("category");
+List<InvestigationTypeList>pending_list = (List<InvestigationTypeList>)session.getAttribute("pendingInvestigationType");
+session.removeAttribute("pendingInvestigationType");
+List<String>user_permission = (List<String>)session.getAttribute("user_permission");
+boolean allow_statusChg = user_permission.contains("investigationType/status");
+boolean allow_delete = user_permission.contains("investigationType/delete");
+InvestigationType editInvestigation = (InvestigationType)session.getAttribute("editInvestigation");
+session.removeAttribute("editInvestigation");
 %>
 
 <style type="text/css">
@@ -18,7 +19,6 @@ session.removeAttribute("category");
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<!-- <?php if( in_array( 'category/add', $permission_arr ) ) { ?>  -->
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="portlet box">
@@ -26,89 +26,21 @@ session.removeAttribute("category");
         <div class="caption">
           <i class="icon-users font-green-sharp"></i>
           <span class="caption-subject font-green-sharp sbold">
-          <%=category == null ? "Add " : "Update "%> investigations</span>
+          <%=editInvestigation == null ? "Add " : "Update "%> Investigation Type</span>
         </div>
       </div>
     </div>
     <div class="portlet light bordered">
       <div class="portlet-body">
         <div id="message_category"></div>
-        <form novalidate="" id="add_category_form" role="form" method="post" class="form-horizontal">
+        <form novalidate id="add_category_form" role="form" method="post" class="form-horizontal">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="col-md-4 control-label" for="categoryNameEn">Investigation Name (English) <span class="text-danger">*</span></label>
+                <label class="col-md-4 control-label" for="categoryNameEn">Investigation Type <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                   <input type="text" required id="categoryNameEn" name="categoryNameEn" maxlength="40" class="form-control" placeholder="investigations Name"
-                  value = "<%=category == null ? "" : category.getCategoryNameEn()%>">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-4 control-label">Investigation Image (English) </label>
-                <div class="col-md-8">
-                  <a href="javascript:void(0);">
-                    <!-- <?php
-                    if($categoryImgEn){
-                      $tmp = explode('/', $categoryImgEn);
-                      $file_name = end($tmp);
-                      if (file_exists('uploads/category/'.$file_name)) {
-                        $categoryImgEn = $categoryImgEn;
-                        $imgCatEngSty  = 'style="display: block;"';
-                      }else{
-                        $categoryImgEn = $assetUrl.'uploads/default_img.png';
-                        $imgCatEngSty  = '';
-                      }
-                    }else{
-                      $categoryImgEn = $assetUrl.'uploads/default_img.png';
-                      $imgCatEngSty  = '';
-                    }
-                    ?> -->
-                    <!-- <span <?= $imgCatEngSty; ?> data-imgID="categoryImgEn" data-delID="delImgMsgEn" data-ID="imgCatEng" id="enLblDelBtn" class="delete_btn" data-toggle="tooltip" data-toggle="tooltip" title="Remove"><i class="fa fa-remove"></i></span> -->
-                    <img src="${pageContext.request.contextPath}/resources/img/upload_img.png" id="categoryImgEn" style="height:100px;width:auto;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload" />
-                    <input type="hidden" name="delImgMsgEn" id="delImgMsgEn" value = "<%=category == null ? "" : category.getImgCatEng()%>"/>
-                    <input type="file" onchange="displayUploadImg(this, 'categoryImgEn', 'enLblDelBtn');" name="imgCatEng" id="imgCatEng" class="placeImg" accept="image/*" />
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="categoryNameHin">Investigation Name (Hindi) <span class="text-danger">*</span></label>
-                <div class="col-md-8">
-                  <input type="text" required="" name="categoryNameHin" id="categoryNameHin" maxlength="40" class="form-control" placeholder="investigations Name" value = "<%=category == null ? "" : category.getCategoryNameHin()%>">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-offset-4 col-md-6 control-label" for="isEnImageSame">
-                  <input type="checkbox"  name="isEnImageSame" id="isEnImageSame" value = "<%=category == null ? "" : category.getIsEnImageSame()%>"> 
-                  Same as English category Image
-                </label>
-              </div>
-              <div class="form-group">
-                <label class="col-md-4 control-label">Investigation Name (Hindi)</label>
-                <div class="col-md-8">
-                  <a href="javascript:void(0);">
-                    <!-- <?php
-                    if($categoryImgHin){
-                      $tmp2 = explode('/', $categoryImgHin);
-                      $file_name2 = end($tmp2);
-                      if (file_exists('uploads/category/'.$file_name2)) {
-                        $categoryImgHin = $categoryImgHin;
-                        $imgCatHinSty   = 'style="display: block;"';
-                      }else{
-                        $categoryImgHin = $assetUrl.'uploads/default_img.png';
-                        $imgCatHinSty   = '';
-                      }
-                    }else{
-                      $categoryImgHin = $assetUrl.'uploads/default_img.png';
-                      $imgCatHinSty   = '';
-                    }
-                    ?> -->	
-                    <!-- <span <?= $imgCatHinSty; ?> data-imgID="categoryImgHin" data-delID="delImgMsgHin" data-ID="imgCatHin" id="HinLblDelBtn" class="delete_btn" data-toggle="tooltip" data-toggle="tooltip" title="Remove"><i class="fa fa-remove"></i></span> -->
-                    <img src="${pageContext.request.contextPath}/resources/img/upload_img.png" id="categoryImgHin" style="height:100px;width: auto;" data-src="#" data-toggle="tooltip" data-toggle="tooltip" title="Click to upload" />
-                    <input type="hidden" name="delImgMsgHin" id="delImgMsgHin" value = "<%=category == null ? "" : category.getImgCatHin()%>" />
-                    <input type="file" onchange="displayUploadImg(this, 'categoryImgHin', 'HinLblDelBtn');" name="imgCatHin" id="imgCatHin" class="placeImg" accept="image/*" />
-                  </a>
+                  value = "<%= editInvestigation == null ? "" : editInvestigation.getInvestigationType()%>">
                 </div>
               </div>
             </div>
@@ -116,20 +48,14 @@ session.removeAttribute("category");
               <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                
-                 <%
-                                	if(category != null){
-                                %>
-                    <input type="hidden" value=<%=category.getCategoryId()%> id="categoryId" name="categoryId">
+                 <%if(editInvestigation != null){%>
+                    <input type="hidden" value=<%=editInvestigation.getInvestigationId()%> id="categoryId" name="categoryId">
                     <button class="btn btn-info" id="editcategorysubmit" type="submit">Update</button>
-                    <a href="${pageContext.request.contextPath}/category/pending_category" class="btn btn-danger" value="">Back</a>
-                  <%
-                  	}else{
-                  %> 
-                    <button class="btn btn-info" id="addcategorysubmit" type="submit">Add Category</button>
+                    <a href="${pageContext.request.contextPath}/category/pending_category" class="btn btn-danger">Back</a>
+                  <%}else{%> 
+                    <button class="btn btn-info" id="addcategorysubmit" type="submit">Add Investigation</button>
                     <button class="btn btn-danger" type="reset" value="">Clear</button>
-                  <%
-                  	}
-                  %>
+                  <%}%>
                 </div>
               </div>
             </div>
@@ -150,13 +76,9 @@ session.removeAttribute("category");
         </div>
         <div class="actions">
             <div class="btn-group">
-             <!--  <?php if( in_array( 'category/add', $permission_arr ) ) { ?>
-              <?php if($this->session->userdata(SYS_SESSION_ID) == SUPER_ADMIN_ID) { ?>  -->
               <a href="${pageContext.request.contextPath}/category/add_category" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
-             <!--  <?php } ?>
-              <?php } ?>  -->
             </div>
         </div>
       </div>
@@ -172,18 +94,12 @@ session.removeAttribute("category");
                       <tr class="tbl_head_bg">
                         <th class="head1 no-sort">#</th>
                         <th class="head1 no-sort">Investigation Name(En)</th>
-                        <th class="head1 no-sort">Investigation Name(Hindi)</th>
-                        <th class="head1 no-sort">Investigation Image(En)</th>
-                        <th class="head1 no-sort">Investigation Image(Hindi)</th>
                         <th class="head1 no-sort">Status</th>
                         <th class="head1 no-sort">Action</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr class="tbl_head_bg">
-                        <th class="head2 no-sort"></th>
-                        <th class="head2 no-sort"></th>
-                        <th class="head2 no-sort"></th>
                         <th class="head2 no-sort"></th>
                         <th class="head2 no-sort"></th>
                         <th class="head2 no-sort">Status</th>
@@ -193,23 +109,21 @@ session.removeAttribute("category");
                     <tbody>
                              <%
                              	if(pending_list!=null){ 
-                                                          for(InvestigationTypeList list_category : pending_list){
+                                	for(InvestigationTypeList list_category : pending_list){
                              %>
                             	<tr>
                             	<td><%=list_category.getSrNo() %></td>
-                            	<td><%=list_category.getCategoryNameEn() %></td>
-                            	<td><%=list_category.getImgCatEng() %></td>
-                            	<td><%=list_category.getImgCatHin() %></td>
-                            	<td><%=list_category.getStatus() %></td>
+                            	<td><%=list_category.getInvestigationType() %></td>
                             	<td><span class="label label-sm label-danger">Pending</span></td>
                             	<td>
-                            		<a href="${pageContext.request.contextPath}/category/pending_category?categoryId=<%=list_category.getCategoryId()%>" data-toggle="tooltip" title="Edit" 
+                            		<a href="${pageContext.request.contextPath}/investigationType/pendingInvestigationType?
+                            		investigationId=<%=list_category.getInvestigationId()%>" data-toggle="tooltip" title="Edit" 
                             	         class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
                             	        
-                            	    <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateCategoryStatus('<%=list_category.getCategoryId() %>',1,<%=allow_statusChg%>);" 
+                            	    <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateCategoryStatus('<%=list_category.getInvestigationId() %>',1,<%=allow_statusChg%>);" 
                             	    	  class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>    
                             	        
-                            	    <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteCategory('<%=list_category.getCategoryId() %>',<%=allow_delete%>);" 
+                            	    <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteCategory('<%=list_category.getInvestigationId() %>',<%=allow_delete%>);" 
                             	    	   class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
                             	        </td>
                             	        
@@ -233,38 +147,6 @@ session.removeAttribute("category");
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-  var csrf_test_name = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  var csrf_hash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  /*
-  table = $('#pending_category_list').DataTable({
-      language: {
-        processing: "<img src='<?php echo base_url();?>${pageContext.request.contextPath}/resources/img/loading.gif'>",
-      },
-      "processing": true, //Feature control the processing indicator.
-      "serverSide": true, //Feature control DataTables' server-side processing mode.
-      "order": [], //Initial no order.
-      'autoWidth': false,
-      "ajax": {
-          "data": function(d) {
-            d.csrf_test_name = csrf_hash;
-          },
-          "url": "<?php echo site_url('/category/pendingCategoryTableResponse')?>",
-          "type": "POST"
-      },
-      "dom": "B lrt<'row' <'col-sm-5' i><'col-sm-7' p>>",
-      "lengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
-      //Set column definition initialisation properties.
-      "columnDefs": [{
-          "targets": [0,6],
-          "orderable": false, //set not orderable
-      },
-      {
-          "targets": [0,6],
-          "searchable": false, //set orderable
-      } ],
-      buttons: []
-  });
-  */
   var i = 0;
   $('#pending_category_list tfoot th').each( function () {
     if( i == 1 || i == 2 ){
@@ -296,43 +178,7 @@ $(document).ready(function() {
   });
 });
 </script>
-<script type="text/javascript">
-function displayUploadImg(input, PlaceholderID, deleteID) {
-  if (input.files && input.files[0]) {
-    var upfile = input.files[0];
-    var imagefile = upfile.type;
-    var match= ["image/jpeg","image/png","image/jpg"];
-    if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))){
-        alert('Please select a valid image file (JPEG/JPG/PNG).');
-        $("#"+input.id).val('');
-        return false;
-    }
-    var file_size = upfile.size/1024/1024;
-    if(file_size < 5){
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        $('#'+PlaceholderID)
-            .attr('src', e.target.result)
-            .width('auto')
-            .height(100);
-        };
-      reader.readAsDataURL(upfile);
-      $('#'+deleteID).show();
-    }else{
-      alert('File too large. File must be less than 5 MB.');
-      $("#"+input.id).val('');
-      return false;
-    }
-  }
-}
 $(document).ready(function(){
-  $("#categoryImgEn").on('click', function() {
-    $("#imgCatEng").trigger('click');
-  });
-  $("#categoryImgHin").on('click', function() {
-    $('input[name=isEnImageSame]').prop('checked', false);
-    $("#imgCatHin").trigger('click');
-  });
   $(".delete_btn").on('click', function() {
     var msgImgID = $(this).attr('data-imgID');
     var imgID    = $(this).attr('data-ID');
@@ -344,9 +190,6 @@ $(document).ready(function(){
   });
   $("#add_category_form").on('submit', function(e){
     e.preventDefault();
-    var table2      = $('#pending_category_list').DataTable();
-    var categoryNameEn   = $( '#add_category_form #categoryNameEn' ).val();
-    var categoryNameHin = $( '#add_category_form #categoryNameHin' ).val();
     var categoryId       = $( '#add_category_form #categoryId' ).val();
     if(categoryNameEn == ''){
       toastr.error('Category Name English Cannot be empty','Error');

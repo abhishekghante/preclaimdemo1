@@ -11,120 +11,113 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.preclaim.dao.CategoryDao;
+import com.preclaim.dao.InvestigationTypeDao;
 import com.preclaim.dao.UserDAO;
 import com.preclaim.models.InvestigationType;
 import com.preclaim.models.InvestigationTypeList;
 import com.preclaim.models.ScreenDetails;
+import com.preclaim.models.UserDetails;
 
 @Controller
-@RequestMapping(value = "/category")
+@RequestMapping(value = "/investigationType")
 public class InvestigationTypeController {
 
 	@Autowired
-	private CategoryDao categorydao;
+	private InvestigationTypeDao investigationTypedao;
 	
 	@Autowired
 	private UserDAO userDao;
 
-	@RequestMapping(value = "/add_category", method = RequestMethod.GET)
-	public String add_category(HttpSession session) {
+	@RequestMapping(value = "/addInvestigationType", method = RequestMethod.GET)
+	public String addInvestigationType(HttpSession session) {
 		session.removeAttribute("ScreenDetails");
 		ScreenDetails details = new ScreenDetails();
-		details.setScreen_name("../category/add_category.jsp");
-		details.setScreen_title("Add Category");
-		details.setMain_menu("Type of Investigations");
-		details.setSub_menu1("Add Investigation");
-		details.setSub_menu2("Manage Category");
-		details.setSub_menu2_path("/category/pending_category");
+		details.setScreen_name("../investigationType/addInvestigationType.jsp");
+		details.setScreen_title("Add Investigation Type");
+		details.setMain_menu("Investigation Type");
+		details.setSub_menu1("Add Investigation Type");
+		details.setSub_menu2("Manage Investigation Type");
+		details.setSub_menu2_path("/investigationType/pendingInvestigationType");
 		session.setAttribute("ScreenDetails", details);
 		return "common/templatecontent";
 	}
-/*
-	@RequestMapping(value = "/pending_category", method = RequestMethod.GET)
-	public String pending_category(HttpSession session,HttpServletRequest request) {
+
+	@RequestMapping(value = "/pendingInvestigationType", method = RequestMethod.GET)
+	public String pendingInvestigationType(HttpSession session,HttpServletRequest request) {
 		session.removeAttribute("ScreenDetails");
 		ScreenDetails details = new ScreenDetails();
-		details.setScreen_name("../category/pending_category.jsp");
-		details.setScreen_title("Category Lists");
-		details.setMain_menu("Type of Investigations");
-		details.setSub_menu1("Pending Investigations");
+		details.setScreen_name("../investigationType/pendingInvestigationType.jsp");
+		details.setScreen_title("Investigation Type Lists");
+		details.setMain_menu("Investigation Type");
+		details.setSub_menu1("Pending Investigation Type");
 		session.setAttribute("ScreenDetails", details);
-		List<InvestigationTypeList> pending_category = categorydao.category_list(0);
-		session.setAttribute("pending_category", pending_category);
 		
-		if(request.getParameter("categoryId")!=null) {
-		InvestigationType category=new InvestigationType();
-		category.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
-		category.setCategoryNameEn(request.getParameter("imgCatEng"));
-		category.setImgCatEng(request.getParameter("categoryImgEn"));
-		category.setCategoryNameHin(request.getParameter("categoryNameHin"));
-		category.setImgCatHin(request.getParameter("delImgMsgHin"));
-		category.setIsEnImageSame(Integer.parseInt(request.getParameter("isEnImageSame")));		
-		session.setAttribute("category", category);
+		List<InvestigationTypeList> pendingInvestigationType = investigationTypedao.InvestigationType_list(0);
+		session.setAttribute("pendingInvestigationType", pendingInvestigationType);
+		
+		if(request.getParameter("InvestigationTypeId")!=null)
+		{
+			int investigationId = Integer.parseInt(request.getParameter(""));
+			String investigationType = request.getParameter("");
+			InvestigationType editInvestigation = new InvestigationType(investigationId, investigationType);
+			session.setAttribute("editInvestigation",editInvestigation);
 		}
 		return "common/templatecontent";
 	}
 
-	@RequestMapping(value = "/active_category", method = RequestMethod.GET)
-	public String active_category(HttpSession session) {
+	@RequestMapping(value = "/activeInvestigationType", method = RequestMethod.GET)
+	public String activeInvestigationType(HttpSession session) {
 		session.removeAttribute("ScreenDetails");
 		ScreenDetails details = new ScreenDetails();
-		details.setScreen_name("../category/active_category.jsp");
-		details.setScreen_title("Category Lists");
-		details.setMain_menu("Type of Investigations");
-		details.setSub_menu1("Active investigations");
+		details.setScreen_name("../investigationType/active_InvestigationType.jsp");
+		details.setScreen_title("Investigation Type Lists");
+		details.setMain_menu("Investigation Type");
+		details.setSub_menu1("Active Investigation Type");
 		session.setAttribute("ScreenDetails", details);
-		List<InvestigationTypeList> activeList = categorydao.category_list(1);
+		List<InvestigationTypeList> activeList = investigationTypedao.InvestigationType_list(1);
 		session.setAttribute("active_list", activeList);
 		return "common/templatecontent";
 	}
 
-	@RequestMapping(value = "/addCategory", method = RequestMethod.POST)
-	public @ResponseBody String addCategory(HttpServletRequest request) {
-		String categoryNameEn = request.getParameter("categoryNameEn");
-		String imgCAtEng = request.getParameter("categoryImgEn");
-		String categoryNameHin = request.getParameter("categoryNameHin");
-		String imgCatHin = request.getParameter("categoryImgHin");
-		int isEnImageSame = Integer.parseInt(request.getParameter("isEnImageSame"));
-		InvestigationType category = new InvestigationType();
-		category.setCategoryNameEn(categoryNameEn);
-		category.setImgCatEng(imgCAtEng);
-		category.setCategoryNameHin(categoryNameHin);
-		category.setImgCatEng(imgCAtEng);
-		category.setIsEnImageSame(isEnImageSame);
-		userDao.activity_log("CATEGORY", 0, "ADD", 0, request.getRemoteAddr());
-		return categorydao.add_category(category);
+	@RequestMapping(value = "/addInvestigation", method = RequestMethod.POST)
+	public @ResponseBody String addInvestigation(HttpSession session, HttpServletRequest request) {
+		InvestigationType investigationType = new InvestigationType();
+		investigationType.setInvestigationType(request.getParameter("investigationType"));
+		UserDetails user = (UserDetails) session.getAttribute("User_Login");
+		userDao.activity_log("INVESTIGATION TYPE", 0, "ADD", user.getUserID(), request.getRemoteAddr());
+		return investigationTypedao.add_InvestigationType(investigationType, user.getUserID());
 	}
 	
-	@RequestMapping(value ="/updateCategory",method = RequestMethod.POST )
-    public @ResponseBody String updatetCategory(HttpServletRequest request) {
-	 int categoryId=Integer.parseInt(request.getParameter("categoryId"));
-	 String categoryNameEn=request.getParameter("categoryNameEn");
-	 String categoryNameThai=request.getParameter("categoryNameHin");
-	 String categoryImgEn=request.getParameter("categoryImgEn");
-	 String categoryImgThai=request.getParameter("categoryImgHin"); 
-     String message=categorydao.updateCategory(categoryNameEn, categoryNameThai, categoryImgEn, categoryImgThai,categoryId);	
-     userDao.activity_log("CATEGORY", categoryId, "Update", 0, request.getRemoteAddr());
+	@RequestMapping(value ="/updateInvestigation",method = RequestMethod.POST )
+    public @ResponseBody String updateInvestigation(HttpSession session, HttpServletRequest request) {
+	 int investigationTypeId = Integer.parseInt(request.getParameter("InvestigationTypeId"));
+	 UserDetails user = (UserDetails) session.getAttribute("User_Login");
+	 userDao.activity_log("INVESTIGATION TYPE", investigationTypeId, "UPDATE", user.getUserID(), 
+			 request.getRemoteAddr());
+	 return "****";
+	}
+	
+	@RequestMapping(value ="/deleteInvestigation",method = RequestMethod.POST )
+    public @ResponseBody String deleteInvestigation(HttpSession session, HttpServletRequest request) {
+	 int investigationTypeId = Integer.parseInt(request.getParameter("InvestigationTypeId"));	
+     String message = investigationTypedao.deleteInvestigationType(investigationTypeId);	
+     UserDetails user = (UserDetails) session.getAttribute("User_Login");
+	 userDao.activity_log("INVESTIGATION TYPE", investigationTypeId, "DELETE", user.getUserID(), 
+			 request.getRemoteAddr());
 	 return message;
 	}
 	
-	@RequestMapping(value ="/deleteCategory",method = RequestMethod.POST )
-    public @ResponseBody String deleteCategory(HttpServletRequest request) {
-	 int categoryId=Integer.parseInt(request.getParameter("categoryId"));	
-     String message=categorydao.deleteCategory(categoryId);	
-     userDao.activity_log("CATEGORY", categoryId, "DELETE", 0, request.getRemoteAddr());
-	 return message;
-	}
-	
-	@RequestMapping(value = "/updateCategoryStatus",method = RequestMethod.POST)
-	public @ResponseBody String updateCategoryStatus(HttpServletRequest request) {
-		int status=Integer.parseInt(request.getParameter("status"));
-		int categoryId=Integer.parseInt(request.getParameter("categoryId"));
-		String message=categorydao.updateCategoryStatus(status, categoryId);
-		userDao.activity_log("CATEGORY", categoryId, status == 1 ? "ACTIVE" : "DEACTIVE", 0, request.getRemoteAddr());
+	@RequestMapping(value = "/updateInvestigationStatus",method = RequestMethod.POST)
+	public @ResponseBody String updateCategoryStatus(HttpSession session, HttpServletRequest request) {
+		int status = Integer.parseInt(request.getParameter("status"));
+		int investigationTypeId = Integer.parseInt(request.getParameter("InvestigationTypeId"));
+		UserDetails user = (UserDetails) session.getAttribute("User_Login");		 
+		String message = investigationTypedao.updateInvestigationTypeStatus(status, user.getUserID(), 
+				investigationTypeId);
+		userDao.activity_log("INVESTIGATION TYPE", investigationTypeId, status == 1 ? "ACTIVE" : "DEACTIVE", 
+				user.getUserID(), request.getRemoteAddr());
 		return message;
 	}
-	 */ 
+	  
    
 }

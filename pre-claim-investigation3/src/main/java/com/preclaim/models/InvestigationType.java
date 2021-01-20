@@ -15,6 +15,15 @@ public class InvestigationType {
 		updatedBy = 0;
 		status = 0;
 	}
+	
+	public InvestigationType(int investigationId, String investigationType) {
+		
+		this.investigationId = investigationId;
+		this.investigationType = investigationType;
+		createdBy = 0;
+		updatedBy = 0;
+		status = 0;
+	}
 
 	public int getInvestigationId() {
 		return investigationId;
