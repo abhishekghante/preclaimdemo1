@@ -37,9 +37,10 @@ session.removeAttribute("editInvestigation");
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="col-md-4 control-label" for="categoryNameEn">Investigation Type <span class="text-danger">*</span></label>
+                <label class="col-md-4 control-label" for="investigationType">Investigation Type <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                  <input type="text" required id="categoryNameEn" name="categoryNameEn" maxlength="40" class="form-control" placeholder="investigations Name"
+                  <input type="text" required id="investigationType" name="investigationType" maxlength="40" class="form-control" 
+                  	placeholder="Investigation Type"
                   value = "<%= editInvestigation == null ? "" : editInvestigation.getInvestigationType()%>">
                 </div>
               </div>
@@ -76,7 +77,7 @@ session.removeAttribute("editInvestigation");
         </div>
         <div class="actions">
             <div class="btn-group">
-              <a href="${pageContext.request.contextPath}/category/add_category" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/investigationType/addInvestigationType" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
             </div>
@@ -93,7 +94,7 @@ session.removeAttribute("editInvestigation");
                     <thead>
                       <tr class="tbl_head_bg">
                         <th class="head1 no-sort">#</th>
-                        <th class="head1 no-sort">Investigation Name(En)</th>
+                        <th class="head1 no-sort">Investigation Name</th>
                         <th class="head1 no-sort">Status</th>
                         <th class="head1 no-sort">Action</th>
                       </tr>
@@ -120,10 +121,10 @@ session.removeAttribute("editInvestigation");
                             		investigationId=<%=list_category.getInvestigationId()%>" data-toggle="tooltip" title="Edit" 
                             	         class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
                             	        
-                            	    <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateCategoryStatus('<%=list_category.getInvestigationId() %>',1,<%=allow_statusChg%>);" 
+                            	    <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateInvestigationTypeStatus('<%=list_category.getInvestigationId() %>',1,<%=allow_statusChg%>);" 
                             	    	  class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>    
                             	        
-                            	    <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteCategory('<%=list_category.getInvestigationId() %>',<%=allow_delete%>);" 
+                            	    <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteInvestigationType('<%=list_category.getInvestigationId() %>',<%=allow_delete%>);" 
                             	    	   class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
                             	        </td>
                             	        
@@ -131,9 +132,7 @@ session.removeAttribute("editInvestigation");
                             	 
                             <%	 
                              }
-                             } %>
-                                                        
-                    
+                             } %>                    
                     </tbody>
                   </table>
                 </div>
@@ -178,32 +177,21 @@ $(document).ready(function() {
   });
 });
 </script>
+<script>
 $(document).ready(function(){
-  $(".delete_btn").on('click', function() {
-    var msgImgID = $(this).attr('data-imgID');
-    var imgID    = $(this).attr('data-ID');
-    var delImgID = $(this).attr('data-delID');
-    $("#"+msgImgID).attr("src", adminurl+'uploads/default_img.png');
-    $("#"+imgID).val('');
-    $("#"+delImgID).val(1);
-    $("#"+this.id).hide();
-  });
   $("#add_category_form").on('submit', function(e){
     e.preventDefault();
-    var categoryId       = $( '#add_category_form #categoryId' ).val();
-    if(categoryNameEn == ''){
-      toastr.error('Category Name English Cannot be empty','Error');
+    var investigationId = $('#add_category_form #investigationId').val();
+    var investigationType = $('#add_category_form #investigationType').val(); 
+    if(investigationType == '')
+    {
+      toastr.error('Investigation Type cannot be blank','Error');
       return false;
     }
-    if(categoryNameHin == ''){
-      toastr.error('investigations Name Hindi Cannot be empty','Error');
-      return false;
-    }
-    if(categoryId){
-      if(categoryNameEn && categoryNameHin && categoryId){
+      if(investigationId){
         $.ajax({
           type: "POST",
-          url: '${pageContext.request.contextPath}/category/updateCategory',
+          url: '${pageContext.request.contextPath}/investigationType/updateInvestigationType',
           data: new FormData(this),
           contentType: false,
           cache: false,
@@ -214,14 +202,15 @@ $(document).ready(function(){
               $('#add_category_form').css("opacity",".5");
           },
           success: function( data ) {
-            if(data == 1){
+            if(data == "****")
+            {
               $("#editcategorysubmit").html('Update');
               $("#editcategorysubmit").prop('disabled', false);
               toastr.success( 'investigations Updated successfully.','Success' );
-              $("#delImgMsgEn").val(0);
-              $("#delImgMsgHin").val(0);
-              table2.ajax.reload();
-            }else{
+              location.reload();
+            }
+            else
+            {
               toastr.error( data,'Error' );
               $("#editcategorysubmit").html('Update');
               $("#editcategorysubmit").prop('disabled', false);
@@ -230,11 +219,11 @@ $(document).ready(function(){
           }
         });
       }
-    }else{
-      if(categoryNameEn && categoryNameHin){
+    else
+    {
         $.ajax({
           type: "POST",
-          url: '${pageContext.request.contextPath}/category/addCategory',
+          url: '${pageContext.request.contextPath}/investigationType/addInvestigationType',
           data: new FormData(this),
           contentType: false,
           cache: false,
@@ -245,15 +234,16 @@ $(document).ready(function(){
               $('#add_category_form').css("opacity",".5");
           },
           success: function( data ) {
-            if(data == 1){
+            if(data == "****")
+            {
               $("#addcategorysubmit").html('Add investigations');
               $("#addcategorysubmit").prop('disabled', false);
               toastr.success( 'investigations Added successfully.','Success' );
               $("form#add_category_form").trigger("reset");
-              $("#categoryImgEn").attr("src", adminurl+'uploads/default_img.png');
-              $("#categoryImgHin").attr("src", adminurl+'uploads/default_img.png');
-              table2.ajax.reload();
-            }else{
+              location.reload();
+            }
+            else
+            {
               toastr.error( data,'Error' );
               $("#addcategorysubmit").html('Add investigations');
               $("#addcategorysubmit").prop('disabled', false);
@@ -262,7 +252,6 @@ $(document).ready(function(){
           }
         });
       }
-    }
   });
 });
 </script>

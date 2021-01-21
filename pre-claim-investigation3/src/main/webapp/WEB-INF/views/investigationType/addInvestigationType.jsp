@@ -1,6 +1,6 @@
 <%@page import="java.util.List"%>
 <%
-List<String> user_permission=(List<String>)session.getAttribute("user_permission");
+List<String> user_permission = (List<String>)session.getAttribute("user_permission");
 %>
 <style type="text/css">
 .placeImg { display:none !important;}
@@ -16,7 +16,9 @@ List<String> user_permission=(List<String>)session.getAttribute("user_permission
         </div>
         <div class="actions">
           <div class="btn-group">
-            <a href="${pageContext.request.contextPath}/category/pending_category" data-toggle="tooltip" title="Back" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Back">
+            <a href="${pageContext.request.contextPath}/investigationType/pendingInvestigationType" data-toggle="tooltip" 
+            	title="Back" class="btn green-haze btn-outline btn-xs pull-right" style="margin-right: 5px;" 
+            	data-original-title="Back">
               <i class="fa fa-reply"></i>
             </a>
           </div>
@@ -41,7 +43,8 @@ List<String> user_permission=(List<String>)session.getAttribute("user_permission
         </div>
         <div class="box-footer">
           <div class="col-md-offset-2 col-md-10">
-            <button class="btn btn-info" id="addInvestigationTypesubmit" type="submit">Add Investigation Type</button>
+            <button class="btn btn-info" id="addInvestigationTypesubmit" type="button"
+            	onClick = "return addInvestigationTypesubmit();">Add Investigation</button>
             <button class="btn btn-danger" type="reset" value="">Clear</button>
           </div>
         </div>
@@ -56,25 +59,26 @@ function addInvestigationTypesubmit() {
 		return false;
 	<%}%>
 	var investigationType   = $( '#add_investigation_type #investigationType' ).val();
-    
-    if(investigationType == ''){
+    if(investigationType == '')
+    {
       toastr.error('Investigation Type cannot be blank','Error');
       return false;
     }
         var formdata = {"investigationType":investigationType}
     	$.ajax({
           type: "POST",
-          url: 'addInvestigationType',
+          url: 'addInvestigation',
           data: formdata,
           beforeSend: function() { 
               $("#addInvestigationTypesubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
               $("#addInvestigationTypesubmit").prop('disabled', true);
               $('#add_investigation_type').css("opacity",".5");
           },
-          success: function( data ) {
+          success: function( data ) 
+          {
             if(data == "****")
             {
-              $("#addInvestigationTypesubmit").html('Add investigations');
+              $("#addInvestigationTypesubmit").html('Add Investigation');
               $("#addInvestigationTypesubmit").prop('disabled', false);
               toastr.success( 'Investigation Type added successfully.','Success' );
               $("form#add_investigation_type").trigger("reset");
@@ -82,12 +86,11 @@ function addInvestigationTypesubmit() {
             else
             {
               toastr.error( data,'Error' );
-              $("#addInvestigationTypesubmit").html('Add Investigation Type');
+              $("#addInvestigationTypesubmit").html('Add Investigation');
               $("#addInvestigationTypesubmit").prop('disabled', false);
             }
             $('#add_investigation_type').css("opacity","");
           }
         });
     }
-  }
 </script>

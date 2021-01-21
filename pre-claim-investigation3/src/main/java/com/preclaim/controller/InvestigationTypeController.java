@@ -69,7 +69,7 @@ public class InvestigationTypeController {
 	public String activeInvestigationType(HttpSession session) {
 		session.removeAttribute("ScreenDetails");
 		ScreenDetails details = new ScreenDetails();
-		details.setScreen_name("../investigationType/active_InvestigationType.jsp");
+		details.setScreen_name("../investigationType/activeInvestigationType.jsp");
 		details.setScreen_title("Investigation Type Lists");
 		details.setMain_menu("Investigation Type");
 		details.setSub_menu1("Active Investigation Type");
@@ -99,10 +99,10 @@ public class InvestigationTypeController {
 	
 	@RequestMapping(value ="/deleteInvestigation",method = RequestMethod.POST )
     public @ResponseBody String deleteInvestigation(HttpSession session, HttpServletRequest request) {
-	 int investigationTypeId = Integer.parseInt(request.getParameter("InvestigationTypeId"));	
-     String message = investigationTypedao.deleteInvestigationType(investigationTypeId);	
+	 int investigationId = Integer.parseInt(request.getParameter("investigationId"));	
+     String message = investigationTypedao.deleteInvestigationType(investigationId);	
      UserDetails user = (UserDetails) session.getAttribute("User_Login");
-	 userDao.activity_log("INVESTIGATION TYPE", investigationTypeId, "DELETE", user.getUserID(), 
+	 userDao.activity_log("INVESTIGATION TYPE", investigationId, "DELETE", user.getUserID(), 
 			 request.getRemoteAddr());
 	 return message;
 	}
@@ -110,11 +110,11 @@ public class InvestigationTypeController {
 	@RequestMapping(value = "/updateInvestigationStatus",method = RequestMethod.POST)
 	public @ResponseBody String updateCategoryStatus(HttpSession session, HttpServletRequest request) {
 		int status = Integer.parseInt(request.getParameter("status"));
-		int investigationTypeId = Integer.parseInt(request.getParameter("InvestigationTypeId"));
+		int investigationId = Integer.parseInt(request.getParameter("investigationId"));
 		UserDetails user = (UserDetails) session.getAttribute("User_Login");		 
 		String message = investigationTypedao.updateInvestigationTypeStatus(status, user.getUserID(), 
-				investigationTypeId);
-		userDao.activity_log("INVESTIGATION TYPE", investigationTypeId, status == 1 ? "ACTIVE" : "DEACTIVE", 
+				investigationId);
+		userDao.activity_log("INVESTIGATION TYPE", investigationId, status == 1 ? "ACTIVE" : "DEACTIVE", 
 				user.getUserID(), request.getRemoteAddr());
 		return message;
 	}

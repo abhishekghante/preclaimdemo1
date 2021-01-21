@@ -248,7 +248,7 @@ function updateRegionStatus( regionId, status, checkAuthority ) {
     });
 }
 //DELETE CATEGORY
-function deleteCategory( categoryId,checkAuthority) {
+function deleteInvestigationType(investigationId, checkAuthority) {
 	if(!checkAuthority)
 	{
 		toastr.error("Access Denied", "Error");
@@ -257,23 +257,23 @@ function deleteCategory( categoryId,checkAuthority) {
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
-    $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal'+categoryId+'" class="btn green">Yes</button>' );
+    $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal'+investigationId+'" class="btn green">Yes</button>' );
     $( '#continuemodal'+categoryId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'deleteCategory',
-            data : { 'categoryId' : categoryId },
+            url  : 'deleteInvestigation',
+            data : { 'investigationId' : investigationId },
             beforeSend: function() { 
-                $("#continuemodal"+categoryId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
-                $("#continuemodal"+categoryId).prop('disabled', true);
+                $("#continuemodal"+investigation).html('<img src="../resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+investigation).prop('disabled', true);
             },
             success : function( msg ) {
-                $("#continuemodal"+categoryId).html('Yes');
-                $("#continuemodal"+categoryId).prop('disabled', false);
+                $("#continuemodal"+investigation).html('Yes');
+                $("#continuemodal"+investigation).prop('disabled', false);
                 $('#small_modal').modal('hide');
                 if(msg == "****")
                 {
-                	toastr.error("Category deleted successfully", "Success");
+                	toastr.error("Investigation Type deleted successfully", "Success");
                 	location.reload();
                 }
                 else
@@ -283,45 +283,40 @@ function deleteCategory( categoryId,checkAuthority) {
         return false;
     });
 }
-function updateCategoryStatus( categoryId, status, checkAuthority ) {
+function updateInvestigationTypeStatus(investigationId, status, checkAuthority ) {
 	if(!checkAuthority)
 	{
 		toastr.error("Access Denied", "Error");
 		return false;
 	}
-    if(status == 1){
+    if(status == 1)
         $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
-    }else{
+    else
         $( '#sm_modal_body' ).html( 'Do you really want to deactivate?' );
-    }
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
-    $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal'+categoryId+'" class="btn green">Yes</button>' );
-    $( '#continuemodal'+categoryId ).click( function() {
+    $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal'+investigationId+'" class="btn green">Yes</button>' );
+    $( '#continuemodal'+investigationId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'updateCategoryStatus',
-            data : { 'categoryId' : categoryId, 'status' : status },
+            url  : 'updateInvestigationStatus',
+            data : { 'investigationId' : investigationId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+categoryId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
-                $("#continuemodal"+categoryId).prop('disabled', true);
+                $("#continuemodal"+investigationId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+investigationId).prop('disabled', true);
             },
-            success : function( msg ) {
-                if(msg=="****"){
-                toastr.success("User updated successfully",'success');
-                $("#continuemodal"+categoryId).html('Yes');
-                $("#continuemodal"+categoryId).prop('disabled', false);
-                $('#small_modal').modal('hide');
-                if(msg == "****")
+            success : function( msg ) 
+            {
+                if(msg=="****")
                 {
-                	toastr.error("Category status updated successfully", "Success");
-                	location.reload();
-                }
-                else
-                	toastr.error(msg,"Error");
-            }
-            else
-             toastr.error(msg,Error);
+	                $("#continuemodal"+investigationId).html('Yes');
+	                $("#continuemodal"+investigationId).prop('disabled', false);
+	                $('#small_modal').modal('hide');
+	                toastr.error("Investigation status updated successfully", "Success");
+	                location.reload();
+            	}
+            	else
+             		toastr.error(msg,Error);
             }
         });
     });
@@ -671,38 +666,7 @@ function updateDashMessageStatus( msgId, status, checkAuthority  ) {
         });
     });
 }
-function updateDashCategoryStatus( categoryId, status, checkAuthority  ) {
-  	if(!checkAuthority)
-	{
-		toastr.error("Access Denied", "Error");
-		return false;
-	}  
-	if(status == 1){
-        $( '#sm_modal_body' ).html( 'Do you really want to activate?' );
-    }else{
-        $( '#sm_modal_body' ).html( 'Do you really want to Reject?' );
-    }
-    $( '#small_modal' ).modal();
-    $( '#sm_modal_title' ).html( 'Are you Sure?' );
-    $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal'+categoryId+'" class="btn green">Yes</button>' );
-    $( '#continuemodal'+categoryId ).click( function() {
-        $.ajax({
-            type : 'POST',
-            url  : 'updateCategoryStatus',
-            data : { 'categoryId' : categoryId, 'status' : status },
-            beforeSend: function() { 
-                $("#continuemodal"+categoryId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
-                $("#continuemodal"+categoryId).prop('disabled', true);
-            },
-            success : function( msg ) {
-                $("#continuemodal"+categoryId).html('Yes');
-                $("#continuemodal"+categoryId).prop('disabled', false);
-                $('#small_modal').modal('hide');
-                ajaxDashCategory();
-            }
-        });
-    });
-}
+
 function ajaxDashMessage() {
     var data = {}
     $.ajax({

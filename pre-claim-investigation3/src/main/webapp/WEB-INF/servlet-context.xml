@@ -57,7 +57,7 @@
  		<beans:property name="template" ref="jt"/>    
 	</beans:bean>
 	
-	<beans:bean id="messagedao" class="com.preclaim.dao.MessageDaoImpl" >
+	<beans:bean id="casedao" class="com.preclaim.dao.CaseDaoImpl" >
  		<beans:property name="template" ref="jt"/>    
 	</beans:bean>
 	

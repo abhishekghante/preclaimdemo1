@@ -20,7 +20,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.preclaim.config.Config;
 import com.preclaim.dao.AppUserDao;
-import com.preclaim.dao.MessageDao;
 import com.preclaim.dao.UserDAO;
 import com.preclaim.models.ScreenDetails;
 
@@ -30,9 +29,6 @@ public class AppUserController {
 	
 	@Autowired
 	AppUserDao appuserDao;
-	
-	@Autowired
-	MessageDao messageDao;
 	
 	@Autowired
 	UserDAO userDao;
@@ -48,9 +44,7 @@ public class AppUserController {
     	details.setSub_menu1("");
     	session.setAttribute("ScreenDetails", details);
     	session.setAttribute("AppUserList", appuserDao.getAppuserList());
-    	session.setAttribute("region_list", messageDao.getActiveRegionlist());
-    	session.setAttribute("channel_list", messageDao.getActiveChannellist());
-		return "common/templatecontent";
+    	return "common/templatecontent";
 	}
 	
 	@RequestMapping(value = "/import")
@@ -100,9 +94,7 @@ public class AppUserController {
     	details.setSuccess_message1("All users deleted successfully");
     	session.setAttribute("ScreenDetails", details);
     	session.setAttribute("AppUserList", appuserDao.getAppuserList());
-    	session.setAttribute("region_list", messageDao.getActiveRegionlist());
-    	session.setAttribute("channel_list", messageDao.getActiveChannellist());
-		return "common/templatecontent";
+    	return "common/templatecontent";
 	}
 	
 	@RequestMapping(value = "/importData", method = RequestMethod.POST)

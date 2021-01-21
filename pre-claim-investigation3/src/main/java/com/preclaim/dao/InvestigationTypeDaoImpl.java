@@ -28,7 +28,7 @@ public class InvestigationTypeDaoImpl implements InvestigationTypeDao {
 
 		try {
 			String sql = "INSERT INTO InvestigationType_lists(investigationType, createdBy, createdDate"
-					+ ", updatedDate, updatedBy, status) values(?,?,now(),now(),?,?)";
+					+ ", updatedDate, updatedBy, status) values(?, ?, now(), now(), ?, ?)";
 			this.template.update(sql,investigationType.getInvestigationType(), userId, 0, 0);
 		} 
 		catch (Exception e) 
@@ -51,7 +51,7 @@ public class InvestigationTypeDaoImpl implements InvestigationTypeDao {
 			InvestigationTypeList investigationTypeList = new InvestigationTypeList();
 			investigationTypeList.setSrNo(rowNum + 1);
 			investigationTypeList.setInvestigationId(rs.getInt("investigationId"));
-			investigationTypeList.setInvestigationType(rs.getString("invesstigationType"));
+			investigationTypeList.setInvestigationType(rs.getString("investigationType"));
 			return investigationTypeList;
 		});
 	}
@@ -61,8 +61,8 @@ public class InvestigationTypeDaoImpl implements InvestigationTypeDao {
 		try 
 		{
 			String sql = "UPDATE investigation_type SET status = ?, updatedDate = now(),"
-					+ " updatedBy = ? where InvestigationTypeId = ?";
-			this.template.update(sql, investigationId, status);
+					+ " updatedBy = ? where investigationId = ?";
+			this.template.update(sql, status, userId, investigationId);
 		} catch (Exception e) {
 			e.printStackTrace();
             System.out.println("Error updating Investigation status. Kindly contact system administrator");
@@ -74,7 +74,7 @@ public class InvestigationTypeDaoImpl implements InvestigationTypeDao {
 	public String deleteInvestigationType(int investigationId) {
 		try 
 		{
-			String sql = "DELETE FROM investigation_type WHERE InvestigationTypeId = ?";
+			String sql = "DELETE FROM investigation_type WHERE investigationId = ?";
 			this.template.update(sql,investigationId);
 		}
 		catch(Exception e) {
