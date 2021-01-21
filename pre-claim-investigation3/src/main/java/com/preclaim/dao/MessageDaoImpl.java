@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.preclaim.models.CaseDetailList;
 import com.preclaim.models.CaseDetails;
 import com.preclaim.models.Channel;
 import com.preclaim.models.Group;
@@ -115,28 +116,28 @@ public class MessageDaoImpl implements MessageDao {
 	}
 
 	@Override
-	public List<MessageList> getMessageList(int status) {
+	public List<CaseDetailList> getCaseDetailList(int status) {
 		try
 		{
-			String sql = "SELECT * FROM message_list where status = " + status;
-			List<MessageList> messagelist = template.query(sql, 
-					(ResultSet rs, int rowCount) -> {
-						MessageList message = new MessageList();
-						message.setSrNo(rowCount + 1);
-						message.setMsgID(rs.getInt("msgId"));
-						message.setGroupId(rs.getInt("msgGroup"));
-						message.setRegionId(rs.getInt("msgRegion"));
-						message.setChannelId(rs.getInt("msgChannel"));
-						message.setCategoryId(rs.getInt("msgCategory"));
-						message.setMsgTitleEng(rs.getString("msgTitleEn"));
-						message.setMsgTitleHin(rs.getString("msgTitleThai"));
-						message.setCreatedDate(rs.getString("createdDate"));
-						message.setExpiryDate(rs.getString("msgExpiryDate"));
-						message.setStatus(rs.getInt("status"));
-						return message;
-					}					
-					);
-			return messagelist;
+			String sql="";
+			 if(status==0) 
+				 sql ="SELECT * FROM case_lists where status = " + status; 
+			   else 
+				 sql ="SELECT * FROM case_lists where status = 1 or status = 2";
+			List<CaseDetailList> casedetailList = template.query(sql,(ResultSet rs, int rowCount) -> {
+						CaseDetailList casedetail=new CaseDetailList();
+						casedetail.setSrNo(rowCount+1);
+						casedetail.setCaseId(rs.getInt("caseId"));
+						casedetail.setPolicyNumber(rs.getString("policyNumber"));
+						casedetail.setInsuredName(rs.getString("insuredName"));
+						casedetail.setInvestigationCategory(rs.getString("investigationCategory"));
+						casedetail.setClaimantZone(rs.getString("claimantZone"));
+						casedetail.setSumAssured(rs.getInt("sumAssured"));
+						casedetail.setStatus(rs.getInt("status"));
+						casedetail.setSubstatus(rs.getInt("subStatus"));
+						return casedetail;
+					});
+			return casedetailList;
 		}
 		catch(Exception ex)
 		{

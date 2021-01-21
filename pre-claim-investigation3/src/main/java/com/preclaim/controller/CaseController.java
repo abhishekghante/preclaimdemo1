@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.preclaim.config.Config;
 import com.preclaim.dao.CaseDao;
 import com.preclaim.dao.InvestigationTypeDao;
+import com.preclaim.models.CaseDetailList;
 import com.preclaim.models.CaseDetails;
 import com.preclaim.models.ScreenDetails;
 import com.preclaim.models.UserDetails;
@@ -73,6 +75,8 @@ public class CaseController {
     	details.setMain_menu("Case Management");
     	details.setSub_menu1("Pending Cases");
     	session.setAttribute("ScreenDetails", details);
+    	List<CaseDetailList> pendingCaseDetailList= caseDao.getCaseDetailList(0);
+    	session.setAttribute("pendingCaseDetailList", pendingCaseDetailList);
         return "common/templatecontent";
     }
   

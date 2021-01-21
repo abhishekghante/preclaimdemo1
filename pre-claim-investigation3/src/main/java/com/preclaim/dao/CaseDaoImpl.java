@@ -3,6 +3,7 @@ package com.preclaim.dao;
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.preclaim.config.Config;
+import com.preclaim.models.CaseDetailList;
 import com.preclaim.models.CaseDetails;
 
 public class CaseDaoImpl implements CaseDao {
@@ -65,6 +67,39 @@ public class CaseDaoImpl implements CaseDao {
 		return "****";
 	}
 
+	@Override
+	public List<CaseDetailList> getCaseDetailList(int status) {
+		try
+		{
+			String sql="";
+			 if(status==0) 
+				 sql ="SELECT * FROM case_lists where status = " + status; 
+			   else 
+				 sql ="SELECT * FROM case_lists where status = 1 or status = 2";
+			List<CaseDetailList> casedetailList = template.query(sql,(ResultSet rs, int rowCount) -> {
+						CaseDetailList casedetail=new CaseDetailList();
+						casedetail.setSrNo(rowCount+1);
+						casedetail.setCaseId(rs.getInt("caseId"));
+						casedetail.setPolicyNumber(rs.getString("policyNumber"));
+						casedetail.setInsuredName(rs.getString("insuredName"));
+						casedetail.setInvestigationCategory(rs.getString("investigationCategory"));
+						casedetail.setClaimantZone(rs.getString("claimantZone"));
+						casedetail.setSumAssured(rs.getInt("sumAssured"));
+						casedetail.setStatus(rs.getInt("status"));
+						casedetail.setSubstatus(rs.getInt("subStatus"));
+						return casedetail;
+					});
+			return casedetailList;
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+			return null;
+		}
+
+	}
+	
 	@Transactional
 	public String readCasexlsx(String filename) {
 		try {
