@@ -70,10 +70,8 @@ boolean allow_delete = user_permission.contains("investigationType/delete");
                             	   <td><span class="label label-sm label-danger">Inactive</span></td>
                               <%}%>
                               <td>
-                              		<a href="${pageContext.request.contextPath}/investigationType/pendingInvestigationType?
-                            			investigationId=<%=list_category.getInvestigationId()%>
-                            			&investigationType=<%=list_category.getInvestigationType() %>" data-toggle="tooltip" title="Edit" 
-                          				class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
+	                           		<a href="${pageContext.request.contextPath}/investigationType/pendingInvestigationType?investigationId=<%=list_category.getInvestigationId()%>&investigationType=<%=list_category.getInvestigationType() %>" data-toggle="tooltip" title="Edit"	
+	                           			class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
                                <%if(list_category.getStatus() == 1){%>
                                   <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateInvestigationTypeStatus('<%=list_category.getInvestigationId() %>',2,<%=allow_statusChg%>);" 
                                   	  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i></a> 
