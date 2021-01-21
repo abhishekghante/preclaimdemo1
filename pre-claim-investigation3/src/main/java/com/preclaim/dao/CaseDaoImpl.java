@@ -211,4 +211,22 @@ public class CaseDaoImpl implements CaseDao {
 		}
 	}
 
+	@Override
+	public String deleteCase(int caseId) {
+		try
+		
+		 {
+			String sql="DELETE FROM case_lists where caseId=?";	
+			this.template.update(sql,caseId);	
+		 }
+		catch(Exception e) 
+		 {
+			e.printStackTrace();
+			return "Error Deleting User";
+			
+		 }
+	
+		return "****";
+	}
+
 }

@@ -10,5 +10,6 @@ public interface CaseDao {
 	String addBulkUpload(String filename);
 	String addcase(CaseDetails casedetail);
 	List<CaseDetailList> getCaseDetailList(int status);
+	String deleteCase(int caseId);
 
 }

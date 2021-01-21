@@ -89,6 +89,8 @@ public class CaseController {
     	details.setMain_menu("Case Management");
     	details.setSub_menu1("Active Cases");
     	session.setAttribute("ScreenDetails", details);
+    	List<CaseDetailList> activeCaseDetailList= caseDao.getCaseDetailList(1);
+    	session.setAttribute("activeCaseDetailList", activeCaseDetailList);
         return "common/templatecontent";
     }
     
@@ -165,5 +167,12 @@ public class CaseController {
        	String message= caseDao.addcase(caseDetail);
    		return message;
    	}
+    
+    @RequestMapping(value = "/deleteMessage",method = RequestMethod.POST)
+    public @ResponseBody String deleteMessage(HttpServletRequest request,HttpSession session) {
+    int caseId=Integer.parseInt(request.getParameter("msgId"));
+    String message=caseDao.deleteCase(caseId);  	
+    return message;
+    }
     
 }

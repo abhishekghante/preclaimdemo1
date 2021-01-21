@@ -1,6 +1,6 @@
 <%@page import="java.util.List" %>
 <%@page import = "java.util.ArrayList" %>
-
+<%@page import="com.preclaim.models.CaseDetailList"%>
 <%@page import = "com.preclaim.models.Region" %>
 <%@page import = "com.preclaim.models.Group" %>
 <%@page import = "com.preclaim.models.Channel" %>
@@ -9,6 +9,8 @@
 List<String>user_permission=(List<String>)session.getAttribute("user_permission");
 boolean allow_statusChg = user_permission.contains("messages/status");
 boolean allow_delete = user_permission.contains("messages/delete");
+List<CaseDetailList> activeCaseDetailList = (List<CaseDetailList>)session.getAttribute("activeCaseDetailList");
+session.removeAttribute("activeCaseDetailList");
 List<Region> regionList = (List<Region>) session.getAttribute("region_list");
 List<Group> groupList = (List<Group>) session.getAttribute("group_list");
 List<Channel> channelList = (List<Channel>) session.getAttribute("channel_list");
@@ -50,18 +52,14 @@ if(channelList == null)
                     <table id="active_message_list" class="table table-striped table-bordered table-hover table-checkable dataTable data-tbl">
                       <thead>
                         <tr class="tbl_head_bg">
-                          <th class="head1 no-sort">#</th>
-                          <th class="head1 no-sort">Case Title(Eng)</th>
-                          <th class="head1 no-sort">Case Title(Hindi)</th>
-                          <th class="head1 no-sort">Region</th>
-                          <th class="head1 no-sort">Group Name</th>
-                          <th class="head1 no-sort">Investigation Name</th>
-                          <th class="head1 no-sort">Channel Name</th>
-                          <th class="head1 no-sort">Creation Date</th>
-                          <th class="head1 no-sort">Expiry Date</th>
-                          <th class="head1 no-sort">CreatedBy</th>
-                          <th class="head1 no-sort">Assign Supervisor</th>
-                          <th class="head1 no-sort">Assign Investigator</th>
+                          <th class="head1 no-sort">Case ID</th>
+                          <th class="head1 no-sort">Policy No</th>
+                          <th class="head1 no-sort">Name of Insured</th>
+                          <th class="head1 no-sort">Type of Investigation</th>
+                          <th class="head1 no-sort">Zone</th>
+                          <th class="head1 no-sort">Sum Assured</th>
+                          <th class="head1 no-sort">Type of Intimation</th>
+                          <th class="head1 no-sort">View history</th>
                           <th class="head1 no-sort">Status</th>
                           <th class="head1 no-sort">Action</th>
                         </tr>
@@ -78,12 +76,47 @@ if(channelList == null)
                           <th class="head2 no-sort"></th>
                           <th class="head2 no-sort"></th>
                           <th class="head1 no-sort"></th>
-                          <th class="head1 no-sort"></th>
-                          <th class="head1 no-sort"></th>
-                          <th class="head2 no-sort"></th>
-                          <th class="head2 no-sort"></th>
                         </tr>
                       </tfoot>
+                      <tbody>
+                      <%if(activeCaseDetailList!=null){
+                        	for(CaseDetailList list_case :activeCaseDetailList){%>                       
+                           <tr>
+ 								<td><%=list_case.getSrNo()%></td>
+                  				<td><%=list_case.getPolicyNumber()%></td>
+                  				<td><%=list_case.getInsuredName()%></td>
+                  				<td><%=list_case.getInvestigationCategory()%></td>
+                  				<td><%=list_case.getClaimantZone()%></td>
+                                <td><%=list_case.getSumAssured()%></td>
+                                <td></td>
+                                <td></td>
+                                <td><span class="label label-sm label-success">Active</span></td>                        
+                                <td>
+                                	<a href="'.base_url().'messages/edit/'.$message->msgId.'" data-toggle="tooltip" title="Edit" 
+                                        class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>
+                               		</a>
+                                
+                              
+                               	    <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateMessageStatus('.$message->msgId.',1,1);" 
+                                		class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i>
+                                	</a>
+                                
+                                
+                                	<a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteMessage('<%=list_case.getCaseId() %>',<%=allow_statusChg%>);" 
+                                		class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>
+                                	</a>
+                                
+                                
+                              </td>
+                          
+                          
+                          </tr>
+                      
+                      <% 		
+                       	}
+                        } 
+                       %>
+                      </tbody>
                       <tbody>
                       </tbody>
                     </table>
