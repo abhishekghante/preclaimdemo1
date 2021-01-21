@@ -219,7 +219,7 @@ ArrayList<String> user_permission = (ArrayList<String>)session.getAttribute("use
               </a>
               <ul class="sub-menu">
                 <%if(user_permission.contains("investigationType/add")){ %>
-                <li class="nav-item <%if(details.getSub_menu1().equals("Add Investigation")){%>active<%}%>">
+                <li class="nav-item <%if(details.getSub_menu1().equals("Add Investigation Type")){%>active<%}%>">
                   <a href="${pageContext.request.contextPath}/investigationType/addInvestigationType" class="nav-link nav-toggle">
                     <i class="icon-plus"></i> Add Investigation Type
                   </a>

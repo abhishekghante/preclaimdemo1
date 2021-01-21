@@ -52,13 +52,13 @@ public class InvestigationTypeController {
 		details.setSub_menu1("Pending Investigation Type");
 		session.setAttribute("ScreenDetails", details);
 		
-		List<InvestigationTypeList> pendingInvestigationType = investigationTypedao.InvestigationType_list(0);
+		List<InvestigationTypeList> pendingInvestigationType = investigationTypedao.getInvestigationList(0);
 		session.setAttribute("pendingInvestigationType", pendingInvestigationType);
 		
-		if(request.getParameter("InvestigationTypeId")!=null)
+		if(request.getParameter("investigationId")!=null)
 		{
-			int investigationId = Integer.parseInt(request.getParameter(""));
-			String investigationType = request.getParameter("");
+			int investigationId = Integer.parseInt(request.getParameter("investigationId"));
+			String investigationType = request.getParameter("investigationType");
 			InvestigationType editInvestigation = new InvestigationType(investigationId, investigationType);
 			session.setAttribute("editInvestigation",editInvestigation);
 		}
@@ -74,7 +74,7 @@ public class InvestigationTypeController {
 		details.setMain_menu("Investigation Type");
 		details.setSub_menu1("Active Investigation Type");
 		session.setAttribute("ScreenDetails", details);
-		List<InvestigationTypeList> activeList = investigationTypedao.InvestigationType_list(1);
+		List<InvestigationTypeList> activeList = investigationTypedao.getInvestigationList(1);
 		session.setAttribute("active_list", activeList);
 		return "common/templatecontent";
 	}
@@ -84,27 +84,31 @@ public class InvestigationTypeController {
 		InvestigationType investigationType = new InvestigationType();
 		investigationType.setInvestigationType(request.getParameter("investigationType"));
 		UserDetails user = (UserDetails) session.getAttribute("User_Login");
+		String error = investigationTypedao.addInvestigationType(investigationType, user.getUserID());
 		userDao.activity_log("INVESTIGATION TYPE", 0, "ADD", user.getUserID(), request.getRemoteAddr());
-		return investigationTypedao.add_InvestigationType(investigationType, user.getUserID());
+		return error;
 	}
 	
 	@RequestMapping(value ="/updateInvestigation",method = RequestMethod.POST )
     public @ResponseBody String updateInvestigation(HttpSession session, HttpServletRequest request) {
-	 int investigationTypeId = Integer.parseInt(request.getParameter("InvestigationTypeId"));
+	 int investigationId = Integer.parseInt(request.getParameter("investigationId"));
+	 String investigationType = request.getParameter("investigationType");
 	 UserDetails user = (UserDetails) session.getAttribute("User_Login");
-	 userDao.activity_log("INVESTIGATION TYPE", investigationTypeId, "UPDATE", user.getUserID(), 
+	 String error = investigationTypedao.updateInvestigationType(investigationType, investigationId, 
+			 investigationId);
+	 userDao.activity_log("INVESTIGATION TYPE", investigationId, "UPDATE", user.getUserID(), 
 			 request.getRemoteAddr());
-	 return "****";
+	 return error;
 	}
 	
 	@RequestMapping(value ="/deleteInvestigation",method = RequestMethod.POST )
     public @ResponseBody String deleteInvestigation(HttpSession session, HttpServletRequest request) {
 	 int investigationId = Integer.parseInt(request.getParameter("investigationId"));	
-     String message = investigationTypedao.deleteInvestigationType(investigationId);	
+     String error_message = investigationTypedao.deleteInvestigationType(investigationId);	
      UserDetails user = (UserDetails) session.getAttribute("User_Login");
 	 userDao.activity_log("INVESTIGATION TYPE", investigationId, "DELETE", user.getUserID(), 
 			 request.getRemoteAddr());
-	 return message;
+	 return error_message;
 	}
 	
 	@RequestMapping(value = "/updateInvestigationStatus",method = RequestMethod.POST)
@@ -112,11 +116,11 @@ public class InvestigationTypeController {
 		int status = Integer.parseInt(request.getParameter("status"));
 		int investigationId = Integer.parseInt(request.getParameter("investigationId"));
 		UserDetails user = (UserDetails) session.getAttribute("User_Login");		 
-		String message = investigationTypedao.updateInvestigationTypeStatus(status, user.getUserID(), 
-				investigationId);
+		String error_message = investigationTypedao.updateInvestigationTypeStatus(investigationId, user.getUserID(), 
+				status);
 		userDao.activity_log("INVESTIGATION TYPE", investigationId, status == 1 ? "ACTIVE" : "DEACTIVE", 
 				user.getUserID(), request.getRemoteAddr());
-		return message;
+		return error_message;
 	}
 	  
    

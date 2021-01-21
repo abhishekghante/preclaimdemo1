@@ -43,8 +43,8 @@ List<String> user_permission = (List<String>)session.getAttribute("user_permissi
         </div>
         <div class="box-footer">
           <div class="col-md-offset-2 col-md-10">
-            <button class="btn btn-info" id="addInvestigationTypesubmit" type="button"
-            	onClick = "return addInvestigationTypesubmit();">Add Investigation</button>
+            <button class="btn btn-info" id="addInvestigation()" type="button"
+            	onclick = "return addInvestigationType()">Add Investigation</button>
             <button class="btn btn-danger" type="reset" value="">Clear</button>
           </div>
         </div>
@@ -53,44 +53,45 @@ List<String> user_permission = (List<String>)session.getAttribute("user_permissi
   </div>
 </div>
 <script>
-function addInvestigationTypesubmit() {
-	<%if(!user_permission.contains("ìnvestigationType/add")){%>
+function addInvestigationType() 
+{
+	console.log(<%=user_permission.contains("investigationType/add")%>);
+	<%if(!user_permission.contains("investigationType/add")){%>	
 		toastr.error("Access Denied","Error");
 		return false;
 	<%}%>
-	var investigationType   = $( '#add_investigation_type #investigationType' ).val();
-    if(investigationType == '')
+	var investigationType = $('#add_investigation_type #investigationType').val();
+    
+	if(investigationType == '')
     {
       toastr.error('Investigation Type cannot be blank','Error');
       return false;
     }
-        var formdata = {"investigationType":investigationType}
-    	$.ajax({
-          type: "POST",
-          url: 'addInvestigation',
-          data: formdata,
-          beforeSend: function() { 
-              $("#addInvestigationTypesubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-              $("#addInvestigationTypesubmit").prop('disabled', true);
-              $('#add_investigation_type').css("opacity",".5");
-          },
-          success: function( data ) 
-          {
-            if(data == "****")
-            {
-              $("#addInvestigationTypesubmit").html('Add Investigation');
-              $("#addInvestigationTypesubmit").prop('disabled', false);
-              toastr.success( 'Investigation Type added successfully.','Success' );
-              $("form#add_investigation_type").trigger("reset");
-            }
-            else
-            {
-              toastr.error( data,'Error' );
-              $("#addInvestigationTypesubmit").html('Add Investigation');
-              $("#addInvestigationTypesubmit").prop('disabled', false);
-            }
-            $('#add_investigation_type').css("opacity","");
-          }
-        });
-    }
+        
+    var formdata = {"investigationType":investigationType}
+   	$.ajax({
+         type: "POST",
+         url: 'addInvestigation',
+         data: formdata,
+         beforeSend: function() 
+         { 
+             $("#addInvestigationTypesubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+             $("#addInvestigationTypesubmit").prop('disabled', true);
+             $('#add_investigation_type').css("opacity",".5");
+         },
+         success: function( data ) 
+         {
+        	 $("#addInvestigationTypesubmit").html('Add Investigation');
+             $("#addInvestigationTypesubmit").prop('disabled', false);           
+             if(data == "****")
+	         {
+	             toastr.success( 'Investigation Type added successfully.','Success' );
+	             $("form#add_investigation_type").trigger("reset");
+	         }
+           	 else
+	             toastr.error( data,'Error' );
+             $('#add_investigation_type').css("opacity","");
+         }
+       });
+}
 </script>

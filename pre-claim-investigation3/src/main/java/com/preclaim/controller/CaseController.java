@@ -20,7 +20,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.preclaim.config.Config;
 import com.preclaim.dao.CaseDao;
 import com.preclaim.dao.InvestigationTypeDao;
-import com.preclaim.dao.MessageDao;
 import com.preclaim.models.CaseDetails;
 import com.preclaim.models.ScreenDetails;
 import com.preclaim.models.UserDetails;
@@ -31,9 +30,6 @@ public class CaseController {
 
 	@Autowired
 	CaseDao caseDao;
-	
-	@Autowired
-	MessageDao messageDao;
 	
 	@Autowired
 	InvestigationTypeDao investigationDao;
@@ -162,7 +158,7 @@ public class CaseController {
        	caseDetail.setInvestigationCategory(typeOfInvestigation);
        	caseDetail.setSumAssured(sumAssured);
        	caseDetail.setCreatedBy(user.getUserID());
-       	String message= messageDao.addcase(caseDetail);
+       	String message= caseDao.addcase(caseDetail);
    		return message;
    	}
     

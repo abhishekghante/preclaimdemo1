@@ -258,18 +258,18 @@ function deleteInvestigationType(investigationId, checkAuthority) {
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
     $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal'+investigationId+'" class="btn green">Yes</button>' );
-    $( '#continuemodal'+categoryId ).click( function() {
+    $( '#continuemodal'+investigationId ).click( function() {
         $.ajax({
             type : 'POST',
             url  : 'deleteInvestigation',
             data : { 'investigationId' : investigationId },
             beforeSend: function() { 
-                $("#continuemodal"+investigation).html('<img src="../resources/img/input-spinner.gif"> Loading...');
-                $("#continuemodal"+investigation).prop('disabled', true);
+                $("#continuemodal"+investigationId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+investigationId).prop('disabled', true);
             },
             success : function( msg ) {
-                $("#continuemodal"+investigation).html('Yes');
-                $("#continuemodal"+investigation).prop('disabled', false);
+                $("#continuemodal"+investigationId).html('Yes');
+                $("#continuemodal"+investigationId).prop('disabled', false);
                 $('#small_modal').modal('hide');
                 if(msg == "****")
                 {
@@ -307,13 +307,13 @@ function updateInvestigationTypeStatus(investigationId, status, checkAuthority )
             },
             success : function( msg ) 
             {
+        		$("#continuemodal"+investigationId).html('Yes');
+                $("#continuemodal"+investigationId).prop('disabled', false);
+                $('#small_modal').modal('hide');	                
                 if(msg=="****")
                 {
-	                $("#continuemodal"+investigationId).html('Yes');
-	                $("#continuemodal"+investigationId).prop('disabled', false);
-	                $('#small_modal').modal('hide');
-	                toastr.error("Investigation status updated successfully", "Success");
-	                location.reload();
+                	toastr.success("Investigation status updated successfully", "Success");
+	                location.reload();	                
             	}
             	else
              		toastr.error(msg,Error);
@@ -685,7 +685,7 @@ function ajaxDashCategory() {
         url     : 'ajaxDashCategoryList',
         data    : data,
         success : function( msg ) {
-            $("#dash_category_lists").html(msg);
+            $("#dash_investigation_lists").html(msg);
         }
     });
 }

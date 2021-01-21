@@ -64,16 +64,17 @@ boolean allow_delete = user_permission.contains("investigationType/delete");
                             <tr>
                                <td><%=list_category.getSrNo()%></td>
                                <td><%=list_category.getInvestigationType()%></td> 
-                              <%if(list_category.getStatus()==1){ %>
+                              <%if(list_category.getStatus() == 1){ %>
                             	   <td><span class="label label-sm label-success">Active</span></td>
                               <%}else{%>
                             	   <td><span class="label label-sm label-danger">Inactive</span></td>
                               <%}%>
                               <td>
                               		<a href="${pageContext.request.contextPath}/investigationType/pendingInvestigationType?
-                              		investigationTypeId=<%=list_category.getInvestigationId()%>" data-toggle="tooltip" title="Edit" 
+                            			investigationId=<%=list_category.getInvestigationId()%>
+                            			&investigationType=<%=list_category.getInvestigationType() %>" data-toggle="tooltip" title="Edit" 
                           				class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
-                               <%if(list_category.getStatus()==1){%>
+                               <%if(list_category.getStatus() == 1){%>
                                   <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateInvestigationTypeStatus('<%=list_category.getInvestigationId() %>',2,<%=allow_statusChg%>);" 
                                   	  class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i></a> 
                               <%}else{ %>

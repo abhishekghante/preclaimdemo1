@@ -24,10 +24,10 @@ public class InvestigationTypeDaoImpl implements InvestigationTypeDao {
 	}
 
 	@Override
-	public String add_InvestigationType(InvestigationType investigationType, int userId) {
+	public String addInvestigationType(InvestigationType investigationType, int userId) {
 
 		try {
-			String sql = "INSERT INTO InvestigationType_lists(investigationType, createdBy, createdDate"
+			String sql = "INSERT INTO investigation_type(investigationType, createdBy, createdDate"
 					+ ", updatedDate, updatedBy, status) values(?, ?, now(), now(), ?, ?)";
 			this.template.update(sql,investigationType.getInvestigationType(), userId, 0, 0);
 		} 
@@ -41,7 +41,7 @@ public class InvestigationTypeDaoImpl implements InvestigationTypeDao {
 	}
 
 	@Override
-	public List<InvestigationTypeList> InvestigationType_list(int status) {
+	public List<InvestigationTypeList> getInvestigationList(int status) {
 		String query = "";
 		if (status == 0)
 			query = "SELECT * FROM investigation_type WHERE status = " + status;
@@ -52,6 +52,7 @@ public class InvestigationTypeDaoImpl implements InvestigationTypeDao {
 			investigationTypeList.setSrNo(rowNum + 1);
 			investigationTypeList.setInvestigationId(rs.getInt("investigationId"));
 			investigationTypeList.setInvestigationType(rs.getString("investigationType"));
+			investigationTypeList.setStatus(rs.getInt("status"));
 			return investigationTypeList;
 		});
 	}
@@ -74,7 +75,9 @@ public class InvestigationTypeDaoImpl implements InvestigationTypeDao {
 			String sql = "UPDATE investigation_type SET status = ?, updatedDate = now(),"
 					+ " updatedBy = ? where investigationId = ?";
 			this.template.update(sql, status, userId, investigationId);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
             System.out.println("Error updating Investigation status. Kindly contact system administrator");
 	    }

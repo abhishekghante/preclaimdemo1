@@ -7,9 +7,9 @@ import com.preclaim.models.InvestigationTypeList;
 
 public interface InvestigationTypeDao {
 	
-	String add_InvestigationType(InvestigationType investigationType, int userId);
+	String addInvestigationType(InvestigationType investigationType, int userId);
 	String updateInvestigationType(String investigationType, int userId, int investigationId);	
-	List<InvestigationTypeList> InvestigationType_list(int status);
+	List<InvestigationTypeList> getInvestigationList(int status);
     String updateInvestigationTypeStatus(int status, int userId, int investigationId);
     String deleteInvestigationType(int investigationId);
     List<InvestigationType> getActiveInvestigationList();

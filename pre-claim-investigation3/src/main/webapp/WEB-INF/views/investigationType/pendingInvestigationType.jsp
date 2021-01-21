@@ -50,7 +50,7 @@ session.removeAttribute("editInvestigation");
                 <div class="col-md-offset-2 col-md-10">
                
                  <%if(editInvestigation != null){%>
-                    <input type="hidden" value=<%=editInvestigation.getInvestigationId()%> id="categoryId" name="categoryId">
+                    <input type="hidden" value=<%=editInvestigation.getInvestigationId()%> id="investigationId" name="investigationId">
                     <button class="btn btn-info" id="editcategorysubmit" type="submit">Update</button>
                     <a href="${pageContext.request.contextPath}/category/pending_category" class="btn btn-danger">Back</a>
                   <%}else{%> 
@@ -117,8 +117,7 @@ session.removeAttribute("editInvestigation");
                             	<td><%=list_category.getInvestigationType() %></td>
                             	<td><span class="label label-sm label-danger">Pending</span></td>
                             	<td>
-                            		<a href="${pageContext.request.contextPath}/investigationType/pendingInvestigationType?
-                            		investigationId=<%=list_category.getInvestigationId()%>" data-toggle="tooltip" title="Edit" 
+                            		<a href="${pageContext.request.contextPath}/investigationType/pendingInvestigationType?investigationId=<%=list_category.getInvestigationId()%>&investigationType=<%=list_category.getInvestigationType() %>" data-toggle="tooltip" title="Edit" 
                             	         class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
                             	        
                             	    <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateInvestigationTypeStatus('<%=list_category.getInvestigationId() %>',1,<%=allow_statusChg%>);" 
@@ -191,7 +190,7 @@ $(document).ready(function(){
       if(investigationId){
         $.ajax({
           type: "POST",
-          url: '${pageContext.request.contextPath}/investigationType/updateInvestigationType',
+          url: '${pageContext.request.contextPath}/investigationType/updateInvestigation',
           data: new FormData(this),
           contentType: false,
           cache: false,
@@ -223,7 +222,7 @@ $(document).ready(function(){
     {
         $.ajax({
           type: "POST",
-          url: '${pageContext.request.contextPath}/investigationType/addInvestigationType',
+          url: '${pageContext.request.contextPath}/investigationType/addInvestigation',
           data: new FormData(this),
           contentType: false,
           cache: false,
@@ -234,20 +233,15 @@ $(document).ready(function(){
               $('#add_category_form').css("opacity",".5");
           },
           success: function( data ) {
-            if(data == "****")
-            {
-              $("#addcategorysubmit").html('Add investigations');
+        	  $("#addcategorysubmit").html('Add investigations');
               $("#addcategorysubmit").prop('disabled', false);
-              toastr.success( 'investigations Added successfully.','Success' );
-              $("form#add_category_form").trigger("reset");
-              location.reload();
-            }
+        	  if(data == "****")
+        	  {
+	              toastr.success('Investigation Type added successfully.','Success' );
+	              location.reload();
+        	  }
             else
-            {
-              toastr.error( data,'Error' );
-              $("#addcategorysubmit").html('Add investigations');
-              $("#addcategorysubmit").prop('disabled', false);
-            }
+              toastr.error( data,'Error' );;
             $('#add_category_form').css("opacity","");
           }
         });

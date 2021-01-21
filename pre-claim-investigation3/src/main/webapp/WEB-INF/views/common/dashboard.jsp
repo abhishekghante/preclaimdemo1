@@ -35,7 +35,7 @@
             <div class="details">
                 <div class="number">
                     <span data-counter="counterup" data-value="12,5">1</span></div>
-                <div class="desc"> New investigation </div>
+                <div class="desc"> New Cases </div>
             </div>
             <a class="more" href="javascript:;"> 
                 <a href="${pageContext.request.contextPath}/category/activelist" 
@@ -53,7 +53,7 @@
                 <div class="number">
                     <span data-counter="counterup" data-value="549">2486</span>
                 </div>
-                <div class="desc"> Pending investigations </div>
+                <div class="desc"> Assigned Cases </div>
             </div>
             <a class="more" href="javascript:;"> 
                 <a href="${pageContext.request.contextPath}/category/pendinglist" class="btn btn-info">View more</a>
@@ -88,7 +88,7 @@
             <div class="details">
                 <div class="number">
                     <span data-counter="counterup" data-value="12,5">1</span></div>
-                <div class="desc"> Investigation charges paid </div>
+                <div class="desc"> PIV/PIRV/LIVE Pending </div>
             </div>
             <a class="more" href="javascript:;"> 
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo6">View more</button>
@@ -106,7 +106,7 @@
             <div class="details">
                 <div class="number">
                     <span data-counter="counterup" data-value="12,5">1</span></div>
-                <div class="desc"> Investigation charges pending </div>
+                <div class="desc"> Claim Document pickup/ Claim Investigation pending cases </div>
             </div>
             <a class="more" href="javascript:;"> 
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo7">View more</button>
@@ -123,14 +123,14 @@
         <div class="portlet-title tabbable-line">
             <div class="caption">
                 <i class="icon-envelope-letter font-green"></i>
-                <span class="caption-subject font-green bold uppercase">New Cases</span>
+                <span class="caption-subject font-green bold uppercase">Active Cases</span>
             </div>
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#tab_actions_pending" data-toggle="tab"> Pending </a>
+                    <a href="#tab_actions_pending" data-toggle="tab"> Work in Progress Cases </a>
                 </li>
                 <li>
-                    <a href="#tab_actions_completed" data-toggle="tab"> Active </a>
+                    <a href="#tab_actions_completed" data-toggle="tab"> Investigation Billing Cases </a>
                 </li>
             </ul>
         </div>

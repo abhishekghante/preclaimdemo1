@@ -36,22 +36,34 @@ public class CaseDaoImpl implements CaseDao {
 	}
 
 	@Override
-	public String addCase() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String addBulkUpload(String filename) {
 		
 		String extension = StringUtils.getFilenameExtension(filename).toLowerCase();
 		String error ="";
 		if(extension.equals("xlsx"))
 			error = readCasexlsx(filename);
-		// TODO Auto-generated method stub
 		return error;
 	}
 	
+	@Override
+	public String addcase(CaseDetails casedetail) {
+		try 
+		{
+			String query = "INSERT INTO case_lists (policyNumber, insuredName, claimantCity, claimantZone,"
+					+ "claimantState, status, subStatus, investigationCategory, sumAssured, createdBy,"
+					+ "createdDate, updatedDate, updatedBy) values(?,?,?,?,?,1,1,?,?,?,now(),now(),0)";    
+			this.template.update(query,casedetail.getPolicyNumber(), casedetail.getInsuredName(), 
+					casedetail.getClaimantCity(), casedetail.getClaimantZone(), 
+					casedetail.getClaimantState(), casedetail.getInvestigationCategory(), 
+					casedetail.getSumAssured(), casedetail.getCreatedBy());				    	
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return "Error adding case. Kindly contact system administrator";
+		}
+		return "****";
+	}
 
 	@Transactional
 	public String readCasexlsx(String filename) {
