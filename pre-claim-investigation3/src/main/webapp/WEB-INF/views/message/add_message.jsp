@@ -1,20 +1,13 @@
 <%@page import = "java.util.List" %>
 <%@page import = "java.util.ArrayList" %>
 
-<%@page import = "com.preclaim.models.Region" %>
-<%@page import = "com.preclaim.models.Group" %>
-<%@page import = "com.preclaim.models.Channel" %>
+<%@page import = "com.preclaim.models.InvestigationType"%>
 <%
 List<String>user_permission=(List<String>)session.getAttribute("user_permission");
-List<Region> regionList = (List<Region>) session.getAttribute("region_list");
-List<Group> groupList = (List<Group>) session.getAttribute("group_list");
-List<Channel> channelList = (List<Channel>) session.getAttribute("channel_list");
-if(regionList == null)
-	regionList = new ArrayList<Region>();
-if(groupList == null)
-	groupList = new ArrayList<Group>();
-if(channelList == null)
-	channelList = new ArrayList<Channel>();
+List<InvestigationType> investigationList = (List<InvestigationType>) session.getAttribute("investigation_list");
+session.removeAttribute("investigation_list");
+if(investigationList == null)
+	investigationList = new ArrayList<InvestigationType>();
 %>
 <style type="text/css">
 .placeImg { display:none !important;}
@@ -62,7 +55,7 @@ if(channelList == null)
                 	<span class="text-danger">*</span>
                	</label>
                 <div class="col-md-8">
-                  <input type="text" placeholder="Policy Number" name="policyNumber" id="policyNummber" 
+                  <input type="text" placeholder="Policy Number" name="policyNumber" id="policyNumber" 
                   	class="form-control">
                 </div>
               </div>
@@ -126,7 +119,10 @@ if(channelList == null)
                 <div class="col-md-8">
                   <select name="msgCategory" id="msgCategory" class="form-control" tabindex="-1">
                     <option value="-1" selected disabled>Select</option>
-                    
+                    <%if(investigationList != null){
+                    	for(InvestigationType investigation: investigationList){%>
+                    	<option value = "<%=investigation.getInvestigationId()%>"><%=investigation.getInvestigationType() %></option>
+                    <%}} %>
                   </select>
                 </div>
               </div>            
@@ -135,7 +131,7 @@ if(channelList == null)
                 	<span class="text-danger">*</span>
                	</label>
                 <div class="col-md-8">
-                  <input type="number" placeholder="Sub Status" name="sumAssured" id="sumAssured" 
+                  <input type="number" placeholder="Sum Assured" name="sumAssured" id="sumAssured" 
                   	class="form-control">
                 </div>
               </div> 
@@ -221,6 +217,7 @@ if(channelList == null)
               </div>
               </div>
               </div>
+              <!--  Footer -->
               <div class="box-footer">
                 <div class="row">
                   <div class="col-md-offset-4 col-md-8">
@@ -229,9 +226,7 @@ if(channelList == null)
                     <button class="btn btn-danger" onClick="return clearForm();" type="button">Clear</button>
                   </div>
                 </div>
-              </div>
-              
-              
+              </div>           
             </div>
           </div>
         </div>
@@ -239,9 +234,6 @@ if(channelList == null)
     </div>
   </div>
 </div>
-<!--  <?php
-$datetime = date('Y-m-d H:i:s');
-?>-->
 <script type="text/javascript">
 function displayUploadImg(input, PlaceholderID, deleteID, linkID) {
   if (input.files && input.files[0]) {
@@ -272,185 +264,78 @@ function displayUploadImg(input, PlaceholderID, deleteID, linkID) {
     }
   }
 }
-$('select#upload_type').on('change', function() {
-  if(this.value == 1){
-    $('#uploadImageDiv').show();
-    $('#videoURLDiv').hide();
-  }else if(this.value == 2){
-    $('#videoURLDiv').show();
-    $('#uploadImageDiv').hide();
-  }else{
-    $('#videoURLDiv').hide();
-    $('#uploadImageDiv').hide();
-  }
-});
-$('.form_datetime').datetimepicker({
-  startDate: '<?= $datetime; ?>',
-  autoclose:!0,
-  dateFormat:'yyyy-mm-dd',
-  timeFormat: 'hh:mm:ss',
-  pickerPosition: 'bottom-left'
-});
-$(".select2, .select2-multiple").select2({placeholder:"Select"});
-$(document).ready(function(){
-  //MESSAGE ENG IMAGE
-  $(".imgMsgEnLbl").on('click', function() {
-    var imgMsgEnId = $(this).attr('id');
-    var ret   = imgMsgEnId.split("_");
-    var imgId = ret[1];
-    $("#imgMsgEn_"+imgId).trigger('click');
-  });
-  //MESSAGE Hindi Image
-  $(".imgMsgHinLbl").on('click', function() {
-    var imgMsgHinId = $(this).attr('id');
-    var ret   = imgMsgHinId.split("_");
-    var imgId = ret[1];
-    $("#imgMsgHin_"+imgId).trigger('click');
-  });
-  $(".delete_btn").on('click', function() {
-    var msgImgID = $(this).attr('data-imgID');
-    var imgID    = $(this).attr('data-ID');
-    var linkID   = $(this).attr('data-linkID');
-
-    $("#"+msgImgID).attr("src", '${pageContext.request.contextPath}/resources/uploads/default_img.png');
-    $("#"+imgID).val('');
-    $("#"+this.id).hide();
-    $("#"+linkID).hide();
-    $('#d_'+linkID).val('');
-    $('#'+linkID).attr('data-val','');
-  });
-
-  $(".add_link_btn").on('click', function() {
-    var linkVal  = $(this).attr('data-val');
-    var linkKey  = $(this).attr('id');
-    var msgId    = 0;
-    
-    $( '#medium_modal' ).modal();
-    $( '#md_modal_title' ).html( 'Update Hperlink' );
-    $( '#md_modal_body' ).html( '<div class="row"><div class="form-group"><div class="col-md-12">'
-                        +'<input type="text" required="" value="'+linkVal+'" placeholder="Link" id="popup_'+linkKey+'" class="form-control" name="popup_'+linkKey+'">'
-                        +'</div></div></div>' );
-    $( '#md_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button><button type="button" id="continuemodal'+linkKey+'" class="btn green">Ok</button>' );
-    $( '#continuemodal'+linkKey ).click( function() {
-        var linkvalue  = $( '#popup_'+linkKey).val();
-        if(linkvalue == ''){
-          toastr.error('Hyperlink Cannot be empty','Error');
-          return false;
-        }
-        $.ajax({
-            type : 'POST',
-            url  : 'messages/updateHperLink',
-            data : { 'hyperlink' : linkvalue,'linkKey' : linkKey,'msgId' : msgId },
-            beforeSend: function() {
-                $("#continuemodal"+linkKey).html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-                $("#continuemodal"+linkKey).prop('disabled', true);
-            },
-            success : function( msg ) {
-              $('#'+linkKey).attr('data-val',linkvalue);
-              $('#d_'+linkKey).val(linkvalue);
-              $("#continuemodal"+linkKey).html('Ok');
-              $("#continuemodal"+linkKey).prop('disabled', false);
-              if(msg==1){
-                $('#medium_modal').modal('hide');
-                //toastr.success( 'Hyperlink updated successfully.','Success' );
-              }else if(msg==2){
-                toastr.error( 'Some error occurred. Please try later','Error' );
-              }else{
-                toastr.error( msg,'Error' );
-              }
-            }
-        });
-        return false;
-    });
-  });
-
   $("#add_message_form").on('submit', function(e){
     e.preventDefault();
-    var msgGroup        = $( '#add_message_form #msgGroup' ).val();
-    var msgRegion       = $( '#add_message_form #msgRegion' ).val();
-    var msgChannel      = $( '#add_message_form #msgChannel' ).val();
-    var msgCategory     = $( '#add_message_form #msgCategory' ).val();
-    var postDateTime    = $( '#add_message_form #postDateTime' ).val();
-    var expiryDate      = $( '#add_message_form #expiryDate' ).val();
-    var msgTitleEn      = $( '#add_message_form #msgTitleEn' ).val();
-    var msgTitleHin    = $( '#add_message_form #msgTitleHin' ).val();
-    if(msgGroup == '-1'){
-      toastr.error('Group cannot be empty','Error');
-      return false;
+    var policyNumber   = $( '#add_message_form #policyNumber' ).val();
+    var insuredName    = $( '#add_message_form #insuredName' ).val();
+    var claimantCity   = $( '#add_message_form #claimantCity' ).val();
+    var claimantZone  = $( '#add_message_form #claimantZone' ).val();
+    var claimantState  = $( '#add_message_form #claimantState' ).val();
+    var msgCategory = $( '#add_message_form #msgCategory' ).val();
+    var sumAssured = $( '#add_message_form #sumAssured' ).val();
+    $('#policyNumber').removeClass('has-error-2');
+    
+    var errorFlag = 0;
+    if(policyNumber == '')
+    {
+    	$('#policyNumber').addClass('has-error-2');
+    	toastr.error('Policy Number cannot be empty','Error');
+    	errorFlag = 1;
     }
-    if(msgRegion == '-1'){
-      toastr.error('Region cannot be empty','Error');
-      return false;
+    if(insuredName == '')
+    {
+      	toastr.error('Insured Name cannot be empty','Error');
+      	errorFlag = 1;
     }
-    if(msgChannel == '-1'){
-      toastr.error('Channel cannot be empty','Error');
-      return false;
+    if(claimantCity == '')
+    {
+	      toastr.error('Claimant City cannot be empty','Error');
+	      errorFlag = 1;
     }
-    if(msgCategory == '-1'){
-      toastr.error('Category cannot be empty','Error');
-      return false;
+    if(claimantZone == ''){
+      toastr.error('Claimaint Zone Cannot be empty','Error');
+      errorFlag = 1;
     }
-    if(postDateTime == ''){
-      toastr.error('Broadcast Post Date Time Cannot be empty','Error');
-      return false;
+    if(claimantState == ''){
+      toastr.error('Claimant State cannot be empty','Error');
+      errorFlag = 1;
     }
-    if(expiryDate == ''){
-      toastr.error('Expiry Date cannot be empty','Error');
-      return false;
-    }
-    if(msgTitleEn == ''){
-      toastr.error('Title English cannot be empty','Error');
-      return false;
-    }
-    if(msgTitleHin == ''){
-      toastr.error('Title Hin cannot be empty','Error');
-      return false;
-    }
-    if(msgGroup && msgCategory && msgChannel && msgRegion && msgTitleEn && msgTitleHin){
-        $.ajax({
-          type: "POST",
-          url: 'messages/addMessage',
-          data: new FormData(this),
-          contentType: false,
-          cache: false,
-          processData:false,
-          beforeSend: function() { 
-              $("#addmessagesubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-              $("#addmessagesubmit").prop('disabled', true);
-              $('#add_message_form').css("opacity",".5");
-          },
-          success: function( data ) {
-            if(data == 1){
-              $("#addmessagesubmit").html('Broadcast');
-              $("#addmessagesubmit").prop('disabled', false);
-              toastr.success( 'Message Added successfully.','Success' );
-              $("form#add_message_form").trigger("reset");
-              $("#msgCategory").select2("val", "");
-              $("#msgChannel").select2("val", "");
-              $("#imgMsgEnLbl_1").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-              $("#imgMsgEnLbl_2").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-              $("#imgMsgEnLbl_3").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-              $("#imgMsgEnLbl_4").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-              $("#imgMsgEnLbl_5").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-              $("#imgMsgHinLbl_1").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-              $("#imgMsgHinLbl_2").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-              $("#imgMsgHinLbl_3").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-              $("#imgMsgHinLbl_4").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-              $("#imgMsgHinLbl_5").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-              $(".delete_btn").hide();
-              $(".add_link_btn").hide();
-              $('.add_link_btn').attr('data-val','');
-            }else{
-              toastr.error( data,'Error' );
-              $("#addmessagesubmit").html('Broadcast');
-              $("#addmessagesubmit").prop('disabled', false);
-            }
-            $('#add_message_form').css("opacity","");
-          }
-        });
-    }
+    if(msgCategory == ''){
+        toastr.error('Investigation Category cannot be empty','Error');
+        errorFlag = 1;
+      }
+    if(sumAssured == ''){
+        toastr.error('Sum Assured cannot be empty','Error');
+        errorFlag = 1;
+      }
+    if(errorFlag == 1)
+    	return false;
+        
+    $.ajax({
+	    type: "POST",
+	    url: 'addMessage',
+	    data: {'policyNumber':policyNumber,'insuredName':insuredName,'claimantCity':claimantCity,'claimantZone':claimantZone,'claimantState':claimantState,'msgCategory':msgCategory,'sumAssured':sumAssured},
+	    beforeSend: function() {
+	    	$("#addmessagesubmit").html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
+	        $("#addmessagesubmit").prop('disabled', true);
+	        $('#add_message_form').css("opacity",".5");
+	    },
+	    success: function( data )
+	    {
+	        $("#addmessagesubmit").html('Broadcast');
+	        $("#addmessagesubmit").prop('disabled',false );
+	  	  if(data == "****")
+	  	  {
+	         toastr.success( 'Message Added successfully.','Success' );
+	         $("form#add_message_form").trigger("reset");            
+	  	  }
+	  	  else
+	         toastr.error( data,'Error' );
+	      $('#add_message_form').css("opacity","");
+	    }
+	  });
   });
-});
+
 function clearForm(){
   $( '#small_modal' ).modal();
   $( '#sm_modal_title' ).html( 'Are you Sure?' );
@@ -460,17 +345,6 @@ function clearForm(){
     $("form#add_message_form").trigger("reset");
     $("#msgCategory").select2("val", "");
     $("#msgChannel").select2("val", "");
-    $("#imgMsgEnLbl_1").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-    $("#imgMsgEnLbl_2").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-    $("#imgMsgEnLbl_3").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-    $("#imgMsgEnLbl_4").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-    $("#imgMsgEnLbl_5").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-    $("#imgMsgHinLbl_1").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-    $("#imgMsgHinLbl_2").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-    $("#imgMsgHinLbl_3").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-    $("#imgMsgHinLbl_4").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-    $("#imgMsgHinLbl_5").attr("src",'${pageContext.request.contextPath}/resources/uploads/default_img.png');
-    $(".delete_btn").hide();
     $(".add_link_btn").hide();
     $('.add_link_btn').attr('data-val','');
     $('#small_modal').modal('hide');

@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.preclaim.models.CaseDetails;
 import com.preclaim.models.Channel;
 import com.preclaim.models.Group;
 import com.preclaim.models.MessageList;
@@ -145,5 +146,28 @@ public class MessageDaoImpl implements MessageDao {
 		}
 
 	}
+
+	@Override
+	public String addcase(CaseDetails casedetail) {
+	
+		try {
+				String query="Insert into case_lists(policyNumber,insuredName,claimantCity,claimantZone,claimantState,status,subStatus,"
+						+ "investigationCategory,sumAssured,createdBy,createdDate,updatedDate,updatedBy) values(?,?,?,?,?,1,1,?,?,?,now(),now(),0)";
+		       this.template.update(query,casedetail.getPolicyNumber(),casedetail.getInsuredName(),casedetail.getClaimantCity(),casedetail.getClaimantZone()
+		    		   ,casedetail.getClaimantState(),casedetail.getInvestigationCategory(),casedetail.getSumAssured(),casedetail.getCreatedBy());
+				
+	    	}
+		catch(Exception e) 
+		{
+			e.printStackTrace();
+			return "Error adding case. Kindly contact system administrator";
+		}
+		return "****";
+	}
+
+	
+
+	
+
 
 }

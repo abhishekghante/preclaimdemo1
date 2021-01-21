@@ -12,5 +12,6 @@ public interface InvestigationTypeDao {
 	List<InvestigationTypeList> InvestigationType_list(int status);
     String updateInvestigationTypeStatus(int status, int userId, int investigationId);
     String deleteInvestigationType(int investigationId);
+    List<InvestigationType> getActiveInvestigationList();
     
 }

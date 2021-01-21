@@ -55,6 +55,17 @@ public class InvestigationTypeDaoImpl implements InvestigationTypeDao {
 			return investigationTypeList;
 		});
 	}
+	
+	@Override
+	public List<InvestigationType> getActiveInvestigationList() {
+		String query = "SELECT * FROM investigation_type WHERE status = 1";
+		return template.query(query, (ResultSet rs, int rowNum) -> {
+			InvestigationType investigationTypeList = new InvestigationType();
+			investigationTypeList.setInvestigationId(rs.getInt("investigationId"));
+			investigationTypeList.setInvestigationType(rs.getString("investigationType"));
+			return investigationTypeList;
+		});
+	}
 
 	public String updateInvestigationTypeStatus(int investigationId, int userId, int status) 
 	{
