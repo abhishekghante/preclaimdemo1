@@ -57,13 +57,13 @@ ArrayList<String> user_permission=(ArrayList<String>)session.getAttribute("user_
 			                    </tr>
 			                    <tr>
 			                    	<td>
-			                    		<input type="checkbox" <%if(role_permission.contains("groups")) {%>checked <%} %> name="groups[]" id="groups" class="allPLCheck1" value="groups"> <label for="groups">Groups</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("intimationType")) {%>checked <%} %> name="intimationType[]" id="intimationType" class="allPLCheck1" value="intimationType"> <label for="intimationType">Intimation Type</label>
 			                    	</td>
 			                    	<td>
-			                    		<input type="checkbox" <%if(role_permission.contains("groups/index")) {%>checked <%} %> name="groups[]" id="groups_index" class="indPLCheck1" value="groups/index"> <label for="groups_index">View</label>
-			                    		<input type="checkbox" <%if(role_permission.contains("groups/add")) {%>checked <%} %> name="groups[]" id="groups_add" class="indPLCheck1" value="groups/add"> <label for="groups_add">Add</label>
-			                    		<input type="checkbox" <%if(role_permission.contains("groups/delete")) {%>checked <%} %> name="groups[]" id="groups_delete" class="indPLCheck1" value="groups/delete"> <label for="groups_delete">Delete</label>
-			                    		<input type="checkbox" <%if(role_permission.contains("groups/status")) {%>checked <%} %> name="groups[]" id="groups_status" class="indPLCheck1" value="groups/status"> <label for="groups_status">Approve Status</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("intimationType/index")) {%>checked <%} %> name="intimationType[]" id="intimationType_index" class="indPLCheck1" value="intimationType/index"> <label for="intimationType_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("intimationType/add")) {%>checked <%} %> name="intimationType[]" id="intimationType_add" class="indPLCheck1" value="intimationType/add"> <label for="intimationType_add">Add</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("intimationType/delete")) {%>checked <%} %> name="intimationType[]" id="intimationType_delete" class="indPLCheck1" value="intimationType/delete"> <label for="intimationType_delete">Delete</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("intimationType/status")) {%>checked <%} %> name="intimationType[]" id="intimationType_status" class="indPLCheck1" value="intimationType/status"> <label for="intimationType_status">Approve Status</label>
 			                    	</td>
 			                    </tr>
 			                    <tr>
@@ -90,13 +90,13 @@ ArrayList<String> user_permission=(ArrayList<String>)session.getAttribute("user_
 			                    </tr>
 			                    <tr>
 			                    	<td>
-			                    		<input type="checkbox" <%if(role_permission.contains("investigationType")) {%>checked <%} %> name="category[]" id="category" class="allPLCheck4" value="investigationType"> <label for="investigationType">Investigation Type</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("investigationType")) {%>checked <%} %> name="investigationType[]" id="investigationType" class="allPLCheck4" value="investigationType"> <label for="investigationType">Investigation Type</label>
 			                    	</td>
 			                    	<td>
-			                    		<input type="checkbox" <%if(role_permission.contains("investigationType/index")) {%>checked <%} %> name="category[]" id="category_index" class="indPLCheck4" value="investigationType/index"> <label for="investigationType_index">View</label>
-			                    		<input type="checkbox" <%if(role_permission.contains("investigationType/add")) {%>checked <%} %> name="category[]" id="category_add" class="indPLCheck4" value="investigationType/add"> <label for="investigationType_add">Add</label>
-			                    		<input type="checkbox" <%if(role_permission.contains("investigationType/delete")) {%>checked <%} %> name="category[]" id="category_delete" class="indPLCheck4" value="investigationType/delete"> <label for="investigationType_delete">Delete</label>
-			                    		<input type="checkbox" <%if(role_permission.contains("investigationType/status")) {%>checked <%} %> name="category[]" id="category_status" class="indPLCheck4" value="investigationType/status"> <label for="investigationType_status">Approve Status</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("investigationType/index")) {%>checked <%} %> name="investigationType[]" id="investigationType_index" class="indPLCheck4" value="investigationType/index"> <label for="investigationType_index">View</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("investigationType/add")) {%>checked <%} %> name="investigationType[]" id="investigationType_add" class="indPLCheck4" value="investigationType/add"> <label for="investigationType_add">Add</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("investigationType/delete")) {%>checked <%} %> name="investigationType[]" id="investigationType_delete" class="indPLCheck4" value="investigationType/delete"> <label for="investigationType_delete">Delete</label>
+			                    		<input type="checkbox" <%if(role_permission.contains("investigationType/status")) {%>checked <%} %> name="investigationType[]" id="investigationType_status" class="indPLCheck4" value="investigationType/status"> <label for="investigationType_status">Approve Status</label>
 			                    	</td>
 			                    </tr>
 			                    <tr>

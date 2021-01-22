@@ -20,7 +20,7 @@ function updateMappingStatus( cmId, status, checkAuthority ) {
     return false;
 }
 //DELETE GROUP
-function deleteGroup( groupId, checkAuthority ) {
+function deleteIntimationType( intimationId, checkAuthority ) {
 	if(!checkAuthority)
 	{
 		toastr.error("Access Denied", "Error");
@@ -29,24 +29,24 @@ function deleteGroup( groupId, checkAuthority ) {
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
     $( '#sm_modal_body' ).html( 'Do you really want to delete this record?' );
-    $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal'+groupId+'" class="btn green">Yes</button>' );
-    $( '#continuemodal'+groupId ).click( function() {
+    $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal'+intimationId+'" class="btn green">Yes</button>' );
+    $( '#continuemodal'+intimationId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'deleteGroup',
-            data : { 'GroupId' : groupId },
+            url  : 'deleteIntimationType',
+            data : { 'IntimationId' : intimationId },
             beforeSend: function() { 
-                $("#continuemodal"+groupId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
-                $("#continuemodal"+groupId).prop('disabled', true);
+                $("#continuemodal"+intimationId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+intimationId).prop('disabled', true);
             },
             success : function( msg ) 
             {
-                $("#continuemodal"+groupId).html('Yes');
-                $("#continuemodal"+groupId).prop('disabled', false);
+                $("#continuemodal"+intimationId).html('Yes');
+                $("#continuemodal"+intimationId).prop('disabled', false);
                 $('#small_modal').modal('hide');
                 if(msg == "****")
                 {
-                	toastr.error("Group deleted successfully", "Success");
+                	toastr.error("IntimationType deleted successfully", "Success");
                 	location.reload();
                 }
                 else
@@ -55,7 +55,7 @@ function deleteGroup( groupId, checkAuthority ) {
         });
     });
 }
-function updateGroupStatus( groupId, status, checkAuthority ) {
+function updateIntimationTypeStatus( intimationId, status, checkAuthority ) {
 	if(!checkAuthority)
 	{
 		toastr.error("Access Denied", "Error");
@@ -68,24 +68,24 @@ function updateGroupStatus( groupId, status, checkAuthority ) {
     }
     $( '#small_modal' ).modal();
     $( '#sm_modal_title' ).html( 'Are you Sure?' );
-    $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal'+groupId+'" class="btn green">Yes</button>' );
-    $( '#continuemodal'+groupId ).click( function() {
+    $( '#sm_modal_footer' ).html( '<button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button><button type="button" id="continuemodal'+intimationId+'" class="btn green">Yes</button>' );
+    $( '#continuemodal'+intimationId ).click( function() {
         $.ajax({
             type : 'POST',
-            url  : 'updateGroupStatus',
-            data : { 'groupId' : groupId, 'status' : status },
+            url  : 'updateIntimationTypeStatus',
+            data : { 'IntimationId' : intimationId, 'status' : status },
             beforeSend: function() { 
-                $("#continuemodal"+groupId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
-                $("#continuemodal"+groupId).prop('disabled', true);
+                $("#continuemodal"+intimationId).html('<img src="../resources/img/input-spinner.gif"> Loading...');
+                $("#continuemodal"+intimationId).prop('disabled', true);
             },
             success : function( msg ) 
             {
-                $("#continuemodal"+groupId).html('Yes');
-	            $("#continuemodal"+groupId).prop('disabled', false);
+                $("#continuemodal"+intimationId).html('Yes');
+	            $("#continuemodal"+intimationId).prop('disabled', false);
 	            $('#small_modal').modal('hide');		            
                 if(msg="****")
                 {
-                  	toastr.success("Group status updated successfully",'Success');
+                  	toastr.success("IntimationType status updated successfully",'Success');
 		            location.reload();
 	            }
 	            else

@@ -3,22 +3,21 @@
 <%@page import="java.util.List" %>
 <%@page import = "java.util.ArrayList" %>
 <%@page import = "com.preclaim.models.Region" %>
-<%@page import = "com.preclaim.models.Group" %>
+<%@page import = "com.preclaim.models.IntimationType" %>
 <%@page import = "com.preclaim.models.Channel" %>
 <%
-
 List<String>user_permission=(List<String>)session.getAttribute("user_permission");
 boolean allow_statusChg = user_permission.contains("messages/status");
 boolean allow_delete = user_permission.contains("messages/delete");
 List<CaseDetailList> pendingCaseDetailList = (List<CaseDetailList>)session.getAttribute("pendingCaseDetailList");
 session.removeAttribute("pendingCaseDetailList");
 List<Region> regionList = (List<Region>) session.getAttribute("region_list");
-List<Group> groupList = (List<Group>) session.getAttribute("group_list");
+List<IntimationType> groupList = (List<IntimationType>) session.getAttribute("group_list");
 List<Channel> channelList = (List<Channel>) session.getAttribute("channel_list");
 if(regionList == null)
 	regionList = new ArrayList<Region>();
 if(groupList == null)
-	groupList = new ArrayList<Group>();
+	groupList = new ArrayList<IntimationType>();
 if(channelList == null)
 	channelList = new ArrayList<Channel>();
 %>

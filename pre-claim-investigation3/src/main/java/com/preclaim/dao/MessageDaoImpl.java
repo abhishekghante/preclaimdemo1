@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.preclaim.models.CaseDetailList;
 import com.preclaim.models.CaseDetails;
 import com.preclaim.models.Channel;
-import com.preclaim.models.Group;
+import com.preclaim.models.IntimationType;
 import com.preclaim.models.MessageList;
 import com.preclaim.models.Region;
 
@@ -27,17 +27,17 @@ public class MessageDaoImpl implements MessageDao {
 	}
 
 	@Override
-	public List<Group> getActiveGrouplist() {
+	public List<IntimationType> getActiveGrouplist() {
 		try {
 			String sql = "SELECT * FROM group_lists where status = 1";
 			return template.query(sql,
 					(ResultSet rs, int rowCount) ->
 					{
-						Group group = new Group();
-						group.setGroup_id(rs.getInt("groupId"));
-						group.setGroupName(rs.getString("groupName"));
-						group.setStatus(1);
-						return group;
+						IntimationType intimationType = new IntimationType();
+						intimationType.setIntimationId(rs.getInt("groupId"));
+						intimationType.setIntimationType(rs.getString("groupName"));
+						intimationType.setStatus(1);
+						return intimationType;
 					}
 					);
 		}

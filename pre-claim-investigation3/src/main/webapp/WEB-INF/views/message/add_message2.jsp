@@ -2,17 +2,17 @@
 <%@page import = "java.util.ArrayList" %>
 
 <%@page import = "com.preclaim.models.Region" %>
-<%@page import = "com.preclaim.models.Group" %>
+<%@page import = "com.preclaim.models.IntimationType" %>
 <%@page import = "com.preclaim.models.Channel" %>
 <%
 List<String>user_permission=(List<String>)session.getAttribute("user_permission");
 List<Region> regionList = (List<Region>) session.getAttribute("region_list");
-List<Group> groupList = (List<Group>) session.getAttribute("group_list");
+List<IntimationType> groupList = (List<IntimationType>) session.getAttribute("group_list");
 List<Channel> channelList = (List<Channel>) session.getAttribute("channel_list");
 if(regionList == null)
 	regionList = new ArrayList<Region>();
 if(groupList == null)
-	groupList = new ArrayList<Group>();
+	groupList = new ArrayList<IntimationType>();
 if(channelList == null)
 	channelList = new ArrayList<Channel>();
 %>
@@ -54,7 +54,9 @@ if(channelList == null)
                 <div class="col-md-8">
                   <select name="msgGroup" id="msgGroup" class="form-control" tabindex="-1" >
                     <option value = "-1" selected disabled>Select</option>
-                    <%for(Group group : groupList) {%>
+                    <%
+                    for(IntimationType group : groupList) {
+                    %>
                     	<option value = "<%= group.getGroup_id()%>"><%=group.getGroupName()%></option>
                    	<%} %>
                   </select>

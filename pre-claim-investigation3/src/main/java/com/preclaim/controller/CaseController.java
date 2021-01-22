@@ -20,6 +20,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.preclaim.config.Config;
 import com.preclaim.dao.CaseDao;
+import com.preclaim.dao.IntimationTypeDao;
 import com.preclaim.dao.InvestigationTypeDao;
 import com.preclaim.models.CaseDetailList;
 import com.preclaim.models.CaseDetails;
@@ -35,6 +36,9 @@ public class CaseController {
 	
 	@Autowired
 	InvestigationTypeDao investigationDao;
+	
+	@Autowired
+	IntimationTypeDao intimationTypeDao;
 	
     @RequestMapping(value = "/import_case", method = RequestMethod.GET)
     public String import_case(HttpSession session) {
@@ -62,6 +66,7 @@ public class CaseController {
     	details.setSub_menu2_path("../message/pending_message.jsp");
     	session.setAttribute("ScreenDetails", details);    	
     	session.setAttribute("investigation_list", investigationDao.getActiveInvestigationList());
+    	session.setAttribute("intimation_list", intimationTypeDao.getActiveIntimationType());
     	
     	return "common/templatecontent";
     }
@@ -75,7 +80,7 @@ public class CaseController {
     	details.setMain_menu("Case Management");
     	details.setSub_menu1("Pending Cases");
     	session.setAttribute("ScreenDetails", details);
-    	List<CaseDetailList> pendingCaseDetailList= caseDao.getCaseDetailList(0);
+    	List<CaseDetailList> pendingCaseDetailList= caseDao.getCaseDetailList(1);
     	session.setAttribute("pendingCaseDetailList", pendingCaseDetailList);
         return "common/templatecontent";
     }
@@ -89,7 +94,7 @@ public class CaseController {
     	details.setMain_menu("Case Management");
     	details.setSub_menu1("Active Cases");
     	session.setAttribute("ScreenDetails", details);
-    	List<CaseDetailList> activeCaseDetailList= caseDao.getCaseDetailList(1);
+    	List<CaseDetailList> activeCaseDetailList= caseDao.getCaseDetailList(0);
     	session.setAttribute("activeCaseDetailList", activeCaseDetailList);
         return "common/templatecontent";
     }
@@ -102,6 +107,8 @@ public class CaseController {
     	details.setScreen_title("<li class = \"active\">Assigned Cases Lists</li>");
     	details.setMain_menu("Case Management");
     	details.setSub_menu1("Assigned Cases");
+    	List<CaseDetailList> assignCaseDetailList= caseDao.getCaseDetailList(1);
+    	session.setAttribute("assignCaseDetailList", assignCaseDetailList);
     	session.setAttribute("ScreenDetails", details);
         return "common/templatecontent";
     }

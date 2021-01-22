@@ -1,11 +1,11 @@
-<%@page import="com.preclaim.models.GroupList"%>
+<%@page import="com.preclaim.models.IntimationTypeList"%>
 <%@page import="java.util.List"%>
 <%
-List<GroupList>active_list=(List<GroupList>)session.getAttribute("active_list");
+List<IntimationTypeList>active_list=(List<IntimationTypeList>)session.getAttribute("active_list");
 session.removeAttribute("active_list");
 List<String> user_permission=(List<String>)session.getAttribute("user_permission");
-boolean allow_statusChg = user_permission.contains("groups/status");
-boolean allow_delete = user_permission.contains("groups/delete");
+boolean allow_statusChg = user_permission.contains("intimationType/status");
+boolean allow_delete = user_permission.contains("intimationType/delete");
 %>
 
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
@@ -22,7 +22,7 @@ boolean allow_delete = user_permission.contains("groups/delete");
         </div>
         <div class="actions">
             <div class="btn-group">
-              <a href="${pageContext.request.contextPath}/group/add_group" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
+              <a href="${pageContext.request.contextPath}/intimationType/add" data-toggle="tooltip" title="Add" class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Add New">
                 <i class="fa fa-plus"></i>
               </a>
             </div>
@@ -39,7 +39,7 @@ boolean allow_delete = user_permission.contains("groups/delete");
                     <thead>
                       <tr class="tbl_head_bg">
                         <th class="head1 no-sort">#</th>
-                        <th class="head1 no-sort">Group Name</th>
+                        <th class="head1 no-sort">Intimation Type Name</th>
                         <th class="head1 no-sort">Created Date</th>
                         <th class="head1 no-sort">Status</th>
                         <th class="head1 no-sort">Action</th>
@@ -55,14 +55,13 @@ boolean allow_delete = user_permission.contains("groups/delete");
                       </tr>
                     </tfoot>
                     <tbody>
-                    <%
-                    if(active_list!=null){
-                    	
-                    	for(GroupList list_group : active_list){
-                         %>
+                             <%
+                                 if(active_list!=null){        	
+                             		for(IntimationTypeList list_group : active_list){
+                              %>
                     		<tr>
                     			<td><%=list_group.getSrNo() %></td>
-                    		    <td><%=list_group.getGroupName() %></td>
+                    		    <td><%=list_group.getIntimationType() %></td>
                     		    <td><%=list_group.getCreatedDate() %></td>
                     		    <td>
 	                    		    <% if(list_group.getStatus()==1){ %> 
@@ -72,20 +71,20 @@ boolean allow_delete = user_permission.contains("groups/delete");
 	                    		   <%} %>
                     		    </td>
                     		    <td>
-                    		         <a href="${pageContext.request.contextPath}/group/pending_group?groupName=<%=list_group.getGroupName() %>&groupId=<%=list_group.getGroupId() %>" 
+                    		         <a href="${pageContext.request.contextPath}/intimationType/pending?intimationtypeName=<%=list_group.getIntimationType() %>&intimationId=<%=list_group.getIntimationId() %>" 
                     		         	data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
                     		         	<i class="glyphicon glyphicon-edit"></i>
                    		         	</a>
                		         	  	<% if(list_group.getStatus()==1){ %> 
-	                    		         <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateGroupStatus('<%=list_group.getGroupId() %>',2,<%=allow_statusChg%>);" 
+	                    		         <a href="javascript:;" data-toggle="tooltip" title="Inactive" onClick="return updateIntimationTypeStatus('<%=list_group.getIntimationId() %>',2,<%=allow_statusChg%>);" 
 	                    		             class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-ban-circle"></i>               		            
 	                   		             </a>
                		               	<%}else{%>
-	                  		              <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('<%=list_group.getGroupId() %>',1,<%=allow_statusChg%>);" 
+	                  		              <a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateIntimationTypeStatus('<%=list_group.getIntimationId() %>',1,<%=allow_statusChg%>);" 
 	                   		            	 class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i>
 	                  		              </a>
                		                <%} %>
-                     		         <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId() %>',<%=allow_delete %>);" 
+                     		         <a href="javascript:;" data-toggle="tooltip" title="Delete" onClick="return deleteIntimationType('<%=list_group.getIntimationId() %>',<%=allow_delete %>);" 
                     		             class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>
                    		             </a>
                     		    </td>

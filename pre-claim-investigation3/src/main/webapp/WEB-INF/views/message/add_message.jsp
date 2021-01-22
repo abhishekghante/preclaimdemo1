@@ -2,12 +2,13 @@
 <%@page import = "java.util.ArrayList" %>
 
 <%@page import = "com.preclaim.models.InvestigationType"%>
+<%@page import = "com.preclaim.models.IntimationType"%>
 <%
 List<String>user_permission=(List<String>)session.getAttribute("user_permission");
 List<InvestigationType> investigationList = (List<InvestigationType>) session.getAttribute("investigation_list");
 session.removeAttribute("investigation_list");
-if(investigationList == null)
-	investigationList = new ArrayList<InvestigationType>();
+List<IntimationType> intimationTypeList = (List<IntimationType>) session.getAttribute("intimation_list");
+session.removeAttribute("intimation_list");
 %>
 <style type="text/css">
 .placeImg { display:none !important;}
@@ -133,6 +134,19 @@ if(investigationList == null)
                 <div class="col-md-8">
                   <input type="number" placeholder="Sum Assured" name="sumAssured" id="sumAssured" 
                   	class="form-control">
+                </div>
+              </div>
+              <div class="form-group selectDiv">
+                <label class="col-md-4 control-label" for="msgIntimationType">Select Intimation Type 
+                	<span class="text-danger">*</span></label>
+                <div class="col-md-8">
+                  <select name="msgIntimationType" id="msgIntimationType" class="form-control" tabindex="-1">
+                    <option value="-1" selected disabled>Select</option>
+                    <%if(intimationTypeList != null){
+                    	for(IntimationType intimation: intimationTypeList){%>
+                    	<option value = "<%=intimation.getIntimationId()%>"><%=intimation.getIntimationType() %></option>
+                    <%}} %>
+                  </select>
                 </div>
               </div> 
               <div id="uploadImageDiv">

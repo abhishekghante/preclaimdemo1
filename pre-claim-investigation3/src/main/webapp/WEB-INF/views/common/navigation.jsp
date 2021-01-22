@@ -127,32 +127,35 @@ ArrayList<String> user_permission = (ArrayList<String>)session.getAttribute("use
               </ul>
             </li>
              <%} %>
-             <%if(user_permission.contains("groups")){ %>
-            <li class="nav-item <%if(details.getMain_menu().equals("Groups")){%>active open<%}%>">
+             <%if(user_permission.contains("intimationType")){ %>
+            <li class="nav-item <%if(details.getMain_menu().equals("Intimation Type")){%>active open<%}%>">
               <a href="javascript:;" class="nav-link nav-toggle">
-                  <i class="icon-users"></i>
-                  <span class="title">Groups</span>
+                  <i class="fa fa-exclamation-triangle" style = "color:white"></i>
+                  <span class="title">Intimation Type</span>
                   <span class="arrow "></span>
               </a>
               <ul class="sub-menu">
-                <%if(user_permission.contains("groups/add")){ %>
-                <li class="nav-item <%if(details.getSub_menu1().equals("Add Groups")){%>active<%}%>">
-                  <a href="${pageContext.request.contextPath}/group/add_group" class="nav-link nav-toggle">
-                    <i class="icon-plus"></i> Add Groups
+                <%if(user_permission.contains("intimationType/add")){ %>
+                <li class="nav-item <%if(details.getSub_menu1().equals("Add Intimation Type")){%>active<%}%>">
+                  <a href="${pageContext.request.contextPath}/intimationType/add" class="nav-link nav-toggle">
+                    <i class="icon-plus"></i> Add Intimation Type
                   </a>
                 </li>
                  <%} %>
-                <li class="nav-item <%if(details.getSub_menu1().equals("Pending Groups")){%>active<%}%>">
-                  <a href="${pageContext.request.contextPath}/group/pending_group" class="nav-link nav-toggle">
-                    <i class="icon-clock"></i> Pending Groups
+                 <%if(user_permission.contains("intimationType/index")){ %>
+                <li class="nav-item <%if(details.getSub_menu1().equals("Pending Intimation")){%>active<%}%>">
+                  <a href="${pageContext.request.contextPath}/intimationType/pending" class="nav-link nav-toggle">
+                    <i class="icon-clock"></i> Pending Intimation
                   </a>
                 </li>
-
-                <li class="nav-item <%if(details.getSub_menu1().equals("Active Groups")){%>active<%}%>">
-                  <a href="${pageContext.request.contextPath}/group/active_group" class="nav-link nav-toggle">
-                    <i class="icon-check"></i> Active Groups
+                <%} %>
+				<%if(user_permission.contains("intimationType/index")){ %>
+                <li class="nav-item <%if(details.getSub_menu1().equals("Active Intimation")){%>active<%}%>">
+                  <a href="${pageContext.request.contextPath}/intimationType/active" class="nav-link nav-toggle">
+                    <i class="icon-check"></i> Active Intimation
                   </a>
                 </li>
+                <%} %>
               </ul>
             </li>
              <%} %>

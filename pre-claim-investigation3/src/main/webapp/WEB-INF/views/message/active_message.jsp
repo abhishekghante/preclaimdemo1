@@ -2,7 +2,7 @@
 <%@page import = "java.util.ArrayList" %>
 <%@page import="com.preclaim.models.CaseDetailList"%>
 <%@page import = "com.preclaim.models.Region" %>
-<%@page import = "com.preclaim.models.Group" %>
+<%@page import = "com.preclaim.models.IntimationType" %>
 <%@page import = "com.preclaim.models.Channel" %>
 
 <%
@@ -12,12 +12,12 @@ boolean allow_delete = user_permission.contains("messages/delete");
 List<CaseDetailList> activeCaseDetailList = (List<CaseDetailList>)session.getAttribute("activeCaseDetailList");
 session.removeAttribute("activeCaseDetailList");
 List<Region> regionList = (List<Region>) session.getAttribute("region_list");
-List<Group> groupList = (List<Group>) session.getAttribute("group_list");
+List<IntimationType> groupList = (List<IntimationType>) session.getAttribute("group_list");
 List<Channel> channelList = (List<Channel>) session.getAttribute("channel_list");
 if(regionList == null)
 	regionList = new ArrayList<Region>();
 if(groupList == null)
-	groupList = new ArrayList<Group>();
+	groupList = new ArrayList<IntimationType>();
 if(channelList == null)
 	channelList = new ArrayList<Channel>();
 %>

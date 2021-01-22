@@ -1,13 +1,13 @@
-<%@page import="com.preclaim.models.GroupList"%>
+<%@page import="com.preclaim.models.IntimationTypeList"%>
 <%@page import="java.util.List"%>
 <%
-List<GroupList> pending_list = (List<GroupList>) session.getAttribute("pending_group");
-session.removeAttribute("pending_group");
-GroupList group = (GroupList) session.getAttribute("group");
-session.removeAttribute("group");
+List<IntimationTypeList> pending_list = (List<IntimationTypeList>) session.getAttribute("pending_intimationType");
+session.removeAttribute("pending_intimationType");
+IntimationTypeList intimationTypeList = (IntimationTypeList) session.getAttribute("intimationTypeList");
+session.removeAttribute("intimationTypeList");
 List<String> user_permission=(List<String>)session.getAttribute("user_permission");
-boolean allow_statusChg = user_permission.contains("groups/status");
-boolean allow_delete = user_permission.contains("groups/delete");
+boolean allow_statusChg = user_permission.contains("intimationType/status");
+boolean allow_delete = user_permission.contains("intimationType/delete");
 %>
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -20,8 +20,8 @@ boolean allow_delete = user_permission.contains("groups/delete");
 				<div class="caption">
 					<i class="icon-users font-green-sharp"></i> 
 					<span class="caption-subject font-green-sharp sbold">
-						<%= group == null ? "Add " : "Update " %>
-						Group
+						<%=intimationTypeList == null ? "Add " : "Update "%>
+						IntimationTypeList
 					</span>
 				</div>
 			</div>
@@ -29,34 +29,40 @@ boolean allow_delete = user_permission.contains("groups/delete");
 		<div class="portlet light bordered">
 			<div class="portlet-body">
 				<div id="message_account"></div>
-				<form novalidate id="add_group_form" role="form" method="post"
+				<form novalidate id="add_intimation_type" role="form" method="post"
 					class="form-horizontal">
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="col-md-4 control-label" for="groupName">Group
-									Name <span class="text-danger">*</span>
+								<label class="col-md-4 control-label" for="intimationtypeName">Intimation Type Name
+									 <span class="text-danger">*</span>
 								</label>
 								<div class="col-md-8">
-									<input type="text" required placeholder="Group Name"
-										id="groupName" class="form-control" name="groupName"
-										value = "<%= group == null ? "" : group.getGroupName() %>">
+									<input type="text" required placeholder="Intimation Type Name"
+										id="intimationtypeName" class="form-control" name="intimationtypeName"
+										value = "<%=intimationTypeList == null ? "" : intimationTypeList.getIntimationType()%>">
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-md-offset-4 col-md-8">
-									<% if(group != null){ %>
-									<input type="hidden" value="<%= group.getGroupId()%>" id="groupId"
-										name="groupId">
-									<button class="btn btn-info" id="editgroupsubmit"
-										onClick="return updateGroup();" type="button">Update</button>
-									<a href="${pageContext.request.contextPath}/group/pending_group"
+									<%
+									if(intimationTypeList != null){
+									%>
+									<input type="hidden" value="<%=intimationTypeList.getIntimationId()%>" id="intimationId"
+										name="intimationId">
+									<button class="btn btn-info" id="editIntimationTypesubmit"
+										onClick="return updateIntimationType();" type="button">Update</button>
+									<a href="${pageContext.request.contextPath}/intimationType/pending"
 										class="btn btn-danger">Back</a>
-									<% }else{ %> 
-									<button class="btn btn-info" id="addgroupsubmit"
-										onClick="return addGroup();" type="button">Add Group</button>
+									<%
+									}else{
+									%> 
+									<button class="btn btn-info" id="addIntimationTypesubmit"
+										onClick="return addIntimationType();" type="button">Add Intimation</button>
 									<button class="btn btn-danger" type="reset" value="">Clear</button>
-									<% } %>
+									<%
+									}
+									%>
 								</div>
 							</div>
 						</div>
@@ -74,11 +80,11 @@ boolean allow_delete = user_permission.contains("groups/delete");
 				<div class="caption">
 					<i class="icon-users font-green-sharp"></i> <span
 						class="caption-subject font-green-sharp sbold">Pending
-						Groups</span>
+						Intimation</span>
 				</div>
 				<div class="actions">
 					<div class="btn-group">
-						<a href="${pageContext.request.contextPath}/group/add_group"
+						<a href="${pageContext.request.contextPath}/intimation/add"
 							data-toggle="tooltip" title="Add" data-original-title="Add New"
 							class="btn green-haze btn-outline btn-xs pull-right" data-toggle="tooltip"
 							style="margin-right: 5px;"> <i class="fa fa-plus"></i>
@@ -98,7 +104,7 @@ boolean allow_delete = user_permission.contains("groups/delete");
 								<thead>
 									<tr class="tbl_head_bg">
 										<th class="head1 no-sort">#</th>
-										<th class="head1 no-sort">Group Name</th>
+										<th class="head1 no-sort">Intimation Type Name</th>
 										<th class="head1 no-sort">Created Date</th>
 										<th class="head1 no-sort">Status</th>
 										<th class="head1 no-sort">Action</th>
@@ -117,23 +123,26 @@ boolean allow_delete = user_permission.contains("groups/delete");
 									<%
 									if (pending_list != null) {
 
-										for (GroupList list_group : pending_list) {
+									  for (IntimationTypeList list_intimationType : pending_list) {
 									%>
 									<tr>
-										<td><%=list_group.getSrNo()%></td>
-										<td><%=list_group.getGroupName()%></td>
-										<td><%=list_group.getCreatedDate()%></td>										
+										<td><%=list_intimationType.getSrNo()%></td>
+										<td><%=list_intimationType.getIntimationType()%></td>
+										<td><%=list_intimationType.getCreatedDate()%></td>										
 										<td><span class="label label-sm label-danger">Pending</span></td>											
 										<td>
-											<a href="${pageContext.request.contextPath}/group/pending_group?groupName=
-												<%=list_group.getGroupName() %>&groupId=<%=list_group.getGroupId() %>" 
+											<a href="${pageContext.request.contextPath}/intimationType/pending?intimationtypeName=<%=list_intimationType.getIntimationType() %>&intimationId=<%=list_intimationType.getIntimationId() %>" 
 												data-toggle="tooltip" title="Edit" class="btn btn-primary btn-xs">
 												<i class="glyphicon glyphicon-edit"></i>
 							   		  		</a>
-									   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateGroupStatus('<%=list_group.getGroupId()%>',1,<%=allow_statusChg %>);" 
-									   		  	class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i></a>
-									   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteGroup('<%=list_group.getGroupId()%>',<%=allow_delete %>);" 
-									   		   	class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>  
+									   		
+									   		<a href="javascript:;" data-toggle="tooltip" title="Active" onClick="return updateIntimationTypeStatus('<%=list_intimationType.getIntimationId()%>',1,<%=allow_statusChg %>);" 
+									   		  	class="btn btn-success btn-xs"><i class="glyphicon glyphicon-ok-circle"></i>
+								   		  	</a>
+									   		
+									   		<a href="#" data-toggle="tooltip" title="Delete" onClick="return deleteIntimationType('<%=list_intimationType.getIntimationId()%>',<%=allow_delete %>);" 
+									   		   	class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>
+								   		   	</a>  
 										</td>
 
 									</tr>
@@ -188,73 +197,73 @@ $(document).ready(function()
 	});
 });
 
-function addGroup() {
-	<%if(!user_permission.contains("groups/add")){%>
+function addIntimationType() {
+	<%if(!user_permission.contains("investigationType/add")){%>
 		toastr.error("Access Denied","Error");
 		return false;
 	<%}%>
-	var groupName = $('#add_group_form #groupName').val();
-	if (groupName == '') {
-		toastr.error('Group Name Cannot be empty', 'Error');
+	var IntimationtypeName = $('#add_intimation_type #intimationtypeName').val();
+	if (IntimationtypeName == '') {
+		toastr.error('Intimation Type Name Cannot be empty', 'Error');
 		return false;
 	}
-	var formdata = {'groupName' : groupName};
+	var formdata = {'intimationtypeName' : IntimationtypeName};
 	$.ajax({
 		type : "POST",
-		url : '${pageContext.request.contextPath}/group/addGroup',
+		url : '${pageContext.request.contextPath}/intimationType/addIntimationType',
 		data : formdata,
 		beforeSend : function() {
-			$("#addgroupsubmit")
+			$("#addIntimationTypesubmit")
 				.html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-			$("#addgroupsubmit").prop('disabled', true);
+			$("#addIntimationTypesubmit").prop('disabled', true);
 		},
 		success : function(data) {
 			if (data == "****") {
-				$("#addgroupsubmit").html('Add Group');
-				$("#addgroupsubmit").prop('disabled', false);
-				toastr.success('Group Added successfully.','Success');
-				$('#add_group_form #groupName').val('');
+				$("#addIntimationTypesubmit").html('Add Intimation Type');
+				$("#addIntimationTypesubmit").prop('disabled', false);
+				toastr.success('Intimation Type Added successfully.','Success');
+				$('#add_intimation_type #intimationtypeName').val('');
 				location.reload();
 			} else {
 				toastr.error(data, 'Error');
-				$("#addgroupsubmit").html('Add Group');
-				$("#addgroupsubmit").prop('disabled', false);
+				$("#addIntimationTypesubmit").html('Add Intimation Type');
+				$("#addIntimationTypesubmit").prop('disabled', false);
 			}
 		}
 	});
 }
 
-function updateGroup() {
-	<%if(!user_permission.contains("groups/add")){%>
+function updateIntimationType() {
+	<%if(!user_permission.contains("intimationType/add")){%>
 		toastr.error("Access Denied","Error");
 		return false;
 	<%}%>
-	var groupName = $('#add_group_form #groupName').val();
-	var groupId = $('#add_group_form #groupId').val();
-	if (groupName == '') {
-		toastr.error('Group Name Cannot be empty', 'Error');
+	var IntimationtypeName = $('#add_intimation_type #intimationtypeName').val();
+	var IntimationId = $('#add_intimation_type #intimationId').val();
+	if (IntimationtypeName == '') {
+		toastr.error('Intimation Type Name Cannot be empty', 'Error');
 		return false;
 	}	
-	var formdata = {'groupName' : groupName,'groupId' : groupId};
+	var formdata = {'intimationtypeName' : IntimationtypeName,'intimationId' : IntimationId};
 		$.ajax({
 			type : "POST",
-			url : '${pageContext.request.contextPath}/group/updateGroup',
+			url : '${pageContext.request.contextPath}/intimationType/updateIntimationType',
 			data : formdata,
 			beforeSend : function() {
-				$("#editgroupsubmit")
+				$("#editIntimationTypesubmit")
 						.html('<img src="${pageContext.request.contextPath}/resources/img/input-spinner.gif"> Loading...');
-				$("#editgroupsubmit").prop('disabled', true);
+				$("#editIntimationTypesubmit").prop('disabled', true);
 			},
 			success : function(data) {
 				if (data == "****") {
-					$("#editgroupsubmit").html('Update');
-					$("#editgroupsubmit").prop('disabled', false);
-					toastr.success('Group Updated successfully.','Success');
-					location.href ="${pageContext.request.contextPath}/group/pending_group";
+					$("#editIntimationTypesubmit").html('Update');
+					$("#editIntimationTypesubmit").prop('disabled', false);
+					toastr.success('Intimation Type Updated successfully.','Success');
+					location.href ="${pageContext.request.contextPath}/intimationType/pending";
 				} else {
 					toastr.error(data, 'Error');
-					$("#editgroupsubmit").html('Update');
-					$("#editgroupsubmit").prop('disabled', false);
+					$("#editIntimationTypesubmit").html('Update');
+					$("#editIntimationTypesubmit").prop('disabled', false);
 				}
 			}
 		});
